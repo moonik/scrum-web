@@ -30,7 +30,6 @@ class UserAccountServiceTest extends Specification{
         then:
         UserAccount userAccount = userAccountRepository.findByUsername(userDto.getUsername())
         userAccount != null
-        userAccount.getUsername() == userDto.getUsername()
         userAccount.getUserProfile() != null
     }
 
