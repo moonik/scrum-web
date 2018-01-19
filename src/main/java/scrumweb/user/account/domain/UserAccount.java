@@ -30,7 +30,7 @@ public class UserAccount {
     private String username;
 
     @NotNull
-    @Size(min = 8, max = 16)
+    @Size(min = 5)
     private String password;
 
     @OneToOne
