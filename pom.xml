@@ -24,18 +24,6 @@
         <java.version>1.8</java.version>
     </properties>
 
-    <profiles>
-        <profile>
-            <id>test</id>
-            <properties>
-                <activatedProperties>test</activatedProperties>
-            </properties>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-        </profile>
-    </profiles>
-
     <dependencies>
 
         <dependency>
@@ -117,13 +105,6 @@
                 </executions>
             </plugin>
         </plugins>
-
-        <resources>
-            <resource>
-                <directory>src/main/test/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
 
     </build>
 
