@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import scrumweb.dto.UserInformationDto;
 import scrumweb.security.JwtAuthenticationRequest;
@@ -20,7 +21,10 @@ import scrumweb.user.account.service.UserAccountService;
 
 import javax.servlet.http.HttpServletResponse;
 
+import static scrumweb.common.ApplicationConstants.API_URL;
+
 @RestController
+@RequestMapping(API_URL)
 public class AuthenticationController {
 
     @Autowired
