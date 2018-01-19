@@ -26,13 +26,13 @@ public class UserAccountService {
     @Autowired
     protected UserProfileRepository userProfileRepository;
 
-    public UserAccount save(UserDto userDto) {
+    public void save(UserDto userDto) {
         if (userAccountRepository.findByUsername(userDto.getUsername()) == null) {
             UserProfile userProfile = userProfileAsm.makeUserProfile(userDto);
             userProfileRepository.save(userProfile);
 
             UserAccount userAccount = userAccountAsm.makeUserAccount(userDto, userProfile);
-            return userAccountRepository.save(userAccount);
+            userAccountRepository.save(userAccount);
         }else
             throw new UserAlreadyExistsException(userDto.getUsername());
     }
