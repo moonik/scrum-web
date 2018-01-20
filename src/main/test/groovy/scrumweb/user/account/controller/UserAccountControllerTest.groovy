@@ -31,9 +31,12 @@ class UserAccountControllerTest extends Specification{
         def request = mockMvc.perform(httpHelper().requestPost(API_URL + "/save", JSON_CONTENT))
 
         then:
-        request
-                .andExpect(status().isOk())
+        request.andExpect(status().isOk())
         verify(userAccountService, Mockito.times(1)).save(any(UserDto.class))
+    }
+
+    def "should throw exception while trying to save user to database"() {
+
     }
 
 }
