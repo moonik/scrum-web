@@ -1,5 +1,6 @@
 package scrumweb.user.account.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import scrumweb.common.asm.UserAccountAsm;
@@ -12,18 +13,12 @@ import scrumweb.user.profile.domain.UserProfile;
 import scrumweb.user.profile.repository.UserProfileRepository;
 
 @Service
+@AllArgsConstructor
 public class UserAccountService {
 
-    @Autowired
     protected UserAccountAsm userAccountAsm;
-
-    @Autowired
     protected UserProfileAsm userProfileAsm;
-
-    @Autowired
     protected UserAccountRepository userAccountRepository;
-
-    @Autowired
     protected UserProfileRepository userProfileRepository;
 
     public void save(UserDto userDto) {

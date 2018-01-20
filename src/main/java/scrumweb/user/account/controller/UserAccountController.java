@@ -1,5 +1,6 @@
 package scrumweb.user.account.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +15,9 @@ import static scrumweb.common.ApplicationConstants.API_URL;
 
 @RestController
 @RequestMapping(API_URL + "user-account")
+@AllArgsConstructor
 public class UserAccountController {
 
-    @Autowired
     protected UserAccountService userAccountService;
 
     @PostMapping("/save")

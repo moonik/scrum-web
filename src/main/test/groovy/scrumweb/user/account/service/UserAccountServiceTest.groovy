@@ -40,6 +40,7 @@ class UserAccountServiceTest extends Specification{
         userAccountService.save(TestData.userDto)
 
         then:
-        thrown(UserAlreadyExistsException.class)
+        UserAlreadyExistsException ex = thrown()
+        ex.message == "User with user name: testUser already exists!"
     }
 }
