@@ -53,16 +53,9 @@ public class AuthenticationController {
         final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(jwtAuthenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User userDTO = userService.getUserByName(auth.getName());
         UserInformationDto userInformationDto = userAccountService.getUserInformation(userAccountRepository.findByUsername(auth.getName()));
 
         return ResponseEntity.ok(new JwtAuthenticationResponse(token, userInformationDto));
-    }
-
-
-    @GetMapping("/hello")
-    public void hello(){
-        System.out.println("hello");
     }
 
     @GetMapping("/refresh")
@@ -81,6 +74,5 @@ public class AuthenticationController {
             return ResponseEntity.badRequest().body(null);
         }
     }
-
 
 }

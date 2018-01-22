@@ -15,8 +15,7 @@ public class UserAccountAsm {
     }
 
     public UserInformationDto makeUserInformation(UserAccount userAccount){
-        UserInformationDto userInformationDto = new UserInformationDto(userAccount.getUsername(), userAccount.getUserProfile().getId());
-        return userInformationDto;
+        return new UserInformationDto(userAccount.getUsername(), userAccount.getUserProfile().getId());
     }
 
 }
