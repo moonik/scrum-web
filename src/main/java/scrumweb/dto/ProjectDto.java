@@ -16,7 +16,6 @@ public class ProjectDto {
 
     private String name;
     private String description;
-    private String workflow;
     private UserProfile owner;
     private String icon;
     private Set<UserProfile> access;

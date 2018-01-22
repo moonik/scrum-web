@@ -25,13 +25,13 @@ class ProjectServiceTest extends Specification{
         given:
         UserProfile userProfile = new UserProfile("Testname", "surname", "Testphoto")
         Set<UserProfile> userProfileSet= null;
-        ProjectDto projectDto = new ProjectDto("projectname", "description", "workflow", userProfile, "icon", userProfileSet)
+        ProjectDto projectDto = new ProjectDto("projectname", "description", userProfile, "icon", userProfileSet)
 
         when:
         projectService.create(projectDto)
 
         then:
-        Project project = projectRepository.findByName(projectDto.getName())
-        project != null
+        projectRepository.findByName(projectDto.getName()) != null
+
     }
 }

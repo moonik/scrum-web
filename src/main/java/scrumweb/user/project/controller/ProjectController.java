@@ -9,16 +9,17 @@ import scrumweb.user.project.service.ProjectService;
 import static scrumweb.common.ApplicationConstants.API_URL;
 
 @RestController
-@RequestMapping(API_URL + "profile")
+@RequestMapping(API_URL + "project")
 public class ProjectController {
 
     @Autowired
     protected ProjectService projectService;
 
-    @PostMapping("/createproject")
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.OK)
-    public void createProject(@RequestBody ProjectDto projectDto){
+    public ProjectDto createProject(@RequestBody ProjectDto projectDto){
         projectService.create(projectDto);
+        return projectDto;
     }
 
 }

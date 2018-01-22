@@ -30,7 +30,7 @@ public class UserProfile {
     private String photo;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Project> projectList;
+    private List<Project> projectsList;
 
     public UserProfile(String firstname, String lastname, String photo) {
         this.firstname = firstname;
