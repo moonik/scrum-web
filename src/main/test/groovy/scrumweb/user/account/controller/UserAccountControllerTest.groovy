@@ -8,6 +8,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import scrumweb.common.asm.UserAccountAsm
 import scrumweb.common.asm.UserProfileAsm
 import scrumweb.dto.UserDto
+import scrumweb.security.repository.AuthorityRepository
 import scrumweb.user.account.repository.UserAccountRepository
 import scrumweb.user.account.service.UserAccountService
 import scrumweb.user.profile.repository.UserProfileRepository
@@ -34,9 +35,12 @@ class UserAccountControllerTest extends Specification{
     UserProfileRepository userProfileRepository
     @Mock
     UserProfileAsm userProfileAsm
+    @Mock
+    AuthorityRepository authorityRepository
 
     private final static API_URL = "user-account"
     private final static JSON_CONTENT = "{username: 'testUser', password: 'testUser', firstname: 'test', lastname: 'test'}"
+
 
     def setup() {
         initMocks(this)
@@ -56,10 +60,10 @@ class UserAccountControllerTest extends Specification{
     }
 
     def "should throw exception while trying to save user to database"() {
-        userAccountRepositoryMock.findByUsername("testUser") >> TestData.userAccount
+        userAccountRepositoryMock.findByUsername("testUser") >> TestData.USER_ACCOUNT
 
         setup:
-        userAccountService = new UserAccountService(userAccountAsm, userProfileAsm, userAccountRepositoryMock, userProfileRepository)
+        userAccountService = new UserAccountService(userAccountAsm, userProfileAsm, userAccountRepositoryMock, userProfileRepository, authorityRepository)
         userAccountController = new UserAccountController(userAccountService)
         mockMvc = MockMvcBuilders.standaloneSetup(userAccountController).build()
 

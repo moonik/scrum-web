@@ -24,20 +24,20 @@ class UserAccountServiceTest extends Specification{
 
     def "should save user to database"() {
         when:
-        userAccountService.save(TestData.userDto)
+        userAccountService.save(TestData.USER_DTO)
 
         then:
-        UserAccount userAccount = userAccountRepository.findByUsername(TestData.userDto.getUsername())
+        UserAccount userAccount = userAccountRepository.findByUsername(TestData.USER_DTO.getUsername())
         userAccount != null
         userAccount.getUserProfile() != null
     }
 
     def "should throw exception when trying to save user that already exists in database"() {
         userAccountService.userAccountRepository = userAccountRepositoryMock
-        userAccountRepositoryMock.findByUsername("testUser") >> TestData.userAccount
+        userAccountRepositoryMock.findByUsername("testUser") >> TestData.USER_ACCOUNT
 
         when:
-        userAccountService.save(TestData.userDto)
+        userAccountService.save(TestData.USER_DTO)
 
         then:
         UserAlreadyExistsException ex = thrown()
