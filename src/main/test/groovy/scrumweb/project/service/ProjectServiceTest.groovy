@@ -24,7 +24,7 @@ class ProjectServiceTest extends Specification{
     def "should save project to database"() {
         given:
         UserProfile userProfile = new UserProfile("Testname", "surname", "Testphoto")
-        Set<UserProfile> userProfileSet= null;
+        Set<UserProfile> userProfileSet= null
         ProjectDto projectDto = new ProjectDto("projectname", "description", userProfile, "icon", userProfileSet)
 
         when:

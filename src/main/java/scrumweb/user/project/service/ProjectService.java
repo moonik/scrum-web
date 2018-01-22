@@ -1,5 +1,6 @@
 package scrumweb.user.project.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import scrumweb.common.asm.ProjectAsm;
@@ -9,18 +10,17 @@ import scrumweb.user.project.domain.Project;
 import scrumweb.user.project.repository.ProjectRepository;
 
 @Service
+@AllArgsConstructor
 public class ProjectService {
 
-    @Autowired
     protected ProjectAsm projectAsm;
-
-    @Autowired
     protected ProjectRepository projectRepository;
 
-    public void create(ProjectDto projectDto){
+    public ProjectDto create(ProjectDto projectDto){
         if (projectRepository.findByName(projectDto.getName()) == null) {
             Project project = projectAsm.makeProject(projectDto);
             projectRepository.save(project);
+            return projectDto;
         }else{
             throw new ProjectAlreadyExsistsException(projectDto.getName());
         }
