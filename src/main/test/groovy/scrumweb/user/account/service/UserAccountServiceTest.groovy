@@ -1,10 +1,10 @@
 package scrumweb.user.account.service
 
+import common.TestData
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.transaction.annotation.Transactional
 import scrumweb.App
-import scrumweb.dto.UserDto
 import scrumweb.exception.UserAlreadyExistsException
 import scrumweb.user.account.domain.UserAccount
 import scrumweb.user.account.repository.UserAccountRepository
@@ -20,28 +20,27 @@ class UserAccountServiceTest extends Specification{
     @Autowired
     UserAccountRepository userAccountRepository
 
-    def "should save user to database"() {
-        given:
-        UserDto userDto = new UserDto("testUser", "testUser", "test", "test")
+    UserAccountRepository userAccountRepositoryMock = Mock()
 
+    def "should save user to database"() {
         when:
-        userAccountService.save(userDto)
+        userAccountService.save(TestData.userDto)
 
         then:
-        UserAccount userAccount = userAccountRepository.findByUsername(userDto.getUsername())
+        UserAccount userAccount = userAccountRepository.findByUsername(TestData.userDto.getUsername())
         userAccount != null
         userAccount.getUserProfile() != null
     }
 
     def "should throw exception when trying to save user that already exists in database"() {
-        setup:
-        UserDto userDto = new UserDto("testUser", "testUser", "test", "test")
-        userAccountService.save(userDto)
+        userAccountService.userAccountRepository = userAccountRepositoryMock
+        userAccountRepositoryMock.findByUsername("testUser") >> TestData.userAccount
 
         when:
-        userAccountService.save(userDto)
+        userAccountService.save(TestData.userDto)
 
         then:
-        thrown(UserAlreadyExistsException.class)
+        UserAlreadyExistsException ex = thrown()
+        ex.message == "User with user name: testUser already exists!"
     }
 }

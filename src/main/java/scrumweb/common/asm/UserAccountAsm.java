@@ -18,4 +18,5 @@ public class UserAccountAsm {
         UserInformationDto userInformationDto = new UserInformationDto(userAccount.getUsername(), userAccount.getUserProfile().getId());
         return userInformationDto;
     }
+
 }

@@ -85,10 +85,9 @@ public class JwtTokenUtil {
                 .compact();
     }
 
-    public Boolean canTokenBeRefreshed(String token, Date lastPasswordReset) {
+    public Boolean canTokenBeRefreshed(String token) {
         final Date created = getCreatedDateFromToken(token);
-        return !isCreatedBeforeLastPasswordReset(created, lastPasswordReset)
-                && !isTokenExpired(token);
+        return !isTokenExpired(token);
     }
 
     public String refreshToken(String token) {

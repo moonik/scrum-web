@@ -1,5 +1,6 @@
 package scrumweb.security;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,9 +10,9 @@ import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
 @Service
+@AllArgsConstructor
 public class JwtUserDetailsServiceImpl implements UserDetailsService{
 
-    @Autowired
     private UserAccountRepository userRepository;
 
     @Override

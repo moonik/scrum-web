@@ -1,6 +1,7 @@
 package scrumweb.security.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import scrumweb.user.account.domain.UserAccount;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Table(name = "AUTHORITY")
 @Setter
 @Getter
+@NoArgsConstructor
 public class Authority {
 
     @Id
@@ -27,4 +29,8 @@ public class Authority {
 
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     private List<UserAccount> userAccounts;
+
+    public Authority(AuthorityName name) {
+        this.name = name;
+    }
 }
