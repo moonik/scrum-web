@@ -3,7 +3,7 @@ package scrumweb.user.project.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import scrumweb.dto.UserProfileDto;
+import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.profile.domain.UserProfile;
 
 import javax.persistence.*;
@@ -28,20 +28,19 @@ public class Project {
     @Size(min = 5, max = 300)
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="OWNER_ID")
-    private UserProfile owner;
+    @OneToOne
+//    @Column(unique = true)
+    private UserAccount owner;
 
     private String icon;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<ProjectMember> access;
+    private Set<ProjectMember> members;
 
-    public Project(String name, String description, UserProfile owner, String icon, Set<ProjectMember> access) {
+    public Project(String name, String description, String icon, Set<ProjectMember> members) {
         this.name = name;
         this.description = description;
-        this.owner = owner;
         this.icon = icon;
-        this.access = access;
+        this.members = members;
     }
 }
