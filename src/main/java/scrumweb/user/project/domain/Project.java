@@ -35,9 +35,9 @@ public class Project {
     private String icon;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<UserProfile> access;
+    private Set<ProjectMember> access;
 
-    public Project(String name, String description, UserProfile owner, String icon, Set<UserProfile> access) {
+    public Project(String name, String description, UserProfile owner, String icon, Set<ProjectMember> access) {
         this.name = name;
         this.description = description;
         this.owner = owner;

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import scrumweb.user.profile.domain.UserProfile;
+import scrumweb.user.project.domain.ProjectMember;
 
 import java.util.Set;
 
@@ -18,6 +19,6 @@ public class ProjectDto {
     private String description;
     private UserProfile owner;
     private String icon;
-    private Set<UserProfile> access;
+    private Set<ProjectMember> access;
 
 }

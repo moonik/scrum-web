@@ -7,6 +7,7 @@ import scrumweb.App
 import scrumweb.dto.ProjectDto
 import scrumweb.user.profile.domain.UserProfile
 import scrumweb.user.project.domain.Project
+import scrumweb.user.project.domain.ProjectMember
 import scrumweb.user.project.repository.ProjectRepository
 import scrumweb.user.project.service.ProjectService
 import spock.lang.Specification
@@ -24,6 +25,7 @@ class ProjectServiceTest extends Specification{
     def "should save project to database"() {
         given:
         UserProfile userProfile = new UserProfile("Testname", "surname", "Testphoto")
+        ProjectMember member = new ProjectMember(userProfile, ProjectMember.Role.DEVELOPER);
         Set<UserProfile> userProfileSet= null
         ProjectDto projectDto = new ProjectDto("projectname", "description", userProfile, "icon", userProfileSet)
 
