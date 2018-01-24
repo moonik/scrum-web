@@ -11,7 +11,7 @@ import scrumweb.user.profile.domain.UserProfile;
 public class UserAccountAsm {
 
     public UserAccount makeUserAccount(UserDto userDto, UserProfile userProfile) {
-        return new UserAccount(userDto.getUsername(), new BCryptPasswordEncoder().encode(userDto.getPassword()), userProfile);
+        return new UserAccount(userDto.getUsername(), new BCryptPasswordEncoder().encode(userDto.getPassword()), userProfile, true);
     }
 
     public UserInformationDto makeUserInformation(UserAccount userAccount){

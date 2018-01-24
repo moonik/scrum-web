@@ -46,9 +46,10 @@ public class UserAccount {
     @NotNull
     private Boolean enabled;
 
-    public UserAccount(String username, String password, UserProfile userProfile) {
+    public UserAccount(String username, String password, UserProfile userProfile, Boolean enabled) {
         this.username = username;
         this.password = password;
         this.userProfile = userProfile;
+        this.enabled = enabled;
     }
 }
