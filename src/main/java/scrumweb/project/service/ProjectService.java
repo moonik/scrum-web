@@ -1,4 +1,4 @@
-package scrumweb.user.project.service;
+package scrumweb.project.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,10 +9,9 @@ import scrumweb.dto.ProjectMemberDto;
 import scrumweb.exception.ProjectAlreadyExsistsException;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
-import scrumweb.user.profile.domain.UserProfile;
-import scrumweb.user.project.domain.Project;
-import scrumweb.user.project.domain.ProjectMember;
-import scrumweb.user.project.repository.ProjectRepository;
+import scrumweb.project.domain.Project;
+import scrumweb.project.domain.ProjectMember;
+import scrumweb.project.repository.ProjectRepository;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

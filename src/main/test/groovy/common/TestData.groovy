@@ -4,7 +4,7 @@ import scrumweb.dto.ProjectDto
 import scrumweb.dto.UserDto
 import scrumweb.user.account.domain.UserAccount
 import scrumweb.user.profile.domain.UserProfile
-import scrumweb.user.project.domain.ProjectMember
+import scrumweb.project.domain.ProjectMember
 
 class TestData {
     static final UserAccount USER_ACCOUNT = new UserAccount("testUser", "testUser", new UserProfile("testUser", "testUser", null), true)

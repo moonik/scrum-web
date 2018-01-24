@@ -1,12 +1,11 @@
-package scrumweb.user.project.domain;
+package scrumweb.project.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import scrumweb.user.account.domain.UserAccount;
-import scrumweb.user.profile.domain.UserProfile;
-import scrumweb.user.project.converter.RoleConverter;
+import scrumweb.project.converter.RoleConverter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -4,19 +4,13 @@ import common.TestData
 import org.mockito.Mock
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.security.core.Authentication
-import org.springframework.security.core.context.SecurityContext
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.transaction.annotation.Transactional
 import scrumweb.App
 import scrumweb.common.SecurityContextService
 import scrumweb.common.asm.ProjectAsm
 import scrumweb.user.account.repository.UserAccountRepository
-import scrumweb.user.account.service.UserAccountService
-import scrumweb.user.project.domain.Project
-import scrumweb.user.project.domain.ProjectMember
-import scrumweb.user.project.repository.ProjectRepository
-import scrumweb.user.project.service.ProjectService
+import scrumweb.project.domain.Project
+import scrumweb.project.repository.ProjectRepository
 import spock.lang.Specification
 
 import static org.mockito.Mockito.when

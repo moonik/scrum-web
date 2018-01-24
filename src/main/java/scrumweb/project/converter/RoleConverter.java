@@ -1,10 +1,8 @@
-package scrumweb.user.project.converter;
+package scrumweb.project.converter;
 
-import scrumweb.user.project.domain.Project;
-import scrumweb.user.project.domain.ProjectMember;
+import scrumweb.project.domain.ProjectMember;
 
 import javax.persistence.AttributeConverter;
-import javax.persistence.Convert;
 import javax.persistence.Converter;
 
 @Converter
