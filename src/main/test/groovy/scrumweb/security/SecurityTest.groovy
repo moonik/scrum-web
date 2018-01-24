@@ -42,7 +42,6 @@ class SecurityTest extends Specification{
     private final static String JSON_CONTENT = "{username: " + USERNAME + ", password: " + PASSWORD + "}"
 
     def setup() {
-
         securityContext.getAuthentication() >> authentication
         authentication.getName() >> USERNAME
         jwtUserDetailsService.loadUserByUsername(USERNAME) >> userDetails

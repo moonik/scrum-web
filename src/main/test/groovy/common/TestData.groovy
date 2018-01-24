@@ -6,7 +6,7 @@ import scrumweb.user.account.domain.UserAccount
 import scrumweb.user.profile.domain.UserProfile
 
 class TestData {
-    static final UserAccount USER_ACCOUNT = new UserAccount("testUser", "testUser", new UserProfile("testUser", "testUser", null))
+    static final UserAccount USER_ACCOUNT = new UserAccount("testUser", "testUser", new UserProfile("testUser", "testUser", null), true)
     static final UserDto USER_DTO = new UserDto("testUser", "testUser", "test", "test")
     static final UserProfile USER_PROFILE = new UserProfile("Testname", "surname", "Testphoto")
     static final Set<UserProfile> USER_PROFILE_SET = null
