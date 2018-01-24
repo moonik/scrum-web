@@ -37,10 +37,9 @@ public class Project {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<ProjectMember> members;
 
-    public Project(String name, String description, String icon, Set<ProjectMember> members) {
+    public Project(String name, String description, String icon) {
         this.name = name;
         this.description = description;
         this.icon = icon;
-        this.members = members;
     }
 }

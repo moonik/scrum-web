@@ -14,6 +14,9 @@ import scrumweb.user.project.domain.Project;
 import scrumweb.user.project.domain.ProjectMember;
 import scrumweb.user.project.repository.ProjectRepository;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Service
 @AllArgsConstructor
 public class ProjectService {
@@ -30,6 +33,10 @@ public class ProjectService {
             UserAccount projectOwner = securityContextService.getCurrentUserAccount();
             project.setOwner(projectOwner);
 
+            Set<ProjectMember> projectMembers = new LinkedHashSet<>();
+            projectMembers.add(projectAsm.makeProjectMember(projectOwner,ProjectMember.Role.PROJECT_MANAGER));
+            project.setMembers(projectMembers);
+
             projectRepository.save(project);
             return projectDto;
         }else{
@@ -39,7 +46,7 @@ public class ProjectService {
 
     public void addMember(ProjectMemberDto projectMemberDto){
         Project project = projectRepository.getOne(projectMemberDto.getProjectID());
-                project.getMembers().add(new ProjectMember(userAccountRepository.findByUsername(projectMemberDto.getUsername()).getUserProfile(),
+                project.getMembers().add(new ProjectMember(userAccountRepository.findByUsername(projectMemberDto.getUsername()),
                                                                                                 ProjectMember.Role.getRole(projectMemberDto.getRole())));
                 projectRepository.save(project);
     }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.profile.domain.UserProfile;
 import scrumweb.user.project.converter.RoleConverter;
 
@@ -25,14 +26,14 @@ public class ProjectMember {
 
     @NotNull
     @OneToOne
-    UserProfile userProfile;
+    UserAccount userAccount;
 
     @NotNull
     @Convert(converter = RoleConverter.class)
     Role role;
 
-    public ProjectMember(UserProfile userProfile, Role role) {
-        this.userProfile = userProfile;
+    public ProjectMember(UserAccount userAccount, Role role) {
+        this.userAccount = userAccount;
         this.role = role;
     }
 

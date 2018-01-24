@@ -18,9 +18,9 @@ public class ProjectDto {
     private String description;
     private UserProfileDto owner;
     private String icon;
-    private Set<ProjectMember> members;
+    private Set<ProjectMemberDto> members;
 
-    public ProjectDto(String name, String description, String icon, Set<ProjectMember> members) {
+    public ProjectDto(String name, String description, String icon, Set<ProjectMemberDto> members) {
         this.name = name;
         this.description = description;
         this.icon = icon;
