@@ -10,4 +10,8 @@ public class ProjectAsm {
         return new Project(projectDto.getName(), projectDto.getDescription(), projectDto.getIcon(), projectDto.getAccess());
     }
 
+    public ProjectDto makeProjectDto(Project project) {
+        return new ProjectDto(project.getName(), project.getDescription(), project.getIcon(), project.getAccess());
+    }
+
 }
