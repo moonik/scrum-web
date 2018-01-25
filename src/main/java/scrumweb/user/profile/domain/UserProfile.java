@@ -3,7 +3,7 @@ package scrumweb.user.profile.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import scrumweb.user.project.domain.Project;
+import scrumweb.project.domain.Project;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

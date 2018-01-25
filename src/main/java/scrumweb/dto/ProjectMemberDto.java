@@ -5,14 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter @Setter
-public class UserProfileDto {
 
-    private Long profileId;
-    private String firstname;
-    private String lastname;
-    private String photo;
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter @Setter
+public class ProjectMemberDto {
+
+    private Long projectID;
     private String username;
+    private String role;
+
 }
