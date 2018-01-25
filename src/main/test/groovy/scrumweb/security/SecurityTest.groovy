@@ -25,17 +25,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class SecurityTest extends Specification{
 
-    SecurityContextService securityContextService
-    MockMvc mockMvc
+    def securityContextService
+    def mockMvc
 
-    Authentication authentication = Mock(Authentication.class)
-    SecurityContext securityContext = Mock(SecurityContext.class)
-    UserDetails userDetails = Mock(UserDetails.class)
-    JwtTokenUtil jwtTokenUtil = mock(JwtTokenUtil.class)
-    UserAccountService userAccountService = mock(UserAccountService.class)
-    JwtUserDetailsServiceImpl jwtUserDetailsService = mock(JwtUserDetailsServiceImpl.class)
-    UserAccountRepository userAccountRepository = Mock(UserAccountRepository.class)
-    AuthenticationManager authenticationManager = mock(AuthenticationManager.class)
+    def authentication = Mock(Authentication)
+    def securityContext = Mock(SecurityContext)
+    def userDetails = Mock(UserDetails)
+    def jwtTokenUtil = Mock(JwtTokenUtil)
+    def userAccountService = Mock(UserAccountService)
+    def jwtUserDetailsService = Mock(JwtUserDetailsServiceImpl)
+    def userAccountRepository = Mock(UserAccountRepository)
+    def authenticationManager = Mock(AuthenticationManager)
 
     private final static String USERNAME = "testUser"
     private final static String PASSWORD = "testUser"
@@ -71,7 +71,7 @@ class SecurityTest extends Specification{
     }
 
     def "should fail on log in request"() {
-        when(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(USERNAME, PASSWORD))).thenThrow(AuthenticationException)
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(USERNAME, PASSWORD)) >> AuthenticationException
 
         when:
         mockMvc.perform(httpHelper().requestPost("/auth", JSON_CONTENT))

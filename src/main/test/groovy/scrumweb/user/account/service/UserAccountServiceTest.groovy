@@ -1,7 +1,6 @@
 package scrumweb.user.account.service
 
 import common.TestData
-import org.mockito.Mockito
 import scrumweb.common.asm.UserAccountAsm
 import scrumweb.common.asm.UserProfileAsm
 import scrumweb.exception.UserAlreadyExistsException
@@ -20,18 +19,19 @@ class UserAccountServiceTest extends Specification{
     def authorityRepository = Mock(AuthorityRepository)
     def userAccountAsm = Mock(UserAccountAsm)
     def userProfileAsm = Mock(UserProfileAsm)
+    static final USERNAME = "testUser"
 
     @Subject
     def userAccountService = new UserAccountService(userAccountAsm, userProfileAsm, userAccountRepository, userProfileRepository, authorityRepository)
 
     def "should save user to database"() {
-        authorityRepository.findByName(AuthorityName.ROLE_USER) >> new Authority(AuthorityName.ROLE_USER)
+        authorityRepository.findByName(_) >> new Authority(AuthorityName.ROLE_USER)
 
         when:
         userAccountService.save(TestData.USER_DTO)
 
         then:
-        1 * userAccountRepository.findByUsername('testUser') >> null
+        1 * userAccountRepository.findByUsername(USERNAME) >> null
         1 * userProfileAsm.makeUserProfile(TestData.USER_DTO) >> TestData.USER_PROFILE
         1 * userProfileRepository.save(TestData.USER_PROFILE)
         1 * userAccountAsm.makeUserAccount(TestData.USER_DTO, TestData.USER_PROFILE) >> TestData.USER_ACCOUNT
@@ -40,7 +40,7 @@ class UserAccountServiceTest extends Specification{
     }
 
     def "should throw exception when trying to save user that already exists in database"() {
-        userAccountRepository.findByUsername("testUser") >> TestData.USER_ACCOUNT
+        userAccountRepository.findByUsername(_) >> TestData.USER_ACCOUNT
 
         when:
         userAccountService.save(TestData.USER_DTO)
