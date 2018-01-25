@@ -7,10 +7,12 @@ import scrumweb.common.asm.ProjectAsm;
 import scrumweb.dto.ProjectDto;
 import scrumweb.dto.ProjectMemberDto;
 import scrumweb.exception.ProjectAlreadyExsistsException;
+import scrumweb.exception.ProjectNotFoundException;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 import scrumweb.project.domain.Project;
 import scrumweb.project.domain.ProjectMember;
+import scrumweb.project.domain.ProjectMember.Role;
 import scrumweb.project.repository.ProjectRepository;
 
 import java.util.LinkedHashSet;
@@ -33,7 +35,7 @@ public class ProjectService {
             project.setOwner(projectOwner);
 
             Set<ProjectMember> projectMembers = new LinkedHashSet<>();
-            projectMembers.add(projectAsm.makeProjectMember(projectOwner,ProjectMember.Role.PROJECT_MANAGER));
+            projectMembers.add(projectAsm.makeProjectMember(projectOwner,Role.PROJECT_MANAGER));
             project.setMembers(projectMembers);
 
             projectRepository.save(project);
@@ -43,10 +45,21 @@ public class ProjectService {
         }
     }
 
-    public void addMember(ProjectMemberDto projectMemberDto){
-        Project project = projectRepository.getOne(projectMemberDto.getProjectID());
-                project.getMembers().add(new ProjectMember(userAccountRepository.findByUsername(projectMemberDto.getUsername()),
-                                                                                                ProjectMember.Role.getRole(projectMemberDto.getRole())));
-                projectRepository.save(project);
+    public ProjectDto editName(String projectName, Long id){
+        Project project = projectRepository.findOne(id);
+        if(project != null){
+            project.setName(projectName);
+            return projectAsm.makeProjectDto(projectRepository.save(project));
+        }else{
+            throw new ProjectNotFoundException(id);
+        }
+    }
+
+    public ProjectMemberDto addMember(ProjectMemberDto projectMemberDto){
+        Project project = projectRepository.getOne(projectMemberDto.getProjectId());
+        UserAccount userAccount = userAccountRepository.findByUsername(projectMemberDto.getUsername());
+        project.getMembers().add(new ProjectMember(userAccount, Role.getRole(projectMemberDto.getRole())));
+        projectRepository.save(project);
+        return projectMemberDto;
     }
 }

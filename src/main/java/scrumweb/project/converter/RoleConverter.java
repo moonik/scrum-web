@@ -1,20 +1,20 @@
 package scrumweb.project.converter;
 
-import scrumweb.project.domain.ProjectMember;
+import scrumweb.project.domain.ProjectMember.Role;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter
-public class RoleConverter implements AttributeConverter<ProjectMember.Role, String> {
+public class RoleConverter implements AttributeConverter<Role, String> {
 
     @Override
-    public String convertToDatabaseColumn(ProjectMember.Role role) {
+    public String convertToDatabaseColumn(Role role) {
         return role.getRoleString();
     }
 
     @Override
-    public ProjectMember.Role convertToEntityAttribute(String s) {
-        return ProjectMember.Role.getRole(s);
+    public Role convertToEntityAttribute(String s) {
+        return Role.getRole(s);
     }
 }

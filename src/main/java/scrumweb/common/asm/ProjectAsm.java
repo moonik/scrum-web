@@ -5,6 +5,7 @@ import scrumweb.dto.ProjectDto;
 import scrumweb.dto.ProjectMemberDto;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.project.domain.Project;
+import scrumweb.project.domain.ProjectMember.Role;
 import scrumweb.project.domain.ProjectMember;
 
 import java.util.Set;
@@ -24,7 +25,7 @@ public class ProjectAsm {
                         .collect(Collectors.toSet()));
     }
 
-    public ProjectMember makeProjectMember(UserAccount userAccount, ProjectMember.Role role){
+    public ProjectMember makeProjectMember(UserAccount userAccount, Role role){
         return  new ProjectMember(userAccount, role);
     }
 

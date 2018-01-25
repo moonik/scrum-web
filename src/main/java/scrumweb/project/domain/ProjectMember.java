@@ -21,15 +21,15 @@ public class ProjectMember {
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "projectMember_seq")
     @SequenceGenerator(name = "projectMember_seq", sequenceName = "projectMember_seq", allocationSize = 1)
-    Long Id;
+    private Long Id;
 
     @NotNull
     @OneToOne
-    UserAccount userAccount;
+    private UserAccount userAccount;
 
     @NotNull
     @Convert(converter = RoleConverter.class)
-    Role role;
+    private Role role;
 
     public ProjectMember(UserAccount userAccount, Role role) {
         this.userAccount = userAccount;
@@ -50,8 +50,10 @@ public class ProjectMember {
         }
 
         public static Role getRole(String roleString){
-            return Arrays.stream(Role.values()).filter((Role role) ->
-                                                        role.getRoleString().equals(roleString)).findFirst().orElse(null);
+            return Arrays.stream(Role.values())
+                    .filter((Role role) -> role.getRoleString().equals(roleString))
+                    .findFirst()
+                    .orElse(null);
         }
     }
 
