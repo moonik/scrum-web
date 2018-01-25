@@ -8,6 +8,7 @@ import scrumweb.common.asm.ProjectAsm;
 import scrumweb.dto.ProjectDto;
 import scrumweb.dto.UserProfileDto;
 import scrumweb.exception.ProjectAlreadyExsistsException;
+import scrumweb.exception.ProjectNotFoundException;
 import scrumweb.user.profile.domain.UserProfile;
 import scrumweb.user.project.domain.Project;
 import scrumweb.user.project.repository.ProjectRepository;
@@ -33,6 +34,16 @@ public class ProjectService {
             return projectDto;
         }else{
             throw new ProjectAlreadyExsistsException(projectDto.getName());
+        }
+    }
+
+    public ProjectDto editName(String projectName, Long id){
+        Project project = projectRepository.findOne(id);
+        if(project != null){
+            project.setName(projectName);
+            return projectAsm.makeProjectDto(projectRepository.save(project));
+        }else{
+            throw new ProjectNotFoundException(id);
         }
     }
 }
