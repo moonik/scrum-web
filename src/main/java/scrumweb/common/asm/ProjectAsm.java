@@ -7,7 +7,11 @@ import scrumweb.user.project.domain.Project;
 @Component
 public class ProjectAsm {
     public Project makeProject(ProjectDto projectDto) {
-        return new Project(projectDto.getName(), projectDto.getDescription(), projectDto.getOwner(), projectDto.getIcon(), projectDto.getAccess());
+        return new Project(projectDto.getName(), projectDto.getDescription(), projectDto.getIcon(), projectDto.getAccess());
+    }
+
+    public ProjectDto makeProjectDto(Project project) {
+        return new ProjectDto(project.getName(), project.getDescription(), project.getIcon(), project.getAccess());
     }
 
 }

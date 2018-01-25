@@ -30,6 +30,7 @@ public class Project {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="OWNER_ID")
+    @Column(unique = true)
     private UserProfile owner;
 
     private String icon;
@@ -37,10 +38,9 @@ public class Project {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<UserProfile> access;
 
-    public Project(String name, String description, UserProfile owner, String icon, Set<UserProfile> access) {
+    public Project(String name, String description, String icon, Set<UserProfile> access) {
         this.name = name;
         this.description = description;
-        this.owner = owner;
         this.icon = icon;
         this.access = access;
     }

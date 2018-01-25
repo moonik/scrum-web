@@ -10,5 +10,5 @@ class TestData {
     static final UserDto USER_DTO = new UserDto("testUser", "testUser", "test", "test")
     static final UserProfile USER_PROFILE = new UserProfile("Testname", "surname", "Testphoto")
     static final Set<UserProfile> USER_PROFILE_SET = null
-    static final ProjectDto PROJECT_DTO = new ProjectDto("projectname", "description", USER_PROFILE, "icon", USER_PROFILE_SET)
+    static final ProjectDto PROJECT_DTO = new ProjectDto("projectname", "description", "icon", USER_PROFILE_SET)
 }

@@ -16,8 +16,14 @@ public class ProjectDto {
 
     private String name;
     private String description;
-    private UserProfile owner;
+    private UserProfileDto owner;
     private String icon;
     private Set<UserProfile> access;
 
+    public ProjectDto(String name, String description, String icon, Set<UserProfile> access) {
+        this.name = name;
+        this.description = description;
+        this.icon = icon;
+        this.access = access;
+    }
 }
