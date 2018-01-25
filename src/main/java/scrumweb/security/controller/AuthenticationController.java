@@ -28,15 +28,15 @@ import static scrumweb.common.ApplicationConstants.TOKEN_PREFIX;
 @AllArgsConstructor
 public class AuthenticationController {
 
-    private UserAccountService userAccountService;
+    protected UserAccountService userAccountService;
 
-    private UserAccountRepository userAccountRepository;
+    protected UserAccountRepository userAccountRepository;
 
-    private AuthenticationManager authenticationManager;
+    protected AuthenticationManager authenticationManager;
 
-    private JwtTokenUtil jwtTokenUtil;
+    protected JwtTokenUtil jwtTokenUtil;
 
-    private JwtUserDetailsServiceImpl jwtUserDetailsService;
+    protected JwtUserDetailsServiceImpl jwtUserDetailsService;
 
     @PostMapping("/auth")
     public ResponseEntity createAuthenticationToken(@RequestBody JwtAuthenticationRequest jwtAuthenticationRequest, HttpServletResponse httpServletResponse) {
