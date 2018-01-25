@@ -25,8 +25,6 @@ class UserAccountServiceTest extends Specification{
     def userAccountService = new UserAccountService(userAccountAsm, userProfileAsm, userAccountRepository, userProfileRepository, authorityRepository)
 
     def "should save user to database"() {
-        authorityRepository.findByName(_) >> new Authority(AuthorityName.ROLE_USER)
-
         when:
         userAccountService.save(TestData.USER_DTO)
 
@@ -34,18 +32,18 @@ class UserAccountServiceTest extends Specification{
         1 * userAccountRepository.findByUsername(USERNAME) >> null
         1 * userProfileAsm.makeUserProfile(TestData.USER_DTO) >> TestData.USER_PROFILE
         1 * userProfileRepository.save(TestData.USER_PROFILE)
+        1 *authorityRepository.findByName(_) >> new Authority(AuthorityName.ROLE_USER)
         1 * userAccountAsm.makeUserAccount(TestData.USER_DTO, TestData.USER_PROFILE) >> TestData.USER_ACCOUNT
         1 * userAccountRepository.save(TestData.USER_ACCOUNT)
 
     }
 
     def "should throw exception when trying to save user that already exists in database"() {
-        userAccountRepository.findByUsername(_) >> TestData.USER_ACCOUNT
-
         when:
         userAccountService.save(TestData.USER_DTO)
 
         then:
+        1 * userAccountRepository.findByUsername(USERNAME) >> TestData.USER_ACCOUNT
         UserAlreadyExistsException ex = thrown()
         ex.message == "User with user name: testUser already exists!"
     }
