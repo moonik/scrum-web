@@ -5,8 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.transaction.annotation.Transactional
 import scrumweb.App
-import scrumweb.user.project.repository.ProjectRepository
-import scrumweb.user.project.service.ProjectService
+import scrumweb.project.repository.ProjectRepository
 import spock.lang.Specification
 
 @SpringBootTest(classes=[App.class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

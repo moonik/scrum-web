@@ -1,13 +1,12 @@
-package scrumweb.user.project.service;
+package scrumweb.project.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import scrumweb.common.asm.ProjectAsm;
 import scrumweb.dto.ProjectDto;
 import scrumweb.exception.ProjectAlreadyExsistsException;
-import scrumweb.user.project.domain.Project;
-import scrumweb.user.project.repository.ProjectRepository;
+import scrumweb.project.domain.Project;
+import scrumweb.project.repository.ProjectRepository;
 
 @Service
 @AllArgsConstructor

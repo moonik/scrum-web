@@ -2,7 +2,7 @@ package scrumweb.common.asm;
 
 import org.springframework.stereotype.Component;
 import scrumweb.dto.ProjectDto;
-import scrumweb.user.project.domain.Project;
+import scrumweb.project.domain.Project;
 
 @Component
 public class ProjectAsm {
