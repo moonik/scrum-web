@@ -60,7 +60,6 @@ class ProjectServiceTest extends Specification{
     def projectService = new ProjectService(projectAsm, projectRepository, userAccountRepository, securityContextService)
 
     def "should save project to database"() {
-
         when:
         projectService.create(TestData.PROJECT_DTO)
 
@@ -71,7 +70,6 @@ class ProjectServiceTest extends Specification{
     }
 
     def "should throw exception when project name exists"(){
-
         when:
         projectService.create(TestData.PROJECT_DTO)
 
@@ -82,7 +80,6 @@ class ProjectServiceTest extends Specification{
     }
 
     def "should edit project name" (){
-
         when:
         projectService.editName("edited", 1L)
 
@@ -91,7 +88,6 @@ class ProjectServiceTest extends Specification{
     }
 
     def "should throw exception project not found" (){
-
         when:
         projectService.editName("edited", 1L)
 
