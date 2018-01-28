@@ -33,7 +33,8 @@ public class ProjectService {
 
             UserAccount projectOwner = securityContextService.getCurrentUserAccount();
             project.setOwner(projectOwner);
-
+            //TO DO add issue types here and fields
+            //attach them to project
             Set<ProjectMember> projectMembers = new LinkedHashSet<>();
             projectMembers.add(projectAsm.makeProjectMember(projectOwner,Role.PROJECT_MANAGER));
             project.setMembers(projectMembers);

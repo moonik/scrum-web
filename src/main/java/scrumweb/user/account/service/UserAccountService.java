@@ -36,10 +36,12 @@ public class UserAccountService {
 
             UserAccount userAccount = userAccountAsm.makeUserAccount(userDto, userProfile);
             Authority authority = authorityRepository.findByName(AuthorityName.ROLE_USER);
+
             List<Authority> authorities = new ArrayList<>();
             authorities.add(authority);
             userAccount.setAuthorities(authorities);
             userAccount.setEnabled(true);
+
             userAccountRepository.save(userAccount);
         }else
             throw new UserAlreadyExistsException(userDto.getUsername());

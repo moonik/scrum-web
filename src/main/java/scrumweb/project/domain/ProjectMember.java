@@ -56,6 +56,5 @@ public class ProjectMember {
                     .orElse(null);
         }
     }
-
 }
 

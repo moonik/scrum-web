@@ -20,3 +20,8 @@ INSERT INTO project (id, description, icon, name, owner_id) VALUES (-1, 'test de
 
 --ProjectMembers
 INSERT INTO project_members (project_id, members_id) VALUES (-1, -1);
+
+--IssueType
+INSERT INTO issue_type (id, name) VALUES (1, 'Task');
+INSERT INTO issue_type (id, name) VALUES (2, 'Bug');
+INSERT INTO issue_type (id, name) VALUES (3, 'Feature');

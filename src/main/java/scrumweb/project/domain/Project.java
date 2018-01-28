@@ -3,6 +3,7 @@ package scrumweb.project.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import scrumweb.issue.domain.Issue;
 import scrumweb.user.account.domain.UserAccount;
 
 import javax.persistence.*;
@@ -30,6 +31,9 @@ public class Project {
     @OneToOne
 //    @Column(unique = true)
     private UserAccount owner;
+
+    @OneToMany
+    private Set<Issue> issues;
 
     private String icon;
 
