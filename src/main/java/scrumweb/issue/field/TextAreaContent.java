@@ -7,10 +7,9 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 
-@Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@RequiredArgsConstructor
+//@Entity
+//@Getter
+//@Setter
+//@NoArgsConstructor
 public class TextAreaContent {
 }

@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class FieldContent {
 
     @Id @GeneratedValue
@@ -22,4 +21,8 @@ public class FieldContent {
 
     @ManyToOne
     private ProjectField projectField;
+
+    public FieldContent(ProjectField projectField) {
+        this.projectField = projectField;
+    }
 }
