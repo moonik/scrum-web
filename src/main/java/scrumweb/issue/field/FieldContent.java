@@ -1,25 +1,25 @@
-package scrumweb.project.field;
+package scrumweb.issue.field;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import scrumweb.project.field.ProjectField;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-public class RadioButton {
+@RequiredArgsConstructor
+public class FieldContent {
 
     @Id @GeneratedValue
     private Long id;
 
-    private String value;
-
-    public RadioButton(String value) {
-        this.value = value;
-    }
+    @ManyToOne
+    private ProjectField projectField;
 }

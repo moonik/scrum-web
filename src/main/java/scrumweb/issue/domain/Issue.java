@@ -4,14 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import scrumweb.project.domain.Project;
+import scrumweb.issue.field.FieldContent;
 import scrumweb.user.account.domain.UserAccount;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -20,7 +18,6 @@ import java.util.Set;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Issue {
 
     @Id @GeneratedValue
@@ -48,6 +45,21 @@ public class Issue {
     @OneToOne
     @NotNull
     private IssueType issueType;
+
+    @OneToMany
+    private Set<FieldContent> fieldContents;
+
+    public Issue(String summary, String description, Set<UserAccount> assignee, UserAccount reporter, String estimateTime, String remainingTime, Priority priority, IssueType issueType, Set<FieldContent> fieldContents) {
+        this.summary = summary;
+        this.description = description;
+        this.assignee = assignee;
+        this.reporter = reporter;
+        this.estimateTime = estimateTime;
+        this.remainingTime = remainingTime;
+        this.priority = priority;
+        this.issueType = issueType;
+        this.fieldContents = fieldContents;
+    }
 
     public enum Priority {
         HIGH, LOW

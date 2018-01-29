@@ -12,10 +12,15 @@ import javax.persistence.InheritanceType;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Getter @Setter
 public class InputField extends ProjectField{
 
     private int minCharacters;
     private int maxCharacters;
+
+    public InputField(FieldType fieldType, String name, Boolean isRequired, int minCharacters, int maxCharacters) {
+        super(fieldType, name, isRequired);
+        this.minCharacters = minCharacters;
+        this.maxCharacters = maxCharacters;
+    }
 }
