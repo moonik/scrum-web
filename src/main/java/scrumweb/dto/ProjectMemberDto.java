@@ -14,5 +14,6 @@ public class ProjectMemberDto {
     private Long projectId;
     private String username;
     private String role;
+    private String photo;
 
 }
