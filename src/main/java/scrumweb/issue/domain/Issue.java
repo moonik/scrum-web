@@ -29,7 +29,7 @@ public class Issue {
     private String description;
 
     @OneToMany
-    private Set<UserAccount> assignee;
+    private Set<UserAccount> assignees;
 
     @OneToOne
     @NotNull
@@ -49,10 +49,10 @@ public class Issue {
     @OneToMany
     private Set<FieldContent> fieldContents;
 
-    public Issue(String summary, String description, Set<UserAccount> assignee, UserAccount reporter, String estimateTime, String remainingTime, Priority priority, IssueType issueType, Set<FieldContent> fieldContents) {
+    public Issue(String summary, String description, Set<UserAccount> assignees, UserAccount reporter, String estimateTime, String remainingTime, Priority priority, IssueType issueType, Set<FieldContent> fieldContents) {
         this.summary = summary;
         this.description = description;
-        this.assignee = assignee;
+        this.assignees = assignees;
         this.reporter = reporter;
         this.estimateTime = estimateTime;
         this.remainingTime = remainingTime;

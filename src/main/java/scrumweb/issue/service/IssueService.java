@@ -63,7 +63,7 @@ public class IssueService {
 
     public IssueDetailsDto getIssue(Long id) {
         final Issue issue = issueRepository.getOne(id);
-        Set<UserProfileDto> assignees = issue.getAssignee().stream().map(assignee -> userProfileAsm.makeUserProfileDto(assignee, assignee.getUserProfile())).collect(Collectors.toSet());
+        Set<UserProfileDto> assignees = issue.getAssignees().stream().map(assignee -> userProfileAsm.makeUserProfileDto(assignee, assignee.getUserProfile())).collect(Collectors.toSet());
         UserProfileDto reporter = userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
         Set<ProjectFieldDto> projectFieldsDto = getInputFieldContent(issue.getFieldContents());
         return issueAsm.createIssueDetailsDto(issue, assignees, reporter, projectFieldsDto);
