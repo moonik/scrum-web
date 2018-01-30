@@ -93,7 +93,7 @@ public class IssueService {
 
     private Set<ProjectFieldDto> getInputFieldContent(Set<FieldContent> fieldContents) {
         return fieldContents.stream()
-                .map(fieldContent -> fieldAsm.createTextFieldContent(fieldContent.getProjectField(), ((InputFieldContent) fieldContent)))
+                .map(fieldContent -> fieldAsm.createProjectFieldDto(fieldContent.getProjectField(), fieldContent))
                 .collect(Collectors.toSet());
     }
 

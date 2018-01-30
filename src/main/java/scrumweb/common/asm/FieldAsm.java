@@ -36,15 +36,16 @@ public class FieldAsm {
         return new CheckBoxContainer(FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), checkBoxes);
     }
 
-    public ProjectFieldDto createTextFieldContent(ProjectField projectField, InputFieldContent inputFieldContent) {
-        if (projectField instanceof InputField) {
+    public ProjectFieldDto createProjectFieldDto(ProjectField projectField, FieldContent fieldContent) {
+        if (fieldContent instanceof InputFieldContent) {
             return new ProjectFieldDto(
                     projectField.getFieldType().toString(),
                     projectField.getName(),
                     projectField.getIsRequired(), null, null,
-                    createTextField(projectField, inputFieldContent)
+                    createTextField(projectField, ((InputFieldContent) fieldContent))
             );
         }
+        //TODO add more fields
         return null;
     }
 
