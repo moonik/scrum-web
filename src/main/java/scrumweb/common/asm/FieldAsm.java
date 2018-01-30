@@ -79,7 +79,7 @@ public class FieldAsm {
     }
 
     private TextField createTextField(ProjectField projectField, InputFieldContent inputFieldContent) {
-        return new TextField(projectField.getId(), false, inputFieldContent.getContent(), ((InputField) projectField).getMaxCharacters(), ((InputField) projectField).getMaxCharacters());
+        return new TextField(projectField.getId(), false, inputFieldContent.getContent(), ((InputField) projectField).getMaxCharacters(), ((InputField) projectField).getMinCharacters());
     }
 
     private Set<CheckBoxDto> createCheckBoxDto(CheckBoxContainer checkBoxContainer) {
