@@ -16,7 +16,7 @@ public class IssueDetailsDto {
     private String key;
     private String summary;
     private String description;
-    private Set<UserProfileDto> assignee;
+    private Set<UserProfileDto> assignees;
     private UserProfileDto reporter;
     private String estimateTime;
     private String remainingTime;
@@ -24,12 +24,12 @@ public class IssueDetailsDto {
     private String issueType;
     private Set<ProjectFieldDto> fields;
 
-    public IssueDetailsDto(Long id, String key, String summary, String description, Set<UserProfileDto> assignee, UserProfileDto reporter, String estimateTime, String remainingTime, String priority, String issueType, Set<ProjectFieldDto> fields) {
+    public IssueDetailsDto(Long id, String key, String summary, String description, Set<UserProfileDto> assignees, UserProfileDto reporter, String estimateTime, String remainingTime, String priority, String issueType, Set<ProjectFieldDto> fields) {
         this.id = id;
         this.key = key;
         this.summary = summary;
         this.description = description;
-        this.assignee = assignee;
+        this.assignees = assignees;
         this.reporter = reporter;
         this.estimateTime = estimateTime;
         this.remainingTime = remainingTime;

@@ -48,9 +48,11 @@ public class IssueService {
         IssueType issueType = issueTypeRepository.findByName(issueDetailsDto.getIssueType());
         Set<Issue> projectIssues = project.getIssues();
         Set<UserAccount> assignees = new HashSet<>();
-        if (issueDetailsDto.getAssignee() != null) {
-            assignees.addAll(getAssignees(issueDetailsDto.getAssignee()));
+
+        if (issueDetailsDto.getAssignees() != null) {
+            assignees.addAll(getAssignees(issueDetailsDto.getAssignees()));
         }
+
         fieldContentRepository.save(fieldContents);
         Issue issue = issueAsm.makeIssue(issueDetailsDto, assignees, reporter, fieldContents, issueType);
         projectIssues.add(issue);
