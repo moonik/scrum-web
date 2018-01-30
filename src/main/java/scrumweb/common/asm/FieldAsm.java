@@ -7,6 +7,7 @@ import scrumweb.dto.CheckBoxDto;
 import scrumweb.dto.ProjectFieldDto;
 import scrumweb.dto.RadioButtonDto;
 import scrumweb.dto.TextField;
+import scrumweb.issue.field.CheckBoxContent;
 import scrumweb.issue.field.FieldContent;
 import scrumweb.issue.field.InputFieldContent;
 import scrumweb.project.field.CheckBox;
@@ -39,14 +40,27 @@ public class FieldAsm {
     public ProjectFieldDto createProjectFieldDto(ProjectField projectField, FieldContent fieldContent) {
         if (fieldContent instanceof InputFieldContent) {
             return new ProjectFieldDto(
+                    projectField.getId(),
                     projectField.getFieldType().toString(),
                     projectField.getName(),
                     projectField.getIsRequired(), null, null,
                     createTextField(projectField, ((InputFieldContent) fieldContent))
             );
+        }else if (fieldContent instanceof CheckBoxContent) {
+            return new ProjectFieldDto(
+                    projectField.getId(),
+                    projectField.getFieldType().toString(),
+                    projectField.getName(),
+                    projectField.getIsRequired(),
+                    new CheckBoxContainerDto(projectField.getId(), createCheckBoxDto(((CheckBoxContent) fieldContent).getCheckBoxes(), true)),
+                    null, null);
         }
-        //TODO add more fields
         return null;
+    }
+
+    public FieldContent createCheckBoxContent(ProjectField projectField, CheckBoxContainerDto checkBoxContainerDto) {
+        Set<CheckBox> checkBoxes = checkBoxContainerDto.getCheckBoxes().stream().map(checkBox -> checkBoxRepository.getOne(checkBox.getId())).collect(Collectors.toSet());
+        return new CheckBoxContent(projectField, checkBoxes);
     }
 
     public FieldContent createFieldContentInputField(TextField textField, ProjectField projectField) {
@@ -83,9 +97,9 @@ public class FieldAsm {
         return new TextField(projectField.getId(), false, inputFieldContent.getContent(), ((InputField) projectField).getMaxCharacters(), ((InputField) projectField).getMinCharacters());
     }
 
-    private Set<CheckBoxDto> createCheckBoxDto(CheckBoxContainer checkBoxContainer) {
-        return checkBoxContainer.getCheckBoxes().stream()
-                .map(checkBox -> new CheckBoxDto(checkBox.getId(), checkBox.getValue()))
+    public Set<CheckBoxDto> createCheckBoxDto(Set<CheckBox> checkBoxes, Boolean isSelected) {
+        return checkBoxes.stream()
+                .map(checkBox -> new CheckBoxDto(checkBox.getId(), isSelected, checkBox.getValue()))
                 .collect(Collectors.toSet());
     }
 

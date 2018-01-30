@@ -9,6 +9,7 @@ import lombok.Setter;
 @Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProjectFieldDto {
+    private Long id;
     private String fieldType;
     private String fieldName;
     private Boolean isRequired;
@@ -18,7 +19,8 @@ public class ProjectFieldDto {
     private String projectName;
     private String issueType;
 
-    public ProjectFieldDto(String fieldType, String fieldName, Boolean isRequired, CheckBoxContainerDto checkBoxContainer, RadioButtonContainerDto radioButtonContainerDto, TextField textField) {
+    public ProjectFieldDto(Long id, String fieldType, String fieldName, Boolean isRequired, CheckBoxContainerDto checkBoxContainer, RadioButtonContainerDto radioButtonContainerDto, TextField textField) {
+        this.id = id;
         this.fieldType = fieldType;
         this.fieldName = fieldName;
         this.isRequired = isRequired;

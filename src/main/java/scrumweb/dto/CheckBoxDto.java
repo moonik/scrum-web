@@ -15,8 +15,9 @@ public class CheckBoxDto {
     private Boolean isSelected;
     private String value;
 
-    public CheckBoxDto(Long id, String value) {
+    public CheckBoxDto(Long id, Boolean isSelected, String value) {
         this.id = id;
+        this.isSelected = isSelected;
         this.value = value;
     }
 }
