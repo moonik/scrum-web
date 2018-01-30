@@ -28,6 +28,7 @@ export class AuthenticationService {
         return response.status;
       });
   }
+
   logout(): void {
     this.token = null;
     localStorage.removeItem('currentUser');
