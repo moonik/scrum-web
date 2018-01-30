@@ -16,3 +16,6 @@ INSERT INTO user_account (id, enabled, password, username, user_profile_id) VALU
 
 -- --UserAuthority
 INSERT INTO user_authority (user_id, authority_id) VALUES (-1, 2);
+
+--Project
+INSERT INTO project (id, description, icon, name, owner_id) VALUES (-1, 'test description', NULL, 'project name', -1);

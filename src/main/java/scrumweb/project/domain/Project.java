@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import scrumweb.issue.domain.Issue;
+import scrumweb.issue.domain.IssueType;
 import scrumweb.project.field.ProjectField;
 import scrumweb.user.account.domain.UserAccount;
 
@@ -43,6 +44,9 @@ public class Project {
 
     @OneToMany
     private Set<ProjectField> projectFields;
+
+    @OneToMany
+    private Set<IssueType> issueTypes;
 
     public Project(String name, String description, String icon) {
         this.name = name;

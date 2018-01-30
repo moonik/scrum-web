@@ -2,10 +2,14 @@ package scrumweb.common.asm;
 
 import org.springframework.stereotype.Component;
 import scrumweb.dto.IssueDetailsDto;
+import scrumweb.dto.ProjectFieldDto;
+import scrumweb.dto.UserProfileDto;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.field.FieldContent;
+import scrumweb.project.domain.Project;
 import scrumweb.user.account.domain.UserAccount;
+import scrumweb.user.profile.domain.UserProfile;
 
 import java.util.Set;
 
@@ -17,5 +21,19 @@ public class IssueAsm {
                 issueDetailsDto.getEstimateTime(), issueDetailsDto.getRemainingTime(),
                 issueDetailsDto.getPriority().equalsIgnoreCase("high") ? Issue.Priority.HIGH : Issue.Priority.LOW,
                 issueType, fieldContents);
+    }
+
+    public IssueDetailsDto createIssueDetailsDto(Issue issue, Set<UserProfileDto> assignees, UserProfileDto reporter, Set<ProjectFieldDto> fields) {
+        return new IssueDetailsDto(
+                issue.getId(), "",
+                issue.getSummary(),
+                issue.getDescription(),
+                assignees, reporter,
+                issue.getEstimateTime(),
+                issue.getRemainingTime(),
+                issue.getPriority().toString(),
+                issue.getIssueType().getName(),
+                fields
+        );
     }
 }

@@ -7,6 +7,8 @@ import scrumweb.dto.CheckBoxDto;
 import scrumweb.dto.ProjectFieldDto;
 import scrumweb.dto.RadioButtonDto;
 import scrumweb.dto.TextField;
+import scrumweb.issue.field.FieldContent;
+import scrumweb.issue.field.InputFieldContent;
 import scrumweb.project.field.CheckBox;
 import scrumweb.project.field.CheckBoxContainer;
 import scrumweb.project.field.InputField;
@@ -34,11 +36,21 @@ public class FieldAsm {
         return new CheckBoxContainer(FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), checkBoxes);
     }
 
-//    public ProjectFieldDto createProjectFieldDto(ProjectField projectField) {
-//        if (projectField instanceof CheckBoxContainer) {
-//            return new ProjectFieldDto(projectField.getFieldType().toString(), projectField.getName(), projectField.getIsRequired(), );
-//        }
-//    }
+    public ProjectFieldDto createTextFieldContent(ProjectField projectField, InputFieldContent inputFieldContent) {
+        if (projectField instanceof InputField) {
+            return new ProjectFieldDto(
+                    projectField.getFieldType().toString(),
+                    projectField.getName(),
+                    projectField.getIsRequired(), null, null,
+                    createTextField(projectField, inputFieldContent)
+            );
+        }
+        return null;
+    }
+
+    public FieldContent createFieldContentInputField(TextField textField, ProjectField projectField) {
+        return new InputFieldContent(projectField, textField.getContent());
+    }
 
     public ProjectField createRadioButtonContainer(ProjectFieldDto projectFieldDto) {
         Set<RadioButton> radioButtons = projectFieldDto.getRadioButtonContainerDto().getRadioButtonDtos().stream().map(this::createRadioButton).collect(Collectors.toSet());
@@ -64,6 +76,10 @@ public class FieldAsm {
                 projectFieldDto.getTextField().getMinCharacters(),
                 projectFieldDto.getTextField().getMaxCharacters()
         );
+    }
+
+    private TextField createTextField(ProjectField projectField, InputFieldContent inputFieldContent) {
+        return new TextField(projectField.getId(), false, inputFieldContent.getContent(), ((InputField) projectField).getMaxCharacters(), ((InputField) projectField).getMaxCharacters());
     }
 
     private Set<CheckBoxDto> createCheckBoxDto(CheckBoxContainer checkBoxContainer) {
