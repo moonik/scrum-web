@@ -15,17 +15,17 @@ public class ProjectFieldDto {
     private Boolean isRequired;
     private CheckBoxContainerDto checkBoxContainer;
     private RadioButtonContainerDto radioButtonContainerDto;
-    private TextField textField;
+    private InputFieldDto inputField;
     private String projectName;
     private String issueType;
 
-    public ProjectFieldDto(Long id, String fieldType, String fieldName, Boolean isRequired, CheckBoxContainerDto checkBoxContainer, RadioButtonContainerDto radioButtonContainerDto, TextField textField) {
+    public ProjectFieldDto(Long id, String fieldType, String fieldName, Boolean isRequired, CheckBoxContainerDto checkBoxContainer, RadioButtonContainerDto radioButtonContainerDto, InputFieldDto inputField) {
         this.id = id;
         this.fieldType = fieldType;
         this.fieldName = fieldName;
         this.isRequired = isRequired;
         this.checkBoxContainer = checkBoxContainer;
         this.radioButtonContainerDto = radioButtonContainerDto;
-        this.textField = textField;
+        this.inputField = inputField;
     }
 }

@@ -6,14 +6,12 @@ import scrumweb.common.SecurityContextService;
 import scrumweb.common.asm.FieldAsm;
 import scrumweb.common.asm.IssueAsm;
 import scrumweb.common.asm.UserProfileAsm;
-import scrumweb.dto.CheckBoxContainerDto;
 import scrumweb.dto.IssueDetailsDto;
 import scrumweb.dto.ProjectFieldDto;
 import scrumweb.dto.UserProfileDto;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.field.FieldContent;
-import scrumweb.issue.field.InputFieldContent;
 import scrumweb.issue.repository.FieldContentRepository;
 import scrumweb.issue.repository.IssueRepository;
 import scrumweb.issue.repository.IssueTypeRepository;
@@ -93,12 +91,6 @@ public class IssueService {
                 .collect(Collectors.toSet());
     }
 
-    private Set<ProjectFieldDto> getInputFieldContent(Set<FieldContent> fieldContents) {
-        return fieldContents.stream()
-                .map(fieldContent -> fieldAsm.createProjectFieldDto(fieldContent.getProjectField(), fieldContent))
-                .collect(Collectors.toSet());
-    }
-
     private Set<ProjectField> getCheckBoxes(Set<ProjectFieldDto> projectFieldsDto) {
         return projectFieldsDto.stream()
                 .filter(field -> field.getFieldType().equalsIgnoreCase("CHECKBOX"))
@@ -130,8 +122,8 @@ public class IssueService {
     private Set<FieldContent> getInputFieldsContent(Set<ProjectFieldDto> fields) {
         return fields.stream()
                 .filter(field -> field.getFieldType().equalsIgnoreCase("INPUT_FIELD"))
-                .map(field -> fieldAsm.createFieldContentInputField(field.getTextField(),
-                        projectFieldRepository.getOne(field.getTextField().getId())))
+                .map(field -> fieldAsm.createFieldContentInputField(field.getInputField(),
+                        projectFieldRepository.getOne(field.getInputField().getId())))
                 .collect(Collectors.toSet());
     }
 }

@@ -8,16 +8,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TextField {
+public class InputFieldDto {
     private Long id;
-    private Boolean isTextArea;
     private String content;
     private int maxCharacters;
     private int minCharacters;
 
-    public TextField(Long id, Boolean isTextArea, String content, int maxCharacters, int minCharacters) {
+    public InputFieldDto(Long id, String content, int maxCharacters, int minCharacters) {
         this.id = id;
-        this.isTextArea = isTextArea;
         this.content = content;
         this.maxCharacters = maxCharacters;
         this.minCharacters = minCharacters;
