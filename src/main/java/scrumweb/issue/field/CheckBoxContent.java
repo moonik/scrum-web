@@ -8,6 +8,7 @@ import scrumweb.project.field.CheckBox;
 import scrumweb.project.field.ProjectField;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class CheckBoxContent extends FieldContent{
 
-    @OneToMany
+    @ManyToMany
     private Set<CheckBox> checkBoxes;
 
     public CheckBoxContent(ProjectField projectField, Set<CheckBox> checkBoxes) {

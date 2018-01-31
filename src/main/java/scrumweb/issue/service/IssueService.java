@@ -75,7 +75,6 @@ public class IssueService {
         Set<ProjectField> projectFields = getCheckBoxes(projectFieldsDto);
         projectFields.addAll(getRadioButtons(projectFieldsDto));
         projectFields.addAll(getInputFields(projectFieldsDto));
-        projectFields.addAll(getCheckBoxes(projectFieldsDto));
         saveProjectFields(projectFields, issueType);
     }
 
