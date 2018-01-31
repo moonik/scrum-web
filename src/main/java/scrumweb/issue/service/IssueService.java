@@ -10,12 +10,18 @@ import scrumweb.dto.CheckBoxContainerDto;
 import scrumweb.dto.FieldsDto;
 import scrumweb.dto.InputFieldDto;
 import scrumweb.dto.IssueDetailsDto;
-import scrumweb.dto.ProjectFieldDto;
+import scrumweb.dto.ListElementsContainerDto;
 import scrumweb.dto.RadioButtonContainerDto;
+import scrumweb.dto.TextAreaDto;
 import scrumweb.dto.UserProfileDto;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
+import scrumweb.issue.field.CheckBoxContent;
 import scrumweb.issue.field.FieldContent;
+import scrumweb.issue.field.InputFieldContent;
+import scrumweb.issue.field.ListContent;
+import scrumweb.issue.field.RadioButtonContent;
+import scrumweb.issue.field.TextAreaContent;
 import scrumweb.issue.repository.FieldContentRepository;
 import scrumweb.issue.repository.IssueRepository;
 import scrumweb.issue.repository.IssueTypeRepository;
@@ -47,9 +53,7 @@ public class IssueService {
     public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Long projectId) {
         final UserAccount reporter = securityContextService.getCurrentUserAccount();
         final Project project = projectRepository.getOne(projectId);
-        FieldsDto fieldsDtos = issueDetailsDto.getFields();
-        Set<FieldContent> fieldContents = getInputFieldsContent(fieldsDtos.getInputFieldDtos());
-        fieldContents.addAll(getCheckBoxContent(fieldsDtos.getCheckBoxContainerDtos()));
+        Set<FieldContent> fieldContents = collectFieldContents(issueDetailsDto.getFields());
         IssueType issueType = issueTypeRepository.findByName(issueDetailsDto.getIssueType());
         Set<Issue> projectIssues = project.getIssues();
         Set<UserAccount> assignees = new HashSet<>();
@@ -70,8 +74,8 @@ public class IssueService {
         final Issue issue = issueRepository.getOne(id);
         Set<UserProfileDto> assignees = issue.getAssignees().stream().map(assignee -> userProfileAsm.makeUserProfileDto(assignee, assignee.getUserProfile())).collect(Collectors.toSet());
         UserProfileDto reporter = userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
-        FieldsDto projectFieldsDto = issue.getFieldContents().stream().map(field -> fieldAsm.createProjectFieldDto(field)).collect(Collectors.toSet());
-        return issueAsm.createIssueDetailsDto(issue, assignees, reporter, projectFieldsDto);
+        FieldsDto fieldsDto = collectFields(issue.getFieldContents());
+        return issueAsm.createIssueDetailsDto(issue, assignees, reporter, fieldsDto);
     }
 
     public void createFields(FieldsDto fieldsDto, String issueType) {
@@ -79,6 +83,24 @@ public class IssueService {
         projectFields.addAll(getRadioButtons(fieldsDto.getRadioButtonContainerDtos()));
         projectFields.addAll(getInputFields(fieldsDto.getInputFieldDtos()));
         saveProjectFields(projectFields, issueType);
+    }
+
+    private FieldsDto collectFields(Set<FieldContent> fieldsContent) {
+        Set<InputFieldDto> inputFieldDtos = fieldsContent.stream().filter(f -> f instanceof InputFieldContent).map(f -> fieldAsm.createInputFieldDtoConent(((InputFieldContent) f))).collect(Collectors.toSet());
+        Set<TextAreaDto> textAreaDtos = fieldsContent.stream().filter(f -> f instanceof TextAreaContent).map(f -> fieldAsm.createTextAreaDtoContent(((TextAreaContent) f))).collect(Collectors.toSet());
+        Set<CheckBoxContainerDto> checkBoxContainerDtos = fieldsContent.stream().filter(f -> f instanceof CheckBoxContent).map(f -> fieldAsm.createCheckBoxContainerDtoContent(((CheckBoxContent) f))).collect(Collectors.toSet());
+        Set<RadioButtonContainerDto> radioButtonDtos = fieldsContent.stream().filter(f -> f instanceof RadioButtonContent).map(f -> fieldAsm.createRadioButtonContainerDtoContent(((RadioButtonContent) f))).collect(Collectors.toSet());
+        Set<ListElementsContainerDto> listElementsContainerDtos = fieldsContent.stream().filter(f -> f instanceof ListContent).map(f -> fieldAsm.createListElementsContainerDtoContent(((ListContent) f))).collect(Collectors.toSet());
+        return new FieldsDto(inputFieldDtos, checkBoxContainerDtos, listElementsContainerDtos, radioButtonDtos, textAreaDtos);
+    }
+
+    private Set<FieldContent> collectFieldContents(FieldsDto fieldsDto) {
+        Set<FieldContent> fieldContents = fieldsDto.getInputFieldDtos().stream().map(f -> fieldAsm.createFieldContentInputField(f, projectFieldRepository.getOne(f.getId()))).collect(Collectors.toSet());
+        fieldContents.addAll(fieldsDto.getCheckBoxContainerDtos().stream().map(f -> fieldAsm.createCheckBoxContent(projectFieldRepository.getOne(f.getId()),f)).collect(Collectors.toSet()));
+        fieldContents.addAll(fieldsDto.getRadioButtonContainerDtos().stream().map(f -> fieldAsm.createRadioButtonContent(projectFieldRepository.getOne(f.getId()), f)).collect(Collectors.toSet()));
+        fieldContents.addAll(fieldsDto.getTextAreaDtos().stream().map(f -> fieldAsm.createTextAreaContent(projectFieldRepository.getOne(f.getId()), f)).collect(Collectors.toSet()));
+        fieldContents.addAll(fieldsDto.getListElementsContainerDtos().stream().map(f -> fieldAsm.createListContent(projectFieldRepository.getOne(f.getId()), f)).collect(Collectors.toSet()));
+        return fieldContents;
     }
 
     private void saveProjectFields(Set<ProjectField> projectFields, String issueTyp) {
@@ -116,12 +138,6 @@ public class IssueService {
     private Set<UserAccount> getAssignees(Set<UserProfileDto> userProfileDtos) {
         return userProfileDtos.stream()
                 .map(u -> userAccountRepository.findByUsername(u.getUsername()))
-                .collect(Collectors.toSet());
-    }
-
-    private Set<FieldContent> getInputFieldsContent(Set<InputFieldDto> inputFieldDtos) {
-        return inputFieldDtos.stream()
-                .map(field -> fieldAsm.createFieldContentInputField(field, projectFieldRepository.getOne(field.getId())))
                 .collect(Collectors.toSet());
     }
 }

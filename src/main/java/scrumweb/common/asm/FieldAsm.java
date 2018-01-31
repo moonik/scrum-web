@@ -34,6 +34,7 @@ import scrumweb.project.repository.RadioButtonRepository;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -57,24 +58,23 @@ public class FieldAsm {
         return new ListElementsContainer(FieldType.getFieldType(listElementsContainerDto.getFieldType()), listElementsContainerDto.getFieldName(), listElementsContainerDto.getIsRequired(), listElements);
     }
 
-    public ProjectFieldDto createProjectFieldDto(FieldContent fieldContent) {
-        ProjectField projectField = fieldContent.getProjectField();
-        if (fieldContent instanceof InputFieldContent) {
-            return createInputFieldDto(((InputFieldContent) fieldContent));
-        } else if (fieldContent instanceof CheckBoxContent) {
-            return new CheckBoxContainerDto(
-                    projectField.getId(),
-                    projectField.getFieldType().toString(),
-                    projectField.getName(),
-                    projectField.getIsRequired(),
-                    createCheckBoxDto(((CheckBoxContent) fieldContent).getCheckBoxes(), true)
-            );
-        }
-    }
-
     public FieldContent createCheckBoxContent(ProjectField projectField, CheckBoxContainerDto checkBoxContainerDto) {
         Set<CheckBox> checkBoxes = checkBoxContainerDto.getCheckBoxes().stream().map(checkBox -> checkBoxRepository.getOne(checkBox.getId())).collect(Collectors.toSet());
         return new CheckBoxContent(projectField, checkBoxes);
+    }
+
+    public FieldContent createRadioButtonContent(ProjectField projectField, RadioButtonContainerDto radioButtonContainer) {
+        List<RadioButton> radioButtons = radioButtonContainer.getRadioButtons().stream().map(radioButton -> radioButtonRepository.getOne(radioButton.getId())).collect(Collectors.toList());
+        return new RadioButtonContent(projectField, radioButtons.get(0));
+    }
+
+    public FieldContent createTextAreaContent(ProjectField projectField, TextAreaDto textAreaDto) {
+        return new TextAreaContent(projectField, textAreaDto.getContent());
+    }
+
+    public FieldContent createListContent(ProjectField projectField, ListElementsContainerDto listElementsContainerDto) {
+        Set<ListElement> listElements = listElementsContainerDto.getListElements().stream().map(this::createListlement).collect(Collectors.toSet());
+        return new ListContent(projectField, listElements);
     }
 
     public FieldContent createFieldContentInputField(InputFieldDto inputFieldDto, ProjectField projectField) {
@@ -107,7 +107,7 @@ public class FieldAsm {
         );
     }
 
-    private InputFieldDto createInputFieldDto(InputFieldContent inputFieldContent) {
+    public InputFieldDto createInputFieldDtoConent(InputFieldContent inputFieldContent) {
         ProjectField projectField = inputFieldContent.getProjectField();
         return new InputFieldDto(
                 projectField.getId(),
@@ -120,22 +120,20 @@ public class FieldAsm {
         );
     }
 
-    public Set<CheckBoxDto> createCheckBoxDto(Set<CheckBox> checkBoxes, Boolean isSelected) {
+    private Set<CheckBoxDto> createCheckBoxDto(Set<CheckBox> checkBoxes, Boolean isSelected) {
         return checkBoxes.stream()
                 .map(checkBox -> new CheckBoxDto(checkBox.getId(), isSelected, checkBox.getValue()))
                 .collect(Collectors.toSet());
     }
 
-    public Set<ListElementDto> createListElementDto(Set<ListElement> listElements, Boolean isSelected) {
+    private Set<ListElementDto> createListElementDto(Set<ListElement> listElements, Boolean isSelected) {
         return listElements.stream()
                 .map(element -> new ListElementDto(element.getId(), isSelected, element.getValue()))
                 .collect(Collectors.toSet());
     }
 
-    private Set<RadioButtonDto> createRadioButtonDto(Set<RadioButton> radioButtons, Boolean isSelected) {
-        return radioButtons.stream()
-                .map(radioButton -> new RadioButtonDto(radioButton.getId(), radioButton.getValue(), isSelected))
-                .collect(Collectors.toSet());
+    private RadioButtonDto createRadioButtonDto(RadioButton radioButton, Boolean isSelected) {
+        return new RadioButtonDto(radioButton.getId(), radioButton.getValue(), isSelected);
     }
 
     private RadioButton createRadioButton(RadioButtonDto radioButtonDto) {
@@ -150,7 +148,7 @@ public class FieldAsm {
         return new ListElement(listElementDto.getValue());
     }
 
-    private TextAreaDto createTextAreaDto(TextAreaContent textAreaContent) {
+    public TextAreaDto createTextAreaDtoContent(TextAreaContent textAreaContent) {
         ProjectField projectField = textAreaContent.getProjectField();
         return new TextAreaDto(
                 projectField.getId(),
@@ -162,21 +160,36 @@ public class FieldAsm {
                 ((TextArea) projectField).getMinCharacters());
     }
 
-    public RadioButtonContainerDto createCheckBoxContainerDto(RadioButtonContainer radioButtonContainer, Set<RadioButton> radioButtons) {
+    public RadioButtonContainerDto createRadioButtonContainerDtoContent(RadioButtonContent radioButtonContent) {
+        RadioButtonDto radioButtonDto = createRadioButtonDto(radioButtonContent.getRadioButton(), true);
+        Set<RadioButtonDto> radioButtonDtos = new HashSet<>(Arrays.asList(radioButtonDto));
         return new RadioButtonContainerDto(
-                radioButtonContainer.getId(),
-                radioButtonContainer.getFieldType().toString(),
-                radioButtonContainer.getName(),
-                radioButtonContainer.getIsRequired(),
-                createRadioButtonDto(radioButtons, true));
+                radioButtonContent.getId(),
+                radioButtonContent.getProjectField().getFieldType().toString(),
+                radioButtonContent.getProjectField().getName(),
+                radioButtonContent.getProjectField().getIsRequired(),
+                radioButtonDtos
+        );
     }
 
-    public ListElementsContainerDto createListElementsContainerDto(ListElementsContainer listElementsContainer) {
+    public CheckBoxContainerDto createCheckBoxContainerDtoContent(CheckBoxContent checkBoxContent) {
+        ProjectField projectField = checkBoxContent.getProjectField();
+        return new CheckBoxContainerDto(
+                checkBoxContent.getId(),
+                projectField.getFieldType().toString(),
+                projectField.getName(),
+                projectField.getIsRequired(),
+                createCheckBoxDto(checkBoxContent.getCheckBoxes(), true)
+        );
+    }
+
+    public ListElementsContainerDto createListElementsContainerDtoContent(ListContent listContent) {
+        ProjectField projectField = listContent.getProjectField();
         return new ListElementsContainerDto(
-                listElementsContainer.getId(),
-                listElementsContainer.getFieldType().toString(),
-                listElementsContainer.getName(),
-                listElementsContainer.getIsRequired(),
-                createListElementDto(listElementsContainer.getElements(), true));
+                projectField.getId(),
+                projectField.getFieldType().toString(),
+                projectField.getName(),
+                projectField.getIsRequired(),
+                createListElementDto(listContent.getListElements(), true));
     }
 }
