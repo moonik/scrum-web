@@ -1,6 +1,7 @@
 package scrumweb.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 import java.util.Set;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class IssueDetailsDto {
@@ -22,19 +24,5 @@ public class IssueDetailsDto {
     private String remainingTime;
     private String priority;
     private String issueType;
-    private Set<ProjectFieldDto> fields;
-
-    public IssueDetailsDto(Long id, String key, String summary, String description, Set<UserProfileDto> assignees, UserProfileDto reporter, String estimateTime, String remainingTime, String priority, String issueType, Set<ProjectFieldDto> fields) {
-        this.id = id;
-        this.key = key;
-        this.summary = summary;
-        this.description = description;
-        this.assignees = assignees;
-        this.reporter = reporter;
-        this.estimateTime = estimateTime;
-        this.remainingTime = remainingTime;
-        this.priority = priority;
-        this.issueType = issueType;
-        this.fields = fields;
-    }
+    private FieldsDto fields;
 }

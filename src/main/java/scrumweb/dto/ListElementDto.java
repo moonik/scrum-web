@@ -8,8 +8,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-public class RadioButtonDto {
+public class ListElementDto {
     private Long id;
-    private String value;
     private Boolean isSelected;
+    private String value;
 }

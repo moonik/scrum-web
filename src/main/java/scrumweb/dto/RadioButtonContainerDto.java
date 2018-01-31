@@ -2,18 +2,17 @@ package scrumweb.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
 
 @NoArgsConstructor
 @Getter @Setter
-public class RadioButtonContainerDto {
-    private Long id;
-    private Set<RadioButtonDto> radioButtonDtos;
+public class RadioButtonContainerDto extends ProjectFieldDto {
+    private Set<RadioButtonDto> radioButtons;
 
-    public RadioButtonContainerDto(Set<RadioButtonDto> radioButtonDtos) {
-        this.radioButtonDtos = radioButtonDtos;
+    public RadioButtonContainerDto(Long id, String fieldType, String fieldName, Boolean isRequired, Set<RadioButtonDto> radioButtons) {
+        super(id, fieldType, fieldName, isRequired);
+        this.radioButtons = radioButtons;
     }
 }

@@ -1,11 +1,13 @@
 package scrumweb.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProjectFieldDto {
@@ -13,19 +15,4 @@ public class ProjectFieldDto {
     private String fieldType;
     private String fieldName;
     private Boolean isRequired;
-    private CheckBoxContainerDto checkBoxContainer;
-    private RadioButtonContainerDto radioButtonContainerDto;
-    private InputFieldDto inputField;
-    private String projectName;
-    private String issueType;
-
-    public ProjectFieldDto(Long id, String fieldType, String fieldName, Boolean isRequired, CheckBoxContainerDto checkBoxContainer, RadioButtonContainerDto radioButtonContainerDto, InputFieldDto inputField) {
-        this.id = id;
-        this.fieldType = fieldType;
-        this.fieldName = fieldName;
-        this.isRequired = isRequired;
-        this.checkBoxContainer = checkBoxContainer;
-        this.radioButtonContainerDto = radioButtonContainerDto;
-        this.inputField = inputField;
-    }
 }

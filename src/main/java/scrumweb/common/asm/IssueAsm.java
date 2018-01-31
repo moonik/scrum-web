@@ -1,6 +1,7 @@
 package scrumweb.common.asm;
 
 import org.springframework.stereotype.Component;
+import scrumweb.dto.FieldsDto;
 import scrumweb.dto.IssueDetailsDto;
 import scrumweb.dto.ProjectFieldDto;
 import scrumweb.dto.UserProfileDto;
@@ -23,7 +24,7 @@ public class IssueAsm {
                 issueType, fieldContents);
     }
 
-    public IssueDetailsDto createIssueDetailsDto(Issue issue, Set<UserProfileDto> assignees, UserProfileDto reporter, Set<ProjectFieldDto> fields) {
+    public IssueDetailsDto createIssueDetailsDto(Issue issue, Set<UserProfileDto> assignees, UserProfileDto reporter, FieldsDto fields) {
         return new IssueDetailsDto(
                 issue.getId(), "",
                 issue.getSummary(),
