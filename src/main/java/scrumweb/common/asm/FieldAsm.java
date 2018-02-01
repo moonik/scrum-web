@@ -73,7 +73,7 @@ public class FieldAsm {
     }
 
     public FieldContent createListContent(ProjectField projectField, ListElementsContainerDto listElementsContainerDto) {
-        Set<ListElement> listElements = listElementsContainerDto.getListElements().stream().map(this::createListlement).collect(Collectors.toSet());
+        Set<ListElement> listElements = listElementsContainerDto.getListElements().stream().map(l -> listElementRepository.getOne(l.getId())).collect(Collectors.toSet());
         return new ListContent(projectField, listElements);
     }
 
