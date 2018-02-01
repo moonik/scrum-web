@@ -35,7 +35,7 @@ export class AuthenticationService {
   }
 
   save(userDto: UserDto): Observable<number>{
-    return this.http.post('http://localhost:8080/save',JSON.stringify(userDto),{headers: this.headers})
+    return this.http.post('/api/scrum-web/user-account/save',JSON.stringify(userDto),{headers: this.headers})
       .map(
         response =>  {
           // console.info('test');
