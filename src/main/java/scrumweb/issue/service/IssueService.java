@@ -82,6 +82,8 @@ public class IssueService {
         Set<ProjectField> projectFields = getCheckBoxes(fieldsDto.getCheckBoxContainerDtos());
         projectFields.addAll(getRadioButtons(fieldsDto.getRadioButtonContainerDtos()));
         projectFields.addAll(getInputFields(fieldsDto.getInputFieldDtos()));
+        projectFields.addAll(getListContainer(fieldsDto.getListElementsContainerDtos()));
+        projectFields.addAll(getTextArea(fieldsDto.getTextAreaDtos()));
         saveProjectFields(projectFields, issueType);
     }
 
@@ -123,15 +125,21 @@ public class IssueService {
                 .collect(Collectors.toSet());
     }
 
-    private Set<FieldContent> getCheckBoxContent(Set<CheckBoxContainerDto> checkBoxContainerDtos) {
-        return checkBoxContainerDtos.stream()
-                .map(field -> fieldAsm.createCheckBoxContent(projectFieldRepository.getOne(field.getId()), field))
-                .collect(Collectors.toSet());
-    }
-
     private Set<ProjectField> getRadioButtons(Set<RadioButtonContainerDto> radioButtonContainerDtos) {
         return radioButtonContainerDtos.stream()
                 .map(field -> fieldAsm.createRadioButtonContainer(field))
+                .collect(Collectors.toSet());
+    }
+
+    private Set<ProjectField> getTextArea(Set<TextAreaDto> textAreaDtos) {
+        return textAreaDtos.stream()
+                .map(t -> fieldAsm.createTextArea(t))
+                .collect(Collectors.toSet());
+    }
+
+    private Set<ProjectField> getListContainer(Set<ListElementsContainerDto> listElementsContainerDtos) {
+        return listElementsContainerDtos.stream()
+                .map(l -> fieldAsm.createListContainer(l))
                 .collect(Collectors.toSet());
     }
 
