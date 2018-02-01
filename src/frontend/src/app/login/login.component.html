@@ -5,8 +5,8 @@
     <form [formGroup] = "loginForm" (ngSubmit)="login()">
       <div class="form-group">
         <div *ngIf="error != ''">
-        <small class="form-text error">{{error}}</small>
-        <br/>
+          <small class="form-text error">{{error}}</small>
+          <br/>
         </div>
         <label for="inputLogin">Login</label>
         <input type="text" class="form-control w-50" id="inputLogin" aria-describedby="loginHelp" placeholder="Enter login" [(ngModel)]="username" formControlName="login">
@@ -17,11 +17,10 @@
         <input type="password" class="form-control w-50" id="inputPassword" aria-describedby="passwordHelp" [(ngModel)] = "password" formControlName="password">
         <small id="passwordHelp" class="form-text text-muted">Don't remember your password? too baaaad...</small>
       </div>
-      Don't have an account? Click
+     <h6>Don't have an account? Click
       <a href="register">here</a>
       to register.
-      <br/>
-      <br/>
+     </h6>
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
   </div>

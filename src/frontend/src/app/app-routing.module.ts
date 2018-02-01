@@ -5,7 +5,6 @@ import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {AuthGuard} from './security/auth.service';
 import {HomeComponent} from './home/home.component';
-// import {AuthGuard} from '../security/auth.service';
 
 const routes: Routes = [
   {
@@ -21,11 +20,11 @@ const routes: Routes = [
     path: 'register',
     component: RegistrationComponent
   },
-    {
-        path: '',
-        redirectTo: '/',
-        pathMatch: 'full'
-    }
+  {
+    path: '',
+    redirectTo: '/',
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({

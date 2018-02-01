@@ -4,11 +4,11 @@ import {HttpModule} from "@angular/http";
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AppRoutingModule} from './app-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
 import { RegistrationComponent } from './registration/registration.component';
-import {AuthGuard} from './security/auth.service';
-import {AuthenticationService} from './security/authentication.service';
+import { AuthGuard } from './security/auth.service';
+import { AuthenticationService } from './security/authentication.service';
 import { HomeComponent } from './home/home.component';
 
 

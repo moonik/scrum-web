@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
             }
           });
     }else{
-      this.error = 'Login or password incorrect';
+      this.error = 'Username or password incorrect';
     }
   }
 
