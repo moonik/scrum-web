@@ -2,7 +2,6 @@ package scrumweb.issue.field;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import scrumweb.project.field.ProjectField;
 

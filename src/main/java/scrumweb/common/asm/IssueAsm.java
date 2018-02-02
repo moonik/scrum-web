@@ -3,14 +3,11 @@ package scrumweb.common.asm;
 import org.springframework.stereotype.Component;
 import scrumweb.dto.FieldsDto;
 import scrumweb.dto.IssueDetailsDto;
-import scrumweb.dto.ProjectFieldDto;
 import scrumweb.dto.UserProfileDto;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.field.FieldContent;
-import scrumweb.project.domain.Project;
 import scrumweb.user.account.domain.UserAccount;
-import scrumweb.user.profile.domain.UserProfile;
 
 import java.util.Set;
 

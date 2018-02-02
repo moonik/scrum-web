@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import scrumweb.dto.FieldsDto;
 import scrumweb.dto.IssueDetailsDto;
-import scrumweb.dto.ProjectFieldDto;
 import scrumweb.issue.service.IssueService;
-
-import java.util.Set;
 
 import static scrumweb.common.ApplicationConstants.API_URL;
 

@@ -2,7 +2,6 @@ package scrumweb.issue.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import scrumweb.issue.field.FieldContent;
 import scrumweb.user.account.domain.UserAccount;
