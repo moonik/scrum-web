@@ -9,7 +9,7 @@ import scrumweb.projectfield.domain.ProjectField.FieldType;
 public class InputFieldAsm implements ProjectFieldAsm<InputField, InputFieldDto> {
 
     @Override
-    public InputField convertToEntityObject(InputFieldDto projectFieldDto) {
+    public InputField createEntityObject(InputFieldDto projectFieldDto) {
         return new InputField(
                 FieldType.getFieldType(projectFieldDto.getFieldType()),
                 projectFieldDto.getFieldName(),
@@ -20,7 +20,7 @@ public class InputFieldAsm implements ProjectFieldAsm<InputField, InputFieldDto>
     }
 
     @Override
-    public InputFieldDto convertToDtoObject(InputField projectField) {
+    public InputFieldDto createDtoObject(InputField projectField) {
         return new InputFieldDto(
                 projectField.getId(),
                 projectField.getFieldType().toString(),

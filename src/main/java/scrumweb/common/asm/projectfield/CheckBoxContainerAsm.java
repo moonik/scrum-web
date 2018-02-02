@@ -21,14 +21,14 @@ public class CheckBoxContainerAsm implements ProjectFieldAsm<CheckBoxContainer, 
     private FieldElementsAsm<CheckBox, CheckBoxDto> fieldElementsAsm;
 
     @Override
-    public CheckBoxContainer convertToEntityObject(CheckBoxContainerDto projectFieldDto) {
+    public CheckBoxContainer createEntityObject(CheckBoxContainerDto projectFieldDto) {
         Set<CheckBox> checkBoxes = projectFieldDto.getCheckBoxes().stream().map(checkBoxDto -> fieldElementsAsm.convertToEntityObject(checkBoxDto)).collect(Collectors.toSet());
         checkBoxRepository.save(checkBoxes);
         return new CheckBoxContainer(FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), checkBoxes);
     }
 
     @Override
-    public CheckBoxContainerDto convertToDtoObject(CheckBoxContainer projectField) {
+    public CheckBoxContainerDto createDtoObject(CheckBoxContainer projectField) {
         Set<CheckBoxDto> checkBoxes = projectField.getCheckBoxes().stream().map(checkBox -> fieldElementsAsm.convertToDtoObject(checkBox)).collect(Collectors.toSet());
         return new CheckBoxContainerDto(
                 projectField.getId(),

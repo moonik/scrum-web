@@ -21,12 +21,12 @@ public class ListContentAsm implements FieldContentAsm<ListContent, ListElements
     private ListElementRepository listElementRepository;
 
     @Override
-    public ListContent convertToEntityObject(ListElementsContainer projectField, ListElementsContainerContentDto fieldContentDto) {
+    public ListContent createEntityObject(ListElementsContainer projectField, ListElementsContainerContentDto fieldContentDto) {
         return new ListContent(projectField, listElementRepository.getListElements(extractIds(fieldContentDto.getListElements())));
     }
 
     @Override
-    public ListElementsContainerContentDto convertToDtoObject(ListContent fieldContent) {
+    public ListElementsContainerContentDto createDtoObject(ListContent fieldContent) {
         Set<ListElementDto> listElementsDto = fieldContent.getListElements().stream().map(listElement -> fieldElementsAsm.convertToDtoObject(listElement)).collect(Collectors.toSet());
         return new ListElementsContainerContentDto(fieldContent.getProjectField().getId(), listElementsDto);
     }

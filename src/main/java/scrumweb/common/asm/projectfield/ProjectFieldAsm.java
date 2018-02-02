@@ -6,6 +6,6 @@ import scrumweb.projectfield.domain.ProjectField;
 
 public interface ProjectFieldAsm<T extends ProjectField, Q extends ProjectFieldDto>{
 
-    T convertToEntityObject(Q projectFieldDto);
-    Q convertToDtoObject(T projectField);
+    T createEntityObject(Q projectFieldDto);
+    Q createDtoObject(T projectField);
 }

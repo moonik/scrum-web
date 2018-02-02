@@ -9,12 +9,12 @@ import scrumweb.projectfield.domain.TextArea;
 public class TextAreaContentAsm implements FieldContentAsm<TextAreaContent, TextAreaContentDto, TextArea> {
 
     @Override
-    public TextAreaContent convertToEntityObject(TextArea projectField, TextAreaContentDto fieldContentDto) {
+    public TextAreaContent createEntityObject(TextArea projectField, TextAreaContentDto fieldContentDto) {
         return new TextAreaContent(projectField, fieldContentDto.getContent());
     }
 
     @Override
-    public TextAreaContentDto convertToDtoObject(TextAreaContent fieldContent) {
+    public TextAreaContentDto createDtoObject(TextAreaContent fieldContent) {
         return new TextAreaContentDto(fieldContent.getProjectField().getId(), fieldContent.getContent());
     }
 }

@@ -18,12 +18,12 @@ public class RadioButtonContentAsm implements FieldContentAsm<RadioButtonContent
     private RadioButtonRepository radioButtonRepository;
 
     @Override
-    public RadioButtonContent convertToEntityObject(RadioButtonContainer projectField, RadioButtonContainerContentDto fieldContentDto) {
+    public RadioButtonContent createEntityObject(RadioButtonContainer projectField, RadioButtonContainerContentDto fieldContentDto) {
         return new RadioButtonContent(projectField, radioButtonRepository.getOne(fieldContentDto.getRadioButton().getId()));
     }
 
     @Override
-    public RadioButtonContainerContentDto convertToDtoObject(RadioButtonContent fieldContent) {
+    public RadioButtonContainerContentDto createDtoObject(RadioButtonContent fieldContent) {
         return new RadioButtonContainerContentDto(fieldContent.getProjectField().getId(), fieldElementsAsm.convertToDtoObject(fieldContent.getRadioButton()));
     }
 }

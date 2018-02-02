@@ -1,9 +1,9 @@
 package scrumweb.projectfield.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import scrumweb.common.asm.projectfield.ProjectFieldAsm;
+import scrumweb.common.asm.projectfield.ProjectFieldConverter;
 import scrumweb.dto.projectfield.ProjectFieldDto;
 import scrumweb.exception.IssueTypeDoesNotExists;
 import scrumweb.issue.domain.IssueType;
@@ -15,18 +15,18 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public abstract class ProjectFieldService implements ProjectFieldAsm<ProjectField, ProjectFieldDto> {
+@AllArgsConstructor
+public class ProjectFieldService {
 
-    @Autowired
+    private ProjectFieldConverter projectFieldAsm;
     private ProjectFieldRepository projectFieldRepository;
-    @Autowired
     private IssueTypeRepository issueTypeRepository;
 
     public void createFields(Set<ProjectFieldDto> projectFieldsDto, String issueType) {
         final IssueType issueTypeFromDb = issueTypeRepository.findByName(issueType.toUpperCase());
         if (issueTypeFromDb != null) {
             Set<ProjectField> issueTypeFields = issueTypeFromDb.getFields();
-            Set<ProjectField> fieldsToBeSaved = projectFieldsDto.stream().map(this::convertToEntityObject).collect(Collectors.toSet());
+            Set<ProjectField> fieldsToBeSaved = projectFieldsDto.stream().map(field -> projectFieldAsm.createEntityObject(field)).collect(Collectors.toSet());
             projectFieldRepository.save(fieldsToBeSaved);
             issueTypeFields.addAll(fieldsToBeSaved);
             issueTypeRepository.save(issueTypeFromDb);
@@ -37,7 +37,7 @@ public abstract class ProjectFieldService implements ProjectFieldAsm<ProjectFiel
     public Set<ProjectFieldDto> getIssueFields(String issueType) {
         final IssueType issueTypeFromDb = issueTypeRepository.findByName(issueType.toUpperCase());
         return issueTypeFromDb.getFields().stream()
-                .map(this::convertToDtoObject)
+                .map(field -> projectFieldAsm.createDtoObject(field))
                 .collect(Collectors.toSet());
     }
 }

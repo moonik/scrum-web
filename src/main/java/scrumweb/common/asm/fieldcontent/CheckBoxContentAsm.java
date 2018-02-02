@@ -9,6 +9,7 @@ import scrumweb.issue.fieldcontent.CheckBoxContent;
 import scrumweb.projectfield.domain.CheckBox;
 import scrumweb.projectfield.domain.CheckBoxContainer;
 import scrumweb.projectfield.repository.CheckBoxRepository;
+import scrumweb.projectfield.repository.ProjectFieldRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,12 +22,12 @@ public class CheckBoxContentAsm implements FieldContentAsm<CheckBoxContent, Chec
     private CheckBoxRepository checkBoxRepository;
 
     @Override
-    public CheckBoxContent convertToEntityObject(CheckBoxContainer projectField, CheckBoxContainerContentDto fieldContentDto) {
+    public CheckBoxContent createEntityObject(CheckBoxContainer projectField, CheckBoxContainerContentDto fieldContentDto) {
         return new CheckBoxContent(projectField, checkBoxRepository.getCheckBoxes(extractIds(fieldContentDto.getCheckBoxes())));
     }
 
     @Override
-    public CheckBoxContainerContentDto convertToDtoObject(CheckBoxContent fieldContent) {
+    public CheckBoxContainerContentDto createDtoObject(CheckBoxContent fieldContent) {
         Set<CheckBoxDto> checkBoxes = fieldContent.getCheckBoxes().stream().map(checkBox -> fieldElementsAsm.convertToDtoObject(checkBox)).collect(Collectors.toSet());
         return new CheckBoxContainerContentDto(fieldContent.getProjectField().getId(), checkBoxes);
     }

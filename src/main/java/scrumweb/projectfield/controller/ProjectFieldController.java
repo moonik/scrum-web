@@ -15,16 +15,19 @@ import java.util.Set;
 import static scrumweb.common.ApplicationConstants.API_URL;
 
 @RestController
-@RequestMapping(API_URL + "project-fieldcontent")
-public abstract class ProjectFieldController extends ProjectFieldService {
+@RequestMapping(API_URL + "project-field")
+@AllArgsConstructor
+public class ProjectFieldController {
+
+    private ProjectFieldService projectFieldService;
 
     @PostMapping("/{issuetype}")
     public void createProjectField(@PathVariable String issuetype, @RequestBody Set<ProjectFieldDto> projectFieldsDto) {
-        createFields(projectFieldsDto, issuetype);
+        projectFieldService.createFields(projectFieldsDto, issuetype);
     }
 
     @GetMapping("/{issuetype}")
     public Set<ProjectFieldDto> getIssueFields(@PathVariable String issuetype) {
-        return getIssueFields(issuetype);
+        return projectFieldService.getIssueFields(issuetype);
     }
 }
