@@ -1,4 +1,4 @@
-package scrumweb.issue.field;
+package scrumweb.issue.fieldcontent;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

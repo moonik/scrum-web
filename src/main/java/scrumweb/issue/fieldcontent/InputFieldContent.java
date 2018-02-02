@@ -1,4 +1,4 @@
-package scrumweb.issue.field;
+package scrumweb.issue.fieldcontent;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,10 +10,11 @@ import javax.persistence.Entity;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-public class TextAreaContent extends FieldContent {
+public class InputFieldContent extends FieldContent {
+
     private String content;
 
-    public TextAreaContent(ProjectField projectField, String content) {
+    public InputFieldContent(ProjectField projectField, String content) {
         super(projectField);
         this.content = content;
     }

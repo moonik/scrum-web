@@ -3,7 +3,7 @@ package scrumweb.issue.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import scrumweb.issue.field.FieldContent;
+import scrumweb.issue.fieldcontent.FieldContent;
 import scrumweb.user.account.domain.UserAccount;
 
 import javax.persistence.Entity;

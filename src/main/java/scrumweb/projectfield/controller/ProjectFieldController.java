@@ -15,7 +15,7 @@ import java.util.Set;
 import static scrumweb.common.ApplicationConstants.API_URL;
 
 @RestController
-@RequestMapping(API_URL + "project-field")
+@RequestMapping(API_URL + "project-fieldcontent")
 @AllArgsConstructor
 public class ProjectFieldController {
 

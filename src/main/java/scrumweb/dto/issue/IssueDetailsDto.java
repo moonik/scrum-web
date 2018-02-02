@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import scrumweb.dto.fieldcontent.FieldContentDto;
 import scrumweb.dto.projectfield.ProjectFieldDto;
 import scrumweb.dto.user.UserProfileDto;
 
@@ -26,5 +27,5 @@ public class IssueDetailsDto {
     private String remainingTime;
     private String priority;
     private String issueType;
-    private Set<ProjectFieldDto> projectFields;
+    private Set<FieldContentDto> projectFields;
 }

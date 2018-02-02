@@ -10,13 +10,11 @@ import lombok.Setter;
 @Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class InputFieldDto extends ProjectFieldDto {
-    private String content;
     private int maxCharacters;
     private int minCharacters;
 
-    public InputFieldDto(Long id, String fieldType, String fieldName, Boolean isRequired, String content, int maxCharacters, int minCharacters) {
+    public InputFieldDto(Long id, String fieldType, String fieldName, Boolean isRequired, int maxCharacters, int minCharacters) {
         super(id, fieldType, fieldName, isRequired);
-        this.content = content;
         this.maxCharacters = maxCharacters;
         this.minCharacters = minCharacters;
     }
