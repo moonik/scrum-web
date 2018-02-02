@@ -19,11 +19,6 @@ public class IssueController {
 
     private IssueService issueService;
 
-    @PostMapping("/type/{type}")
-    public void createFieldsForType(@PathVariable String type, @RequestBody FieldsDto fieldsDto) {
-        issueService.createFields(fieldsDto, type);
-    }
-
     @PostMapping("/project/{id}")
     public IssueDetailsDto createIssue(@PathVariable Long id, @RequestBody IssueDetailsDto issueDetailsDto) {
         return issueService.create(issueDetailsDto, id);
