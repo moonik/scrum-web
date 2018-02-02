@@ -5,10 +5,10 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <ul class="navbar-nav mr-auto">
-      <a class="nav-item nav-link active" href="home">Home <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="projects">Projects</a>
-      <a class="nav-item nav-link" href="login" *ngIf="!checkLogin()">Login</a>
-      <a class="nav-item nav-link" href="register" *ngIf="!checkLogin()">Register</a>
+      <a class="nav-item nav-link active" (click)="navigate('/home')">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" (click)="navigate('/projects')">Projects</a>
+      <a class="nav-item nav-link" (click)="navigate('/login')" *ngIf="!checkLogin()">Login</a>
+      <a class="nav-item nav-link" (click)="navigate('/register')" *ngIf="!checkLogin()">Register</a>
       <a class="nav-item nav-link" (click)="logout()" *ngIf="checkLogin()">Logout</a>
       </ul>
       <ul class="navbar-nav ml-auto">
