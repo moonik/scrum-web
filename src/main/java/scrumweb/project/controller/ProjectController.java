@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import scrumweb.dto.ProjectDto;
 import scrumweb.dto.ProjectMemberDto;
-import scrumweb.project.ProjectService;
+import scrumweb.project.service.ProjectService;
 
 import static scrumweb.common.ApplicationConstants.API_URL;
 

@@ -1,4 +1,4 @@
-package scrumweb.project;
+package scrumweb.project.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

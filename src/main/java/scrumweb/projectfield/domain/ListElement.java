@@ -1,4 +1,4 @@
-package scrumweb.project.field;
+package scrumweb.projectfield.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

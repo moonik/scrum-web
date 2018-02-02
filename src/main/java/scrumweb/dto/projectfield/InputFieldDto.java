@@ -1,14 +1,12 @@
-package scrumweb.dto;
+package scrumweb.dto.projectfield;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor
 @Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper=false)
@@ -17,8 +15,7 @@ public class InputFieldDto extends ProjectFieldDto {
     private int maxCharacters;
     private int minCharacters;
 
-    public InputFieldDto(Long id, String fieldType, String fieldName, Boolean isRequired, String content, int maxCharacters, int minCharacters) {
-        this.content = content;
+    public InputFieldDto(Long id, String fieldType, String fieldName, Boolean isRequired, int maxCharacters, int minCharacters) {
         this.maxCharacters = maxCharacters;
         this.minCharacters = minCharacters;
         setId(id);

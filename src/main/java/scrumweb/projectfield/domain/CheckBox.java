@@ -1,4 +1,4 @@
-package scrumweb.project.field;
+package scrumweb.projectfield.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,18 +8,21 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 @Entity
-@Getter @Setter
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @NoArgsConstructor
-public class RadioButton {
+@Getter @Setter
+public class CheckBox {
 
     @Id @GeneratedValue
     private Long id;
 
     private String value;
 
-    public RadioButton(String value) {
+    public CheckBox(String value) {
         this.value = value;
     }
 }

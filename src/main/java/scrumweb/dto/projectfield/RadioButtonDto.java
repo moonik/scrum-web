@@ -1,4 +1,4 @@
-package scrumweb.dto;
+package scrumweb.dto.projectfield;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,8 +8,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-public class ListElementDto {
+public class RadioButtonDto {
     private Long id;
-    private Boolean isSelected;
     private String value;
 }

@@ -12,7 +12,6 @@ import scrumweb.common.asm.ProjectAsm
 import scrumweb.exception.ProjectAlreadyExsistsException
 import scrumweb.exception.ProjectNotFoundException
 import scrumweb.project.repository.ProjectRepository
-import scrumweb.project.ProjectService
 import scrumweb.security.JwtTokenUtil
 import scrumweb.security.JwtUserDetailsServiceImpl
 import scrumweb.security.controller.AuthenticationController

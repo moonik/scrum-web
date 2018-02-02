@@ -3,16 +3,15 @@ package scrumweb.issue.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import scrumweb.common.SecurityContextService;
-import scrumweb.common.asm.FieldAsm;
+import scrumweb.common.asm.projectfield.ProjectFieldAsm;
 import scrumweb.common.asm.IssueAsm;
 import scrumweb.common.asm.UserProfileAsm;
-import scrumweb.dto.CheckBoxContainerDto;
-import scrumweb.dto.FieldsDto;
-import scrumweb.dto.InputFieldDto;
+import scrumweb.dto.projectfield.CheckBoxContainerDto;
+import scrumweb.dto.projectfield.InputFieldDto;
 import scrumweb.dto.IssueDetailsDto;
-import scrumweb.dto.ListElementsContainerDto;
-import scrumweb.dto.RadioButtonContainerDto;
-import scrumweb.dto.TextAreaDto;
+import scrumweb.dto.projectfield.ListElementsContainerDto;
+import scrumweb.dto.projectfield.RadioButtonContainerDto;
+import scrumweb.dto.projectfield.TextAreaDto;
 import scrumweb.dto.UserProfileDto;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
@@ -26,8 +25,8 @@ import scrumweb.issue.field.FieldContent;
 import scrumweb.issue.repository.IssueRepository;
 import scrumweb.issue.repository.IssueTypeRepository;
 import scrumweb.project.domain.Project;
-import scrumweb.project.field.ProjectField;
-import scrumweb.project.repository.ProjectFieldRepository;
+import scrumweb.projectfield.domain.ProjectField;
+import scrumweb.projectfield.repository.ProjectFieldRepository;
 import scrumweb.project.repository.ProjectRepository;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
@@ -39,7 +38,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class IssueService {
     private IssueAsm issueAsm;
-    private FieldAsm fieldAsm;
+    private ProjectFieldAsm projectFieldAsm;
     private IssueRepository issueRepository;
     private UserAccountRepository userAccountRepository;
     private SecurityContextService securityContextService;
@@ -88,42 +87,42 @@ public class IssueService {
     protected FieldsDto collectFields(Set<FieldContent> fieldsContent) {
         Set<InputFieldDto> inputFieldDtos = fieldsContent.stream()
                 .filter(f -> f instanceof InputFieldContent)
-                .map(f -> fieldAsm.createInputFieldDtoConent(((InputFieldContent) f)))
+                .map(f -> projectFieldAsm.createInputFieldDtoConent(((InputFieldContent) f)))
                 .collect(Collectors.toSet());
         Set<TextAreaDto> textAreaDtos = fieldsContent.stream()
                 .filter(f -> f instanceof TextAreaContent)
-                .map(f -> fieldAsm.createTextAreaDtoContent(((TextAreaContent) f)))
+                .map(f -> projectFieldAsm.createTextAreaDtoContent(((TextAreaContent) f)))
                 .collect(Collectors.toSet());
         Set<CheckBoxContainerDto> checkBoxContainerDtos = fieldsContent.stream()
                 .filter(f -> f instanceof CheckBoxContent)
-                .map(f -> fieldAsm.createCheckBoxContainerDtoContent(((CheckBoxContent) f)))
+                .map(f -> projectFieldAsm.createCheckBoxContainerDtoContent(((CheckBoxContent) f)))
                 .collect(Collectors.toSet());
         Set<RadioButtonContainerDto> radioButtonDtos = fieldsContent.stream()
                 .filter(f -> f instanceof RadioButtonContent)
-                .map(f -> fieldAsm.createRadioButtonContainerDtoContent(((RadioButtonContent) f)))
+                .map(f -> projectFieldAsm.createRadioButtonContainerDtoContent(((RadioButtonContent) f)))
                 .collect(Collectors.toSet());
         Set<ListElementsContainerDto> listElementsContainerDtos = fieldsContent.stream()
                 .filter(f -> f instanceof ListContent)
-                .map(f -> fieldAsm.createListElementsContainerDtoContent(((ListContent) f)))
+                .map(f -> projectFieldAsm.createListElementsContainerDtoContent(((ListContent) f)))
                 .collect(Collectors.toSet());
         return new FieldsDto(inputFieldDtos, checkBoxContainerDtos, listElementsContainerDtos, radioButtonDtos, textAreaDtos);
     }
 
     protected Set<FieldContent> collectFieldContents(FieldsDto fieldsDto) {
         Set<FieldContent> fieldContents = fieldsDto.getInputFieldDtos().stream()
-                .map(f -> fieldAsm.createFieldContentInputField(f, projectFieldRepository.getOne(f.getId())))
+                .map(f -> projectFieldAsm.createFieldContentInputField(f, projectFieldRepository.getOne(f.getId())))
                 .collect(Collectors.toSet());
         fieldContents.addAll(fieldsDto.getCheckBoxContainerDtos().stream()
-                .map(f -> fieldAsm.createCheckBoxContent(projectFieldRepository.getOne(f.getId()),f))
+                .map(f -> projectFieldAsm.createCheckBoxContent(projectFieldRepository.getOne(f.getId()),f))
                 .collect(Collectors.toSet()));
         fieldContents.addAll(fieldsDto.getRadioButtonContainerDtos().stream()
-                .map(f -> fieldAsm.createRadioButtonContent(projectFieldRepository.getOne(f.getId()), f))
+                .map(f -> projectFieldAsm.createRadioButtonContent(projectFieldRepository.getOne(f.getId()), f))
                 .collect(Collectors.toSet()));
         fieldContents.addAll(fieldsDto.getTextAreaDtos().stream()
-                .map(f -> fieldAsm.createTextAreaContent(projectFieldRepository.getOne(f.getId()), f))
+                .map(f -> projectFieldAsm.createTextAreaContent(projectFieldRepository.getOne(f.getId()), f))
                 .collect(Collectors.toSet()));
         fieldContents.addAll(fieldsDto.getListElementsContainerDtos().stream()
-                .map(f -> fieldAsm.createListContent(projectFieldRepository.getOne(f.getId()), f))
+                .map(f -> projectFieldAsm.createListContent(projectFieldRepository.getOne(f.getId()), f))
                 .collect(Collectors.toSet()));
         return fieldContents;
     }
@@ -138,31 +137,31 @@ public class IssueService {
 
     protected Set<ProjectField> getInputFields(Set<InputFieldDto> inputFieldDtos) {
         return inputFieldDtos.stream()
-                .map(f -> fieldAsm.createInputField(f))
+                .map(f -> projectFieldAsm.createInputField(f))
                 .collect(Collectors.toSet());
     }
 
     protected Set<ProjectField> getCheckBoxes(Set<CheckBoxContainerDto> checkBoxContainerDtos) {
         return checkBoxContainerDtos.stream()
-                .map(field -> fieldAsm.createCheckBoxContainer(field))
+                .map(field -> projectFieldAsm.createCheckBoxContainer(field))
                 .collect(Collectors.toSet());
     }
 
     protected Set<ProjectField> getRadioButtons(Set<RadioButtonContainerDto> radioButtonContainerDtos) {
         return radioButtonContainerDtos.stream()
-                .map(field -> fieldAsm.createRadioButtonContainer(field))
+                .map(field -> projectFieldAsm.createRadioButtonContainer(field))
                 .collect(Collectors.toSet());
     }
 
     protected Set<ProjectField> getTextArea(Set<TextAreaDto> textAreaDtos) {
         return textAreaDtos.stream()
-                .map(t -> fieldAsm.createTextArea(t))
+                .map(t -> projectFieldAsm.createTextArea(t))
                 .collect(Collectors.toSet());
     }
 
     protected Set<ProjectField> getListContainer(Set<ListElementsContainerDto> listElementsContainerDtos) {
         return listElementsContainerDtos.stream()
-                .map(l -> fieldAsm.createListContainer(l))
+                .map(l -> projectFieldAsm.createListContainer(l))
                 .collect(Collectors.toSet());
     }
 

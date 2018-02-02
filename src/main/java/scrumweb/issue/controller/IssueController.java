@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import scrumweb.dto.FieldsDto;
 import scrumweb.dto.IssueDetailsDto;
 import scrumweb.issue.service.IssueService;
 

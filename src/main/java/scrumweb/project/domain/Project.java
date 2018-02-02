@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
-import scrumweb.project.field.ProjectField;
+import scrumweb.projectfield.domain.ProjectField;
 import scrumweb.user.account.domain.UserAccount;
 
 import javax.persistence.*;

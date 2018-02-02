@@ -1,10 +1,8 @@
-package scrumweb.project.field;
+package scrumweb.projectfield.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import scrumweb.dto.ProjectFieldDto;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

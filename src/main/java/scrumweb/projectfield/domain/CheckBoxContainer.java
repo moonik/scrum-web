@@ -1,8 +1,7 @@
-package scrumweb.project.field;
+package scrumweb.projectfield.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -12,16 +11,16 @@ import javax.persistence.OneToMany;
 import java.util.Set;
 
 @Entity
-@Getter @Setter
 @NoArgsConstructor
+@Getter @Setter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class RadioButtonContainer extends ProjectField {
+public class CheckBoxContainer extends ProjectField{
 
     @OneToMany
-    private Set<RadioButton> radioButtons;
+    private Set<CheckBox> checkBoxes;
 
-    public RadioButtonContainer(FieldType fieldType, String name, Boolean isRequired, Set<RadioButton> radioButtons) {
+    public CheckBoxContainer(FieldType fieldType, String name, Boolean isRequired, Set<CheckBox> checkBoxes) {
         super(fieldType, name, isRequired);
-        this.radioButtons = radioButtons;
+        this.checkBoxes = checkBoxes;
     }
 }

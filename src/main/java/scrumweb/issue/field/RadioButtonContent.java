@@ -4,8 +4,8 @@ package scrumweb.issue.field;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import scrumweb.project.field.ProjectField;
-import scrumweb.project.field.RadioButton;
+import scrumweb.projectfield.domain.ProjectField;
+import scrumweb.projectfield.domain.RadioButton;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;

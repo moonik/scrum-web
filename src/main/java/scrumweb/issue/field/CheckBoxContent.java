@@ -3,8 +3,8 @@ package scrumweb.issue.field;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import scrumweb.project.field.CheckBox;
-import scrumweb.project.field.ProjectField;
+import scrumweb.projectfield.domain.CheckBox;
+import scrumweb.projectfield.domain.ProjectField;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;

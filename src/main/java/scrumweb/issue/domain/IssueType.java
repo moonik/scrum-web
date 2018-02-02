@@ -2,10 +2,9 @@ package scrumweb.issue.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import scrumweb.project.domain.Project;
-import scrumweb.project.field.ProjectField;
+import scrumweb.projectfield.domain.ProjectField;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

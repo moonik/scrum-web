@@ -1,6 +1,5 @@
-package scrumweb.dto;
+package scrumweb.dto.projectfield;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
