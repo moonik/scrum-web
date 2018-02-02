@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ProjectFieldService {
 
-    private ProjectFieldAsm projectFieldAsm;
+    private ProjectFieldAsm<ProjectField, ProjectFieldDto> projectFieldAsm;
     private ProjectFieldRepository projectFieldRepository;
     private IssueTypeRepository issueTypeRepository;
 
@@ -31,5 +31,12 @@ public class ProjectFieldService {
             issueTypeRepository.save(issueTypeFromDb);
         } else
             throw new IssueTypeDoesNotExists(issueType);
+    }
+
+    public Set<ProjectFieldDto> getIssueFields(String issueType) {
+        final IssueType issueTypeFromDb = issueTypeRepository.findByName(issueType.toUpperCase());
+        return issueTypeFromDb.getFields().stream()
+                .map(field -> projectFieldAsm.convertToDtoObject(field))
+                .collect(Collectors.toSet());
     }
 }

@@ -1,4 +1,4 @@
-package scrumweb.dto;
+package scrumweb.dto.project;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

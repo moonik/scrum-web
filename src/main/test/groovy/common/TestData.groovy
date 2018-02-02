@@ -6,12 +6,12 @@ import scrumweb.dto.projectfield.CheckBoxDto
 import scrumweb.dto.projectfield.InputFieldDto
 import scrumweb.dto.projectfield.ListElementDto
 import scrumweb.dto.projectfield.ListElementsContainerDto
-import scrumweb.dto.ProjectDto
-import scrumweb.dto.ProjectMemberDto
+import scrumweb.dto.project.ProjectDto
+import scrumweb.dto.project.ProjectMemberDto
 import scrumweb.dto.projectfield.RadioButtonContainerDto
 import scrumweb.dto.projectfield.RadioButtonDto
 import scrumweb.dto.projectfield.TextAreaDto
-import scrumweb.dto.UserDto
+import scrumweb.dto.user.UserDto
 import scrumweb.project.domain.Project
 import scrumweb.projectfield.domain.CheckBox
 import scrumweb.projectfield.domain.CheckBoxContainer

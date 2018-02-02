@@ -1,10 +1,12 @@
-package scrumweb.dto;
+package scrumweb.dto.issue;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import scrumweb.dto.projectfield.ProjectFieldDto;
+import scrumweb.dto.user.UserProfileDto;
 
 import java.util.Set;
 
@@ -24,5 +26,5 @@ public class IssueDetailsDto {
     private String remainingTime;
     private String priority;
     private String issueType;
-    private FieldsDto fields;
+    private Set<ProjectFieldDto> projectFields;
 }

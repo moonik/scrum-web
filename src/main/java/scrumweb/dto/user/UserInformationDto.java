@@ -1,4 +1,4 @@
-package scrumweb.dto;
+package scrumweb.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,11 +8,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-public class UserProfileDto {
+public class UserInformationDto {
 
-    private Long profileId;
-    private String firstname;
-    private String lastname;
-    private String photo;
     private String username;
+    private Long profileId;
+
 }

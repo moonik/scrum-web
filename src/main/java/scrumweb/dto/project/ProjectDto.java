@@ -1,9 +1,10 @@
-package scrumweb.dto;
+package scrumweb.dto.project;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import scrumweb.dto.user.UserProfileDto;
 
 import java.util.Set;
 

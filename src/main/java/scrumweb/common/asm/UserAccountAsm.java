@@ -2,8 +2,8 @@ package scrumweb.common.asm;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import scrumweb.dto.UserDto;
-import scrumweb.dto.UserInformationDto;
+import scrumweb.dto.user.UserDto;
+import scrumweb.dto.user.UserInformationDto;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.profile.domain.UserProfile;
 

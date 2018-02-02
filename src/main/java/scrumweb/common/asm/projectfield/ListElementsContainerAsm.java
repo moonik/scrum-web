@@ -6,7 +6,7 @@ import scrumweb.dto.projectfield.ListElementDto;
 import scrumweb.dto.projectfield.ListElementsContainerDto;
 import scrumweb.projectfield.domain.ListElement;
 import scrumweb.projectfield.domain.ListElementsContainer;
-import scrumweb.projectfield.domain.ProjectField;
+import scrumweb.projectfield.domain.ProjectField.FieldType;
 import scrumweb.projectfield.repository.ListElementRepository;
 
 import java.util.Set;
@@ -22,7 +22,7 @@ public class ListElementsContainerAsm implements ProjectFieldAsm<ListElementsCon
     public ListElementsContainer convertToEntityObject(ListElementsContainerDto projectFieldDto) {
         Set<ListElement> listElements = projectFieldDto.getListElements().stream().map(this::createListlement).collect(Collectors.toSet());
         listElementRepository.save(listElements);
-        return new ListElementsContainer(ProjectField.FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), listElements);
+        return new ListElementsContainer(FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), listElements);
     }
 
     @Override

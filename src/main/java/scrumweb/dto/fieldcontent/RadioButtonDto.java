@@ -1,4 +1,4 @@
-package scrumweb.dto;
+package scrumweb.dto.fieldcontent;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,9 +8,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-public class UserInformationDto {
-
-    private String username;
-    private Long profileId;
-
+public class RadioButtonDto {
+    private Long id;
+    private String value;
 }

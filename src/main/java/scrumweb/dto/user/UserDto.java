@@ -1,4 +1,4 @@
-package scrumweb.dto;
+package scrumweb.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

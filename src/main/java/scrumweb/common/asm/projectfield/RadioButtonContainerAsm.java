@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import scrumweb.dto.projectfield.RadioButtonContainerDto;
 import scrumweb.dto.projectfield.RadioButtonDto;
-import scrumweb.projectfield.domain.ProjectField;
+import scrumweb.projectfield.domain.ProjectField.FieldType;
 import scrumweb.projectfield.domain.RadioButton;
 import scrumweb.projectfield.domain.RadioButtonContainer;
 import scrumweb.projectfield.repository.RadioButtonRepository;
@@ -22,12 +22,7 @@ public class RadioButtonContainerAsm implements ProjectFieldAsm<RadioButtonConta
     public RadioButtonContainer convertToEntityObject(RadioButtonContainerDto projectFieldDto) {
         Set<RadioButton> radioButtons = projectFieldDto.getRadioButtons().stream().map(this::createRadioButton).collect(Collectors.toSet());
         radioButtonRepository.save(radioButtons);
-        return new RadioButtonContainer(
-                ProjectField.FieldType.getFieldType(projectFieldDto.getFieldType()),
-                projectFieldDto.getFieldName(),
-                projectFieldDto.getIsRequired(),
-                radioButtons
-        );
+        return new RadioButtonContainer(FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), radioButtons);
     }
 
     @Override

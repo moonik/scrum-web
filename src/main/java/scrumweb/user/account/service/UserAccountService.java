@@ -1,12 +1,11 @@
 package scrumweb.user.account.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import scrumweb.common.asm.UserAccountAsm;
 import scrumweb.common.asm.UserProfileAsm;
-import scrumweb.dto.UserDto;
-import scrumweb.dto.UserInformationDto;
+import scrumweb.dto.user.UserDto;
+import scrumweb.dto.user.UserInformationDto;
 import scrumweb.exception.UserAlreadyExistsException;
 import scrumweb.security.model.Authority;
 import scrumweb.security.model.AuthorityName;

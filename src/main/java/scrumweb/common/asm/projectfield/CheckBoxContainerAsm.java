@@ -3,10 +3,9 @@ package scrumweb.common.asm.projectfield;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import scrumweb.dto.projectfield.CheckBoxContainerDto;
-import scrumweb.dto.projectfield.CheckBoxDto;
 import scrumweb.projectfield.domain.CheckBox;
 import scrumweb.projectfield.domain.CheckBoxContainer;
-import scrumweb.projectfield.domain.ProjectField;
+import scrumweb.projectfield.domain.ProjectField.FieldType;
 import scrumweb.projectfield.repository.CheckBoxRepository;
 
 import java.util.Set;
@@ -22,7 +21,7 @@ public class CheckBoxContainerAsm implements ProjectFieldAsm<CheckBoxContainer, 
     public CheckBoxContainer convertToEntityObject(CheckBoxContainerDto projectFieldDto) {
         Set<CheckBox> checkBoxes = projectFieldDto.getCheckBoxes().stream().map(this::createCheckBox).collect(Collectors.toSet());
         checkBoxRepository.save(checkBoxes);
-        return new CheckBoxContainer(ProjectField.FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), checkBoxes);
+        return new CheckBoxContainer(FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), checkBoxes);
     }
 
     @Override
@@ -34,15 +33,5 @@ public class CheckBoxContainerAsm implements ProjectFieldAsm<CheckBoxContainer, 
                 projectField.getIsRequired(),
                 createCheckBoxDto(projectField.getCheckBoxes())
         );
-    }
-
-    private CheckBox createCheckBox(CheckBoxDto checkBoxDto) {
-        return new CheckBox(checkBoxDto.getValue());
-    }
-
-    private Set<CheckBoxDto> createCheckBoxDto(Set<CheckBox> checkBoxes) {
-        return checkBoxes.stream()
-                .map(checkBox -> new CheckBoxDto(checkBox.getId(), checkBox.getValue()))
-                .collect(Collectors.toSet());
     }
 }
