@@ -1,6 +1,7 @@
 package scrumweb.issue.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import scrumweb.common.SecurityContextService;
 import scrumweb.common.asm.fieldcontent.FieldContentAsm;
@@ -27,18 +28,24 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
-public class IssueService {
+public abstract class IssueService implements FieldContentAsm<FieldContent, FieldContentDto, ProjectField> {
 
+    @Autowired
     private IssueAsm issueAsm;
+    @Autowired
     private IssueRepository issueRepository;
+    @Autowired
     private UserAccountRepository userAccountRepository;
+    @Autowired
     private SecurityContextService securityContextService;
+    @Autowired
     private ProjectFieldRepository projectFieldRepository;
+    @Autowired
     private IssueTypeRepository issueTypeRepository;
+    @Autowired
     private ProjectRepository projectRepository;
+    @Autowired
     private UserProfileAsm userProfileAsm;
-    private FieldContentAsm<FieldContent, FieldContentDto, ProjectField> fieldContentAsm;
 
     public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Long projectId) {
         final Project project = projectRepository.getOne(projectId);
@@ -62,7 +69,7 @@ public class IssueService {
         Issue issue = issueRepository.getOne(id);
         Set<UserProfileDto> assignees = issue.getAssignees().stream().map(userAccount -> userProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile())).collect(Collectors.toSet());
         UserProfileDto reporter = userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
-        Set<FieldContentDto> fieldsContentsDto = issue.getFieldContents().stream().map(fieldContent -> fieldContentAsm.convertToDtoObject(fieldContent)).collect(Collectors.toSet());
+        Set<FieldContentDto> fieldsContentsDto = issue.getFieldContents().stream().map(this::convertToDtoObject).collect(Collectors.toSet());
         return issueAsm.createIssueDetailsDto(issue, assignees, reporter, fieldsContentsDto);
     }
 
@@ -74,7 +81,7 @@ public class IssueService {
 
     private Set<FieldContent> extractContents(Set<FieldContentDto> fieldContentsDto) {
         return fieldContentsDto.stream()
-                .map(fieldContentDto -> fieldContentAsm.convertToEntityObject(
+                .map(fieldContentDto -> convertToEntityObject(
                         projectFieldRepository.getOne(fieldContentDto.getProjectFieldId()), fieldContentDto))
                 .collect(Collectors.toSet());
     }

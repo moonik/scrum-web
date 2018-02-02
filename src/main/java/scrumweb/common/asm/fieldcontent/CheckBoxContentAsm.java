@@ -4,12 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import scrumweb.common.asm.common.FieldElementsAsm;
 import scrumweb.dto.fieldcontent.CheckBoxContainerContentDto;
-import scrumweb.dto.fieldcontent.CheckBoxDto;
+import scrumweb.dto.projectfield.CheckBoxDto;
 import scrumweb.issue.fieldcontent.CheckBoxContent;
 import scrumweb.projectfield.domain.CheckBox;
 import scrumweb.projectfield.domain.CheckBoxContainer;
 import scrumweb.projectfield.repository.CheckBoxRepository;
-import scrumweb.projectfield.repository.ProjectFieldRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;

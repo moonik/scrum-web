@@ -1,7 +1,7 @@
 package scrumweb.common.asm.common;
 
 import org.springframework.stereotype.Component;
-import scrumweb.dto.fieldcontent.RadioButtonDto;
+import scrumweb.dto.projectfield.RadioButtonDto;
 import scrumweb.projectfield.domain.RadioButton;
 
 @Component

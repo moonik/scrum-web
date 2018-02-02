@@ -1,7 +1,7 @@
 package scrumweb.common.asm.common;
 
 import org.springframework.stereotype.Component;
-import scrumweb.dto.fieldcontent.CheckBoxDto;
+import scrumweb.dto.projectfield.CheckBoxDto;
 import scrumweb.projectfield.domain.CheckBox;
 
 @Component

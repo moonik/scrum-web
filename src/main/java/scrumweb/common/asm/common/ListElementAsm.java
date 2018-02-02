@@ -1,7 +1,7 @@
 package scrumweb.common.asm.common;
 
 import org.springframework.stereotype.Component;
-import scrumweb.dto.fieldcontent.ListElementDto;
+import scrumweb.dto.projectfield.ListElementDto;
 import scrumweb.projectfield.domain.ListElement;
 
 @Component

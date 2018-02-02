@@ -1,6 +1,7 @@
 package scrumweb.projectfield.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import scrumweb.common.asm.projectfield.ProjectFieldAsm;
 import scrumweb.dto.projectfield.ProjectFieldDto;
@@ -14,18 +15,18 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
-public class ProjectFieldService {
+public abstract class ProjectFieldService implements ProjectFieldAsm<ProjectField, ProjectFieldDto> {
 
-    private ProjectFieldAsm<ProjectField, ProjectFieldDto> projectFieldAsm;
+    @Autowired
     private ProjectFieldRepository projectFieldRepository;
+    @Autowired
     private IssueTypeRepository issueTypeRepository;
 
     public void createFields(Set<ProjectFieldDto> projectFieldsDto, String issueType) {
         final IssueType issueTypeFromDb = issueTypeRepository.findByName(issueType.toUpperCase());
         if (issueTypeFromDb != null) {
             Set<ProjectField> issueTypeFields = issueTypeFromDb.getFields();
-            Set<ProjectField> fieldsToBeSaved = projectFieldsDto.stream().map(field -> projectFieldAsm.convertToEntityObject(field)).collect(Collectors.toSet());
+            Set<ProjectField> fieldsToBeSaved = projectFieldsDto.stream().map(this::convertToEntityObject).collect(Collectors.toSet());
             projectFieldRepository.save(fieldsToBeSaved);
             issueTypeFields.addAll(fieldsToBeSaved);
             issueTypeRepository.save(issueTypeFromDb);
@@ -36,7 +37,7 @@ public class ProjectFieldService {
     public Set<ProjectFieldDto> getIssueFields(String issueType) {
         final IssueType issueTypeFromDb = issueTypeRepository.findByName(issueType.toUpperCase());
         return issueTypeFromDb.getFields().stream()
-                .map(field -> projectFieldAsm.convertToDtoObject(field))
+                .map(this::convertToDtoObject)
                 .collect(Collectors.toSet());
     }
 }

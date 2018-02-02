@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import scrumweb.common.asm.common.FieldElementsAsm;
 import scrumweb.dto.fieldcontent.RadioButtonContainerContentDto;
-import scrumweb.dto.fieldcontent.RadioButtonDto;
+import scrumweb.dto.projectfield.RadioButtonDto;
 import scrumweb.issue.fieldcontent.RadioButtonContent;
 import scrumweb.projectfield.domain.RadioButton;
 import scrumweb.projectfield.domain.RadioButtonContainer;
