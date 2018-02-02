@@ -37,6 +37,7 @@ public class IssueService {
     private ProjectFieldRepository projectFieldRepository;
     private IssueTypeRepository issueTypeRepository;
     private ProjectRepository projectRepository;
+    private UserProfileAsm userProfileAsm;
     private FieldContentAsm<FieldContent, FieldContentDto, ProjectField> fieldContentAsm;
 
     public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Long projectId) {
@@ -58,7 +59,11 @@ public class IssueService {
     }
 
     public IssueDetailsDto getIssue(Long id) {
-
+        Issue issue = issueRepository.getOne(id);
+        Set<UserProfileDto> assignees = issue.getAssignees().stream().map(userAccount -> userProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile())).collect(Collectors.toSet());
+        UserProfileDto reporter = userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
+        Set<FieldContentDto> fieldsContentsDto = issue.getFieldContents().stream().map(fieldContent -> fieldContentAsm.convertToDtoObject(fieldContent)).collect(Collectors.toSet());
+        return issueAsm.createIssueDetailsDto(issue, assignees, reporter, fieldsContentsDto);
     }
 
     private Set<String> extractUserNames(Set<UserProfileDto> userProfileDtos) {

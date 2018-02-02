@@ -8,6 +8,7 @@ import scrumweb.dto.fieldcontent.ListElementsContainerContentDto;
 import scrumweb.issue.fieldcontent.ListContent;
 import scrumweb.projectfield.domain.ListElement;
 import scrumweb.projectfield.domain.ListElementsContainer;
+import scrumweb.projectfield.repository.ListElementRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,15 +18,22 @@ import java.util.stream.Collectors;
 public class ListContentAsm implements FieldContentAsm<ListContent, ListElementsContainerContentDto, ListElementsContainer> {
 
     private FieldElementsAsm<ListElement, ListElementDto> fieldElementsAsm;
+    private ListElementRepository listElementRepository;
 
     @Override
     public ListContent convertToEntityObject(ListElementsContainer projectField, ListElementsContainerContentDto fieldContentDto) {
-        Set<ListElement> listElements = fieldContentDto.getListElement().stream().map(listElementDto -> fieldElementsAsm.convertToEntityObject(listElementDto)).collect(Collectors.toSet());
-        return new ListContent(projectField, listElements);
+        return new ListContent(projectField, listElementRepository.getListElements(extractIds(fieldContentDto.getListElements())));
     }
 
     @Override
     public ListElementsContainerContentDto convertToDtoObject(ListContent fieldContent) {
-        return null;
+        Set<ListElementDto> listElementsDto = fieldContent.getListElements().stream().map(listElement -> fieldElementsAsm.convertToDtoObject(listElement)).collect(Collectors.toSet());
+        return new ListElementsContainerContentDto(fieldContent.getProjectField().getId(), listElementsDto);
+    }
+
+    private Set<Long> extractIds(Set<ListElementDto> listElementDtos) {
+        return listElementDtos.stream()
+                .map(ListElementDto::getId)
+                .collect(Collectors.toSet());
     }
 }
