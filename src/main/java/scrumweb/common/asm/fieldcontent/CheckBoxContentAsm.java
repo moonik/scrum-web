@@ -8,25 +8,21 @@ import scrumweb.dto.projectfield.CheckBoxDto;
 import scrumweb.issue.fieldcontent.CheckBoxContent;
 import scrumweb.projectfield.domain.CheckBox;
 import scrumweb.projectfield.domain.CheckBoxContainer;
-import scrumweb.projectfield.repository.FieldElementsRepoImpl;
-import scrumweb.projectfield.repository.FieldElementsRepository;
+import scrumweb.projectfield.repository.CheckBoxRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
-public abstract class CheckBoxContentAsm extends FieldElementsRepoImpl<CheckBox> implements FieldContentAsm<CheckBoxContent, CheckBoxContainerContentDto, CheckBoxContainer> {
+public class CheckBoxContentAsm implements FieldContentAsm<CheckBoxContent, CheckBoxContainerContentDto, CheckBoxContainer> {
 
     private FieldElementsAsm<CheckBox, CheckBoxDto> fieldElementsAsm;
-
-    public CheckBoxContentAsm(Class<CheckBox> clazz) {
-        super(clazz);
-    }
+    private CheckBoxRepository checkBoxRepository;
 
     @Override
     public CheckBoxContent createEntityObject(CheckBoxContainer projectField, CheckBoxContainerContentDto fieldContentDto) {
-        return new CheckBoxContent(projectField, getElements(extractIds(fieldContentDto.getCheckBoxes())));
+        return new CheckBoxContent(projectField, checkBoxRepository.getCheckBoxes(extractIds(fieldContentDto.getCheckBoxes())));
     }
 
     @Override

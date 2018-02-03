@@ -8,7 +8,7 @@ import scrumweb.dto.projectfield.RadioButtonDto;
 import scrumweb.projectfield.domain.ProjectField.FieldType;
 import scrumweb.projectfield.domain.RadioButton;
 import scrumweb.projectfield.domain.RadioButtonContainer;
-import scrumweb.projectfield.repository.FieldElementsRepository;
+import scrumweb.projectfield.repository.RadioButtonRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class RadioButtonContainerAsm implements ProjectFieldAsm<RadioButtonContainer, RadioButtonContainerDto> {
 
-    private FieldElementsRepository<RadioButton> radioButtonRepository;
+    private RadioButtonRepository radioButtonRepository;
     private FieldElementsAsm<RadioButton, RadioButtonDto> fieldElementsAsm;
 
     @Override
