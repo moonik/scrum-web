@@ -21,13 +21,13 @@ public class ProjectFieldsCollector implements FieldsExtractor<ProjectFieldDto, 
     private Set<TextAreaDto> textAreaDtos;
 
     @Override
-    public Set<ProjectFieldDto> extractFields(ProjectFieldsCollector fieldsColletor) {
+    public Set<ProjectFieldDto> extractFields(ProjectFieldsCollector fieldsCollector) {
         Set<ProjectFieldDto> projectFieldDtos = new HashSet<>();
-        projectFieldDtos.addAll(fieldsColletor.getCheckBoxContainerDtos());
-        projectFieldDtos.addAll(fieldsColletor.getInputFieldDtos());
-        projectFieldDtos.addAll(fieldsColletor.getListElementsContainerDtos());
-        projectFieldDtos.addAll(fieldsColletor.getRadioButtonContainerDtos());
-        projectFieldDtos.addAll(fieldsColletor.getTextAreaDtos());
+        projectFieldDtos.addAll(fieldsCollector.getCheckBoxContainerDtos());
+        projectFieldDtos.addAll(fieldsCollector.getInputFieldDtos());
+        projectFieldDtos.addAll(fieldsCollector.getListElementsContainerDtos());
+        projectFieldDtos.addAll(fieldsCollector.getRadioButtonContainerDtos());
+        projectFieldDtos.addAll(fieldsCollector.getTextAreaDtos());
         return projectFieldDtos;
     }
 }
