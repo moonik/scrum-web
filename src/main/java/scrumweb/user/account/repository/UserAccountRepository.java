@@ -2,6 +2,7 @@ package scrumweb.user.account.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import scrumweb.user.account.domain.UserAccount;
 
@@ -13,5 +14,5 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
     UserAccount findByUsername(String username);
 
     @Query("select u from UserAccount  u where u.username in :usernames")
-    Set<UserAccount> findUsers(Set<String> usernames);
+    Set<UserAccount> findUsers(@Param("usernames") Set<String> usernames);
 }

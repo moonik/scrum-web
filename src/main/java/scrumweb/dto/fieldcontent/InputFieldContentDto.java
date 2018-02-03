@@ -14,8 +14,8 @@ public class InputFieldContentDto extends FieldContentDto {
 
     private String content;
 
-    public InputFieldContentDto(Long projectFieldId, String content) {
-        super(projectFieldId);
+    public InputFieldContentDto(Long projectFieldId, String projectFieldName, String content) {
+        super(projectFieldId, projectFieldName);
         this.content = content;
     }
 }

@@ -17,13 +17,11 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CheckBoxContainerAsm implements ProjectFieldAsm<CheckBoxContainer, CheckBoxContainerDto> {
 
-    private CheckBoxRepository checkBoxRepository;
     private FieldElementsAsm<CheckBox, CheckBoxDto> fieldElementsAsm;
 
     @Override
     public CheckBoxContainer createEntityObject(CheckBoxContainerDto projectFieldDto) {
         Set<CheckBox> checkBoxes = projectFieldDto.getCheckBoxes().stream().map(checkBoxDto -> fieldElementsAsm.convertToEntityObject(checkBoxDto)).collect(Collectors.toSet());
-        checkBoxRepository.save(checkBoxes);
         return new CheckBoxContainer(FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), checkBoxes);
     }
 

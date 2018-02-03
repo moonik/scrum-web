@@ -29,7 +29,10 @@ public class ListContentAsm implements FieldContentAsm<ListContent, ListElements
     @Override
     public ListElementsContainerContentDto createDtoObject(ListContent fieldContent) {
         Set<ListElementDto> listElementsDto = fieldContent.getListElements().stream().map(listElement -> fieldElementsAsm.convertToDtoObject(listElement)).collect(Collectors.toSet());
-        return new ListElementsContainerContentDto(fieldContent.getProjectField().getId(), listElementsDto);
+        return new ListElementsContainerContentDto(
+                fieldContent.getProjectField().getId(),
+                fieldContent.getProjectField().getName(),
+                listElementsDto);
     }
 
     private Set<Long> extractIds(Set<ListElementDto> listElementDtos) {

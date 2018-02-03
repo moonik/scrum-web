@@ -15,6 +15,10 @@ public class TextAreaContentAsm implements FieldContentAsm<TextAreaContent, Text
 
     @Override
     public TextAreaContentDto createDtoObject(TextAreaContent fieldContent) {
-        return new TextAreaContentDto(fieldContent.getProjectField().getId(), fieldContent.getContent());
+        return new TextAreaContentDto(
+                fieldContent.getProjectField().getId(),
+                fieldContent.getProjectField().getName(),
+                fieldContent.getContent()
+        );
     }
 }

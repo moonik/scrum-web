@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.Set;
@@ -13,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class ListElementsContainer extends ProjectField {
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<ListElement> elements;
 
     public ListElementsContainer(FieldType fieldType, String name, Boolean isRequired, Set<ListElement> elements) {

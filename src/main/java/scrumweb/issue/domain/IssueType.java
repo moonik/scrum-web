@@ -6,6 +6,7 @@ import lombok.Setter;
 import scrumweb.project.domain.Project;
 import scrumweb.projectfield.domain.ProjectField;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,15 +28,14 @@ public class IssueType {
     @Column(unique = true)
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<ProjectField> fields;
 
     @ManyToOne
     private Project project;
 
-    public IssueType(String name, Set<ProjectField> fields, Project project) {
+    public IssueType(String name, Project project) {
         this.name = name;
-        this.fields = fields;
         this.project = project;
     }
 }

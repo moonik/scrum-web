@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 

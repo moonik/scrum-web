@@ -12,8 +12,8 @@ public class TextAreaContentDto extends FieldContentDto {
 
     private String content;
 
-    public TextAreaContentDto(Long projectFieldId, String content) {
-        super(projectFieldId);
+    public TextAreaContentDto(Long projectFieldId, String projectFieldName, String content) {
+        super(projectFieldId, projectFieldName);
         this.content = content;
     }
 }

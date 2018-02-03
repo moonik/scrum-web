@@ -6,6 +6,7 @@ import lombok.Setter;
 import scrumweb.issue.fieldcontent.FieldContent;
 import scrumweb.user.account.domain.UserAccount;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -45,7 +46,7 @@ public class Issue {
     @NotNull
     private IssueType issueType;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<FieldContent> fieldContents;
 
     public Issue(String summary, String description, Set<UserAccount> assignees, UserAccount reporter, String estimateTime, String remainingTime, Priority priority, IssueType issueType, Set<FieldContent> fieldContents) {

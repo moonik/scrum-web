@@ -17,13 +17,11 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class RadioButtonContainerAsm implements ProjectFieldAsm<RadioButtonContainer, RadioButtonContainerDto> {
 
-    private RadioButtonRepository radioButtonRepository;
     private FieldElementsAsm<RadioButton, RadioButtonDto> fieldElementsAsm;
 
     @Override
     public RadioButtonContainer createEntityObject(RadioButtonContainerDto projectFieldDto) {
         Set<RadioButton> radioButtons = projectFieldDto.getRadioButtons().stream().map(radioButtonDto -> fieldElementsAsm.convertToEntityObject(radioButtonDto)).collect(Collectors.toSet());
-        radioButtonRepository.save(radioButtons);
         return new RadioButtonContainer(FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), radioButtons);
     }
 

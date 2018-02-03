@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import scrumweb.dto.projectfield.ProjectFieldDto;
 import scrumweb.dto.projectfield.ProjectFieldsCollector;
@@ -23,14 +24,14 @@ public class ProjectFieldController extends ProjectFieldsCollector {
 
     private ProjectFieldService projectFieldService;
 
-    @PostMapping("/{issuetype}")
-    public void createProjectField(@PathVariable String issuetype,
+    @PostMapping("")
+    public void createProjectField(@RequestParam String issuetype, @RequestParam String projectName,
                                    @RequestBody ProjectFieldsCollector projectFieldsCollector) {
-        projectFieldService.createFields(extractFields(projectFieldsCollector), issuetype);
+        projectFieldService.createFields(extractFields(projectFieldsCollector), issuetype, projectName);
     }
 
-    @GetMapping("/{issuetype}")
-    public Set<ProjectFieldDto> getIssueFields(@PathVariable String issuetype) {
-        return projectFieldService.getIssueFields(issuetype);
+    @GetMapping("")
+    public Set<ProjectFieldDto> getIssueFields(@RequestParam String issuetype, @RequestParam String projectName) {
+        return projectFieldService.getIssueFields(issuetype, projectName);
     }
 }

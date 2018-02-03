@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -16,7 +17,7 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class CheckBoxContainer extends ProjectField{
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<CheckBox> checkBoxes;
 
     public CheckBoxContainer(FieldType fieldType, String name, Boolean isRequired, Set<CheckBox> checkBoxes) {

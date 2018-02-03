@@ -39,18 +39,18 @@ public class IssueService {
     private UserProfileAsm userProfileAsm;
     private FieldContentConverter fieldContentAsm;
 
-    public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Long projectId) {
-        final Project project = projectRepository.getOne(projectId);
+    public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, Long projectId) {
+        final Project project = projectRepository.findOne(projectId);
         Set<Issue> issues = project.getIssues();
-        issues.add(createIssue(issueDetailsDto));
+        issues.add(createIssue(issueDetailsDto, fieldContentsDto));
         projectRepository.save(project);
         return issueDetailsDto;
     }
 
-    private Issue createIssue(IssueDetailsDto issueDetailsDto) {
+    private Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto) {
         final UserAccount reporter = securityContextService.getCurrentUserAccount();
         Set<UserAccount> assignees = userAccountRepository.findUsers(extractUserNames(issueDetailsDto.getAssignees()));
-        Set<FieldContent> fieldContents = extractContents(issueDetailsDto.getProjectFields());
+        Set<FieldContent> fieldContents = extractContents(fieldContentsDto);
         IssueType issueType = issueTypeRepository.findByName(issueDetailsDto.getIssueType());
         Issue issue = issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
         issueRepository.save(issue);
@@ -58,11 +58,13 @@ public class IssueService {
     }
 
     public IssueDetailsDto getIssue(Long id) {
-        Issue issue = issueRepository.getOne(id);
+        Issue issue = issueRepository.findOne(id);
         Set<UserProfileDto> assignees = issue.getAssignees().stream().map(userAccount -> userProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile())).collect(Collectors.toSet());
         UserProfileDto reporter = userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
         Set<FieldContentDto> fieldsContentsDto = issue.getFieldContents().stream().map(fieldContent -> fieldContentAsm.createDtoObject(fieldContent)).collect(Collectors.toSet());
-        return issueAsm.createIssueDetailsDto(issue, assignees, reporter, fieldsContentsDto);
+        IssueDetailsDto issueDetailsDto = issueAsm.createIssueDetailsDto(issue, assignees, reporter);
+        issueDetailsDto.setFieldContents(fieldsContentsDto);
+        return issueDetailsDto;
     }
 
     private Set<String> extractUserNames(Set<UserProfileDto> userProfileDtos) {
@@ -74,7 +76,7 @@ public class IssueService {
     private Set<FieldContent> extractContents(Set<FieldContentDto> fieldContentsDto) {
         return fieldContentsDto.stream()
                 .map(fieldContentDto -> fieldContentAsm.createObjectEntity(
-                        projectFieldRepository.getOne(fieldContentDto.getProjectFieldId()), fieldContentDto))
+                        projectFieldRepository.findOne(fieldContentDto.getProjectFieldId()), fieldContentDto))
                 .collect(Collectors.toSet());
     }
 }

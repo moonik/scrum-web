@@ -2,6 +2,7 @@ package scrumweb.projectfield.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import scrumweb.projectfield.domain.CheckBox;
 
@@ -11,5 +12,5 @@ import java.util.Set;
 public interface CheckBoxRepository extends JpaRepository<CheckBox, Long> {
 
     @Query("select c from CheckBox c where c.id in :ids")
-    Set<CheckBox> getCheckBoxes(Set<Long> ids);
+    Set<CheckBox> getCheckBoxes(@Param("ids") Set<Long> ids);
  }

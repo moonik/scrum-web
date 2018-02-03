@@ -13,8 +13,8 @@ import java.util.Set;
 public class ListElementsContainerContentDto extends FieldContentDto {
     private Set<ListElementDto> listElements;
 
-    public ListElementsContainerContentDto(Long projectFieldId, Set<ListElementDto> listElements) {
-        super(projectFieldId);
+    public ListElementsContainerContentDto(Long projectFieldId, String projectFieldName, Set<ListElementDto> listElements) {
+        super(projectFieldId, projectFieldName);
         this.listElements = listElements;
     }
 }

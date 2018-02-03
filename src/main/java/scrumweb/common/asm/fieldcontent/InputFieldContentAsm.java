@@ -15,6 +15,10 @@ public class InputFieldContentAsm implements FieldContentAsm<InputFieldContent, 
 
     @Override
     public InputFieldContentDto createDtoObject(InputFieldContent fieldContent) {
-        return new InputFieldContentDto(fieldContent.getProjectField().getId(), fieldContent.getContent());
+        return new InputFieldContentDto(
+                fieldContent.getProjectField().getId(),
+                fieldContent.getProjectField().getName(),
+                fieldContent.getContent()
+        );
     }
 }

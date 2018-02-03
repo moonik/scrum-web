@@ -18,13 +18,11 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ListElementsContainerAsm implements ProjectFieldAsm<ListElementsContainer, ListElementsContainerDto> {
 
-    private ListElementRepository listElementRepository;
     private FieldElementsAsm<ListElement, ListElementDto> fieldElementsAsm;
 
     @Override
     public ListElementsContainer createEntityObject(ListElementsContainerDto projectFieldDto) {
         Set<ListElement> listElements = projectFieldDto.getListElements().stream().map(listElementDto -> fieldElementsAsm.convertToEntityObject(listElementDto)).collect(Collectors.toSet());
-        listElementRepository.save(listElements);
         return new ListElementsContainer(FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), listElements);
     }
 

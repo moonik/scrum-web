@@ -16,6 +16,7 @@ import scrumweb.issue.fieldcontent.RadioButtonContent;
 import scrumweb.issue.fieldcontent.TextAreaContent;
 import scrumweb.projectfield.domain.CheckBoxContainer;
 import scrumweb.projectfield.domain.InputField;
+import scrumweb.projectfield.domain.ListElementsContainer;
 import scrumweb.projectfield.domain.ProjectField;
 import scrumweb.projectfield.domain.RadioButtonContainer;
 import scrumweb.projectfield.domain.TextArea;
@@ -36,8 +37,10 @@ public class FieldContentConverter {
         } else if (fieldContent instanceof InputFieldContentDto) {
             return inputFieldContentAsm.createEntityObject(((InputField) projectField), ((InputFieldContentDto) fieldContent));
         } else if (fieldContent instanceof ListElementsContainerContentDto) {
+            return listContentAsm.createEntityObject(((ListElementsContainer) projectField), ((ListElementsContainerContentDto) fieldContent));
+        } else if (fieldContent instanceof RadioButtonContainerContentDto) {
             return radioButtonContentAsm.createEntityObject(((RadioButtonContainer) projectField), ((RadioButtonContainerContentDto) fieldContent));
-        } else
+        }  else
             return textAreaContentAsm.createEntityObject(((TextArea) projectField), ((TextAreaContentDto) fieldContent));
     }
 

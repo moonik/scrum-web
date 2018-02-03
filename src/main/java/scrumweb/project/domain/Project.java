@@ -34,7 +34,7 @@ public class Project {
 //    @Column(unique = true)
     private UserAccount owner;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Issue> issues;
 
     private String icon;
@@ -42,10 +42,10 @@ public class Project {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<ProjectMember> members;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<ProjectField> projectFields;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<IssueType> issueTypes;
 
     public Project(String name, String description, String icon) {

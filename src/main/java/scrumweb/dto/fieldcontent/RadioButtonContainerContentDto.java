@@ -13,8 +13,8 @@ import java.util.Set;
 public class RadioButtonContainerContentDto extends FieldContentDto {
     private RadioButtonDto radioButton;
 
-    public RadioButtonContainerContentDto(Long projectFieldId, RadioButtonDto radioButton) {
-        super(projectFieldId);
+    public RadioButtonContainerContentDto(Long projectFieldId, String projectFieldName, RadioButtonDto radioButton) {
+        super(projectFieldId, projectFieldName);
         this.radioButton = radioButton;
     }
 }

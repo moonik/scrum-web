@@ -28,7 +28,11 @@ public class CheckBoxContentAsm implements FieldContentAsm<CheckBoxContent, Chec
     @Override
     public CheckBoxContainerContentDto createDtoObject(CheckBoxContent fieldContent) {
         Set<CheckBoxDto> checkBoxes = fieldContent.getCheckBoxes().stream().map(checkBox -> fieldElementsAsm.convertToDtoObject(checkBox)).collect(Collectors.toSet());
-        return new CheckBoxContainerContentDto(fieldContent.getProjectField().getId(), checkBoxes);
+        return new CheckBoxContainerContentDto(
+                fieldContent.getProjectField().getId(),
+                fieldContent.getProjectField().getName(),
+                checkBoxes
+        );
     }
 
     private Set<Long> extractIds(Set<CheckBoxDto> checkBoxes) {

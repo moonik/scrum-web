@@ -12,4 +12,5 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FieldContentDto {
     private Long projectFieldId;
+    private String projectFieldName;
 }

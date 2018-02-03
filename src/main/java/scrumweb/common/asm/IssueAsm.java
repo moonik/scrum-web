@@ -22,7 +22,7 @@ public class IssueAsm {
                 issueType, fieldContents);
     }
 
-    public IssueDetailsDto createIssueDetailsDto(Issue issue, Set<UserProfileDto> assignees, UserProfileDto reporter, Set<FieldContentDto> fields) {
+    public IssueDetailsDto createIssueDetailsDto(Issue issue, Set<UserProfileDto> assignees, UserProfileDto reporter) {
         return new IssueDetailsDto(
                 issue.getId(), "",
                 issue.getSummary(),
@@ -31,8 +31,7 @@ public class IssueAsm {
                 issue.getEstimateTime(),
                 issue.getRemainingTime(),
                 issue.getPriority().toString(),
-                issue.getIssueType().getName(),
-                fields
+                issue.getIssueType().getName()
         );
     }
 }

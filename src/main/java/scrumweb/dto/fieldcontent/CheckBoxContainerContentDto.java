@@ -14,8 +14,8 @@ public class CheckBoxContainerContentDto extends FieldContentDto {
 
     private Set<CheckBoxDto> checkBoxes;
 
-    public CheckBoxContainerContentDto(Long id, Set<CheckBoxDto> checkBoxes) {
-        super(id);
+    public CheckBoxContainerContentDto(Long projectFieldId, String projectFieldName, Set<CheckBoxDto> checkBoxes) {
+        super(projectFieldId, projectFieldName);
         this.checkBoxes = checkBoxes;
     }
 }
