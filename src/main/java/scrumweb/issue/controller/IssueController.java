@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import scrumweb.dto.fieldcontent.FieldsContentCollector;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.issue.service.IssueService;
 
@@ -15,7 +16,7 @@ import static scrumweb.common.ApplicationConstants.API_URL;
 @RestController
 @RequestMapping(API_URL + "issue")
 @AllArgsConstructor
-public class IssueController {
+public class IssueController extends FieldsContentCollector {
 
     private IssueService issueService;
 

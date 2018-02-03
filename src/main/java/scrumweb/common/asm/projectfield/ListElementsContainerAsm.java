@@ -8,7 +8,7 @@ import scrumweb.dto.projectfield.ListElementsContainerDto;
 import scrumweb.projectfield.domain.ListElement;
 import scrumweb.projectfield.domain.ListElementsContainer;
 import scrumweb.projectfield.domain.ProjectField.FieldType;
-import scrumweb.projectfield.repository.ListElementRepository;
+import scrumweb.projectfield.repository.FieldElementsRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ListElementsContainerAsm implements ProjectFieldAsm<ListElementsContainer, ListElementsContainerDto> {
 
-    private ListElementRepository listElementRepository;
+    private FieldElementsRepository<ListElement> listElementRepository;
     private FieldElementsAsm<ListElement, ListElementDto> fieldElementsAsm;
 
     @Override

@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import scrumweb.dto.projectfield.ProjectFieldDto;
+import scrumweb.dto.projectfield.ProjectFieldsCollector;
 import scrumweb.projectfield.service.ProjectFieldService;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static scrumweb.common.ApplicationConstants.API_URL;
@@ -17,13 +19,14 @@ import static scrumweb.common.ApplicationConstants.API_URL;
 @RestController
 @RequestMapping(API_URL + "project-field")
 @AllArgsConstructor
-public class ProjectFieldController {
+public class ProjectFieldController extends ProjectFieldsCollector {
 
     private ProjectFieldService projectFieldService;
 
     @PostMapping("/{issuetype}")
-    public void createProjectField(@PathVariable String issuetype, @RequestBody Set<ProjectFieldDto> projectFieldsDto) {
-        projectFieldService.createFields(projectFieldsDto, issuetype);
+    public void createProjectField(@PathVariable String issuetype,
+                                   @RequestBody ProjectFieldsCollector projectFieldsCollector) {
+        projectFieldService.createFields(extractFields(projectFieldsCollector), issuetype);
     }
 
     @GetMapping("/{issuetype}")

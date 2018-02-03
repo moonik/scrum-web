@@ -8,7 +8,7 @@ import scrumweb.dto.projectfield.ListElementDto;
 import scrumweb.issue.fieldcontent.ListContent;
 import scrumweb.projectfield.domain.ListElement;
 import scrumweb.projectfield.domain.ListElementsContainer;
-import scrumweb.projectfield.repository.ListElementRepository;
+import scrumweb.projectfield.repository.FieldElementsRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 public class ListContentAsm implements FieldContentAsm<ListContent, ListElementsContainerContentDto, ListElementsContainer> {
 
     private FieldElementsAsm<ListElement, ListElementDto> fieldElementsAsm;
-    private ListElementRepository listElementRepository;
+    private FieldElementsRepository<ListElement> listElementRepository;
 
     @Override
     public ListContent createEntityObject(ListElementsContainer projectField, ListElementsContainerContentDto fieldContentDto) {
-        return new ListContent(projectField, listElementRepository.getListElements(extractIds(fieldContentDto.getListElements())));
+        return new ListContent(projectField, listElementRepository.getElements(extractIds(fieldContentDto.getListElements())));
     }
 
     @Override

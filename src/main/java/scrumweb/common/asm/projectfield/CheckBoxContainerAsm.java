@@ -1,6 +1,7 @@
 package scrumweb.common.asm.projectfield;
 
 import lombok.AllArgsConstructor;
+import org.hibernate.annotations.Check;
 import org.springframework.stereotype.Component;
 import scrumweb.common.asm.common.FieldElementsAsm;
 import scrumweb.dto.projectfield.CheckBoxContainerDto;
@@ -8,7 +9,7 @@ import scrumweb.dto.projectfield.CheckBoxDto;
 import scrumweb.projectfield.domain.CheckBox;
 import scrumweb.projectfield.domain.CheckBoxContainer;
 import scrumweb.projectfield.domain.ProjectField.FieldType;
-import scrumweb.projectfield.repository.CheckBoxRepository;
+import scrumweb.projectfield.repository.FieldElementsRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CheckBoxContainerAsm implements ProjectFieldAsm<CheckBoxContainer, CheckBoxContainerDto> {
 
-    private CheckBoxRepository checkBoxRepository;
+    private FieldElementsRepository<CheckBox> checkBoxRepository;
     private FieldElementsAsm<CheckBox, CheckBoxDto> fieldElementsAsm;
 
     @Override

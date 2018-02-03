@@ -8,14 +8,14 @@ import scrumweb.dto.projectfield.RadioButtonDto;
 import scrumweb.issue.fieldcontent.RadioButtonContent;
 import scrumweb.projectfield.domain.RadioButton;
 import scrumweb.projectfield.domain.RadioButtonContainer;
-import scrumweb.projectfield.repository.RadioButtonRepository;
+import scrumweb.projectfield.repository.FieldElementsRepository;
 
 @Component
 @AllArgsConstructor
 public class RadioButtonContentAsm implements FieldContentAsm<RadioButtonContent, RadioButtonContainerContentDto, RadioButtonContainer> {
 
     private FieldElementsAsm<RadioButton, RadioButtonDto> fieldElementsAsm;
-    private RadioButtonRepository radioButtonRepository;
+    private FieldElementsRepository<RadioButton> radioButtonRepository;
 
     @Override
     public RadioButtonContent createEntityObject(RadioButtonContainer projectField, RadioButtonContainerContentDto fieldContentDto) {
