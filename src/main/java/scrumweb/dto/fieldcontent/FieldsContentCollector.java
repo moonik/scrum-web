@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 import scrumweb.common.FieldsExtractor;
 import scrumweb.dto.projectfield.ProjectFieldDto;
 
@@ -13,6 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
+@Component
 public class FieldsContentCollector implements FieldsExtractor<FieldContentDto, FieldsContentCollector> {
 
     private Set<CheckBoxContainerContentDto> checkBoxContainerContentDtos;

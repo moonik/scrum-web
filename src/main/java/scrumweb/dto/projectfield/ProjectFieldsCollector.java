@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 import scrumweb.common.FieldsExtractor;
 
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
 @Getter @Setter
 public class ProjectFieldsCollector implements FieldsExtractor<ProjectFieldDto, ProjectFieldsCollector> {
 

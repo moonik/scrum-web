@@ -17,13 +17,14 @@ import static scrumweb.common.ApplicationConstants.API_URL;
 @RestController
 @RequestMapping(API_URL + "issue")
 @AllArgsConstructor
-public class IssueController extends FieldsContentCollector {
+public class IssueController {
 
     private IssueService issueService;
+    private FieldsContentCollector fieldsContentCollector;
 
     @PostMapping("/project/{id}")
     public IssueDetailsDto createIssue(@PathVariable Long id, @RequestBody IssueDetailsDto issueDetailsDto) {
-        return issueService.create(issueDetailsDto, extractFields(issueDetailsDto.getProjectFields()), id);
+        return issueService.create(issueDetailsDto, fieldsContentCollector.extractFields(issueDetailsDto.getProjectFields()), id);
     }
 
     @GetMapping("/{id}")

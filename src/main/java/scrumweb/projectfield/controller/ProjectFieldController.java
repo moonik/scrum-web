@@ -20,14 +20,15 @@ import static scrumweb.common.ApplicationConstants.API_URL;
 @RestController
 @RequestMapping(API_URL + "project-field")
 @AllArgsConstructor
-public class ProjectFieldController extends ProjectFieldsCollector {
+public class ProjectFieldController {
 
     private ProjectFieldService projectFieldService;
+    private ProjectFieldsCollector projectFieldsCollector;
 
     @PostMapping("")
     public void createProjectField(@RequestParam String issuetype, @RequestParam String projectName,
                                    @RequestBody ProjectFieldsCollector projectFieldsCollector) {
-        projectFieldService.createFields(extractFields(projectFieldsCollector), issuetype, projectName);
+        projectFieldService.createFields(projectFieldsCollector.extractFields(projectFieldsCollector), issuetype, projectName);
     }
 
     @GetMapping("")
