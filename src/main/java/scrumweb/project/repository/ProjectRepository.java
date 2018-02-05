@@ -7,5 +7,5 @@ import scrumweb.project.domain.Project;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    Project findByName(String name);
+    Project findByKey(String key);
 }
