@@ -11,6 +11,7 @@ import { AuthGuard } from './security/auth.service';
 import { AuthenticationService } from './security/authentication.service';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ProjectComponent } from './project/project.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     LoginComponent,
     RegistrationComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProjectComponent
   ],
   imports: [
     BrowserModule,

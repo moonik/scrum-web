@@ -1,0 +1,21 @@
+is logged: {{ checkLogin() }}, logged as: {{ getCurrentUser() }}, token: {{ getCurrentToken() }}
+<br>
+{{getCurrentToken2()}}
+<br/>
+<div class="row justify-content-center">
+  <form [formGroup] = "projectForm" (ngSubmit)="createproject()">
+
+    <div class="form-group">
+      <label for="inputName">Name</label>
+      <input type="text" class="form-control w-100" id="inputName"
+             placeholder="Enter project name" [(ngModel)]="projectDto.name" formControlName="name">
+    </div>
+    <div class="form-group">
+      <label for="inputDescription">Description</label>
+      <input type="text" class="form-control w-200" id="inputDescription"
+             placeholder="Enter description" [(ngModel)]="projectDto.description" formControlName="description">
+    </div>
+    <button type="submit" class="btn btn-primary">Create project</button>
+
+  </form>
+</div>
