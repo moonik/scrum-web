@@ -8,14 +8,12 @@ import scrumweb.project.domain.Project;
 import scrumweb.project.domain.ProjectMember.Role;
 import scrumweb.project.domain.ProjectMember;
 
-import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Component
 public class ProjectAsm {
     public Project makeProject(ProjectDto projectDto) {
-        return new Project(projectDto.getName(), projectDto.getDescription(), projectDto.getIcon(), projectDto.getProject_key());
+        return new Project(projectDto.getName(), projectDto.getDescription(), projectDto.getIcon(), projectDto.getProjectKey());
     }
 
     public ProjectDto makeProjectDto(Project project) {

@@ -20,6 +20,7 @@ public class Project {
     @GeneratedValue
     private Long id;
 
+    @Size(min = 3, max = 8)
     @Column(unique = true)
     private String key;
 
@@ -31,7 +32,6 @@ public class Project {
     private String description;
 
     @OneToOne
-//    @Column(unique = true)
     private UserAccount owner;
 
     private String icon;

@@ -28,7 +28,7 @@ public class ProjectService {
     protected SecurityContextService securityContextService;
 
     public ProjectDto create(ProjectDto projectDto){
-        if (projectRepository.findByKey(projectDto.getProject_key()) == null) {
+        if (projectRepository.findByKey(projectDto.getProjectKey()) == null) {
             Project project = projectAsm.makeProject(projectDto);
 
             UserAccount projectOwner = securityContextService.getCurrentUserAccount();
@@ -41,7 +41,7 @@ public class ProjectService {
             projectRepository.save(project);
             return projectDto;
         }else{
-            throw new ProjectAlreadyExsistsException(projectDto.getProject_key());
+            throw new ProjectAlreadyExsistsException(projectDto.getProjectKey());
         }
     }
 

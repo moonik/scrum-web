@@ -14,15 +14,15 @@ import java.util.Set;
 public class ProjectDto {
 
     private String name;
-    private String project_key;
+    private String projectKey;
     private String description;
     private UserProfileDto owner;
     private String icon;
     private Set<ProjectMemberDto> members;
 
-    public ProjectDto(String name, String description, String icon, Set<ProjectMemberDto> members, String project_key) {
+    public ProjectDto(String name, String description, String icon, Set<ProjectMemberDto> members, String projectKey) {
         this.name = name;
-        this.project_key = project_key;
+        this.projectKey = projectKey;
         this.description = description;
         this.icon = icon;
         this.members = members;
