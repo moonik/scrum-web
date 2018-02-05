@@ -5,6 +5,7 @@ import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {AuthGuard} from './security/auth.service';
 import {HomeComponent} from './home/home.component';
+import {ProjectComponent} from "./project/project.component";
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegistrationComponent
+  },
+  {
+    path: 'project',
+    component: ProjectComponent
   },
   {
     path: '',

@@ -27,7 +27,6 @@ export class ProjectComponent implements OnInit {
     });
     this.headers.append('Authorization', this.authenticationService.token);
     this.headers.append('Content-Type', 'application/json');
-
   }
 
   ngOnInit() {
@@ -49,14 +48,10 @@ export class ProjectComponent implements OnInit {
   }
 
   getCurrentToken(): string{
-    // let token = JSON.parse(localStorage.getItem('currentUser'));
-    // return token.token;
+
     return this.authenticationService.token;
   }
 
-  getCurrentToken2(): string{
-    let token = JSON.parse(localStorage.getItem('currentUser'));
-    return token.token;
-  }
+
 
 }
