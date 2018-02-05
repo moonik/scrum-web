@@ -1,3 +1,11 @@
+#INSTALL ADDITIONAL LIBRIRIES
+
+npm install bootstrap@4.0.0
+
+npm install jquery
+
+npm install popper.js angular-popper
+
 # Angular5
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.5.
