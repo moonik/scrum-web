@@ -31,7 +31,6 @@ public class UserAccountService {
     public void save(UserDto userDto) {
         if (userAccountRepository.findByUsername(userDto.getUsername()) == null) {
             UserProfile userProfile = userProfileAsm.makeUserProfile(userDto);
-            userProfileRepository.save(userProfile);
 
             UserAccount userAccount = userAccountAsm.makeUserAccount(userDto, userProfile);
             Authority authority = authorityRepository.findByName(AuthorityName.ROLE_USER);
