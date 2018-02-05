@@ -10,6 +10,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { AuthGuard } from './security/auth.service';
 import { AuthenticationService } from './security/authentication.service';
 import { HomeComponent } from './home/home.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { HomeComponent } from './home/home.component';
     AppComponent,
     LoginComponent,
     RegistrationComponent,
-    HomeComponent
+    HomeComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
