@@ -31,7 +31,7 @@ public class UserAccount {
     @Size(min = 5)
     private String password;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @NotNull
     private UserProfile userProfile;
 
