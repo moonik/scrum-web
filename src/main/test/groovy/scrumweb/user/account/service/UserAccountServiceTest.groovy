@@ -31,7 +31,6 @@ class UserAccountServiceTest extends Specification{
         then:
         1 * userAccountRepository.findByUsername(USERNAME) >> null
         1 * userProfileAsm.makeUserProfile(TestData.USER_DTO) >> TestData.USER_PROFILE
-        1 * userProfileRepository.save(TestData.USER_PROFILE)
         1 *authorityRepository.findByName(_) >> new Authority(AuthorityName.ROLE_USER)
         1 * userAccountAsm.makeUserAccount(TestData.USER_DTO, TestData.USER_PROFILE) >> TestData.USER_ACCOUNT
         1 * userAccountRepository.save(TestData.USER_ACCOUNT)
