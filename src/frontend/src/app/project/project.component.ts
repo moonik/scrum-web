@@ -32,9 +32,9 @@ export class ProjectComponent implements OnInit {
   ngOnInit() {
   }
 
-  createproject(projectDto: ProjectDto){
+  createproject(){
     console.log(this.authenticationService.headers);
-    return this.http.post('/api/scrum-web/project/create',JSON.stringify(projectDto),{headers: this.headers})
+    return this.http.post('/api/scrum-web/project/create',JSON.stringify(this.projectDto),{headers: this.headers})
       .subscribe(projectDto => this.projectDto = projectDto.json())
   }
 
