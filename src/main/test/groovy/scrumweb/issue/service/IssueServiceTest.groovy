@@ -47,7 +47,7 @@ class IssueServiceTest extends Specification {
     def projectFieldName = "projectFieldName"
     def content = "content"
 
-    def issueId = null
+    def issueId = 1L
     def key = null
     def summary = "summary"
     def description = "description"
@@ -62,19 +62,19 @@ class IssueServiceTest extends Specification {
     def "should create issue"() {
         given:
         UserProfileDto userProfileDto = new UserProfileDto(profileId, firstname, lastname, photo, username)
-        Set<UserProfileDto> assigness = new HashSet<>(Arrays.asList(userProfileDto))
+        Set<UserProfileDto> assignees = new HashSet<>(Arrays.asList(userProfileDto))
         FieldContentDto fieldContentDto = new InputFieldContentDto(projectFieldId, projectFieldName, content)
         Set<FieldContentDto> fieldContentDtos = new HashSet<>(Arrays.asList(fieldContentDto))
         ProjectField projectField = new ProjectField(FieldType.INPUT_FIELD, projectFieldName, true)
         FieldContent inputFieldContent = new InputFieldContent(projectField, content)
         Set<FieldContent> fieldContents = new HashSet<>(Arrays.asList(inputFieldContent))
-        IssueDetailsDto issueDetailsDto = new IssueDetailsDto(issueId, key, summary, description, assigness, userProfileDto, estimateTime, remainingTime, priority, issueType)
+        IssueDetailsDto issueDetailsDto = new IssueDetailsDto(issueId, key, summary, description, assignees, userProfileDto, estimateTime, remainingTime, priority, issueType)
         Set<UserAccount> users = new HashSet<>(Arrays.asList(TestData.USER_ACCOUNT))
         IssueType issueType = new IssueType(issueType, TestData.PROJECT)
-        Issue createdIssue = new Issue(summary, description, users, TestData.USER_ACCOUNT, estimateTime, remainingTime, Priority.HIGH, issueType, fieldContents)
+        Issue issue = new Issue(summary, description, users, TestData.USER_ACCOUNT, estimateTime, remainingTime, Priority.HIGH, issueType, fieldContents)
 
         when:
-        Issue issue = issueService.createIssue(issueDetailsDto, fieldContentDtos)
+        Issue createdIssue = issueService.createIssue(issueDetailsDto, fieldContentDtos)
 
         then:
         1 * securityContextService.getCurrentUserAccount() >> TestData.USER_ACCOUNT
@@ -84,6 +84,33 @@ class IssueServiceTest extends Specification {
         1 * issueTypeRepository.findByName(_) >> issueType
         1 * issueAsm.createIssueEntityObject(issueDetailsDto, users, TestData.USER_ACCOUNT, fieldContents, issueType) >> createdIssue
         createdIssue == issue
+    }
+
+    def "should get issue"() {
+        given:
+        UserProfileDto userProfileDto = new UserProfileDto(profileId, firstname, lastname, photo, username)
+        Set<UserProfileDto> assignees = new HashSet<>(Arrays.asList(userProfileDto))
+        ProjectField projectField = new ProjectField(FieldType.INPUT_FIELD, projectFieldName, true)
+        FieldContent inputFieldContent = new InputFieldContent(projectField, content)
+        Set<FieldContent> fieldContents = new HashSet<>(Arrays.asList(inputFieldContent))
+        IssueDetailsDto issueDetailsDto = new IssueDetailsDto(issueId, key, summary, description, assignees, userProfileDto, estimateTime, remainingTime, priority, issueType)
+        Set<UserAccount> users = new HashSet<>(Arrays.asList(TestData.USER_ACCOUNT))
+        IssueType issueType = new IssueType(issueType, TestData.PROJECT)
+        Issue createdIssue = new Issue(summary, description, users, TestData.USER_ACCOUNT, estimateTime, remainingTime, Priority.HIGH, issueType, fieldContents)
+
+        and:
+        createdIssue.getAssignees() >> users
+        createdIssue.getFieldContents() >> fieldContents
+
+        when:
+        IssueDetailsDto returnedIssue = issueService.getIssue(issueId)
+
+        then:
+        1 * issueRepository.findOne(issueId) >> createdIssue
+        2 * userProfileAsm.makeUserProfileDto(*_) >> userProfileDto
+        1 * fieldContentAsm.createDtoObject(inputFieldContent)
+        1 * issueAsm.createIssueDetailsDto(*_) >> issueDetailsDto
+        issueDetailsDto == returnedIssue
     }
 
 }
