@@ -12,4 +12,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
+  getCurrentUser(): string{
+    let Username = JSON.parse(localStorage.getItem('currentUser'));
+    return Username.username;
+  }
+
 }
