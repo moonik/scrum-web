@@ -20,6 +20,10 @@ public class Project {
     @GeneratedValue
     private Long id;
 
+    @Size(min = 3, max = 8)
+    @Column(unique = true)
+    private String key;
+
     @NotNull
     @Size(min = 5, max = 30)
     private String name;
@@ -28,7 +32,6 @@ public class Project {
     private String description;
 
     @OneToOne
-//    @Column(unique = true)
     private UserAccount owner;
 
     private String icon;
@@ -36,8 +39,9 @@ public class Project {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<ProjectMember> members;
 
-    public Project(String name, String description, String icon) {
+    public Project(String name, String description, String icon, String key) {
         this.name = name;
+        this.key = key;
         this.description = description;
         this.icon = icon;
     }
