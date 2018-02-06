@@ -27,6 +27,7 @@
       <small id="usernameError" class="form-text text-danger" *ngIf="registrationForm.controls.username.errors.required">username is required.</small>
       <small id="usernameError" class="form-text text-danger" *ngIf="checkUsernameLength()">username must be between 5 to 9 characters.</small>
       </div>
+      <small id="usernameError" class="form-text text-danger">{{usernameExistError}}</small>
     </div>
 
     <!--<div class="form-group">-->

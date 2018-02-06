@@ -11,6 +11,7 @@ import { AuthGuard } from './security/auth.service';
 import { AuthenticationService } from './security/authentication.service';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import {HttpClient} from './shared/http.client.service';
 
 
 @NgModule({
@@ -28,7 +29,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [AuthGuard, AuthenticationService],
+  providers: [AuthGuard, AuthenticationService, HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
