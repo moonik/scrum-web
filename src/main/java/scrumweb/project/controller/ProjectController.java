@@ -3,9 +3,9 @@ package scrumweb.project.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import scrumweb.dto.ProjectDto;
-import scrumweb.dto.ProjectMemberDto;
-import scrumweb.project.ProjectService;
+import scrumweb.dto.project.ProjectDto;
+import scrumweb.dto.project.ProjectMemberDto;
+import scrumweb.project.service.ProjectService;
 
 import static scrumweb.common.ApplicationConstants.API_URL;
 
