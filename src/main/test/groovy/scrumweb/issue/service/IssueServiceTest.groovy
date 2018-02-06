@@ -59,7 +59,7 @@ class IssueServiceTest extends Specification {
     @Subject
     def issueService = new IssueService(issueAsm, issueRepository, userAccountRepository, securityContextService, projectFieldRepository, issueTypeRepository, projectRepository, userProfileAsm, fieldContentAsm)
 
-    def "should save issue"() {
+    def "should create issue"() {
         given:
         UserProfileDto userProfileDto = new UserProfileDto(profileId, firstname, lastname, photo, username)
         Set<UserProfileDto> assigness = new HashSet<>(Arrays.asList(userProfileDto))
@@ -82,8 +82,7 @@ class IssueServiceTest extends Specification {
         1 * projectFieldRepository.findOne(projectFieldId) >> projectField
         1 * fieldContentAsm.createObjectEntity(projectField, fieldContentDto) >> inputFieldContent
         1 * issueTypeRepository.findByName(_) >> issueType
-        1 * issueAsm.createIssueEntityObject(issueDetailsDto, users, TestData.USER_ACCOUNT, fieldContents, issueType)
-        1 * issueRepository.save(_) >> createdIssue
+        1 * issueAsm.createIssueEntityObject(issueDetailsDto, users, TestData.USER_ACCOUNT, fieldContents, issueType) >> createdIssue
         createdIssue == issue
     }
 

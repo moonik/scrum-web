@@ -52,8 +52,7 @@ public class IssueService {
         Set<UserAccount> assignees = userAccountRepository.findUsers(extractUserNames(issueDetailsDto.getAssignees()));
         Set<FieldContent> fieldContents = extractContents(fieldContentsDto);
         IssueType issueType = issueTypeRepository.findByName(issueDetailsDto.getIssueType());
-        Issue issue = issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
-        return issueRepository.save(issue);
+        return issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
     }
 
     public IssueDetailsDto getIssue(Long id) {
