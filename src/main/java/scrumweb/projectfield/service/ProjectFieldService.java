@@ -24,8 +24,8 @@ public class ProjectFieldService {
     private ProjectRepository projectRepository;
     private IssueTypeRepository issueTypeRepository;
 
-    public void createFields(Set<ProjectFieldDto> projectFieldsDto, String issuetype, String projectName) {
-        Project project = projectRepository.findByName(projectName);
+    public void createFields(Set<ProjectFieldDto> projectFieldsDto, String issuetype, String projectKey) {
+        Project project = projectRepository.findByKey(projectKey);
         IssueType issueType = findIssueType(project.getIssueTypes(), issuetype.toUpperCase());
         if (issueType != null) {
             Set<ProjectField> issueTypeFields = issueType.getFields();
@@ -36,8 +36,8 @@ public class ProjectFieldService {
             throw new IssueTypeDoesNotExists(issuetype);
     }
 
-    public Set<ProjectFieldDto> getIssueFields(String issueType, String projectName) {
-        final Project project = projectRepository.findByName(projectName);
+    public Set<ProjectFieldDto> getIssueFields(String issueType, String projectKey) {
+        final Project project = projectRepository.findByKey(projectKey);
         final IssueType issueTypeFromDb = findIssueType(project.getIssueTypes(), issueType.toUpperCase());
         return issueTypeFromDb.getFields().stream()
                 .map(field -> projectFieldAsm.createDtoObject(field))

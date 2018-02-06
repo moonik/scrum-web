@@ -28,7 +28,7 @@ class ProjectFieldServiceTest extends Specification {
     def final MAX_CHARACTERS = 10
     def final MIN_CHARACTERS = 0
     def final FIELD_ID = 1L
-    def anyProjectName = "any project name"
+    def anyProjectKey = "any project key"
     def final ISSUE_TYPE = "TASK"
 
     def "should create new project field"() {
@@ -44,10 +44,10 @@ class ProjectFieldServiceTest extends Specification {
         project.setIssueTypes(issueTypes)
 
         when:
-        projectFieldService.createFields(projectFieldDtos, ISSUE_TYPE, anyProjectName)
+        projectFieldService.createFields(projectFieldDtos, ISSUE_TYPE, anyProjectKey)
 
         then:
-        1 * projectRepository.findByName(anyProjectName) >> project
+        1 * projectRepository.findByKey(anyProjectKey) >> project
         1 * projectFieldAsm.createEntityObject(projectFieldDto) >> projectField
         1 * issueTypeRepository.save(issueType) >> issueType
     }

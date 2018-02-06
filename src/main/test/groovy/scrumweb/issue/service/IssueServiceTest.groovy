@@ -82,7 +82,7 @@ class IssueServiceTest extends Specification {
         1 * projectFieldRepository.findOne(projectFieldId) >> projectField
         1 * fieldContentAsm.createObjectEntity(projectField, fieldContentDto) >> inputFieldContent
         1 * issueTypeRepository.findByName(_) >> issueType
-        1 * issueAsm.createIssueEntityObject(issueDetailsDto, users, TestData.USER_ACCOUNT, fieldContents, issueType) >> createdIssue
+        1 * issueAsm.createIssueEntityObject(issueDetailsDto, users, TestData.USER_ACCOUNT, fieldContents, issueType) >> issue
         createdIssue == issue
     }
 
