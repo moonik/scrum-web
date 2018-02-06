@@ -3,7 +3,9 @@ import {ProjectDto} from "../model/projectDto";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../security/authentication.service";
-import {Http, Headers} from "@angular/http";
+import {Http} from "@angular/http";
+import { ProjectService } from "./project.service";
+import { HttpClient } from "../shared/http.client.service";
 
 @Component({
   selector: 'app-project',
@@ -16,26 +18,31 @@ export class ProjectComponent implements OnInit {
   projectForm: FormGroup;
   error = '';
 
-  headers: Headers = new Headers();
-
-
-  constructor(private authenticationService: AuthenticationService, fb: FormBuilder, private router: Router, private http: Http) {
+  constructor(fb: FormBuilder, private router: Router, private projectService: ProjectService, httpClient: HttpClient) {
 
     this.projectForm = fb.group({
       name: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
       description: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(300)]],
       projectKey: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(8)]]
-
     });
-    this.headers.append('Authorization', this.authenticationService.token);
-    this.headers.append('Content-Type', 'application/json');
+
   }
 
   ngOnInit() {
   }
 
   createproject(){
-    return this.http.post('/api/scrum-web/project/create',JSON.stringify(this.projectDto),{headers: this.headers})
+    // return this.http.post('/api/scrum-web/project/create',JSON.stringify(this.projectDto),{headers: this.headers})
+    //   .subscribe(
+    //     success => {
+    //       this.router.navigate(['/home']);
+    //     },
+    //     error => {
+    //       if(error.status === 409){
+    //         this.error = 'Project with key ' + this.projectDto.projectKey + ' already exists!';
+    //       }
+    //     });
+    this.projectService.createProject(this.projectDto)
       .subscribe(
         success => {
           this.router.navigate(['/home']);
