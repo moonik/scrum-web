@@ -11,7 +11,7 @@ export class AuthenticationService {
 
   constructor(private http: Http) {
 
-    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    let currentUser = JSON.parse(localStorage.getItem('username'));
     this.token = currentUser && currentUser.token;
     this.headers.append('Authorization', '');
     this.headers.append('Content-Type', 'application/json');
