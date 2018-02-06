@@ -1,8 +1,8 @@
 package scrumweb.common.asm;
 
 import org.springframework.stereotype.Component;
-import scrumweb.dto.ProjectDto;
-import scrumweb.dto.ProjectMemberDto;
+import scrumweb.dto.project.ProjectDto;
+import scrumweb.dto.project.ProjectMemberDto;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.project.domain.Project;
 import scrumweb.project.domain.ProjectMember.Role;

@@ -7,7 +7,7 @@ INSERT INTO user_profile (id, firstname, lastname, photo) VALUES (-1, 'testUser'
 
 -- --UserAccount
 --decoded password= testUser
-INSERT INTO user_account (id, enabled, password, username, user_profile_id) VALUES (-1, true, '$2a$10$KG6KiB.Yx0IDwxRdYD9dku9DP3DspOQQ1lxs4o8WNrJs74GNFHtve', 'Mr Smith', -1);
+INSERT INTO user_account (id, enabled, password, username, user_profile_id) VALUES (-1, true, '$2a$10$KG6KiB.Yx0IDwxRdYD9dku9DP3DspOQQ1lxs4o8WNrJs74GNFHtve', 'testUser', -1);
 
 -- --UserAuthority
 INSERT INTO user_authority (user_id, authority_id) VALUES (-1, 2);
@@ -20,3 +20,8 @@ INSERT INTO project (id, description, icon, name, owner_id) VALUES (-1, 'test de
 
 --ProjectMembers
 INSERT INTO project_members (project_id, members_id) VALUES (-1, -1);
+
+--IssueType
+INSERT INTO issue_type (id, name) VALUES (1, 'Task');
+INSERT INTO issue_type (id, name) VALUES (2, 'Bug');
+INSERT INTO issue_type (id, name) VALUES (3, 'Feature');

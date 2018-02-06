@@ -2,7 +2,7 @@ package scrumweb.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import scrumweb.dto.UserInformationDto;
+import scrumweb.dto.user.UserInformationDto;
 
 @AllArgsConstructor
 @Getter
