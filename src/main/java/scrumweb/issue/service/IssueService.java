@@ -47,14 +47,13 @@ public class IssueService {
         return issueDetailsDto;
     }
 
-    private Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto) {
+    protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto) {
         final UserAccount reporter = securityContextService.getCurrentUserAccount();
         Set<UserAccount> assignees = userAccountRepository.findUsers(extractUserNames(issueDetailsDto.getAssignees()));
         Set<FieldContent> fieldContents = extractContents(fieldContentsDto);
         IssueType issueType = issueTypeRepository.findByName(issueDetailsDto.getIssueType());
         Issue issue = issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
-        issueRepository.save(issue);
-        return issue;
+        return issueRepository.save(issue);
     }
 
     public IssueDetailsDto getIssue(Long id) {
