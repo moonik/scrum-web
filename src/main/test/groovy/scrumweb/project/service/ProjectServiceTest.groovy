@@ -64,18 +64,18 @@ class ProjectServiceTest extends Specification{
 
         then:
         1 * projectAsm.makeProject(TestData.PROJECT_DTO) >> TestData.PROJECT
-        1 * projectRepository.findByName(TestData.PROJECT_DTO.getName())
+        1 * projectRepository.findByKey(TestData.PROJECT_DTO.getProjectKey())
         1 * projectRepository.save(TestData.PROJECT)
     }
 
-    def "should throw exception when project name exists"(){
+    def "should throw exception when project key exists"(){
         when:
         projectService.create(TestData.PROJECT_DTO)
 
         then:
-        1 * projectRepository.findByName(TestData.PROJECT.getName()) >> TestData.PROJECT
+        1 * projectRepository.findByKey(TestData.PROJECT.getKey()) >> TestData.PROJECT
         ProjectAlreadyExsistsException ex = thrown()
-        ex.message == "Project with name projectname already exists!"
+        ex.message == "Project with key testkey already exists!"
     }
 
     def "should edit project name" (){

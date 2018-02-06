@@ -31,6 +31,6 @@ class TestData {
     static final UserProfile USER_PROFILE = new UserProfile("testUser", "testUser", null)
     static final Set<UserProfile> USER_PROFILE_SET = null
     static final Set<ProjectMemberDto> PROJECT_MEMBER_SET = null
-    static final ProjectDto PROJECT_DTO = new ProjectDto("projectname", "description", "icon", PROJECT_MEMBER_SET)
-    static final Project PROJECT = new Project("projectname", "description", "icon")
+    static final ProjectDto PROJECT_DTO = new ProjectDto("projectname", "description", "icon", PROJECT_MEMBER_SET, "testkey")
+    static final Project PROJECT = new Project("projectname", "description", "icon", "testkey")
 }

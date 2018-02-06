@@ -33,7 +33,7 @@ public class ProjectService {
     private static final String[] DEFAULT_ISSUE_TYPES = {"TASK", "BUG", "FEATURE"};
 
     public ProjectDto create(ProjectDto projectDto){
-        if (projectRepository.findByName(projectDto.getName()) == null) {
+        if (projectRepository.findByKey(projectDto.getProjectKey()) == null) {
             Project project = projectAsm.makeProject(projectDto);
 
             UserAccount projectOwner = securityContextService.getCurrentUserAccount();
@@ -47,7 +47,7 @@ public class ProjectService {
             projectRepository.save(project);
             return projectDto;
         }else{
-            throw new ProjectAlreadyExsistsException(projectDto.getName());
+            throw new ProjectAlreadyExsistsException(projectDto.getProjectKey());
         }
     }
 

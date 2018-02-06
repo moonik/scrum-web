@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 @Component
 public class ProjectAsm {
     public Project makeProject(ProjectDto projectDto) {
-        return new Project(projectDto.getName(), projectDto.getDescription(), projectDto.getIcon());
+        return new Project(projectDto.getName(), projectDto.getDescription(), projectDto.getIcon(), projectDto.getProjectKey());
     }
 
     public ProjectDto makeProjectDto(Project project) {
         return new ProjectDto(project.getName(), project.getDescription(), project.getIcon(),
                 project.getMembers().stream()
                         .map(member -> makeProjectMemberDto(member, project.getId()))
-                        .collect(Collectors.toSet()));
+                        .collect(Collectors.toSet()), project.getKey());
     }
 
     public ProjectMember makeProjectMember(UserAccount userAccount, Role role){
