@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {ProjectDto} from "../model/projectDto";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../security/authentication.service";
-import {Http} from "@angular/http";
 import { ProjectService } from "./project.service";
 import { HttpClient } from "../shared/http.client.service";
 
@@ -32,16 +30,6 @@ export class ProjectComponent implements OnInit {
   }
 
   createproject(){
-    // return this.http.post('/api/scrum-web/project/create',JSON.stringify(this.projectDto),{headers: this.headers})
-    //   .subscribe(
-    //     success => {
-    //       this.router.navigate(['/home']);
-    //     },
-    //     error => {
-    //       if(error.status === 409){
-    //         this.error = 'Project with key ' + this.projectDto.projectKey + ' already exists!';
-    //       }
-    //     });
     this.projectService.createProject(this.projectDto)
       .subscribe(
         success => {
@@ -53,17 +41,6 @@ export class ProjectComponent implements OnInit {
           }
         });
   }
-
-  /*
-  project.service.ts
-  createProject(object) {
-    return this.httpClient.post('URL//api/scrum', object));
-  }
-  project.component.ts
-  createProject() {
-    projectService.createProject(this.projectDto).subscribe()
-  }
-   */
 
   checkProjectNameLength(): boolean {
     return this.projectForm.controls.name.errors.minlength || this.projectForm.controls.name.errors.maxlength;
