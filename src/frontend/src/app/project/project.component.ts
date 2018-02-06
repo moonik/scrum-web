@@ -23,7 +23,8 @@ export class ProjectComponent implements OnInit {
 
     this.projectForm = fb.group({
       name: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
-      description: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(300)]]
+      description: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(300)]],
+      projectKey: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(8)]]
 
     });
     this.headers.append('Authorization', this.authenticationService.token);
@@ -34,7 +35,6 @@ export class ProjectComponent implements OnInit {
   }
 
   createproject(){
-    console.log(this.authenticationService.headers);
     return this.http.post('/api/scrum-web/project/create',JSON.stringify(this.projectDto),{headers: this.headers})
       .subscribe(
         success => {
@@ -42,7 +42,7 @@ export class ProjectComponent implements OnInit {
         },
         error => {
           if(error.status === 409){
-            this.error = 'Project with name ' + this.projectDto.name + ' already exists!';
+            this.error = 'Project with key ' + this.projectDto.projectKey + ' already exists!';
           }
         });
   }
@@ -62,6 +62,10 @@ export class ProjectComponent implements OnInit {
     return this.projectForm.controls.name.errors.minlength || this.projectForm.controls.name.errors.maxlength;
   }
 
+  checkProjectKeyLength(): boolean {
+    return this.projectForm.controls.projectKey.errors.minlength || this.projectForm.controls.projectKey.errors.maxlength;
+  }
+
   checkDescriptionLength(): boolean {
     return this.projectForm.controls.description.errors.minlength || this.projectForm.controls.description.errors.maxlength;
   }
@@ -78,12 +82,5 @@ export class ProjectComponent implements OnInit {
     let Username = JSON.parse(localStorage.getItem('currentUser'));
     return Username.username;
   }
-
-  getCurrentToken(): string{
-
-    return this.authenticationService.token;
-  }
-
-
 
 }
