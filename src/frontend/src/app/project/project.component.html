@@ -4,15 +4,31 @@ is logged: {{ checkLogin() }}, logged as: {{ getCurrentUser() }}, token: {{ getC
   <form [formGroup] = "projectForm" (ngSubmit)="createproject()">
 
     <div class="form-group">
+
+      <div *ngIf="error != ''">
+        <small class="form-text error">{{error}}</small>
+        <br/>
+      </div>
+
       <label for="inputName">Name</label>
       <input type="text" class="form-control w-100" id="inputName"
              placeholder="Enter project name" [(ngModel)]="projectDto.name" formControlName="name">
+      <div *ngIf="checkControl('name')">
+        <small id="nameIsRequiredError" class="form-text text-danger" *ngIf="registrationForm.controls.name.errors.required">Project name is required.</small>
+        <small id="nameLengthError" class="form-text text-danger" *ngIf="checkProjectNameLength()">Project name must be between 5 to 30 characters.</small>
+      </div>
     </div>
+
     <div class="form-group">
       <label for="inputDescription">Description</label>
       <input type="text" class="form-control w-200" id="inputDescription"
              placeholder="Enter description" [(ngModel)]="projectDto.description" formControlName="description">
+      <div *ngIf="checkControl('description')">
+        <small id="descriptionIsRequiredError" class="form-text text-danger" *ngIf="registrationForm.controls.description.errors.required">Project description is required.</small>
+        <small id="descriptionLengthError" class="form-text text-danger" *ngIf="checkDescriptionLength()">Project description must be between 5 to 300 characters.</small>
+      </div>
     </div>
+
     <button type="submit" class="btn btn-primary">Create project</button>
 
   </form>
