@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../security/authentication.service';
 import {Router} from '@angular/router';
+import {UserDto} from '../model/userDto';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,7 @@ export class LoginComponent implements OnInit {
 
   loading = false;
   error = '';
-  username: string;
-  password: string;
+  userDto: UserDto = new UserDto();
   loginForm: FormGroup;
 
   constructor(private fb: FormBuilder, private authenticationService: AuthenticationService,private router: Router) {
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       console.info('logged');
       this.loading = true;
-      this.authenticationService.login (this.username, this.password)
+      this.authenticationService.login (this.userDto)
         .subscribe(
           success => {
             this.router.navigate(['/home']);

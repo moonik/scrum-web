@@ -9,12 +9,12 @@
           <br/>
         </div>
         <label for="inputLogin">Login</label>
-        <input type="text" class="form-control w-50" id="inputLogin" aria-describedby="loginHelp" placeholder="Enter login" [(ngModel)]="username" formControlName="login">
+        <input type="text" class="form-control w-50" id="inputLogin" aria-describedby="loginHelp" placeholder="Enter login" [(ngModel)]="userDto.username" formControlName="login">
         <small id="loginHelp" class="form-text text-muted">use login used to register an account</small>
       </div>
       <div class="form-group">
         <label for="inputPassword">Password</label>
-        <input type="password" class="form-control w-50" id="inputPassword" aria-describedby="passwordHelp" [(ngModel)] = "password" formControlName="password">
+        <input type="password" class="form-control w-50" id="inputPassword" aria-describedby="passwordHelp" [(ngModel)] = "userDto.password" formControlName="password">
         <small id="passwordHelp" class="form-text text-muted">Don't remember your password? too baaaad...</small>
       </div>
      <h6>Don't have an account? Click
