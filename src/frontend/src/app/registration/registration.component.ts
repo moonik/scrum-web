@@ -57,7 +57,7 @@ export class RegistrationComponent implements OnInit {
           this.router.navigate(['/login']);
         }, error => {
             if(error.status === 409){
-              this.usernameExistError = 'Username already taken.';
+              this.usernameExistError = error._body;
             }
       });
   }
