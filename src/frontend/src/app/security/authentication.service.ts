@@ -11,7 +11,7 @@ export class AuthenticationService {
 
   constructor(private http: Http) {
 
-    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    let currentUser = JSON.parse(localStorage.getItem('username'));
     this.token = currentUser && currentUser.token;
     this.headers.append('Authorization', '');
     this.headers.append('Content-Type', 'application/json');
@@ -23,7 +23,8 @@ export class AuthenticationService {
         let token = response.json() && response.json().token;
         if (token) {
           this.token = token;
-          localStorage.setItem('currentUser', JSON.stringify({username: username, token: token}));
+          localStorage.setItem('token', token);
+          localStorage.setItem('currentUser', JSON.stringify({username: username}));
         }
         return response.status;
       });
