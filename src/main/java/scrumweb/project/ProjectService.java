@@ -8,6 +8,7 @@ import scrumweb.dto.ProjectDto;
 import scrumweb.dto.ProjectMemberDto;
 import scrumweb.exception.ProjectAlreadyExsistsException;
 import scrumweb.exception.ProjectNotFoundException;
+import scrumweb.storage.FileStorage;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 import scrumweb.project.domain.Project;
@@ -26,6 +27,7 @@ public class ProjectService {
     protected ProjectRepository projectRepository;
     protected UserAccountRepository userAccountRepository;
     protected SecurityContextService securityContextService;
+    protected FileStorage storage;
 
     public ProjectDto create(ProjectDto projectDto){
         if (projectRepository.findByName(projectDto.getName()) == null) {
@@ -37,6 +39,8 @@ public class ProjectService {
             Set<ProjectMember> projectMembers = new LinkedHashSet<>();
             projectMembers.add(projectAsm.makeProjectMember(projectOwner,Role.PROJECT_MANAGER));
             project.setMembers(projectMembers);
+
+            project.setIcon(projectDto.getIcon());
 
             projectRepository.save(project);
             return projectDto;

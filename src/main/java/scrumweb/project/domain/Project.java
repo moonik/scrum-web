@@ -3,11 +3,13 @@ package scrumweb.project.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import scrumweb.storage.Asset;
 import scrumweb.user.account.domain.UserAccount;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.nio.file.Path;
 import java.util.Set;
 
 @Entity
@@ -31,12 +33,12 @@ public class Project {
 //    @Column(unique = true)
     private UserAccount owner;
 
-    private String icon;
+    private Path icon;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<ProjectMember> members;
 
-    public Project(String name, String description, String icon) {
+    public Project(String name, String description, Path icon) {
         this.name = name;
         this.description = description;
         this.icon = icon;
