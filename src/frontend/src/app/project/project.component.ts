@@ -37,7 +37,7 @@ export class ProjectComponent implements OnInit {
         },
         error => {
           if(error.status === 409){
-            this.error = 'Project with key ' + this.projectDto.projectKey + ' already exists!';
+            this.error = error._body;
           }
         });
   }
@@ -56,15 +56,6 @@ export class ProjectComponent implements OnInit {
 
   checkControl(name: string): boolean {
     return this.projectForm.controls[name].invalid && (this.projectForm.controls[name].touched || this.projectForm.controls[name].dirty);
-  }
-
-  checkLogin(): boolean{
-    return localStorage.getItem('currentUser') ? true : false;
-  }
-
-  getCurrentUser(): string{
-    let Username = JSON.parse(localStorage.getItem('currentUser'));
-    return Username.username;
   }
 
 }

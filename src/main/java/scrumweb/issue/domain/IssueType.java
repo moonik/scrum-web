@@ -25,7 +25,6 @@ public class IssueType {
     private Long id;
 
     @NotNull
-    @Column(unique = true)
     private String name;
 
     @ManyToMany(cascade = CascadeType.ALL)

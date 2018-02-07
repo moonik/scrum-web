@@ -12,6 +12,7 @@
       <a class="nav-item nav-link" (click)="logout()" *ngIf="checkLogin()">Logout</a>
       </ul>
       <ul class="navbar-nav ml-auto">
+        <li class="nav-item nav-link">Hello {{ getCurrentUser() }}!</li>
         <li class="nav-item">
           <input type="text" class="form-control" placeholder="Search...">
         </li>
