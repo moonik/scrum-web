@@ -16,9 +16,7 @@ import scrumweb.project.domain.ProjectMember;
 import scrumweb.project.domain.ProjectMember.Role;
 import scrumweb.project.repository.ProjectRepository;
 
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -73,5 +71,17 @@ public class ProjectService {
         return Arrays.stream(DEFAULT_ISSUE_TYPES)
                 .map(type -> new IssueType(type, project))
                 .collect(Collectors.toSet());
+    }
+
+    public List<ProjectDto> displayAllUserProject(){
+        List<ProjectDto> projects = new ArrayList<>();
+        UserAccount projectOwner = securityContextService.getCurrentUserAccount();
+        List<Project> ownProjects = projectRepository.findProjectsByOwner(projectOwner);
+
+        for(Project project : ownProjects){
+            projects.add(projectAsm.convertFromProjectToProjectDto(project));
+        }
+
+        return projects;
     }
 }

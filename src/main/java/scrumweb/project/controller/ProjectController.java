@@ -5,7 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
+import scrumweb.project.domain.Project;
 import scrumweb.project.service.ProjectService;
+
+import java.util.List;
 
 import static scrumweb.common.ApplicationConstants.API_URL;
 
@@ -32,5 +35,11 @@ public class ProjectController {
     @ResponseStatus(HttpStatus.OK)
     public ProjectDto editProject(@PathVariable Long id,@RequestBody ProjectDto projectDto){
         return projectService.editName(projectDto.getName(), id);
+    }
+
+    @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProjectDto> allProjects(){
+        return projectService.displayAllUserProject();
     }
 }
