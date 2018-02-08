@@ -55,7 +55,7 @@ public class IssueService {
         return issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
     }
 
-    public IssueDetailsDto getIssue(Long id) {
+    public IssueDetailsDto getDetails(Long id) {
         Issue issue = issueRepository.findOne(id);
         Set<UserProfileDto> assignees = issue.getAssignees().stream().map(userAccount -> userProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile())).collect(Collectors.toSet());
         UserProfileDto reporter = userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());

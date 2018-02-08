@@ -103,7 +103,7 @@ class IssueServiceTest extends Specification {
         createdIssue.getFieldContents() >> fieldContents
 
         when:
-        IssueDetailsDto returnedIssue = issueService.getIssue(issueId)
+        IssueDetailsDto returnedIssue = issueService.getDetails(issueId)
 
         then:
         1 * issueRepository.findOne(issueId) >> createdIssue

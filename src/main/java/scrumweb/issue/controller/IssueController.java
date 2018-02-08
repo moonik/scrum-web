@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import scrumweb.dto.fieldcontent.FieldContentDto;
 import scrumweb.dto.fieldcontent.FieldsContentCollector;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.issue.service.IssueService;
@@ -27,8 +26,8 @@ public class IssueController {
         return issueService.create(issueDetailsDto, fieldsContentCollector.extractFields(issueDetailsDto.getProjectFields()), id);
     }
 
-    @GetMapping("/{id}")
-    public IssueDetailsDto getIssue(@PathVariable Long id) {
-        return issueService.getIssue(id);
+    @GetMapping("/details/{id}")
+    public IssueDetailsDto getDetails(@PathVariable Long id) {
+        return issueService.getDetails(id);
     }
 }

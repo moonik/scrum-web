@@ -3,6 +3,7 @@ package scrumweb.project.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
 import scrumweb.project.service.ProjectService;
@@ -32,5 +33,10 @@ public class ProjectController {
     @ResponseStatus(HttpStatus.OK)
     public ProjectDto editProject(@PathVariable Long id,@RequestBody ProjectDto projectDto){
         return projectService.editName(projectDto.getName(), id);
+    }
+
+    @GetMapping("/details/{id}")
+    private ProjectDetailsDto getDetails(@PathVariable Long id) {
+        return projectService.getProjectDetails(id);
     }
 }
