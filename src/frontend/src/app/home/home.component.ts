@@ -11,10 +11,9 @@ import {HomeService} from "./home.service";
 })
 export class HomeComponent implements OnInit {
 
-  projectDto: ProjectDto = new ProjectDto();
   projects: ProjectDto[] = [];
 
-  constructor(private _http: HttpClient, private homeService: HomeService) {
+  constructor(private homeService: HomeService) {
     this.getAllOwnProjects();
   }
 
