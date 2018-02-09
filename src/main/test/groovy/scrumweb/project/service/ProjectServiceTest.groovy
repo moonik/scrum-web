@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import scrumweb.common.SecurityContextService
 import scrumweb.common.asm.IssueAsm
 import scrumweb.common.asm.ProjectAsm
+import scrumweb.common.asm.UserProfileAsm
 import scrumweb.dto.issue.IssueDto
 import scrumweb.exception.ProjectAlreadyExsistsException
 import scrumweb.exception.ProjectNotFoundException
@@ -39,6 +40,7 @@ class ProjectServiceTest extends Specification{
     def jwtUserDetailsService = Mock(JwtUserDetailsServiceImpl)
     def userDetails = Mock(UserDetails)
     def issueAsm = Mock(IssueAsm)
+    def userProfileAsm = Mock(UserProfileAsm)
     private final static String USERNAME = "testUser"
     private final static String PASSWORD = "testUser"
 
@@ -55,7 +57,7 @@ class ProjectServiceTest extends Specification{
     }
 
     @Subject
-    def projectService = new ProjectService(projectAsm, projectRepository, userAccountRepository, securityContextService, issueAsm)
+    def projectService = new ProjectService(projectAsm, projectRepository, userAccountRepository, securityContextService, issueAsm, userProfileAsm)
 
     def "should save project to database"() {
         given:
@@ -102,6 +104,7 @@ class ProjectServiceTest extends Specification{
 
     def "should get project details"() {
         given:
+        def anyKey = "anykey"
         def anyId = 1L
         def anySummary = "anySummary"
         def anyType = "anyType"
@@ -123,12 +126,13 @@ class ProjectServiceTest extends Specification{
         def anyIssueDto = new IssueDto(anyId, anySummary, anyType, anyPriority, anyNames)
         def project = TestData.PROJECT
         project.setIssues(issues)
+        project.setOwner(TestData.USER_ACCOUNT)
 
         when:
-        projectService.getProjectDetails(anyId)
+        projectService.getProjectDetails(anyKey)
 
         then:
-        1 * projectRepository.findOne(anyId) >> TestData.PROJECT
+        1 * projectRepository.findByKey(anyKey) >> TestData.PROJECT
         1 * projectAsm.makeProjectDto(TestData.PROJECT) >> TestData.PROJECT_DTO
         1 * issueAsm.createIssueDto(_) >> anyIssueDto
         1 * projectAsm.makeProjectDetailsDro(*_)
