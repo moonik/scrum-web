@@ -33,6 +33,7 @@ export class RegistrationComponent implements OnInit {
 
   userDto: UserDto = new UserDto();
   registrationForm: FormGroup;
+  usernameExistError: string;
 
   constructor(private authenticationService: AuthenticationService, fb: FormBuilder, private router: Router) {
 
@@ -54,7 +55,11 @@ export class RegistrationComponent implements OnInit {
     this.authenticationService.save(this.userDto).subscribe(
         success => {
           this.router.navigate(['/login']);
-        });
+        }, error => {
+            if(error.status === 409){
+              this.usernameExistError = error._body;
+            }
+      });
   }
 
   checkControl(name: string): boolean {

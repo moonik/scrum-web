@@ -16,6 +16,7 @@ import scrumweb.exception.ProjectNotFoundException
 import scrumweb.issue.domain.Issue
 import scrumweb.issue.domain.Issue.Priority
 import scrumweb.issue.domain.IssueType
+import scrumweb.project.domain.Project
 import scrumweb.project.repository.ProjectRepository
 import scrumweb.security.JwtTokenUtil
 import scrumweb.security.JwtUserDetailsServiceImpl
@@ -57,13 +58,18 @@ class ProjectServiceTest extends Specification{
     def projectService = new ProjectService(projectAsm, projectRepository, userAccountRepository, securityContextService, issueAsm)
 
     def "should save project to database"() {
+        given:
+        UserAccount projectOwner = TestData.USER_ACCOUNT
+        projectOwner.setProjects(new ArrayList<Project>(Arrays.asList(TestData.PROJECT)))
+
         when:
         projectService.create(TestData.PROJECT_DTO)
 
         then:
         1 * projectAsm.makeProject(TestData.PROJECT_DTO) >> TestData.PROJECT
         1 * projectRepository.findByKey(TestData.PROJECT_DTO.getProjectKey())
-        1 * projectRepository.save(TestData.PROJECT)
+        1 * projectAsm.makeProjectMember(*_)
+        1 * userAccountRepository.save(projectOwner)
     }
 
     def "should throw exception when project key exists"(){
