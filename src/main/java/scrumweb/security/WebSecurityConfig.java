@@ -61,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 // allow authentication requests
-                .antMatchers("/api/scrum-web/auth/**", "/api/scrum-web/user-account/save/**").permitAll()
+                .antMatchers("/api/scrum-web/auth/**", "/api/scrum-web/user-account/save").permitAll()
                 .anyRequest().authenticated();
 
         // add custom JWT base security filter

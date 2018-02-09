@@ -42,16 +42,16 @@ public class IssueService {
     public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String projectKey) {
         final Project project = projectRepository.findByKey(projectKey);
         Set<Issue> issues = project.getIssues();
-        issues.add(createIssue(issueDetailsDto, fieldContentsDto));
+        issues.add(createIssue(issueDetailsDto, fieldContentsDto, project));
         projectRepository.save(project);
         return issueDetailsDto;
     }
 
-    protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto) {
+    protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, Project project) {
         final UserAccount reporter = securityContextService.getCurrentUserAccount();
         Set<UserAccount> assignees = userAccountRepository.findUsers(extractUserNames(issueDetailsDto.getAssignees()));
         Set<FieldContent> fieldContents = extractContents(fieldContentsDto);
-        IssueType issueType = issueTypeRepository.findByName(issueDetailsDto.getIssueType());
+        IssueType issueType = getIssueType(project.getIssueTypes(), issueDetailsDto.getIssueType());
         return issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
     }
 
@@ -76,5 +76,12 @@ public class IssueService {
                 .map(fieldContentDto -> fieldContentAsm.createObjectEntity(
                         projectFieldRepository.findOne(fieldContentDto.getProjectFieldId()), fieldContentDto))
                 .collect(Collectors.toSet());
+    }
+
+    private IssueType getIssueType(Set<IssueType> issueTypes, String issueType) {
+        return issueTypes.stream()
+                .filter(i -> i.getName().equalsIgnoreCase(issueType))
+                .findFirst()
+                .orElse(null);
     }
 }
