@@ -73,7 +73,7 @@ public class ProjectService {
                 .collect(Collectors.toSet());
     }
 
-    public List<ProjectDto> displayAllUserProject(){
+    public List<ProjectDto> getAllProjects(){
         List<ProjectDto> projects = new ArrayList<>();
         UserAccount projectOwner = securityContextService.getCurrentUserAccount();
         List<Project> ownProjects = projectRepository.findProjectsByOwner(projectOwner);
@@ -84,4 +84,5 @@ public class ProjectService {
 
         return projects;
     }
+
 }
