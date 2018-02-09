@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import {ProjectDto} from "../model/projectDto";
 import { HttpClient } from "../shared/http.client.service";
+import {HomeService} from "./home.service";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  providers: [HomeService]
 })
 export class HomeComponent implements OnInit {
 
   projectDto: ProjectDto = new ProjectDto();
-  projects = [];
+  projects: ProjectDto[] = [];
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient, private homeService: HomeService) {
     this.getAllOwnProjects();
   }
 
@@ -20,7 +22,7 @@ export class HomeComponent implements OnInit {
   }
 
   getAllOwnProjects() {
-    this._http.get('/api/scrum-web/project/all').map(res => res.json())
+    this.homeService.getAllOwnProjects().map(res => res.json())
       .subscribe(
         data => {
           this.projects = data;
