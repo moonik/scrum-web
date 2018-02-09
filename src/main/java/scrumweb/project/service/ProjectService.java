@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import scrumweb.common.SecurityContextService;
 import scrumweb.common.asm.IssueAsm;
 import scrumweb.common.asm.ProjectAsm;
+import scrumweb.common.asm.UserProfileAsm;
 import scrumweb.dto.issue.IssueDto;
 import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.dto.project.ProjectDto;
@@ -36,6 +37,7 @@ public class ProjectService {
     protected UserAccountRepository userAccountRepository;
     protected SecurityContextService securityContextService;
     private IssueAsm issueAsm;
+    private UserProfileAsm userProfileAsm;
     private static final String[] DEFAULT_ISSUE_TYPES = {"TASK", "BUG", "FEATURE"};
 
     public ProjectDto create(ProjectDto projectDto){
@@ -72,6 +74,7 @@ public class ProjectService {
     public ProjectDetailsDto getProjectDetails(String projectKey) {
         final Project project = projectRepository.findByKey(projectKey);
         final ProjectDto projectDto = projectAsm.makeProjectDto(project);
+        projectDto.setOwner(userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile()));
         final Set<IssueDto> issues = project.getIssues().stream().map(issue -> issueAsm.createIssueDto(issue)).collect(Collectors.toSet());
         return projectAsm.makeProjectDetailsDro(projectDto, issues);
     }
