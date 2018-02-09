@@ -5,7 +5,8 @@ import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {AuthGuard} from './security/auth.service';
 import {HomeComponent} from './home/home.component';
-import {ProjectComponent} from "./project/project.component";
+import {ProjectComponent} from "./project/project.component"
+import {ProjectDetailsComponent} from './project-details/project-details.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
   {
     path: 'project',
     component: ProjectComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'project/details',
+    component: ProjectDetailsComponent,
     canActivate: [AuthGuard]
   },
   {

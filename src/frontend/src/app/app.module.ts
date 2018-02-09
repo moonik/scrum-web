@@ -14,6 +14,8 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProjectComponent } from './project/project.component';
 import {ProjectService} from "./project/project.service";
+import { ProjectDetailsComponent } from './project-details/project-details.component';
+import {ApplicationConstants} from './shared/applicatins-contants';
 
 
 @NgModule({
@@ -23,7 +25,8 @@ import {ProjectService} from "./project/project.service";
     RegistrationComponent,
     HomeComponent,
     NavbarComponent,
-    ProjectComponent
+    ProjectComponent,
+    ProjectDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,7 @@ import {ProjectService} from "./project/project.service";
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [AuthGuard, AuthenticationService, HttpClient, ProjectService],
+  providers: [AuthGuard, AuthenticationService, HttpClient, ProjectService, ApplicationConstants],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
