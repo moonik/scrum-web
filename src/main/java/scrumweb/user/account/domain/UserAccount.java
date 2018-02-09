@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import scrumweb.project.domain.Project;
 import scrumweb.security.model.Authority;
 import scrumweb.user.profile.domain.UserProfile;
 
@@ -45,6 +46,9 @@ public class UserAccount {
     @Column(name = "ENABLED")
     @NotNull
     private Boolean enabled;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private List<Project> projects;
 
     public UserAccount(String username, String password, UserProfile userProfile, Boolean enabled) {
         this.username = username;

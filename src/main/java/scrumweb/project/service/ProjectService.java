@@ -18,7 +18,6 @@ import scrumweb.project.repository.ProjectRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -35,6 +34,7 @@ public class ProjectService {
             Project project = projectAsm.makeProject(projectDto);
 
             UserAccount projectOwner = securityContextService.getCurrentUserAccount();
+            List<Project> projects = projectOwner.getProjects();
             project.setOwner(projectOwner);
 
             Set<ProjectMember> projectMembers = new LinkedHashSet<>();
@@ -42,9 +42,10 @@ public class ProjectService {
             project.setMembers(projectMembers);
             project.setIssueTypes(createIssueTypes(project));
 
-            projectRepository.save(project);
+            projects.add(project);
+            userAccountRepository.save(projectOwner);
             return projectDto;
-        }else{
+        } else {
             throw new ProjectAlreadyExsistsException(projectDto.getProjectKey());
         }
     }
@@ -73,16 +74,10 @@ public class ProjectService {
                 .collect(Collectors.toSet());
     }
 
-    public List<ProjectDto> getAllProjects(){
-        List<ProjectDto> projects = new ArrayList<>();
-        UserAccount projectOwner = securityContextService.getCurrentUserAccount();
-        List<Project> ownProjects = projectRepository.findProjectsByOwner(projectOwner);
+    public List<ProjectDto> getAllProjects(UserAccount userAccount){
 
-        for(Project project : ownProjects){
-            projects.add(projectAsm.convertFromProjectToProjectDto(project));
-        }
-
-        return projects;
+        return userAccount.getProjects().stream()
+                .map(project -> projectAsm.convertFromProjectToProjectDto(project))
+                        .collect(Collectors.toList());
     }
-
 }
