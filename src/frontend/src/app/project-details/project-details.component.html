@@ -1,5 +1,12 @@
 <div class="project-details-container">
   <div class="details">
-    {{projectDetails.projectDto.name}}
+    {{ projectDetails.projectDto.name }}
+  </div>
+  <div class="list-panel">
+    <ol class="issue-list">
+      <li *ngFor="let issue of projectDetails.issues">
+        {{ issue.id }} : {{ issue.summary }}
+      </li>
+    </ol>
   </div>
 </div>

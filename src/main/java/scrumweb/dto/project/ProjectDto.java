@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import scrumweb.dto.user.UserProfileDto;
+import scrumweb.user.account.domain.UserAccount;
 
 import java.util.Set;
 
@@ -26,5 +27,12 @@ public class ProjectDto {
         this.description = description;
         this.icon = icon;
         this.members = members;
+    }
+
+    public ProjectDto(String name, String description, String icon, String projectKey){
+        this.name = name;
+        this.projectKey = projectKey;
+        this.description = description;
+        this.icon = icon;
     }
 }

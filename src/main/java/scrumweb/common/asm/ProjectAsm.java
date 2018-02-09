@@ -37,4 +37,8 @@ public class ProjectAsm {
     public ProjectDetailsDto makeProjectDetailsDro(ProjectDto projectDto, Set<IssueDto> issues) {
         return new ProjectDetailsDto(projectDto, issues);
     }
+
+    public ProjectDto convertFromProjectToProjectDto(Project project){
+        return new ProjectDto(project.getName(), project.getDescription(), project.getIcon(), project.getKey());
+    }
 }

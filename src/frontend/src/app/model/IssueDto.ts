@@ -5,4 +5,5 @@ export class IssueDto {
     public issueType: string;
     public priority: string;
     public assignees: Array<string>;
+    public description: string;
 }

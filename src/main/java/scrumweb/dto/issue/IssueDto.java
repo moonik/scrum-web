@@ -19,4 +19,5 @@ public class IssueDto {
     private String issueType;
     private String priority;
     private Set<String> assignees;
+    private String description;
 }
