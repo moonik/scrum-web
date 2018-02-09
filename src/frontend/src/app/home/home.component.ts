@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   }
 
   getAllOwnProjects() {
-    this.homeService.getAllOwnProjects().map(res => res.json())
+    this.homeService.getAllOwnProjects()
       .subscribe(
         data => {
           this.projects = data;
