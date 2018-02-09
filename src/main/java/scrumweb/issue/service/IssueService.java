@@ -39,8 +39,8 @@ public class IssueService {
     private UserProfileAsm userProfileAsm;
     private FieldContentConverter fieldContentAsm;
 
-    public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, Long projectId) {
-        final Project project = projectRepository.findOne(projectId);
+    public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String projectKey) {
+        final Project project = projectRepository.findByKey(projectKey);
         Set<Issue> issues = project.getIssues();
         issues.add(createIssue(issueDetailsDto, fieldContentsDto));
         projectRepository.save(project);

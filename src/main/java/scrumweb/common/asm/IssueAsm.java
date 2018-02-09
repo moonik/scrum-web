@@ -41,7 +41,7 @@ public class IssueAsm {
         return new IssueDto(
                 issue.getId(),
                 issue.getSummary(),
-                issue.getIssueType().toString(),
+                issue.getIssueType().getName(),
                 issue.getPriority().toString(),
                 issue.getAssignees().stream().map(UserAccount::getUsername).collect(Collectors.toSet()));
     }

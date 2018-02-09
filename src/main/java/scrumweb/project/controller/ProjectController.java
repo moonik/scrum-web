@@ -35,8 +35,9 @@ public class ProjectController {
         return projectService.editName(projectDto.getName(), id);
     }
 
-    @GetMapping("/details/{id}")
-    private ProjectDetailsDto getDetails(@PathVariable Long id) {
-        return projectService.getProjectDetails(id);
+    @GetMapping("/details/{projectKey}")
+    @ResponseStatus(HttpStatus.OK)
+    private ProjectDetailsDto getDetails(@PathVariable String projectKey) {
+        return projectService.getProjectDetails(projectKey);
     }
 }

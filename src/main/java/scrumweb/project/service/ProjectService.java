@@ -69,8 +69,8 @@ public class ProjectService {
         }
     }
 
-    public ProjectDetailsDto getProjectDetails(Long id) {
-        final Project project = projectRepository.findOne(id);
+    public ProjectDetailsDto getProjectDetails(String projectKey) {
+        final Project project = projectRepository.findByKey(projectKey);
         final ProjectDto projectDto = projectAsm.makeProjectDto(project);
         final Set<IssueDto> issues = project.getIssues().stream().map(issue -> issueAsm.createIssueDto(issue)).collect(Collectors.toSet());
         return projectAsm.makeProjectDetailsDro(projectDto, issues);
