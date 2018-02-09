@@ -16,6 +16,7 @@ import { ProjectComponent } from './project/project.component';
 import {ProjectService} from "./project/project.service";
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import {ApplicationConstants} from './shared/applicatins-contants';
+import { IssueComponent } from './issue/issue.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {ApplicationConstants} from './shared/applicatins-contants';
     HomeComponent,
     NavbarComponent,
     ProjectComponent,
-    ProjectDetailsComponent
+    ProjectDetailsComponent,
+    IssueComponent
   ],
   imports: [
     BrowserModule,

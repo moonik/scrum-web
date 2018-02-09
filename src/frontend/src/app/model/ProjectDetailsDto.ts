@@ -1,7 +1,7 @@
 import {ProjectDto} from './projectDto';
 import {IssueDto} from './IssueDto';
 
-export interface ProjectDetailsDto {
+export class ProjectDetailsDto {
     projectDto: ProjectDto;
     issues: Array<IssueDto>;
 }

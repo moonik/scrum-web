@@ -7,7 +7,7 @@ export class HomeService {
   constructor(private _http: HttpClient) { }
 
   getAllOwnProjects() {
-    return this._http.get('/api/scrum-web/project/all').map(res => res.json());
+    return this._http.get('project/all').map(res => res.json());
   }
 
 }
