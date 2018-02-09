@@ -16,12 +16,8 @@ import scrumweb.project.domain.ProjectMember;
 import scrumweb.project.domain.ProjectMember.Role;
 import scrumweb.project.repository.ProjectRepository;
 
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -76,5 +72,12 @@ public class ProjectService {
         return Arrays.stream(DEFAULT_ISSUE_TYPES)
                 .map(type -> new IssueType(type, project))
                 .collect(Collectors.toSet());
+    }
+
+    public List<ProjectDto> getAllProjects(UserAccount userAccount){
+
+        return userAccount.getProjects().stream()
+                .map(project -> projectAsm.convertFromProjectToProjectDto(project))
+                        .collect(Collectors.toList());
     }
 }
