@@ -3,7 +3,9 @@ package scrumweb.project.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import scrumweb.storage.Asset;
+import scrumweb.issue.domain.Issue;
+import scrumweb.issue.domain.IssueType;
+import scrumweb.projectfield.domain.ProjectField;
 import scrumweb.user.account.domain.UserAccount;
 
 import javax.persistence.*;
@@ -22,6 +24,10 @@ public class Project {
     @GeneratedValue
     private Long id;
 
+    @Size(min = 3, max = 8)
+    @Column(unique = true)
+    private String key;
+
     @NotNull
     @Size(min = 5, max = 30)
     private String name;
@@ -29,17 +35,28 @@ public class Project {
     @Size(min = 5, max = 300)
     private String description;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
 //    @Column(unique = true)
     private UserAccount owner;
 
-    private Path icon;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Issue> issues;
+
+    private String icon;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<ProjectMember> members;
 
-    public Project(String name, String description, Path icon) {
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<ProjectField> projectFields;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<IssueType> issueTypes;
+
+    public Project(String name, String description, String icon, String key) {
         this.name = name;
+        this.key = key;
         this.description = description;
         this.icon = icon;
     }

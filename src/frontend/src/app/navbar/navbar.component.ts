@@ -26,4 +26,9 @@ export class NavbarComponent implements OnInit {
   navigate(path: string){
     this.router.navigate([path]);
   }
+
+  getCurrentUser(): string{
+    return JSON.parse(localStorage.getItem('currentUser')).username;
+  }
+
 }
