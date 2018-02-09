@@ -18,6 +18,7 @@ import scrumweb.project.repository.ProjectRepository;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -37,6 +38,7 @@ public class ProjectService {
             Project project = projectAsm.makeProject(projectDto);
 
             UserAccount projectOwner = securityContextService.getCurrentUserAccount();
+            List<Project> projects = projectOwner.getProjects();
             project.setOwner(projectOwner);
 
             Set<ProjectMember> projectMembers = new LinkedHashSet<>();
@@ -44,9 +46,10 @@ public class ProjectService {
             project.setMembers(projectMembers);
             project.setIssueTypes(createIssueTypes(project));
 
-            projectRepository.save(project);
+            projects.add(project);
+            userAccountRepository.save(projectOwner);
             return projectDto;
-        }else{
+        } else {
             throw new ProjectAlreadyExsistsException(projectDto.getProjectKey());
         }
     }

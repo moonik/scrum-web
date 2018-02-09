@@ -34,7 +34,7 @@ public class Project {
     @Size(min = 5, max = 300)
     private String description;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
 //    @Column(unique = true)
     private UserAccount owner;
 
