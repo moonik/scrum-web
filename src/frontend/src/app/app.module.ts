@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from "@angular/http";
+import {ModalModule} from "ng2-modal"
 import { HttpClient } from "./shared/http.client.service";
 
 import { AppComponent } from './app.component';
@@ -36,6 +37,7 @@ import { IssueComponent } from './issue/issue.component';
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
+    ModalModule
   ],
   providers: [AuthGuard, AuthenticationService, HttpClient, ProjectService, ApplicationConstants],
   bootstrap: [AppComponent]

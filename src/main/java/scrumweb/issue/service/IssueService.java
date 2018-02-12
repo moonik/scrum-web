@@ -34,7 +34,6 @@ public class IssueService {
     private UserAccountRepository userAccountRepository;
     private SecurityContextService securityContextService;
     private ProjectFieldRepository projectFieldRepository;
-    private IssueTypeRepository issueTypeRepository;
     private ProjectRepository projectRepository;
     private UserProfileAsm userProfileAsm;
     private FieldContentConverter fieldContentAsm;

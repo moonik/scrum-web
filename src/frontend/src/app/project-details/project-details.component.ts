@@ -30,10 +30,14 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   public getProjectDetails() {
-    return this._projectDetailsService.getProjectDetails(this.projectKey).
-        subscribe( data => {
+    return this._projectDetailsService.getProjectDetails(this.projectKey)
+      .subscribe( data => {
           this.projectDetails = data;
           this.selectedIssue = data.issues[0];
         });
+  }
+
+  public showIssueList() {
+    return this.projectDetails && this.projectDetails.issues.length > 0;
   }
 }

@@ -1,3 +1,60 @@
-<p>
-  issue works!
-</p>
+<div class="issue-creation">
+  <button (click)="issueModal.open()">Create issue</button>
+
+  <div class="row">
+      <modal #issueModal modalClass="modal-lg" id="issue-creation-modal" [closeOnOutsideClick]="true" [closeOnEscape]="true">
+          <modal-header>
+            <h1>Create issue</h1>
+          </modal-header>
+          <modal-content>
+              <div class="default-fields">
+                <form>
+                    <label for="summary">Summary</label>
+                    <input name="summary">
+              
+                    <label for="description">Description</label>
+                    <input name="description">
+              
+                    <label for="assignees">Assignees</label>
+                    <input name="assignees">
+              
+                    <label for="estimateTime">Estimate time</label>
+                    <input name="estimateTime">
+              
+                    <label for="priority">Priority</label>
+                    <select name="priority">
+                      <option value="HIGH">HIGH</option>
+                      <option value="LOW">LOW</option>
+                    </select>
+              
+                    <label for="type">Issue type</label>
+                    <select name="type">
+                      <option value="TASK">TASK</option>
+                      <option value="BUG">BUG</option>
+                      <option value="FEATURE">FEATURE</option>
+                    </select>
+                </form>
+              </div>
+          </modal-content>
+          <modal-footer>
+            <button>Create</button>
+            <button>Cancel</button>
+          </modal-footer>
+      </modal>
+  </div>
+
+  <!-- <div class="row">
+      <button (click)="myModal.open()">open my modal</button>
+      <modal #myModal>
+          <modal-header>
+              <h1>Modal header</h1>
+          </modal-header>
+          <modal-content>
+              Hello Modal!
+          </modal-content>
+          <modal-footer>
+              <button class="btn btn-primary" (click)="myModal.close()">close</button>
+          </modal-footer>
+      </modal>
+  </div> -->
+</div>
