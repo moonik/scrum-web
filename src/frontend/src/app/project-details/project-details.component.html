@@ -5,7 +5,7 @@
   <div class="list-panel">
     <ol class="issue-list">
       <li *ngFor="let issue of projectDetails?.issues">
-        <a (click)="getIssueDetails(issue.id)">{{ issue?.id }} : {{ issue?.summary }} </a>
+        <a (click)="selectIssue(issue.id)">{{ issue?.id }} : {{ issue?.summary }} </a>
       </li>
     </ol>
   </div>

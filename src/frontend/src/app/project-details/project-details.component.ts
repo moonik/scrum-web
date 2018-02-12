@@ -12,9 +12,9 @@ import {IssueDto} from '../model/IssueDto';
 })
 export class ProjectDetailsComponent implements OnInit {
 
-  public projectKey: string = '';
-  public projectDetails: ProjectDetailsDto = new ProjectDetailsDto();
-  public selectedIssue: IssueDto = new IssueDto();
+  public projectKey: string;
+  public projectDetails: ProjectDetailsDto;
+  public selectedIssue: IssueDto;
 
   constructor(private _activatedRoute: ActivatedRoute, private _projectDetailsService: ProjectDetailsService) {
     this._activatedRoute.params.subscribe((params: Params) => {
@@ -25,12 +25,12 @@ export class ProjectDetailsComponent implements OnInit {
 
   ngOnInit() {}
 
-  public getIssueDetails(issueId: number) {
+  public selectIssue(issueId: number) {
     this.selectedIssue = this.projectDetails.issues.find(issue => issue.id === issueId);
   }
 
   public getProjectDetails() {
-    return this._projectDetailsService.getProjectDetails('tnasme').
+    return this._projectDetailsService.getProjectDetails(this.projectKey).
         subscribe( data => {
           this.projectDetails = data;
           this.selectedIssue = data.issues[0];
