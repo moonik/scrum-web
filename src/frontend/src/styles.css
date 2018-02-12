@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+.justify-content-center{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+footer{
+  margin-top: 30px;
+  padding: 30px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 40px; /* Set the fixed height of the footer here */
+  line-height: 0px;
+  text-align: center;
+  background-color: #ccc;
+  vertical-align: middle;
+}
