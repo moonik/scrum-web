@@ -47,7 +47,7 @@ export class AuthenticationService {
   }
 
   refresh(token: string, username: string): Observable<any>{
-    var tokenObj = {"token": token, "username": username};
+    const tokenObj = {"token": token, "username": username};
     return this.httpClientService.post('/api/scrum-web/refresh', tokenObj)
       .map(
         response =>  {
