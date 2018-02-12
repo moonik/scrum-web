@@ -25,7 +25,7 @@ export class AuthenticationService {
         if (token) {
           this.token = token;
           localStorage.setItem('token', token);
-          localStorage.setItem('currentUser', JSON.stringify({username: userDto.username}));
+          localStorage.setItem('currentUser', userDto.username);
         }
         return response.status;
       });
@@ -45,5 +45,20 @@ export class AuthenticationService {
     // if(response.status ==)
       });
   }
+
+  refresh(token: string, username: string): Observable<any>{
+    var tokenObj = {"token": token, "username": username};
+    return this.httpClientService.post('/api/scrum-web/refresh', tokenObj)
+      .map(
+        response =>  {
+          let token = response.json() && response.json().token;
+          if (token) {
+            this.token = token;
+            localStorage.setItem('token', token);
+          }
+          return response.status;
+        });
+  }
 }
+
 
