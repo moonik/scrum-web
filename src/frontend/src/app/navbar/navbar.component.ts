@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
   }
 
   getCurrentUser(): string{
-    return JSON.parse(localStorage.getItem('currentUser')).username;
+    return localStorage.getItem('currentUser');
   }
 
 }
