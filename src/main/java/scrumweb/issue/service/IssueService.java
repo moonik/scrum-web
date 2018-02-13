@@ -22,6 +22,7 @@ import scrumweb.project.repository.ProjectRepository;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -42,17 +43,23 @@ public class IssueService {
     public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, Long projectId) {
         final Project project = projectRepository.findOne(projectId);
         Set<Issue> issues = project.getIssues();
-        issues.add(createIssue(issueDetailsDto, fieldContentsDto));
+        issues.add(createIssue(issueDetailsDto, fieldContentsDto, project.getKey().concat("-").concat(project.getIssues().size()+1+"")));
         projectRepository.save(project);
         return issueDetailsDto;
     }
 
-    protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto) {
+    protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String issueKey) {
         final UserAccount reporter = securityContextService.getCurrentUserAccount();
-        Set<UserAccount> assignees = userAccountRepository.findUsers(extractUserNames(issueDetailsDto.getAssignees()));
+        Set<UserAccount> assignees = new HashSet<>();
+        if(issueDetailsDto.getAssignees().size()>0) {
+            assignees = userAccountRepository.findUsers(extractUserNames(issueDetailsDto.getAssignees()));
+        }
         Set<FieldContent> fieldContents = extractContents(fieldContentsDto);
         IssueType issueType = issueTypeRepository.findByName(issueDetailsDto.getIssueType());
-        return issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
+        Issue issue = issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
+        issue.setKey(issueKey);
+
+        return issue;
     }
 
     public IssueDetailsDto getIssue(Long id) {

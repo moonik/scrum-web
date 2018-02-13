@@ -6,13 +6,9 @@ import lombok.Setter;
 import scrumweb.issue.fieldcontent.FieldContent;
 import scrumweb.user.account.domain.UserAccount;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -22,6 +18,9 @@ public class Issue {
 
     @Id @GeneratedValue
     private Long id;
+
+    @Column(unique = true)
+    private String key;
 
     @NotNull
     private String summary;

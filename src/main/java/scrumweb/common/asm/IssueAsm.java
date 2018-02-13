@@ -24,7 +24,7 @@ public class IssueAsm {
 
     public IssueDetailsDto createIssueDetailsDto(Issue issue, Set<UserProfileDto> assignees, UserProfileDto reporter) {
         return new IssueDetailsDto(
-                issue.getId(), "",
+                issue.getId(), issue.getKey(),
                 issue.getSummary(),
                 issue.getDescription(),
                 assignees, reporter,
