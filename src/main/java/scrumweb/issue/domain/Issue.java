@@ -56,7 +56,7 @@ public class Issue {
     private LocalDateTime createdDate;
 
     @UpdateTimestamp
-    private Timestamp lastUpdate;
+    private Timestamp    lastUpdate;
 
     public Issue(String summary, String description, Set<UserAccount> assignees, UserAccount reporter, String estimateTime, String remainingTime,
                  Priority priority, IssueType issueType, Set<FieldContent> fieldContents, String createdDate) {
