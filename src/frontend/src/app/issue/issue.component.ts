@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
@@ -10,7 +10,7 @@ import { IMultiSelectTexts  } from 'angular-2-dropdown-multiselect';
   templateUrl: './issue.component.html',
   styleUrls: ['./issue.component.css']
 })
-export class IssueComponent {
+export class IssueComponent implements OnInit {
 
   modalRef: BsModalRef;
   config = {
@@ -19,32 +19,52 @@ export class IssueComponent {
     backdrop: true,
     ignoreBackdropClick: false
   };
-
-  basicExampleList = [
-    {"id":1,"itemName":"India"},
-    {"id":2,"itemName":"Singapore"},
-    {"id":3,"itemName":"Australia"},
-    {"id":4,"itemName":"Canada"},
-    {"id":5,"itemName":"South Korea"},    
-    {"id":6,"itemName":"Brazil"}                      
-  ];
-
-  basicExampleSelectedItems = [
-      {"id":1,"itemName":"India"},
-      {"id":2,"itemName":"Singapore"},
-      {"id":3,"itemName":"Australia"},
-      {"id":4,"itemName":"Canada"}
-    ];
-
-  basicExampleSettings = { 
-          text:"Select Countries",
-          selectAllText:'Select All',
-          unSelectAllText:'UnSelect All',
-          enableSearchFilter: true,
-          classes:"myclass custom-class"
-  };
+  
+  itemList = [];
+  selectedItems = [];
+  settings = {};
 
   constructor(private modalService: BsModalService) {}
+
+  ngOnInit() {
+
+    this.itemList = [
+      { "id": 1, "itemName": "India" },
+      { "id": 2, "itemName": "Singapore" },
+      { "id": 3, "itemName": "Australia" },
+      { "id": 4, "itemName": "Canada" },
+      { "id": 5, "itemName": "South Korea" },
+      { "id": 6, "itemName": "Brazil" }
+    ];
+
+    this.selectedItems = [
+      { "id": 1, "itemName": "India" },
+      { "id": 2, "itemName": "Singapore" },
+      { "id": 3, "itemName": "Australia" },
+      { "id": 4, "itemName": "Canada" }];
+    this.settings = {
+      singleSelection: false,
+      text: "Select Countries",
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      enableSearchFilter: true,
+      badgeShowLimit: 3
+    };
+  }
+  onItemSelect(item: any) {
+    console.log(item);
+    console.log(this.selectedItems);
+  }
+  OnItemDeSelect(item: any) {
+    console.log(item);
+    console.log(this.selectedItems);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
+  }
+  onDeSelectAll(items: any) {
+    console.log(items);
+  }
  
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, this.config);

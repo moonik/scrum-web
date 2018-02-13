@@ -19,15 +19,14 @@
                 <textarea name="description"></textarea><br>
                     
                 <label for="assignees">Assignees</label><br>
-                <angular2-multiselect 
-                    [data]="basicExampleList" 
-                    [(ngModel)]="basicExampleSelectedItems" 
-                    [settings]="basicExampleSettings" 
-                    (onSelect)="onItemSelect($event)" 
-                    (onDeSelect)="OnItemDeSelect($event)"  
-                    (onSelectAll)="onSelectAll($event)" 
-                    (onDeSelectAll)="onDeSelectAll($event)">
-                </angular2-multiselect><br>
+                <angular2-multiselect [data]="itemList" 
+                [(ngModel)]="selectedItems" 
+                [settings]="settings" 
+                (onSelect)="onItemSelect($event)"
+                (onDeSelect)="OnItemDeSelect($event)" 
+                (onSelectAll)="onSelectAll($event)" 
+                (onDeSelectAll)="onDeSelectAll($event)">
+</angular2-multiselect><br>
 
                 <label for="estimateTime">Estimate time</label><br>
                 <input name="estimateTime"><br><br>
