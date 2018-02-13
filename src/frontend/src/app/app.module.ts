@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from "@angular/http";
-import {ModalModule} from "ng2-modal"
 import { HttpClient } from "./shared/http.client.service";
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -37,7 +38,8 @@ import { IssueComponent } from './issue/issue.component';
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    ModalModule
+    ModalModule.forRoot(),
+    AngularMultiSelectModule
   ],
   providers: [AuthGuard, AuthenticationService, HttpClient, ProjectService, ApplicationConstants],
   bootstrap: [AppComponent]

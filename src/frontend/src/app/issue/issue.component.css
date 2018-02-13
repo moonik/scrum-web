@@ -1,3 +1,8 @@
 .issue-creation a {
     cursor: pointer;
 }
+
+#btn-create, #btn-cancel {
+    background-color: #212529;
+    border-color: #212529;
+}
