@@ -1,6 +1,7 @@
-package scrumweb.storage;
+package scrumweb.storage.service;
 
 import org.springframework.stereotype.Component;
+import scrumweb.common.StorageProperties;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,7 +14,6 @@ public class LocationImpl implements Location {
     public LocationImpl(StorageProperties location) {
         this.location = location.getLocation();
     }
-
 
     @Override
     public Path toPath() {

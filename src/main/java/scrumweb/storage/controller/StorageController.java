@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import scrumweb.storage.Storage;
+import scrumweb.storage.service.StorageServiceImpl;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -20,23 +20,23 @@ import static scrumweb.common.ApplicationConstants.API_URL;
 @RequestMapping(API_URL + "storage")
 class StorageController {
 
-    private final Storage storage;
+    private final StorageServiceImpl storageServiceImpl;
 
-    StorageController(Storage storage) {
-        this.storage = storage;
+    StorageController(StorageServiceImpl storageServiceImpl) {
+        this.storageServiceImpl = storageServiceImpl;
     }
 
     @PostMapping("/icon")
     @ResponseStatus(HttpStatus.CREATED)
     public Path uploadIcon(@RequestParam("file") MultipartFile file) throws IOException {
-        return storage.storeProjectIcon(file);
+        return storageServiceImpl.storeProjectIcon(file);
     }
 
     @GetMapping("/{filename:.+}")
     public ResponseEntity<?> load(@PathVariable String filename) {
 
         try {
-            Resource file = storage.loadAsResource(filename);
+            Resource file = storageServiceImpl.loadAsResource(filename);
 
             return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")

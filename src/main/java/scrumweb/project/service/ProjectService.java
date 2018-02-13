@@ -8,11 +8,7 @@ import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
 import scrumweb.exception.ProjectAlreadyExsistsException;
 import scrumweb.exception.ProjectNotFoundException;
-<<<<<<< HEAD:src/main/java/scrumweb/project/ProjectService.java
-import scrumweb.storage.FileStorage;
-=======
 import scrumweb.issue.domain.IssueType;
->>>>>>> cc1b3359625083ef4175dcc108ecf1f58f434fea:src/main/java/scrumweb/project/service/ProjectService.java
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 import scrumweb.project.domain.Project;

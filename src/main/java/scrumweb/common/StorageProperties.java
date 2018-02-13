@@ -1,4 +1,4 @@
-package scrumweb.storage;
+package scrumweb.common;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,5 +16,10 @@ public class StorageProperties {
 
     public String getLocation() {
         return location;
+    }
+
+    // needed for tests...
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

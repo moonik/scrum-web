@@ -1,4 +1,4 @@
-package scrumweb.storage;
+package scrumweb.storage.service;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
@@ -8,7 +8,7 @@ import java.net.MalformedURLException;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 
-public interface FileStorage {
+public interface StorageService {
 
     Path storeProjectIcon(MultipartFile file) throws IOException;
 

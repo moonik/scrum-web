@@ -1,10 +1,11 @@
-package scrumweb.storage;
+package scrumweb.storage.service;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import scrumweb.exception.EmptyFileException;
+import scrumweb.storage.StorageUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -18,11 +19,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
-public class Storage implements FileStorage{
+public class StorageServiceImpl implements StorageService {
 
     private final Location location;
 
-    public Storage(Location location) {
+    public StorageServiceImpl(Location location) {
         this.location = location;
     }
 
@@ -37,7 +38,7 @@ public class Storage implements FileStorage{
         InputStream is = file.getInputStream();
         BufferedImage bi = StorageUtils.resize(ImageIO.read(is));
 
-        ImageIO.write(bi, "png", new File(String.valueOf(destinationPath)));
+        ImageIO.write(bi, "jpg", new File(String.valueOf(destinationPath)));
 
         return destinationPath;
     }

@@ -1,4 +1,4 @@
-package scrumweb.storage;
+package scrumweb.storage.service;
 
 import java.nio.file.Path;
 
