@@ -1,7 +1,6 @@
 <br/>
 <div class="row justify-content-center">
   <form [formGroup] = "registrationForm" (ngSubmit)="register()">
-
     <div class="form-group">
       <label for="inputFirstname">Firstname</label>
       <input type="text" class="form-control w-50" id="inputFirstname"
@@ -64,4 +63,8 @@
     <button type="submit" class="btn btn-primary" [disabled]="registrationForm.invalid">Register</button>
 
   </form>
+
 </div>
+<br/>
+<br/>
+<br/>
