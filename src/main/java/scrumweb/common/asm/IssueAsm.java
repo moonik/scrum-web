@@ -19,7 +19,7 @@ public class IssueAsm {
         return new Issue(issueDetailsDto.getSummary(), issueDetailsDto.getDescription(), assignees, reporter,
                 issueDetailsDto.getEstimateTime(), issueDetailsDto.getRemainingTime(),
                 issueDetailsDto.getPriority().equalsIgnoreCase("high") ? Priority.HIGH : Priority.LOW,
-                issueType, fieldContents, issueDetailsDto.getCreatedDate(), issueDetailsDto.getLastUpdate());
+                issueType, fieldContents, issueDetailsDto.getCreatedDate());
     }
 
     public IssueDetailsDto createIssueDetailsDto(Issue issue, Set<UserProfileDto> assignees, UserProfileDto reporter) {

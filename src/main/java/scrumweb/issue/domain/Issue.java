@@ -3,6 +3,7 @@ package scrumweb.issue.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 import scrumweb.issue.fieldcontent.FieldContent;
 import scrumweb.user.account.domain.UserAccount;
 
@@ -13,7 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -52,10 +55,11 @@ public class Issue {
 
     private LocalDateTime createdDate;
 
-    private LocalDateTime lastUpdate;
+    @UpdateTimestamp
+    private Timestamp lastUpdate;
 
     public Issue(String summary, String description, Set<UserAccount> assignees, UserAccount reporter, String estimateTime, String remainingTime,
-                 Priority priority, IssueType issueType, Set<FieldContent> fieldContents, String createdDate, String lastUpdate) {
+                 Priority priority, IssueType issueType, Set<FieldContent> fieldContents, String createdDate) {
         this.summary = summary;
         this.description = description;
         this.assignees = assignees;
@@ -66,7 +70,6 @@ public class Issue {
         this.issueType = issueType;
         this.fieldContents = fieldContents;
         this.createdDate = LocalDateTime.parse(createdDate);
-        this.lastUpdate = LocalDateTime.parse(lastUpdate);
     }
 
     public enum Priority {
