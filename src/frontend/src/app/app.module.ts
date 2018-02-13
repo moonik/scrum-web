@@ -15,6 +15,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ProjectComponent } from './project/project.component';
 import {ProjectService} from "./project/project.service";
 import { FooterComponent } from './footer/footer.component';
+import {FileUploadService} from "./shared/file-upload.service";
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { FooterComponent } from './footer/footer.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [AuthGuard, AuthenticationService, HttpClient, ProjectService],
+  providers: [AuthGuard, AuthenticationService, HttpClient, ProjectService, FileUploadService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

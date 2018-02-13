@@ -1,5 +1,6 @@
 package scrumweb.storage.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -19,13 +20,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
+@AllArgsConstructor
 public class StorageServiceImpl implements StorageService {
 
     private final Location location;
-
-    public StorageServiceImpl(Location location) {
-        this.location = location;
-    }
 
     @Override
     public Path storeProjectIcon(MultipartFile file) throws IOException {

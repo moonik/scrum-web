@@ -1,9 +1,13 @@
 package scrumweb.storage;
 
+import com.google.common.net.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
+import scrumweb.storage.controller.StorageController;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,6 +16,7 @@ import static com.google.common.base.Joiner.on;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.io.Files.getFileExtension;
 import static com.google.common.io.Files.getNameWithoutExtension;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodName;
 
 public class StorageUtils {
 
@@ -42,5 +47,25 @@ public class StorageUtils {
         g2d.drawImage(image, 0, 0, null);
         g2d.dispose();
         return resized;
+    }
+
+    public static URI createUri(Path path) {
+        return create(path.toString());
+    }
+
+    private static URI create(String string) {
+        return fromMethodName(StorageController.class, "load", string).build().toUri();
+    }
+
+    public static ResponseEntity<?> response(URI link) {
+        return ResponseEntity.created(link)
+            .header(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true")
+            .header(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "Origin, X-Requested-With, Content-Type, Accept, Authorization")
+            .header(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "POST, PUT, DELETE, GET, OPTIONS")
+            .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
+            .header(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "1728000")
+            .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "*")
+            .header(HttpHeaders.X_FRAME_OPTIONS, "*")
+            .body(StorageLink.from(link.toString()));
     }
 }

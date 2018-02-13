@@ -44,7 +44,6 @@ public class ProjectService {
 
             project.setIcon(projectDto.getIcon());
 
-            projectRepository.save(project);
             projects.add(project);
             userAccountRepository.save(projectOwner);
             return projectDto;

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {ProjectDto} from "../model/projectDto";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import { ProjectService } from "./project.service";
-import { HttpClient } from "../shared/http.client.service";
+import {ProjectDto} from '../model/projectDto';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import { ProjectService } from './project.service';
+import { HttpClient } from '../shared/http.client.service';
+import {FileUploadService} from '../shared/file-upload.service';
 
 @Component({
   selector: 'app-project',
@@ -15,13 +16,19 @@ export class ProjectComponent implements OnInit {
   projectDto: ProjectDto = new ProjectDto();
   projectForm: FormGroup;
   error = '';
+  icon: File = null;
 
-  constructor(fb: FormBuilder, private router: Router, private projectService: ProjectService, httpClient: HttpClient) {
+  constructor(fb: FormBuilder,
+              private router: Router,
+              private projectService: ProjectService,
+              httpClient: HttpClient,
+              private fileUploadService: FileUploadService) {
 
     this.projectForm = fb.group({
       name: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
       description: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(300)]],
-      projectKey: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(8)]]
+      projectKey: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(8)]],
+      icon: [null]
     });
 
   }
@@ -29,17 +36,28 @@ export class ProjectComponent implements OnInit {
   ngOnInit() {
   }
 
-  createproject(){
+  createproject() {
     this.projectService.createProject(this.projectDto)
       .subscribe(
         success => {
           this.router.navigate(['/home']);
         },
         error => {
-          if(error.status === 409){
+          if (error.status === 409) {
             this.error = error._body;
           }
         });
+  }
+
+  chooseIcon(files: FileList) {
+    this.icon = files.item(0);
+    this.fileUploadService.uploadFile(this.icon)
+      .subscribe(data => {
+        const json = data.json();
+        console.log(json['link']);
+        this.projectDto.icon = json['link'];
+        console.log(this.projectDto.icon);
+      });
   }
 
   checkProjectNameLength(): boolean {

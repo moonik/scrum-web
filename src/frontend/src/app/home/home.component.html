@@ -10,6 +10,7 @@
         <th>Name</th>
         <th>Key</th>
         <th>Description</th>
+        <th>Icon</th>
       </tr>
     </thead>
     <tbody *ngFor="let project of projects">
@@ -17,6 +18,7 @@
         <td>{{project.name}}</td>
         <td>{{project.projectKey}}</td>
         <td>{{project.description}}</td>
+        <td><img src={{project.icon}}></td>
       </tr>
     </tbody>
   </table>

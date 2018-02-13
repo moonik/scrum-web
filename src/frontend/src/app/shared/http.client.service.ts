@@ -12,7 +12,7 @@ export class HttpClient {
     let headers = new Headers();
     headers.append('Authorization', localStorage.getItem('token'));
     headers.append('Content-Type', 'application/json');
-    return { 
+    return {
       headers: headers
     };
   }
@@ -31,5 +31,11 @@ export class HttpClient {
 
   delete(url: string): Observable<Response> {
     return this._http.delete(url, this.createRequestOptionsArgs());
+  }
+
+  upload(url: string, formData: any): Observable<Response> {
+    let headers = new Headers();
+    headers.append('Authorization', localStorage.getItem('token'));
+    return this._http.post(url, formData, {headers: headers});
   }
 }
