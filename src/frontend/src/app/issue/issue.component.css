@@ -10,3 +10,17 @@
 .modal-body input, textarea, select{
     border-radius: 3px;
 }
+
+.assignees-multi-select {
+    width: 300px; 
+    text-align:center;
+    display: inline-block;
+}
+
+.modal-body {
+    overflow-y: auto;
+    height: 500px;
+    font-size: 16px;
+    display: inline-block;
+    text-align: center;
+}

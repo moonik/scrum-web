@@ -10,7 +10,7 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body" style="overflow-y: auto;height: 500px;font-size: 16px;display: inline-block;text-align: center;">
+        <div class="modal-body">
             <form>
                 <label for="summary">Summary</label><br>
                 <input name="summary"><br>
@@ -19,7 +19,7 @@
                 <textarea name="description" cols="50"></textarea><br>
                     
                 <label for="assignees">Assignees</label><br>
-                <div style="width: 300px; text-align:center; display: inline-block">
+                <div class="assignees-multi-select">
                     <angular2-multiselect [data]="itemList" 
                     [(ngModel)]="selectedItems" 
                     [settings]="settings" 
