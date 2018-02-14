@@ -31,7 +31,13 @@ export class IssueComponent implements OnInit {
       { "id": 3, "itemName": "Australia" },
       { "id": 4, "itemName": "Canada" },
       { "id": 5, "itemName": "South Korea" },
-      { "id": 6, "itemName": "Brazil" }
+      { "id": 6, "itemName": "Brazil" },
+      { "id": 7, "itemName": "India" },
+      { "id": 8, "itemName": "Singapore" },
+      { "id": 9, "itemName": "Australia" },
+      { "id": 10, "itemName": "Canada" },
+      { "id": 11, "itemName": "South Korea" },
+      { "id": 12, "itemName": "Brazil" }
     ];
 
     this.selectedItems = [
@@ -40,14 +46,14 @@ export class IssueComponent implements OnInit {
       { "id": 3, "itemName": "Australia" },
       { "id": 4, "itemName": "Canada" }];
 
-      this.settings = {
-        singleSelection: false,
-        text: "Select Countries",
-        selectAllText: 'Select All',
-        unSelectAllText: 'UnSelect All',
-        enableSearchFilter: true,
-        badgeShowLimit: 3,
-        classes: "myclass custom-class-example"
+    this.settings = {
+      singleSelection: false,
+      text: "Select Countries",
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      enableSearchFilter: true,
+      badgeShowLimit: 10,
+      classes: "custom-class-example"
       };
   }
   onItemSelect(item: any) {
