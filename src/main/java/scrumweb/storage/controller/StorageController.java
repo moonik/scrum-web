@@ -32,10 +32,7 @@ public class StorageController {
     public ResponseEntity<?> uploadIcon(@RequestParam("file") MultipartFile file) throws IOException {
 
         URI link = StorageUtils.createUri(storageServiceImpl.storeProjectIcon(file).getFileName());
-
         return StorageUtils.response(link);
-
-//        return storageServiceImpl.storeProjectIcon(file);
     }
 
     @GetMapping("/{filename:.+}")
@@ -57,6 +54,4 @@ public class StorageController {
             return  ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
-
 }

@@ -40,6 +40,7 @@ public class StorageUtils {
         return destinationPath;
     }
 
+    //todo images get wrong colors
     public static BufferedImage resize(BufferedImage bi) {
         Image image = bi.getScaledInstance(128, 128, Image.SCALE_SMOOTH);
         BufferedImage resized = new BufferedImage(128, 128, BufferedImage.TYPE_INT_ARGB);

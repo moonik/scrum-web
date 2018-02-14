@@ -3,4 +3,5 @@ export class ProjectDto {
   projectKey: string;
   description: string;
   icon: string;
+  image: any;
 }
