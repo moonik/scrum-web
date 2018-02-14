@@ -1,5 +1,5 @@
 <div class="issue-creation">
-    <button class="btn btn-primary" (click)="lgModal.show()">Create issue</button>
+    <button class="btn btn-primary" (click)="lgModal.show()" id="btn-create-issue">Create issue</button>
  
     <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -19,15 +19,17 @@
                 <textarea name="description" cols="50"></textarea><br>
                     
                 <label for="assignees">Assignees</label><br>
-                <angular2-multiselect [data]="itemList" 
-                [(ngModel)]="selectedItems" 
-                [settings]="settings" 
-                (onSelect)="onItemSelect($event)"
-                (onDeSelect)="OnItemDeSelect($event)" 
-                (onSelectAll)="onSelectAll($event)" 
-                (onDeSelectAll)="onDeSelectAll($event)"
-                name="assignees">
-                </angular2-multiselect><br>
+                <div style="width: 300px; text-align:center; display: inline-block">
+                    <angular2-multiselect [data]="itemList" 
+                    [(ngModel)]="selectedItems" 
+                    [settings]="settings" 
+                    (onSelect)="onItemSelect($event)"
+                    (onDeSelect)="OnItemDeSelect($event)" 
+                    (onSelectAll)="onSelectAll($event)" 
+                    (onDeSelectAll)="onDeSelectAll($event)"
+                    name="assignees">
+                    </angular2-multiselect>
+                </div><br>
 
                 <label for="estimateTime">Estimate time</label><br>
                 <input name="estimateTime"><br><br>

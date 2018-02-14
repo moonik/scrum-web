@@ -2,7 +2,11 @@
     cursor: pointer;
 }
 
-#btn-create, #btn-cancel {
+#btn-create, #btn-cancel, #btn-create-issue {
     background-color: #212529;
     border-color: #212529;
+}
+
+.modal-body input, textarea, select{
+    border-radius: 3px;
 }
