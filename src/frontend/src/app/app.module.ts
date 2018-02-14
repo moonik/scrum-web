@@ -19,6 +19,7 @@ import {ProjectService} from "./project/project.service";
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import {ApplicationConstants} from './shared/applicatins-contants';
 import { IssueComponent } from './issue/issue.component';
+import { IssueService } from './issue/issue.service';
 
 
 @NgModule({
@@ -41,7 +42,7 @@ import { IssueComponent } from './issue/issue.component';
     ModalModule.forRoot(),
     AngularMultiSelectModule
   ],
-  providers: [AuthGuard, AuthenticationService, HttpClient, ProjectService, ApplicationConstants],
+  providers: [AuthGuard, AuthenticationService, HttpClient, ProjectService, ApplicationConstants, IssueService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

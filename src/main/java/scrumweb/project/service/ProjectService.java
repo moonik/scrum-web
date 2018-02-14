@@ -7,9 +7,11 @@ import scrumweb.common.asm.IssueAsm;
 import scrumweb.common.asm.ProjectAsm;
 import scrumweb.common.asm.UserProfileAsm;
 import scrumweb.dto.issue.IssueDto;
+import scrumweb.dto.issue.ItemAssignee;
 import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
+import scrumweb.dto.user.UserProfileDto;
 import scrumweb.exception.ProjectAlreadyExsistsException;
 import scrumweb.exception.ProjectNotFoundException;
 import scrumweb.issue.domain.Issue;
@@ -81,6 +83,14 @@ public class ProjectService {
         project.getMembers().add(new ProjectMember(userAccount, Role.getRole(projectMemberDto.getRole())));
         projectRepository.save(project);
         return projectMemberDto;
+    }
+
+    public Set<ItemAssignee> getProjectMembers(String projectKey) {
+        return projectRepository.findByKey(projectKey)
+                .getMembers().stream()
+                .map(ProjectMember::getUserAccount)
+                .map(u -> new ItemAssignee(u.getId(), u.getUsername()))
+                .collect(Collectors.toSet());
     }
 
     private Set<IssueType> createIssueTypes(Project project) {

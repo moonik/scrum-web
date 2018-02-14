@@ -19,14 +19,10 @@
                 <textarea name="description" cols="50"></textarea><br>
                     
                 <label for="assignees">Assignees</label><br>
-                <div class="assignees-multi-select">
-                    <angular2-multiselect [data]="itemList" 
+                <div class="assignees-multi-select" *ngIf="projectMembers">
+                    <angular2-multiselect [data]="projectMembers" 
                     [(ngModel)]="selectedItems" 
-                    [settings]="settings" 
-                    (onSelect)="onItemSelect($event)"
-                    (onDeSelect)="OnItemDeSelect($event)" 
-                    (onSelectAll)="onSelectAll($event)" 
-                    (onDeSelectAll)="onDeSelectAll($event)"
+                    [settings]="settings"
                     name="assignees">
                     </angular2-multiselect>
                 </div><br>

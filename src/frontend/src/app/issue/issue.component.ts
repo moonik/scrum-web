@@ -1,11 +1,13 @@
-import { Component, TemplateRef, OnInit } from '@angular/core';
+import { Component, TemplateRef, OnInit, Input } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import {IssueService} from './issue.service';
 
 @Component({
   selector: 'app-issue-creation',
   templateUrl: './issue.component.html',
-  styleUrls: ['./issue.component.css']
+  styleUrls: ['./issue.component.css'],
+  providers: [IssueService]
 })
 export class IssueComponent implements OnInit {
 
@@ -17,68 +19,42 @@ export class IssueComponent implements OnInit {
     ignoreBackdropClick: false
   };
   
-  itemList = [];
+  @Input() projectKey: string;
+  isLoading: boolean = false;
+  projectMembers: Array<String> = [];
   selectedItems = [];
   settings = {};
 
-  constructor(private modalService: BsModalService) {}
+  constructor(private _modalService: BsModalService, private _issueService: IssueService) {}
 
   ngOnInit() {
-
-    this.itemList = [
-      { "id": 1, "itemName": "India" },
-      { "id": 2, "itemName": "Singapore" },
-      { "id": 3, "itemName": "Australia" },
-      { "id": 4, "itemName": "Canada" },
-      { "id": 5, "itemName": "South Korea" },
-      { "id": 6, "itemName": "Brazil" },
-      { "id": 7, "itemName": "India" },
-      { "id": 8, "itemName": "Singapore" },
-      { "id": 9, "itemName": "Australia" },
-      { "id": 10, "itemName": "Canada" },
-      { "id": 11, "itemName": "South Korea" },
-      { "id": 12, "itemName": "Brazil" }
-    ];
-
-    this.selectedItems = [
-      { "id": 1, "itemName": "India" },
-      { "id": 2, "itemName": "Singapore" },
-      { "id": 3, "itemName": "Australia" },
-      { "id": 4, "itemName": "Canada" }];
+    this.getAssignees();
+    console.log(this.projectMembers);
 
     this.settings = {
       singleSelection: false,
-      text: "Select Countries",
+      text: "Select assignees",
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       enableSearchFilter: true,
       badgeShowLimit: 10,
       classes: "custom-class-example"
-      };
-  }
-  onItemSelect(item: any) {
-    console.log(item);
-    console.log(this.selectedItems);
-  }
-  OnItemDeSelect(item: any) {
-    console.log(item);
-    console.log(this.selectedItems);
-  }
-  onSelectAll(items: any) {
-    console.log(items);
-  }
-  onDeSelectAll(items: any) {
-    console.log(items);
+    };
   }
  
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, this.config);
+    this.modalRef = this._modalService.show(template, this.config);
   }
  
   openModalWithClass(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(
+    this.modalRef = this._modalService.show(
       template,
       Object.assign({}, this.config, { class: 'gray modal-lg' })
     );
+  }
+
+  getAssignees() {
+    return this._issueService.getAssignees('testUse')
+      .subscribe(data => this.projectMembers = data);
   }
 }
