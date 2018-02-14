@@ -6,3 +6,17 @@
     background-color: #212529;
     border-color: #212529;
 }
+
+
+.custom-class-example {
+    color: #ccc !important;
+}
+.custom-class-example .c-token{
+    background: #38d574 !important;
+}
+.custom-class-example .pure-checkbox label::before {
+    border-color: #38d574 !important;
+}
+.custom-class-example .pure-checkbox input[type="checkbox"]:checked + label[_ngcontent-c1]:before {
+    background: #38d574 !important;
+}

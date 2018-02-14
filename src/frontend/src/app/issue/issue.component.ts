@@ -1,9 +1,6 @@
 import { Component, TemplateRef, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
-import { IMultiSelectSettings  } from 'angular-2-dropdown-multiselect';
-import { IMultiSelectTexts  } from 'angular-2-dropdown-multiselect';
 
 @Component({
   selector: 'app-issue-creation',
@@ -42,14 +39,16 @@ export class IssueComponent implements OnInit {
       { "id": 2, "itemName": "Singapore" },
       { "id": 3, "itemName": "Australia" },
       { "id": 4, "itemName": "Canada" }];
-    this.settings = {
-      singleSelection: false,
-      text: "Select Countries",
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      enableSearchFilter: true,
-      badgeShowLimit: 3
-    };
+
+      this.settings = {
+        singleSelection: false,
+        text: "Select Countries",
+        selectAllText: 'Select All',
+        unSelectAllText: 'UnSelect All',
+        enableSearchFilter: true,
+        badgeShowLimit: 3,
+        classes: "myclass custom-class-example"
+      };
   }
   onItemSelect(item: any) {
     console.log(item);

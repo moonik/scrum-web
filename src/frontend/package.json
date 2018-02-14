@@ -25,6 +25,7 @@
     "angular-multiple-select": "^1.1.3",
     "angular2-multiselect-dropdown": "^1.3.6",
     "core-js": "^2.4.1",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "ng-bootstrap": "^1.6.3",
     "ng2-modal": "0.0.25",
