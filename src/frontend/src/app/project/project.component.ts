@@ -49,14 +49,12 @@ export class ProjectComponent implements OnInit {
         });
   }
 
+  // todo wait for file upload
   chooseIcon(files: FileList) {
     this.icon = files.item(0);
     this.fileUploadService.uploadFile(this.icon)
       .subscribe(data => {
-        const json = data.json();
-        console.log(json['link']);
-        this.projectDto.icon = json['link'];
-        console.log(this.projectDto.icon);
+        this.projectDto.icon = data.json()['link'];
       });
   }
 

@@ -27,7 +27,9 @@ export class HomeComponent implements OnInit {
         data => {
           this.projects = data;
           for (let i = 0; i < this.projects.length; i++) {
-            this.loadIcon(this.projects[i].icon, i);
+            if (this.projects[i].icon != null) {
+              this.loadIcon(this.projects[i].icon, i);
+            }
           }
         }
       );
@@ -46,7 +48,6 @@ export class HomeComponent implements OnInit {
 
   loadIcon(filename: string, i: number) {
     const f = filename.substr(filename.lastIndexOf('/') + 1);
-    console.log(f);
     return this.uploadService.loadFile(f)
       .subscribe(
         data => {
