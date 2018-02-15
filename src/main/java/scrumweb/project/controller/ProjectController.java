@@ -1,6 +1,7 @@
 package scrumweb.project.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import scrumweb.common.SecurityContextService;
@@ -42,5 +43,11 @@ public class ProjectController {
     @ResponseStatus(HttpStatus.OK)
     public List<ProjectDto> allProjects(){
         return projectService.getAllProjects(securityContextService.getCurrentUserAccount());
+    }
+
+    @GetMapping("/search/{paramkey}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProjectDto> findProjectsByKeyQuery(@PathVariable String paramkey){
+        return projectService.findProjectsByKeyQuery(paramkey);
     }
 }

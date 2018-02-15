@@ -80,4 +80,18 @@ public class ProjectService {
                 .map(project -> projectAsm.convertFromProjectToProjectDto(project))
                         .collect(Collectors.toList());
     }
+
+//    public List<ProjectDto> findProjectsByKey(String key){
+//
+//        return projectRepository.findProjectsByKey(key).stream()
+//                .map(project -> projectAsm.convertFromProjectToProjectDto(project))
+//                    .collect(Collectors.toList());
+//    }
+
+    public List<ProjectDto> findProjectsByKeyQuery(String paramkey){
+
+        return projectRepository.findProjectsByKeyQuery(paramkey).stream()
+                .map(project -> projectAsm.convertFromProjectToProjectDto(project))
+                    .collect(Collectors.toList());
+    }
 }
