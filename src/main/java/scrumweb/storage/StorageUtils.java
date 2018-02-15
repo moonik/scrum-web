@@ -46,8 +46,9 @@ public class StorageUtils {
         int type =
             (img.getTransparency() == Transparency.OPAQUE)
                 ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
-        BufferedImage ret = (BufferedImage) img;
-        int w, h;
+        BufferedImage ret = img;
+        int w;
+        int h;
         if (higherQuality) {
             w = img.getWidth();
             h = img.getHeight();

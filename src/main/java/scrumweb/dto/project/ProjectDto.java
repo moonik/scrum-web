@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import scrumweb.dto.user.UserProfileDto;
-import scrumweb.user.account.domain.UserAccount;
 
-import java.nio.file.Path;
 import java.util.Set;
 
 @NoArgsConstructor

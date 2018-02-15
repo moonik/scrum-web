@@ -8,7 +8,6 @@ import scrumweb.dto.projectfield.ListElementDto;
 import scrumweb.issue.fieldcontent.ListContent;
 import scrumweb.projectfield.domain.ListElement;
 import scrumweb.projectfield.domain.ListElementsContainer;
-import scrumweb.projectfield.repository.CheckBoxRepository;
 import scrumweb.projectfield.repository.ListElementRepository;
 
 import java.util.Set;

@@ -1,9 +1,7 @@
 package scrumweb.user.account.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import scrumweb.project.domain.Project;
 import scrumweb.security.model.Authority;

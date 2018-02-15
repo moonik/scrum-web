@@ -3,7 +3,6 @@ package scrumweb.issue.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import scrumweb.common.SecurityContextService;
-import scrumweb.common.asm.fieldcontent.FieldContentAsm;
 import scrumweb.common.asm.IssueAsm;
 import scrumweb.common.asm.UserProfileAsm;
 import scrumweb.common.asm.fieldcontent.FieldContentConverter;
@@ -16,9 +15,8 @@ import scrumweb.issue.fieldcontent.FieldContent;
 import scrumweb.issue.repository.IssueRepository;
 import scrumweb.issue.repository.IssueTypeRepository;
 import scrumweb.project.domain.Project;
-import scrumweb.projectfield.domain.ProjectField;
-import scrumweb.projectfield.repository.ProjectFieldRepository;
 import scrumweb.project.repository.ProjectRepository;
+import scrumweb.projectfield.repository.ProjectFieldRepository;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 

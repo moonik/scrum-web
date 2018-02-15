@@ -1,7 +1,6 @@
 package scrumweb.common.asm;
 
 import org.springframework.stereotype.Component;
-import scrumweb.dto.fieldcontent.FieldContentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.user.UserProfileDto;
 import scrumweb.issue.domain.Issue;
