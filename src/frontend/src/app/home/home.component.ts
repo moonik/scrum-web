@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProjectDto} from '../model/projectDto';
-import { HttpClient } from '../shared/http.client.service';
 import {HomeService} from './home.service';
 import {FileUploadService} from '../shared/file-upload.service';
-import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +12,6 @@ import {forEach} from '@angular/router/src/utils/collection';
 export class HomeComponent implements OnInit {
 
   projects: ProjectDto[] = [];
-  imageToShow: any;
 
   constructor(private homeService: HomeService,
               private uploadService: FileUploadService) {

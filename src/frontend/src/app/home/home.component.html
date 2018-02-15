@@ -6,20 +6,20 @@
 <form class="table-form">
   <table class="table table-hover">
     <thead>
-      <tr>
-        <th>Name</th>
-        <th>Key</th>
-        <th>Description</th>
-        <th>Icon</th>
-      </tr>
+    <tr>
+      <th>Name</th>
+      <th>Key</th>
+      <th>Description</th>
+      <th>Icon</th>
+    </tr>
     </thead>
     <tbody *ngFor="let project of projects">
-      <tr>
-        <td>{{project.name}}</td>
-        <td>{{project.projectKey}}</td>
-        <td>{{project.description}}</td>
-        <td><img src="{{project.image}}"></td>
-      </tr>
+    <tr>
+      <td>{{project.name}}</td>
+      <td>{{project.projectKey}}</td>
+      <td>{{project.description}}</td>
+      <td><img src="{{project.image}}"></td>
+    </tr>
     </tbody>
   </table>
 </form>

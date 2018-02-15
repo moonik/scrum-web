@@ -43,7 +43,7 @@ export class HttpClient {
   load(url: string) {
     const headers = new Headers();
     headers.append('Authorization', localStorage.getItem('token'));
-    return this._http.get(url, { headers: headers, responseType: ResponseContentType.Blob })
+    return this._http.get(url, {headers: headers, responseType: ResponseContentType.Blob})
       .map((res: Response) => res.blob());
 
   }

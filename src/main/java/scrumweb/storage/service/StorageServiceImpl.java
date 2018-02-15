@@ -9,10 +9,10 @@ import scrumweb.exception.EmptyFileException;
 import scrumweb.storage.StorageUtils;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -33,8 +33,9 @@ public class StorageServiceImpl implements StorageService {
 
         Path destinationPath = StorageUtils.checkName(file, location());
 
-        InputStream is = file.getInputStream();
-        BufferedImage bi = StorageUtils.resize(ImageIO.read(is));
+        BufferedImage image = ImageIO.read(file.getInputStream());
+        BufferedImage bi = StorageUtils.getScaledInstance(image, 128, 128,
+            RenderingHints.VALUE_INTERPOLATION_BILINEAR, true);
 
         ImageIO.write(bi, "jpg", new File(String.valueOf(destinationPath)));
 
