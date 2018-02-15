@@ -47,8 +47,7 @@ export class HomeComponent implements OnInit {
   }
 
   loadIcon(filename: string, i: number) {
-    const f = filename.substr(filename.lastIndexOf('/') + 1);
-    return this.uploadService.loadFile(f)
+    return this.uploadService.loadFile(filename)
       .subscribe(
         data => {
           this.createImageFromBlob(data, i);

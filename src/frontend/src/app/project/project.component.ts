@@ -51,18 +51,25 @@ export class ProjectComponent implements OnInit {
         });
   }
 
-  // todo delete file if changed
   chooseIcon(files: FileList) {
     this.icon = files.item(0);
     this.loading = true;
     this.goodIcon = true;
+    if (this.projectDto.icon != null) {
+      console.log('czy cycki: ' + this.projectDto.icon);
+      this.fileUploadService.deleteFile(this.projectDto.icon).subscribe(data => {
+      });
+    }
     this.fileUploadService.uploadFile(this.icon)
       .subscribe(data => {
-          this.projectDto.icon = data.json()['link'];
+          const link = data.json()['link'];
+          this.projectDto.icon = link.substr(link.lastIndexOf('/') + 1);
           this.loading = false;
         },
         error => {
           if (error.status !== 200) {
+            this.fileUploadService.deleteFile(this.projectDto.icon).subscribe(data => {
+            });
             this.goodIcon = false;
           }
         });

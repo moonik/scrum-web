@@ -16,7 +16,6 @@ import java.nio.file.NoSuchFileException;
 
 import static scrumweb.common.ApplicationConstants.API_URL;
 
-// todo handle deleting file
 @Controller
 @RequestMapping(API_URL + "storage")
 public class StorageController {
@@ -48,6 +47,16 @@ public class StorageController {
             return ResponseEntity.notFound().build();
         } catch (MalformedURLException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{filename:.+}")
+    public ResponseEntity<?> deleteFile(@PathVariable String filename) throws IOException {
+        try {
+            storageServiceImpl.delete(filename);
+            return ResponseEntity.ok().build();
+        } catch (NoSuchFileException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }
