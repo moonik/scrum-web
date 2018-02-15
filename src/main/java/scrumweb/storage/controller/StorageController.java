@@ -16,6 +16,7 @@ import java.nio.file.NoSuchFileException;
 
 import static scrumweb.common.ApplicationConstants.API_URL;
 
+// todo handle deleting file
 @Controller
 @RequestMapping(API_URL + "storage")
 public class StorageController {

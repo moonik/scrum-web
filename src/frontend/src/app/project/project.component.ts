@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProjectDto} from '../model/projectDto';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import { ProjectService } from './project.service';
-import { HttpClient } from '../shared/http.client.service';
+import {ProjectService} from './project.service';
+import {HttpClient} from '../shared/http.client.service';
 import {FileUploadService} from '../shared/file-upload.service';
 
 @Component({
@@ -17,6 +17,8 @@ export class ProjectComponent implements OnInit {
   projectForm: FormGroup;
   error = '';
   icon: File = null;
+  loading = false;
+  goodIcon = true;
 
   constructor(fb: FormBuilder,
               private router: Router,
@@ -49,13 +51,21 @@ export class ProjectComponent implements OnInit {
         });
   }
 
-  // todo wait for file upload
+  // todo delete file if changed
   chooseIcon(files: FileList) {
     this.icon = files.item(0);
+    this.loading = true;
+    this.goodIcon = true;
     this.fileUploadService.uploadFile(this.icon)
       .subscribe(data => {
-        this.projectDto.icon = data.json()['link'];
-      });
+          this.projectDto.icon = data.json()['link'];
+          this.loading = false;
+        },
+        error => {
+          if (error.status !== 200) {
+            this.goodIcon = false;
+          }
+        });
   }
 
   checkProjectNameLength(): boolean {
@@ -73,5 +83,4 @@ export class ProjectComponent implements OnInit {
   checkControl(name: string): boolean {
     return this.projectForm.controls[name].invalid && (this.projectForm.controls[name].touched || this.projectForm.controls[name].dirty);
   }
-
 }

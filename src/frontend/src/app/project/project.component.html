@@ -37,10 +37,15 @@
 
     <div class="form-group">
       <label for = "icon">Choose Icon</label>
-      <input type = "file" id = "icon" (change)="chooseIcon($event.target.files)">
+      <input type = "file" id = "icon" class="form-control w-200"
+             (change)="chooseIcon($event.target.files)"
+              accept="image/jpeg, image/png">
+      <div *ngIf="!goodIcon">
+        <small id="fileUploadError" class="form-text text-danger">Icon must be in .jpg or .png format</small>
+      </div>
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="projectForm.invalid">Create project</button>
+    <button type="submit" class="btn btn-primary" [disabled]="projectForm.invalid || loading || !goodIcon">Create project</button>
 
     <div *ngIf="projectForm.invalid">
       <small class="form-text error">Please fill all fields.</small>

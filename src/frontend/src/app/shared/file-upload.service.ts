@@ -17,4 +17,9 @@ export class FileUploadService {
   loadFile(filename: string): Observable<Blob> {
     return this._http.load('/api/scrum-web/storage/' + filename);
   }
+
+  // todo handle delete file
+  deleteFile(filename: string) {
+    return this._http.delete('/api/scrum-web/storage/' + filename);
+  }
 }

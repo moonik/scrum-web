@@ -14,7 +14,6 @@ import java.nio.file.Paths;
 @Setter
 public class StorageProperties {
 
-    @Autowired
     @Value("${location.upload-dir:upload-dir}")
     private String location;
 
