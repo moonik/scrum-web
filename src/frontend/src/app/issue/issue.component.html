@@ -13,10 +13,10 @@
         <div class="modal-body">
             <form>
                 <label for="summary">Summary</label><br>
-                <input name="summary"><br>
+                <input name="summary" [(ngModel)]="issueDetails.summary"><br>
                     
                 <label for="description">Description</label><br>
-                <textarea name="description" cols="50"></textarea><br>
+                <textarea name="description" cols="50" [(ngModel)]="issueDetails.description"></textarea><br>
                     
                 <label for="assignees">Assignees</label><br>
                 <div class="assignees-multi-select" *ngIf="projectMembers">
@@ -28,16 +28,16 @@
                 </div><br>
 
                 <label for="estimateTime">Estimate time</label><br>
-                <input name="estimateTime"><br><br>
+                <input name="estimateTime" [(ngModel)]="issueDetails.estimateTime"><br><br>
                     
                 <label for="priority">Priority</label>
-                <select name="priority">
+                <select name="priority" [(ngModel)]="issueDetails.priority">
                     <option value="HIGH">HIGH</option>
                     <option value="LOW">LOW</option>
                 </select><br>
                     
                 <label for="type">Issue type</label>
-                <select name="type">
+                <select name="type" [(ngModel)]="issueDetails.issueType">
                     <option value="TASK">TASK</option>
                     <option value="BUG">BUG</option>
                     <option value="FEATURE">FEATURE</option>
@@ -45,7 +45,7 @@
             </form>
         </div>
         <span class="modal-footer">
-            <button class="btn btn-primary" id="btn-create">Create</button>
+            <button class="btn btn-primary" id="btn-create" (click)="createIssue()">Create</button>
             <button class="btn btn-primary" id="btn-cancel" (click)="lgModal.hide()">Cancel</button>
         </span>
         </div>

@@ -1,7 +1,9 @@
 import { Component, TemplateRef, OnInit, Input } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import {IssueService} from './issue.service';
+import { IssueService } from './issue.service';
+import { IssueDetailsDto } from '../model/IssueDetailsDto';
+import { UserProfileDto } from '../model/UserProfileDto';
 
 @Component({
   selector: 'app-issue-creation',
@@ -20,8 +22,8 @@ export class IssueComponent implements OnInit {
   };
   
   @Input() projectKey: string;
-  isLoading: boolean = false;
-  projectMembers: Array<String> = [];
+  public issueDetails: IssueDetailsDto = new IssueDetailsDto();
+  projectMembers: Array<any> = [];
   selectedItems = [];
   settings = {};
 
@@ -29,15 +31,13 @@ export class IssueComponent implements OnInit {
 
   ngOnInit() {
     this.getAssignees();
-    console.log(this.projectMembers);
-
     this.settings = {
       singleSelection: false,
       text: "Select assignees",
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       enableSearchFilter: true,
-      badgeShowLimit: 10,
+      badgeShowLimit: 3,
       classes: "custom-class-example"
     };
   }
@@ -54,7 +54,14 @@ export class IssueComponent implements OnInit {
   }
 
   getAssignees() {
-    return this._issueService.getAssignees('testUse')
+    return this._issueService.getAssignees(this.projectKey)
       .subscribe(data => this.projectMembers = data);
+  }
+
+  createIssue() {
+    this.issueDetails.assignees = this.selectedItems.map(item => new UserProfileDto(item.itemName));
+    console.log(this.issueDetails);
+    return this._issueService.createIssue(this.projectKey, this.issueDetails)
+      .subscribe();
   }
 }

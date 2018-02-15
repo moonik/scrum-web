@@ -34,11 +34,6 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'project/issue/:projectKey',
-    component: IssueComponent,
-    canActivate: [AuthGuard]
-  },
-  {
     path: '',
     redirectTo: '/',
     pathMatch: 'full'

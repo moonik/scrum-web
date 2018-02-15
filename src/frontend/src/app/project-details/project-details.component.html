@@ -1,5 +1,6 @@
 <div class="project-details-container">
   <div class="details">
+    <app-issue-creation [projectKey]="projectKey"></app-issue-creation>
     {{ projectDetails?.projectDto?.name }}
   </div>
   <div class="issues-panel" *ngIf="showIssueList()">

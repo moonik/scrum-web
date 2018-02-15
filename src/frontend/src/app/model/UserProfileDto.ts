@@ -4,4 +4,8 @@ export class UserProfileDto {
     lastname: string;
     photo: string;
     username: string;
+
+    constructor(private _username: string) {
+        this.username = _username;
+    }
 }
