@@ -19,7 +19,6 @@ export class FileUploadService {
   }
 
   deleteFile(filename: string) {
-    console.log('cycki: ' + filename);
     return this._http.delete('/api/scrum-web/storage/' + filename);
   }
 }

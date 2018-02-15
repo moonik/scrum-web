@@ -56,7 +56,6 @@ export class ProjectComponent implements OnInit {
     this.loading = true;
     this.goodIcon = true;
     if (this.projectDto.icon != null) {
-      console.log('czy cycki: ' + this.projectDto.icon);
       this.fileUploadService.deleteFile(this.projectDto.icon).subscribe(data => {
       });
     }

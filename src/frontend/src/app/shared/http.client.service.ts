@@ -31,9 +31,7 @@ export class HttpClient {
   }
 
   delete(url: string): Observable<Response> {
-    const headers = new Headers();
-    headers.append('Authorization', localStorage.getItem('token'));
-    return this._http.delete(url, {headers: headers});
+    return this._http.delete(url, this.createRequestOptionsArgs());
   }
 
   upload(url: string, formData: any): Observable<Response> {
@@ -47,6 +45,5 @@ export class HttpClient {
     headers.append('Authorization', localStorage.getItem('token'));
     return this._http.get(url, {headers: headers, responseType: ResponseContentType.Blob})
       .map((res: Response) => res.blob());
-
   }
 }
