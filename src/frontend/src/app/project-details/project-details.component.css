@@ -35,8 +35,16 @@
 }
 
 .issue-details span {
-	margin-right: 100px;
+	margin-right: 50px;
 	width: 500px;
+}
+
+.col-2-details {
+	width: 400px;
+}
+
+.col-3-details span {
+	width: 300px !important;
 }
 
 .list-panel {
@@ -57,6 +65,7 @@
 
 .issue-det {
 	margin-top: 10px;
+	display: table;
 }
 
 .underline {
@@ -65,8 +74,5 @@
 }
 
 .issue-det .col-1-details, .col-2-details {
-	width:300px;
-    height:200px;
-    margin-right:10px;
-	float:left;
+	display: table-cell;
 }
