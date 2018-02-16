@@ -1,21 +1,122 @@
-<div class="project-details-container">
-  <div class="details">
-    {{ projectDetails?.projectDto?.name }}
-  </div>
-  <div class="issues-panel" *ngIf="showIssueList()">
-    <div class="list-panel">
-      <ol class="issue-list">
-        <li *ngFor="let issue of projectDetails.issues">
+<div class="project-name">
+  <h3>{{ projectDetails?.projectDto?.name }}</h3>
+</div>
+    <div class="list-panel" id="list-panel">
+      <ol class="issue-list" style="display: inline; list-style-type: none;">
+        <!-- <li *ngFor="let issue of projectDetails.issues">
           <a (click)="selectIssue(issue.id)">{{ issue.id }} : {{ issue.summary }} </a>
+        </li> //TODO SCROLL BAR -->
+        <li>
+          <p class="key"><b>PROJS-1</b></p>
+          <p>Summary</p>
         </li>
+        <li>
+            <p class="key">PROJS-1</p>
+            <p>Summary</p>
+          </li>
+          <li>
+              <p class="key">PROJS-1</p>
+              <p>Summary</p>
+            </li>
+            <li>
+                <p class="key">PROJS-1</p>
+                <p>Summary</p>
+              </li>
+              <li>
+                  <p class="key">PROJS-1</p>
+                  <p>Summary</p>
+                </li>
+                <li>
+                    <p class="key"><b>PROJS-1</b></p>
+                    <p>Summary</p>
+                  </li>
+                  <li>
+                      <p class="key">PROJS-1</p>
+                      <p>Summary</p>
+                    </li>
+                    <li>
+                        <p class="key">PROJS-1</p>
+                        <p>Summary</p>
+                      </li>
+                      <li>
+                          <p class="key">PROJS-1</p>
+                          <p>Summary</p>
+                        </li>
+                        <li>
+                            <p class="key">PROJS-1</p>
+                            <p>Summary</p>
+                          </li>
+                          <li>
+                              <p class="key"><b>PROJS-1</b></p>
+                              <p>Summary</p>
+                            </li>
+                            <li>
+                                <p class="key">PROJS-1</p>
+                                <p>Summary</p>
+                              </li>
+                              <li>
+                                  <p class="key">PROJS-1</p>
+                                  <p>Summary</p>
+                                </li>
+                                <li>
+                                    <p class="key">PROJS-1</p>
+                                    <p>Summary</p>
+                                  </li>
+                                  <li>
+                                      <p class="key">PROJS-1</p>
+                                      <p>Summary</p>
+                                    </li>
+                                    <li>
+                                        <p class="key"><b>PROJS-1</b></p>
+                                        <p>Summary</p>
+                                      </li>
+                                      <li>
+                                          <p class="key">PROJS-1</p>
+                                          <p>Summary</p>
+                                        </li>
+                                        <li>
+                                            <p class="key">PROJS-1</p>
+                                            <p>Summary</p>
+                                          </li>
+                                          <li>
+                                              <p class="key">PROJS-1</p>
+                                              <p>Summary</p>
+                                            </li>
+                                            <li>
+                                                <p class="key">PROJS-1</p>
+                                                <p>Summary</p>
+                                              </li>
+                                              <li>
+                                                  <p class="key"><b>PROJS-1</b></p>
+                                                  <p>Summary</p>
+                                                </li>
+                                                <li>
+                                                    <p class="key">PROJS-1</p>
+                                                    <p>Summary</p>
+                                                  </li>
+                                                  <li>
+                                                      <p class="key">PROJS-1</p>
+                                                      <p>Summary</p>
+                                                    </li>
+                                                    <li>
+                                                        <p class="key">PROJS-1</p>
+                                                        <p>Summary</p>
+                                                      </li>
+                                                      <li>
+                                                          <p class="key">PROJS-1</p>
+                                                          <p>Summary</p>
+                                                        </li>
       </ol>
     </div>
-    <div class="issue-details">
-      {{ selectedIssue.id }} : {{ selectedIssue.summary }}
+
+    <div class="issue-details" id="issue-details" style="display: inline">
+      <h5>PROJS-1</h5>
+      <h6>Test summary</h6>
       <br>
-      Type: {{ selectedIssue.issueType }}
-      <br>
-      Priority: {{ selectedIssue.priority }}
+      <div class="issue-det">
+          <span>Type: TASK</span>
+          <span>Assignees: </span>
+          <br>
+          <span>Priority: HIGH</span>
+      </div>
     </div>
-  </div>
-</div>

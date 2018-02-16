@@ -1,3 +1,51 @@
 .issue-list li {
-    cursor: pointer;
+	cursor: pointer;
+	margin: 0px 5px 0px 5px;
+	border-bottom: 2px slategray solid;
+}
+
+.issue-list p {
+	margin: 0;
+}
+
+.issue-list .key {
+	font-size: 15px;
+}
+
+.list-panel, .issue-details {
+    width:100px;
+    height:100px;
+    margin-right:10px;
+	float:left;
+	margin-left: 15px;
+}
+
+.issue-details {
+	margin-top: 25px;
+	margin-left: 100px;
+	width: 60% !important;
+}
+
+.issue-details span {
+	margin-right: 100px;
+}
+
+.list-panel {
+	width: 15% !important;
+	overflow-y: auto;
+    height: 800px;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.project-name {
+	margin-left: 10px;
+	border-bottom: 2px slategray solid;
+	border-top: 2px slategray solid;
+	margin-top: 5px;
+	width: 99%;
+}
+
+.issue-det {
+	margin-top: 50px;
 }
