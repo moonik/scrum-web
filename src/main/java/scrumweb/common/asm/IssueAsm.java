@@ -19,19 +19,23 @@ public class IssueAsm {
         return new Issue(issueDetailsDto.getSummary(), issueDetailsDto.getDescription(), assignees, reporter,
                 issueDetailsDto.getEstimateTime(), issueDetailsDto.getRemainingTime(),
                 issueDetailsDto.getPriority().equalsIgnoreCase("high") ? Priority.HIGH : Priority.LOW,
-                issueType, fieldContents);
+                issueType, fieldContents, issueDetailsDto.getCreatedDate());
     }
 
     public IssueDetailsDto createIssueDetailsDto(Issue issue, Set<UserProfileDto> assignees, UserProfileDto reporter) {
         return new IssueDetailsDto(
-                issue.getId(), "",
+                issue.getId(),
+                "",
                 issue.getSummary(),
                 issue.getDescription(),
-                assignees, reporter,
+                assignees,
+                reporter,
                 issue.getEstimateTime(),
                 issue.getRemainingTime(),
                 issue.getPriority().toString(),
-                issue.getIssueType().getName()
+                issue.getIssueType().getName(),
+                issue.getCreatedDate().toString(),
+                issue.getLastUpdate().toString()
         );
     }
 }
