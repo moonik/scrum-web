@@ -4,6 +4,10 @@
 	border-bottom: 2px slategray solid;
 }
 
+.issue-list li:hover {
+	background-color: rgb(222, 226, 226);
+}
+
 .issue-list p {
 	margin: 0;
 }
@@ -24,10 +28,15 @@
 	margin-top: 25px;
 	margin-left: 100px;
 	width: 60% !important;
+	overflow-y: auto;
+    height: 800px;
+    font-size: 16px;
+    display: inline-block;
 }
 
 .issue-details span {
 	margin-right: 100px;
+	width: 500px;
 }
 
 .list-panel {
@@ -47,5 +56,17 @@
 }
 
 .issue-det {
-	margin-top: 50px;
+	margin-top: 10px;
+}
+
+.underline {
+	margin-top: 10px;
+	border-bottom: 2px slategray solid;
+}
+
+.issue-det .col-1-details, .col-2-details {
+	width:300px;
+    height:200px;
+    margin-right:10px;
+	float:left;
 }
