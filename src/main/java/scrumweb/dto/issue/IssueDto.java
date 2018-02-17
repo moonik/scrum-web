@@ -15,6 +15,7 @@ import java.util.Set;
 public class IssueDto {
 
     private Long id;
+    private String issueKey;
     private String summary;
     private String issueType;
     private String priority;

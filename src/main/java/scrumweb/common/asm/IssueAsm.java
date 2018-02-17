@@ -40,6 +40,7 @@ public class IssueAsm {
     public IssueDto createIssueDto(Issue issue) {
         return new IssueDto(
                 issue.getId(),
+                issue.getK
                 issue.getSummary(),
                 issue.getIssueType().getName(),
                 issue.getPriority().toString(),

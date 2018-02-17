@@ -2,113 +2,12 @@
   <h3>{{ projectDetails?.projectDto?.name }}</h3>
 </div>
 <div class="list-panel" id="list-panel">
-      <ul class="issue-list" style="display: inline; list-style-type: none;">
-        <!-- <li *ngFor="let issue of projectDetails.issues">
-          <a (click)="selectIssue(issue.id)">{{ issue.id }} : {{ issue.summary }} </a>
-        </li> //TODO SCROLL BAR -->
-        <li>
-          <a>
-              <p class="key"><b>PROJS-1</b></p>
-              <p>Summary</p>
-          </a>
+      <ul class="issue-list">
+        <li *ngFor="let issue of projectDetails.issues">
+            <p class="key"><b>{{ issue.id }}</b></p>
+            <p>{{ issue.summary }}</p>
         </li>
-        <li>
-            <p class="key">PROJS-1</p>
-            <p>Summary</p>
-          </li>
-          <li>
-              <p class="key">PROJS-1</p>
-              <p>Summary</p>
-            </li>
-            <li>
-                <p class="key">PROJS-1</p>
-                <p>Summary</p>
-              </li>
-              <li>
-                  <p class="key">PROJS-1</p>
-                  <p>Summary</p>
-                </li>
-                <li>
-                    <p class="key"><b>PROJS-1</b></p>
-                    <p>Summary</p>
-                  </li>
-                  <li>
-                      <p class="key">PROJS-1</p>
-                      <p>Summary</p>
-                    </li>
-                    <li>
-                        <p class="key">PROJS-1</p>
-                        <p>Summary</p>
-                      </li>
-                      <li>
-                          <p class="key">PROJS-1</p>
-                          <p>Summary</p>
-                        </li>
-                        <li>
-                            <p class="key">PROJS-1</p>
-                            <p>Summary</p>
-                          </li>
-                          <li>
-                              <p class="key"><b>PROJS-1</b></p>
-                              <p>Summary</p>
-                            </li>
-                            <li>
-                                <p class="key">PROJS-1</p>
-                                <p>Summary</p>
-                              </li>
-                              <li>
-                                  <p class="key">PROJS-1</p>
-                                  <p>Summary</p>
-                                </li>
-                                <li>
-                                    <p class="key">PROJS-1</p>
-                                    <p>Summary</p>
-                                  </li>
-                                  <li>
-                                      <p class="key">PROJS-1</p>
-                                      <p>Summary</p>
-                                    </li>
-                                    <li>
-                                        <p class="key"><b>PROJS-1</b></p>
-                                        <p>Summary</p>
-                                      </li>
-                                      <li>
-                                          <p class="key">PROJS-1</p>
-                                          <p>Summary</p>
-                                        </li>
-                                        <li>
-                                            <p class="key">PROJS-1</p>
-                                            <p>Summary</p>
-                                          </li>
-                                          <li>
-                                              <p class="key">PROJS-1</p>
-                                              <p>Summary</p>
-                                            </li>
-                                            <li>
-                                                <p class="key">PROJS-1</p>
-                                                <p>Summary</p>
-                                              </li>
-                                              <li>
-                                                  <p class="key"><b>PROJS-1</b></p>
-                                                  <p>Summary</p>
-                                                </li>
-                                                <li>
-                                                    <p class="key">PROJS-1</p>
-                                                    <p>Summary</p>
-                                                  </li>
-                                                  <li>
-                                                      <p class="key">PROJS-1</p>
-                                                      <p>Summary</p>
-                                                    </li>
-                                                    <li>
-                                                        <p class="key">PROJS-1</p>
-                                                        <p>Summary</p>
-                                                      </li>
-                                                      <li>
-                                                          <p class="key">PROJS-1</p>
-                                                          <p>Summary</p>
-                                                        </li>
-                                                      </ul>
+  </ul>
 </div>
 
 <div class="issue-details" id="issue-details" style="display: inline">
@@ -136,9 +35,6 @@
   <div class="more-details">
     <b>Description</b>
     <div class="issue-description">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
     </div>
   </div>
 </div>
