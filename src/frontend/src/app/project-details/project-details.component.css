@@ -27,7 +27,7 @@
 .issue-details {
 	margin-top: 25px;
 	margin-left: 50px;
-	width: 60% !important;
+	width: 65% !important;
 	overflow-y: auto;
     height: 31.5em;
     font-size: 16px;
@@ -40,11 +40,11 @@
 }
 
 .col-2-details {
-	width: 400px;
+	width: 250px;
 }
 
-.col-3-details span {
-	width: 300px !important;
+.col-4-details {
+	margin-left: 5px;
 }
 
 .list-panel {
@@ -73,14 +73,33 @@
 	border-bottom: 2px slategray solid;
 }
 
-.issue-det .col-1-details, .col-2-details, .col-3-details {
+.issue-det .col-1-details, .col-2-details, .col-3-details, .col-4-details {
 	display: table-cell;
 }
 
 .more-details {
-	margin-top: 7em;
+	margin-top: 5em;
 }
 
 .more-details .issue-description {
+	overflow-y: auto;
+    height: 12em;
 	margin-top: 5px;
+}
+
+.list-panel::-webkit-scrollbar-track, .more-details .issue-description::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+.list-panel::-webkit-scrollbar, .more-details .issue-description::-webkit-scrollbar {
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+.list-panel::-webkit-scrollbar-thumb, .more-details .issue-description::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
 }
