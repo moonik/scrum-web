@@ -26,10 +26,10 @@
 
 .issue-details {
 	margin-top: 25px;
-	margin-left: 100px;
+	margin-left: 50px;
 	width: 60% !important;
 	overflow-y: auto;
-    height: 800px;
+    height: 31.5em;
     font-size: 16px;
     display: inline-block;
 }
@@ -50,7 +50,7 @@
 .list-panel {
 	width: 15% !important;
 	overflow-y: auto;
-    height: 800px;
+    height: 31.5em;
     font-size: 16px;
     display: inline-block;
 }
@@ -73,6 +73,14 @@
 	border-bottom: 2px slategray solid;
 }
 
-.issue-det .col-1-details, .col-2-details {
+.issue-det .col-1-details, .col-2-details, .col-3-details {
 	display: table-cell;
+}
+
+.more-details {
+	margin-top: 7em;
+}
+
+.more-details .issue-description {
+	margin-top: 5px;
 }

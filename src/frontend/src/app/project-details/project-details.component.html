@@ -1,14 +1,16 @@
 <div class="project-name">
   <h3>{{ projectDetails?.projectDto?.name }}</h3>
 </div>
-    <div class="list-panel" id="list-panel">
-      <ol class="issue-list" style="display: inline; list-style-type: none;">
+<div class="list-panel" id="list-panel">
+      <ul class="issue-list" style="display: inline; list-style-type: none;">
         <!-- <li *ngFor="let issue of projectDetails.issues">
           <a (click)="selectIssue(issue.id)">{{ issue.id }} : {{ issue.summary }} </a>
         </li> //TODO SCROLL BAR -->
         <li>
-          <p class="key"><b>PROJS-1</b></p>
-          <p>Summary</p>
+          <a>
+              <p class="key"><b>PROJS-1</b></p>
+              <p>Summary</p>
+          </a>
         </li>
         <li>
             <p class="key">PROJS-1</p>
@@ -106,26 +108,31 @@
                                                           <p class="key">PROJS-1</p>
                                                           <p>Summary</p>
                                                         </li>
-      </ol>
-    </div>
+                                                      </ul>
+</div>
 
-    <div class="issue-details" id="issue-details" style="display: inline">
-      <h5>PROJS-1</h5>
-      <h6>Test summary</h6>
-      <div class="underline"></div>
-
-      <div class="issue-det">
-        <div class="col-1-details">
-          <span><b>Type:</b> TASK</span><br>
-          <span><b>Priority:</b>HIGH</span>
-        </div>
-        <div class="col-2-details">
-          <span><b>Reporter:</b> mysanr</span><br>
-          <span><b>Assignees:</b> mysanr, dasdl, dlasdlas, mysanr, mysanr, mysanr</span>
-        </div>
-        <div class="col-3-details">
-            <span><b>Created at: </b>33/33/33:12:12</span><br>
-            <span><b>Updated at: </b>33/33/33:12:12</span>
-          </div>
-      </div>
+<div class="issue-details" id="issue-details" style="display: inline">
+  <h5>PROJS-1 <b>(CLOSED)</b></h5>
+  <h6>Test summary</h6>
+  <div class="underline"></div>
+  <div class="issue-det">
+    <div class="col-1-details">
+      <span><b>Type:</b> TASK</span><br>
+      <span><b>Priority:</b>HIGH</span>
     </div>
+    <div class="col-2-details">
+      <span><b>Reporter:</b> mysanr</span><br>
+      <span><b>Assignees:</b> mysanr, dasdl, dlasdlas, mysanr, mysanr, mysanr</span>
+    </div>
+    <div class="col-3-details">
+      <span><b>Created at: </b>33/33/33:12:12</span><br>
+      <span><b>Updated at: </b>33/33/33:12:12</span>
+    </div>
+  </div>
+  <div class="more-details">
+    <b>Description</b>
+    <div class="issue-description">
+      User should bla bla bla and then bla bla bla
+    </div>
+  </div>
+</div>

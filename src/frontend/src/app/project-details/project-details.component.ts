@@ -26,6 +26,7 @@ export class ProjectDetailsComponent implements OnInit {
   ngOnInit() {}
 
   public selectIssue(issueId: number) {
+    console.log('HAYA');
     this.selectedIssue = this.projectDetails.issues.find(issue => issue.id === issueId);
   }
 
