@@ -9,7 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { RegistrationComponent } from './registration/registration.component';
-import { AuthGuard } from './security/auth.service';
+import { AuthGuard } from './security/auth.guard';
 import { AuthenticationService } from './security/authentication.service';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -18,6 +18,7 @@ import {ProjectService} from "./project/project.service";
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import {ApplicationConstants} from './shared/applicatins-contants';
 import { IssueComponent } from './issue/issue.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { IssueComponent } from './issue/issue.component';
     NavbarComponent,
     ProjectComponent,
     ProjectDetailsComponent,
-    IssueComponent
+    IssueComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -1,17 +1,17 @@
 <div class="project-name">
   <h3>{{ projectDetails?.projectDto?.name }}</h3>
 </div>
-<div class="list-panel" id="list-panel">
+<div class="list-panel" id="list-panel" *ngIf="projectDetails.issues.length > 0">
       <ul class="issue-list">
         <li *ngFor="let issue of projectDetails.issues">
-            <p class="key"><b>{{ issue.id }}</b></p>
+            <p class="key"><b>{{ issue.key }}</b></p>
             <p>{{ issue.summary }}</p>
         </li>
   </ul>
 </div>
 
-<div class="issue-details" id="issue-details" style="display: inline">
-  <h5>PROJS-1 <b>(CLOSED)</b></h5>
+<div class="issue-details" id="issue-details" *ngIf="projectDetails.issues.length > 0">
+  <h5>PROJS-1 <b>(STATUS)</b></h5>
   <h6>Test summary</h6>
   <div class="underline"></div>
   <div class="issue-det">
@@ -37,4 +37,8 @@
     <div class="issue-description">
     </div>
   </div>
+</div>
+
+<div class="no-issues-found" *ngIf="projectDetails.issues.length == 0" >
+  <h4>Sorry, we didn't find issues for this project</h4>
 </div>

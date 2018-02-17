@@ -55,7 +55,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(new JwtAuthenticationResponse(token, userInformationDto));
     }
 
-    @GetMapping("/refresh")
+    @PostMapping("/refresh")
     public ResponseEntity refreshAndGetAuthenticationToken(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
         String username = jwtTokenUtil.getUsernameFromToken(token);

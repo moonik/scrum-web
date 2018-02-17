@@ -2,7 +2,7 @@ package scrumweb.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import scrumweb.security.model.Authority;
+import scrumweb.security.domain.Authority;
 import scrumweb.user.account.domain.UserAccount;
 
 import java.util.List;

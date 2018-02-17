@@ -13,7 +13,7 @@ import {IssueDto} from '../model/IssueDto';
 export class ProjectDetailsComponent implements OnInit {
 
   public projectKey: string;
-  public projectDetails: ProjectDetailsDto;
+  public projectDetails: ProjectDetailsDto = new ProjectDetailsDto();
   public selectedIssue: IssueDto;
 
   constructor(private _activatedRoute: ActivatedRoute, private _projectDetailsService: ProjectDetailsService) {
