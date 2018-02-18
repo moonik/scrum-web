@@ -1,6 +1,7 @@
 <div class="project-name">
   <h3>{{ projectDetails?.projectDto?.name }}</h3>
 </div>
+
 <div class="list-panel" id="list-panel" *ngIf="projectDetails.issues.length > 0">
       <ul class="issue-list">
         <li *ngFor="let issue of projectDetails.issues" (click)="selectIssue(issue.id)">
