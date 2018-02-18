@@ -17,7 +17,7 @@
   <div class="issue-det">
     <div class="col-1-details">
       <span><b>Type:</b> {{ selectedIssue.issueType }}</span><br>
-      <span><b>Priority:</b>{{ selectedIssue.priority }}</span>
+      <span><b>Priority: </b>{{ selectedIssue.priority }}</span>
     </div>
     <div class="col-2-details">
       <span><b>Created at: </b>{{ selectedIssue.createdDate }}</span><br>
@@ -28,7 +28,7 @@
       <span><b>Remaining time: </b>{{ selectedIssue.remainingTime }}</span>
     </div>
     <div class="col-4-details">
-      <span><b>Reporter:</b>{{ selectedIssue.reporter.username }}</span><br>
+      <span><b>Reporter: </b>{{ selectedIssue.reporter.username }}</span><br>
       <span>
         <b>Assignees:</b>
         <span *ngFor="let user of selectedIssue.assignees">{{ user.username }}</span>
