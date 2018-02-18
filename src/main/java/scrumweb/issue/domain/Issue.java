@@ -26,7 +26,7 @@ public class Issue {
 
     private String description;
 
-    @OneToMany
+    @ManyToMany
     private Set<UserAccount> assignees;
 
     @OneToOne
@@ -50,10 +50,10 @@ public class Issue {
     private LocalDateTime createdDate;
 
     @UpdateTimestamp
-    private Timestamp    lastUpdate;
+    private Timestamp lastUpdate;
 
     public Issue(String summary, String description, Set<UserAccount> assignees, UserAccount reporter, String estimateTime, String remainingTime,
-                 Priority priority, IssueType issueType, Set<FieldContent> fieldContents, String createdDate) {
+                 Priority priority, IssueType issueType, Set<FieldContent> fieldContents, LocalDateTime createdDate) {
         this.summary = summary;
         this.description = description;
         this.assignees = assignees;
@@ -63,7 +63,7 @@ public class Issue {
         this.priority = priority;
         this.issueType = issueType;
         this.fieldContents = fieldContents;
-        this.createdDate = LocalDateTime.parse(createdDate);
+        this.createdDate = createdDate;
     }
 
     public enum Priority {

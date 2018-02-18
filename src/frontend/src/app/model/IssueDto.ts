@@ -1,4 +1,3 @@
-
 export class IssueDto {
     public id: number;
     public key: string;

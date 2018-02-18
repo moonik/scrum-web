@@ -34,6 +34,7 @@ export class AuthenticationService {
   logout(): void {
     this.token = null;
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
   }
 
   save(userDto: UserDto): Observable<number>{
