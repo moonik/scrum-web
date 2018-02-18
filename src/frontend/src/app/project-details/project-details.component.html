@@ -2,7 +2,7 @@
   <h3>{{ projectDetails?.projectDto?.name }}</h3>
 </div>
 
-<div class="list-panel" id="list-panel" *ngIf="projectDetails.issues.length > 0">
+<div class="list-panel" id="list-panel" *ngIf="showIssueList()">
       <ul class="issue-list">
         <li *ngFor="let issue of projectDetails.issues" (click)="selectIssue(issue.id)">
             <p class="key"><b>{{ issue.key }}</b></p>
@@ -42,6 +42,6 @@
   </div>
 </div>
 
-<div class="no-issues-found" *ngIf="projectDetails.issues.length == 0" >
+<div class="no-issues-found" *ngIf="!showIssueList()" >
   <h4>Sorry, we didn't find issues for this project</h4>
 </div>
