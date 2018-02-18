@@ -4,7 +4,7 @@
 <div class="list-panel" id="list-panel" *ngIf="projectDetails.issues.length > 0">
       <ul class="issue-list">
         <li *ngFor="let issue of projectDetails.issues" (click)="selectIssue(issue.id)">
-            <p class="key"><b>{{ issue.key }} TPN-1</b></p>
+            <p class="key"><b>{{ issue.key }}</b></p>
             <p>{{ issue.summary }}</p>
         </li>
   </ul>
