@@ -3,9 +3,11 @@ import {RouterModule, Routes} from "@angular/router";
 import {NgModule} from "@angular/core";
 import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
-import {AuthGuard} from './security/auth.service';
+import {AuthGuard} from './security/auth.guard';
 import {HomeComponent} from './home/home.component';
-import {ProjectComponent} from "./project/project.component";
+import {ProjectComponent} from "./project/project.component"
+import {ProjectDetailsComponent} from './project-details/project-details.component';
+import {IssueComponent} from './issue/issue.component';
 
 const routes: Routes = [
   {
@@ -24,6 +26,16 @@ const routes: Routes = [
   {
     path: 'project',
     component: ProjectComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'project/details/:projectKey',
+    component: ProjectDetailsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'project/issue/:projectKey',
+    component: IssueComponent,
     canActivate: [AuthGuard]
   },
   {

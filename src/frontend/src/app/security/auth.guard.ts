@@ -9,7 +9,6 @@ export class AuthGuard implements CanActivate {
 
   }
 
-
   canActivate() {
     if (localStorage.getItem('currentUser')){
       this.authenticationService.refresh(localStorage.getItem('token'), localStorage.getItem('currentUser')).subscribe();
