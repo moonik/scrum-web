@@ -64,4 +64,8 @@ export class IssueComponent implements OnInit {
     return this._issueService.createIssue(this.projectKey, this.issueDetails)
       .subscribe();
   }
+
+  isValid() {
+    return this.issueDetails.summary && this.issueDetails.priority && this.issueDetails.issueType;
+  }
 }
