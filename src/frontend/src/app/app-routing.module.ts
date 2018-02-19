@@ -6,6 +6,7 @@ import {RegistrationComponent} from './registration/registration.component';
 import {AuthGuard} from './security/auth.service';
 import {HomeComponent} from './home/home.component';
 import {ProjectComponent} from "./project/project.component";
+import {SearchComponent} from "./search/search.component";
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
   {
     path: 'project',
     component: ProjectComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'search/:query',
+    component: SearchComponent,
     canActivate: [AuthGuard]
   },
   {

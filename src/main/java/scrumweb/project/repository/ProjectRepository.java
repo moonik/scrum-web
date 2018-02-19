@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import scrumweb.dto.project.ProjectDto;
+import scrumweb.issue.domain.Issue;
 import scrumweb.project.domain.Project;
 import scrumweb.user.account.domain.UserAccount;
 
@@ -19,3 +20,4 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Project> findProjectsByKeyQuery(@Param("paramkey")String paramkey);
 
 }
+

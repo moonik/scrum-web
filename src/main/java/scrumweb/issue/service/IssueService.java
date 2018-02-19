@@ -84,4 +84,5 @@ public class IssueService {
                         projectFieldRepository.findOne(fieldContentDto.getProjectFieldId()), fieldContentDto))
                 .collect(Collectors.toSet());
     }
+
 }
