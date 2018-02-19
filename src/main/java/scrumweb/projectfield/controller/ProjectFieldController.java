@@ -23,12 +23,11 @@ import static scrumweb.common.ApplicationConstants.API_URL;
 public class ProjectFieldController {
 
     private ProjectFieldService projectFieldService;
-    private ProjectFieldsCollector projectFieldsCollector;
 
     @PostMapping("")
-    public void createProjectField(@RequestParam String issuetype, @RequestParam String projectName,
+    public void createProjectField(@RequestParam String issuetype, @RequestParam String projectKey,
                                    @RequestBody ProjectFieldsCollector projectFieldsCollector) {
-        projectFieldService.createFields(projectFieldsCollector.extractFields(projectFieldsCollector), issuetype, projectName);
+        projectFieldService.createFields(projectFieldsCollector.extractFields(projectFieldsCollector), issuetype, projectKey);
     }
 
     @GetMapping("")

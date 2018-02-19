@@ -3,12 +3,14 @@ package scrumweb.issue.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 import scrumweb.issue.fieldcontent.FieldContent;
 import scrumweb.user.account.domain.UserAccount;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -16,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Issue {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
@@ -27,7 +29,7 @@ public class Issue {
 
     private String description;
 
-    @OneToMany
+    @ManyToMany
     private Set<UserAccount> assignees;
 
     @OneToOne
@@ -48,7 +50,13 @@ public class Issue {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<FieldContent> fieldContents;
 
-    public Issue(String summary, String description, Set<UserAccount> assignees, UserAccount reporter, String estimateTime, String remainingTime, Priority priority, IssueType issueType, Set<FieldContent> fieldContents) {
+    private LocalDateTime createdDate;
+
+    @UpdateTimestamp
+    private Timestamp lastUpdate;
+
+    public Issue(String summary, String description, Set<UserAccount> assignees, UserAccount reporter, String estimateTime, String remainingTime,
+                 Priority priority, IssueType issueType, Set<FieldContent> fieldContents, LocalDateTime createdDate) {
         this.summary = summary;
         this.description = description;
         this.assignees = assignees;
@@ -58,6 +66,7 @@ public class Issue {
         this.priority = priority;
         this.issueType = issueType;
         this.fieldContents = fieldContents;
+        this.createdDate = createdDate;
     }
 
     public enum Priority {

@@ -1,2 +1,5 @@
-
+.blockquote-footer{
+  position: static;
+  bottom: 0;
+}
 

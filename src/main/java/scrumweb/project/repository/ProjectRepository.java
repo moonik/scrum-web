@@ -4,10 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import scrumweb.dto.project.ProjectDto;
-import scrumweb.issue.domain.Issue;
 import scrumweb.project.domain.Project;
-import scrumweb.user.account.domain.UserAccount;
+
 
 import java.util.List;
 

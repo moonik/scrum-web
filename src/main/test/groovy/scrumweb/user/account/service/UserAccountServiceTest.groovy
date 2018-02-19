@@ -4,8 +4,8 @@ import common.TestData
 import scrumweb.common.asm.UserAccountAsm
 import scrumweb.common.asm.UserProfileAsm
 import scrumweb.exception.UserAlreadyExistsException
-import scrumweb.security.model.Authority
-import scrumweb.security.model.AuthorityName
+import scrumweb.security.domain.Authority
+import scrumweb.security.domain.AuthorityName
 import scrumweb.security.repository.AuthorityRepository
 import scrumweb.user.account.repository.UserAccountRepository
 import scrumweb.user.profile.repository.UserProfileRepository

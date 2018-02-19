@@ -33,10 +33,6 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  navigate(path: string){
-    this.router.navigate([path]);
-  }
-
   getCurrentUser(): string{
     return localStorage.getItem('currentUser');
   }

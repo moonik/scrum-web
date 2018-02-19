@@ -7,7 +7,7 @@ export class SearchService {
   constructor(private _http: HttpClient) { }
 
   search(phrase){
-    return this._http.get('/api/scrum-web/project/search/'+phrase)
+    return this._http.get('project/search/'+phrase)
       .map(res => res.json());
   }
 

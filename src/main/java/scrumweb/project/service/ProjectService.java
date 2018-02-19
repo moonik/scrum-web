@@ -3,7 +3,12 @@ package scrumweb.project.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import scrumweb.common.SecurityContextService;
+import scrumweb.common.asm.IssueAsm;
 import scrumweb.common.asm.ProjectAsm;
+import scrumweb.common.asm.UserProfileAsm;
+import scrumweb.dto.issue.IssueDto;
+import scrumweb.dto.issue.ItemAssignee;
+import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
 import scrumweb.exception.ProjectAlreadyExsistsException;
@@ -27,6 +32,8 @@ public class ProjectService {
     protected ProjectRepository projectRepository;
     protected UserAccountRepository userAccountRepository;
     protected SecurityContextService securityContextService;
+    private IssueAsm issueAsm;
+    private UserProfileAsm userProfileAsm;
     private static final String[] DEFAULT_ISSUE_TYPES = {"TASK", "BUG", "FEATURE"};
 
     public ProjectDto create(ProjectDto projectDto){
@@ -60,12 +67,28 @@ public class ProjectService {
         }
     }
 
+    public ProjectDetailsDto getProjectDetails(String projectKey) {
+        final Project project = projectRepository.findByKey(projectKey);
+        final ProjectDto projectDto = projectAsm.makeProjectDto(project);
+        projectDto.setOwner(userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile()));
+        final Set<IssueDto> issues = project.getIssues().stream().map(issue -> issueAsm.createIssueDto(issue)).collect(Collectors.toSet());
+        return projectAsm.makeProjectDetailsDro(projectDto, issues);
+    }
+
     public ProjectMemberDto addMember(ProjectMemberDto projectMemberDto){
         Project project = projectRepository.findOne(projectMemberDto.getProjectId());
         UserAccount userAccount = userAccountRepository.findByUsername(projectMemberDto.getUsername());
         project.getMembers().add(new ProjectMember(userAccount, Role.getRole(projectMemberDto.getRole())));
         projectRepository.save(project);
         return projectMemberDto;
+    }
+
+    public Set<ItemAssignee> getProjectMembers(String projectKey) {
+        return projectRepository.findByKey(projectKey)
+                .getMembers().stream()
+                .map(ProjectMember::getUserAccount)
+                .map(u -> new ItemAssignee(u.getId(), u.getUsername()))
+                .collect(Collectors.toSet());
     }
 
     private Set<IssueType> createIssueTypes(Project project) {
@@ -81,12 +104,6 @@ public class ProjectService {
                         .collect(Collectors.toList());
     }
 
-//    public List<ProjectDto> findProjectsByKey(String key){
-//
-//        return projectRepository.findProjectsByKey(key).stream()
-//                .map(project -> projectAsm.convertFromProjectToProjectDto(project))
-//                    .collect(Collectors.toList());
-//    }
 
     public List<ProjectDto> findProjectsByKeyQuery(String paramkey){
 

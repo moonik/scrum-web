@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ProjectDto} from "../model/projectDto";
-import { HttpClient } from "../shared/http.client.service";
 import {HomeService} from "./home.service";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
 
   projects: ProjectDto[] = [];
 
-  constructor(private homeService: HomeService) {
+  constructor(private _homeService: HomeService, private _router: Router) {
     this.getAllOwnProjects();
   }
 
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   }
 
   getAllOwnProjects() {
-    this.homeService.getAllOwnProjects()
+    this._homeService.getAllOwnProjects()
       .subscribe(
         data => {
           this.projects = data;
@@ -29,4 +29,7 @@ export class HomeComponent implements OnInit {
       );
   }
 
+  goToProjectDetails(projectKey: string) {
+    this._router.navigate(['project/details/'+projectKey]);
+  }
 }

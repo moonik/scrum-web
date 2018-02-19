@@ -3,7 +3,6 @@ package scrumweb.issue.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import scrumweb.common.SecurityContextService;
-import scrumweb.common.asm.fieldcontent.FieldContentAsm;
 import scrumweb.common.asm.IssueAsm;
 import scrumweb.common.asm.UserProfileAsm;
 import scrumweb.common.asm.fieldcontent.FieldContentConverter;
@@ -14,9 +13,7 @@ import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.fieldcontent.FieldContent;
 import scrumweb.issue.repository.IssueRepository;
-import scrumweb.issue.repository.IssueTypeRepository;
 import scrumweb.project.domain.Project;
-import scrumweb.projectfield.domain.ProjectField;
 import scrumweb.projectfield.repository.ProjectFieldRepository;
 import scrumweb.project.repository.ProjectRepository;
 import scrumweb.user.account.domain.UserAccount;
@@ -35,34 +32,33 @@ public class IssueService {
     private UserAccountRepository userAccountRepository;
     private SecurityContextService securityContextService;
     private ProjectFieldRepository projectFieldRepository;
-    private IssueTypeRepository issueTypeRepository;
     private ProjectRepository projectRepository;
     private UserProfileAsm userProfileAsm;
     private FieldContentConverter fieldContentAsm;
 
-    public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, Long projectId) {
-        final Project project = projectRepository.findOne(projectId);
+    public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String projectKey) {
+        final Project project = projectRepository.findByKey(projectKey);
         Set<Issue> issues = project.getIssues();
-        issues.add(createIssue(issueDetailsDto, fieldContentsDto, project.getKey().concat("-").concat(project.getIssues().size()+1+"")));
+        String issueKey = project.getKey().concat("-").concat(project.getIssues().size()+1+"");
+        issues.add(createIssue(issueDetailsDto, fieldContentsDto, issueKey, project));
         projectRepository.save(project);
         return issueDetailsDto;
     }
 
-    protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String issueKey) {
+    protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String issueKey, Project project) {
         final UserAccount reporter = securityContextService.getCurrentUserAccount();
         Set<UserAccount> assignees = new HashSet<>();
-        if(issueDetailsDto.getAssignees().size()>0) {
+        if (!issueDetailsDto.getAssignees().isEmpty()) {
             assignees = userAccountRepository.findUsers(extractUserNames(issueDetailsDto.getAssignees()));
         }
         Set<FieldContent> fieldContents = extractContents(fieldContentsDto);
-        IssueType issueType = issueTypeRepository.findByName(issueDetailsDto.getIssueType());
+        IssueType issueType = getIssueType(project.getIssueTypes(), issueDetailsDto.getIssueType());
         Issue issue = issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
         issue.setKey(issueKey);
-
         return issue;
     }
 
-    public IssueDetailsDto getIssue(Long id) {
+    public IssueDetailsDto getDetails(Long id) {
         Issue issue = issueRepository.findOne(id);
         Set<UserProfileDto> assignees = issue.getAssignees().stream().map(userAccount -> userProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile())).collect(Collectors.toSet());
         UserProfileDto reporter = userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
@@ -85,4 +81,10 @@ public class IssueService {
                 .collect(Collectors.toSet());
     }
 
+    private IssueType getIssueType(Set<IssueType> issueTypes, String issueType) {
+        return issueTypes.stream()
+                .filter(i -> i.getName().equalsIgnoreCase(issueType))
+                .findFirst()
+                .orElse(null);
+    }
 }

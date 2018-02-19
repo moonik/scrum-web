@@ -1,15 +1,17 @@
 package scrumweb.project.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import scrumweb.dto.issue.ItemAssignee;
+import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.common.SecurityContextService;
 import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
 import scrumweb.project.service.ProjectService;
 
 import java.util.List;
+import java.util.Set;
 
 import static scrumweb.common.ApplicationConstants.API_URL;
 
@@ -39,6 +41,12 @@ public class ProjectController {
         return projectService.editName(projectDto.getName(), id);
     }
 
+    @GetMapping("/details/{projectKey}")
+    @ResponseStatus(HttpStatus.OK)
+    private ProjectDetailsDto getDetails(@PathVariable String projectKey) {
+        return projectService.getProjectDetails(projectKey);
+    }
+
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<ProjectDto> allProjects(){
@@ -49,5 +57,10 @@ public class ProjectController {
     @ResponseStatus(HttpStatus.OK)
     public List<ProjectDto> findProjectsByKeyQuery(@PathVariable String paramkey){
         return projectService.findProjectsByKeyQuery(paramkey);
+    }
+
+    @GetMapping("/members/{projectKey}")
+    public Set<ItemAssignee> getProjectMembers(@PathVariable String projectKey) {
+        return projectService.getProjectMembers(projectKey);
     }
 }
