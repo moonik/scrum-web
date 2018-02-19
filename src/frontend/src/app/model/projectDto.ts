@@ -1,9 +1,9 @@
-import {ProjectMemberDto} from "./projectMemberDto";
+import {ProjectMemberDto} from './projectMemberDto';
 
 export class ProjectDto {
+  id: number;
   name: string;
   projectKey: string;
   description: string;
-  // members: string[];
   members: ProjectMemberDto[];
 }
