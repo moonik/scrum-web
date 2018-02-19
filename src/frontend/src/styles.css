@@ -16,3 +16,21 @@ footer{
   background-color: #ccc;
   vertical-align: middle;
 }
+.custom-class-example {
+    color: #ccc !important;
+    width: 50%;
+}
+.custom-class-example .c-token{
+    background: #212529 !important;
+}
+.custom-class-example .pure-checkbox label::before {
+    border-color: #212529 !important;
+}
+.custom-class-example .pure-checkbox input[type="checkbox"]:checked + label[_ngcontent-c1]:before {
+    background: #212529 !important;
+}
+
+.custom-class-example .pure-checkbox[_ngcontent-c3] input[type="checkbox"][_ngcontent-c3]:checked + label[_ngcontent-c3]:before {
+    animation: borderscale 200ms ease-in;
+    background: #212529;
+}

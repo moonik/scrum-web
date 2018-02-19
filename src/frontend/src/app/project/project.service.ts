@@ -9,7 +9,7 @@ export class ProjectService {
   }
 
   createProject(object) {
-    return this._http.post('/api/scrum-web/project/create', object);
+    return this._http.post('project/create', object).map(res => res.json());
   }
 
 }

@@ -1,0 +1,47 @@
+.issue-creation a {
+    cursor: pointer;
+}
+
+#btn-create, #btn-cancel, #btn-create-issue {
+    background-color: #212529;
+    border-color: #212529;
+}
+
+.modal-body input, textarea, select{
+    border-radius: 3px;
+}
+
+.assignees-multi-select {
+    width: 300px; 
+    text-align:center;
+    display: inline-block;
+}
+
+.modal-body {
+    overflow-y: auto;
+    height: 500px;
+    font-size: 16px;
+    display: inline-block;
+    text-align: center;
+}
+
+.modal-body::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 3px;
+	background-color: #F5F5F5;
+}
+
+.modal-body::-webkit-scrollbar {
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
+.required-star {
+    color: red !important;
+}

@@ -1,0 +1,22 @@
+<div class="project-details-container">
+  <div class="details">
+    <app-issue-creation [projectKey]="projectKey"></app-issue-creation>
+    {{ projectDetails?.projectDto?.name }}
+  </div>
+  <div class="issues-panel" *ngIf="showIssueList()">
+    <div class="list-panel">
+      <ol class="issue-list">
+        <li *ngFor="let issue of projectDetails.issues">
+          <a (click)="selectIssue(issue.id)">{{ issue.id }} : {{ issue.summary }} </a>
+        </li>
+      </ol>
+    </div>
+    <div class="issue-details">
+      {{ selectedIssue.id }} : {{ selectedIssue.summary }}
+      <br>
+      Type: {{ selectedIssue.issueType }}
+      <br>
+      Priority: {{ selectedIssue.priority }}
+    </div>
+  </div>
+</div>
