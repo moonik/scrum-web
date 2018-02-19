@@ -45,7 +45,7 @@
                     </form>
                 </div>
                 <span class="modal-footer">
-                    <button class="btn btn-primary" id="btn-create" (click)="createIssue()" [disabled]="!isValid()">Create</button>
+                    <button class="btn btn-primary" id="btn-create" (click)="createIssue(); issueModal.hide()" [disabled]="!isValid()">Create</button>
                     <button class="btn btn-primary" id="btn-cancel" (click)="issueModal.hide()">Cancel</button>
                 </span>
             </div>

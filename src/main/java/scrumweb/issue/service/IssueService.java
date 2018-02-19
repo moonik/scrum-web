@@ -22,6 +22,7 @@ import scrumweb.project.repository.ProjectRepository;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -48,7 +49,10 @@ public class IssueService {
 
     protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, Project project) {
         final UserAccount reporter = securityContextService.getCurrentUserAccount();
-        Set<UserAccount> assignees = userAccountRepository.findUsers(extractUserNames(issueDetailsDto.getAssignees()));
+        Set<UserAccount> assignees = new HashSet<>();
+        if (!issueDetailsDto.getAssignees().isEmpty()) {
+            assignees = userAccountRepository.findUsers(extractUserNames(issueDetailsDto.getAssignees()));
+        }
         Set<FieldContent> fieldContents = extractContents(fieldContentsDto);
         IssueType issueType = getIssueType(project.getIssueTypes(), issueDetailsDto.getIssueType());
         return issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
