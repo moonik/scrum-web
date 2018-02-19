@@ -2,6 +2,8 @@
   <h3>{{ projectDetails?.projectDto?.name }}</h3>
 </div>
 
+<span><app-issue-creation [projectKey]="projectKey"></app-issue-creation></span>
+
 <div class="list-panel" id="list-panel" *ngIf="showIssueList()">
       <ul class="issue-list">
         <li *ngFor="let issue of projectDetails.issues" (click)="selectIssue(issue.id)">

@@ -2,7 +2,16 @@
     cursor: pointer;
 }
 
-#btn-create, #btn-cancel, #btn-create-issue {
+.text-create {
+    border-bottom: 2px black solid !important;
+    margin: 15px;
+}
+
+.text-create:hover {
+    background-color: rgb(222, 226, 226);
+}
+
+#btn-create, #btn-cancel {
     background-color: #212529;
     border-color: #212529;
 }

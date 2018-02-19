@@ -57,15 +57,4 @@ public class IssueAsm {
                 issue.getDescription()
         );
     }
-
-    public IssueDto createIssueDto(Issue issue) {
-        return new IssueDto(
-                issue.getId(),
-                issue.getSummary(),
-                issue.getIssueType().getName(),
-                issue.getPriority().toString(),
-                issue.getAssignees().stream().map(UserAccount::getUsername).collect(Collectors.toSet()),
-                issue.getDescription()
-        );
-    }
 }

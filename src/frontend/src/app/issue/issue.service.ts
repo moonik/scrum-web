@@ -15,7 +15,8 @@ export class IssueService {
     }
 
     getAssignees(projectKey: string) {
-      return this._http.get('project/members/' + projectKey);
+      return this._http.get('project/members/' + projectKey)
+        .map(res => res.json());
     }
 
     getIssueDetails(id: number) {
