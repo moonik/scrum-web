@@ -27,7 +27,11 @@ public class ProjectAsm {
         return  new ProjectMember(userAccount, role);
     }
 
-    public ProjectMemberDto makeProjectMemberDto(ProjectMember projectMember, Long projectId){
+    private ProjectMemberDto makeProjectMemberDto(ProjectMember projectMember, Long projectId){
         return new ProjectMemberDto(projectId, projectMember.getUserAccount().getUsername(),projectMember.getRole().getRoleString());
+    }
+
+    public ProjectDto convertFromProjectToProjectDto(Project project){
+        return new ProjectDto(project.getName(), project.getDescription(), project.getIcon(), project.getKey());
     }
 }

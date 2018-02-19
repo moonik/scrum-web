@@ -1,4 +1,4 @@
-package scrumweb.security.model;
+package scrumweb.security.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,8 +18,9 @@ public class Authority {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authority_seq")
-    @SequenceGenerator(name = "authority_seq", sequenceName = "authority_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authority_seq")
+//    @SequenceGenerator(name = "authority_seq", sequenceName = "authority_seq", allocationSize = 1)
     private long Id;
 
     @Column(name = "NAME", length = 50)

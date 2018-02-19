@@ -23,12 +23,8 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  navigate(path: string){
-    this.router.navigate([path]);
-  }
-
   getCurrentUser(): string{
-    return JSON.parse(localStorage.getItem('currentUser')).username;
+    return localStorage.getItem('currentUser');
   }
 
 }
