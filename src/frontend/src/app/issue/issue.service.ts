@@ -5,6 +5,8 @@ import { IssueDetailsDto } from '../model/IssueDetailsDto';
 @Injectable()
 export class IssueService {
 
+    private _URL: string = 'project/issue/';
+
     constructor(private _http: HttpClient) {}
 
     createIssue(projectkey: string, issueDetails: IssueDetailsDto) {
@@ -13,7 +15,11 @@ export class IssueService {
     }
 
     getAssignees(projectKey: string) {
-        return this._http.get('project/members/' + projectKey)
+      return this._http.get('project/members/' + projectKey);
+    }
+
+    getIssueDetails(id: number) {
+        return this._http.get(this._URL+'details/'+id)
             .map(res => res.json());
     }
 }

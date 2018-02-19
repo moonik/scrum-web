@@ -13,6 +13,8 @@ export class IssueDetailsDto {
     remainingTime: string;
     priority: string;
     issueType: string;
+    createdDate: string;
+    lastUpdate: string;
     projectFields: FieldsContentCollector = new FieldsContentCollector();
     fieldContents: Array<FieldContentDto> = [];
 }

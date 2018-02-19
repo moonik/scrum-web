@@ -8,7 +8,6 @@ import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.common.SecurityContextService;
 import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
-import scrumweb.dto.user.UserProfileDto;
 import scrumweb.project.service.ProjectService;
 
 import java.util.List;

@@ -1,22 +1,47 @@
-<div class="project-details-container">
-  <div class="details">
-    <app-issue-creation [projectKey]="projectKey"></app-issue-creation>
-    {{ projectDetails?.projectDto?.name }}
-  </div>
-  <div class="issues-panel" *ngIf="showIssueList()">
-    <div class="list-panel">
-      <ol class="issue-list">
-        <li *ngFor="let issue of projectDetails.issues">
-          <a (click)="selectIssue(issue.id)">{{ issue.id }} : {{ issue.summary }} </a>
+<div class="project-name">
+  <h3>{{ projectDetails?.projectDto?.name }}</h3>
+</div>
+
+<div class="list-panel" id="list-panel" *ngIf="showIssueList()">
+      <ul class="issue-list">
+        <li *ngFor="let issue of projectDetails.issues" (click)="selectIssue(issue.id)">
+            <p class="key"><b>{{ issue.key }}</b></p>
+            <p>{{ issue.summary }}</p>
         </li>
-      </ol>
+  </ul>
+</div>
+
+<div class="issue-details" id="issue-details" *ngIf="selectedIssue">
+  <h5>{{ selectedIssue.key }}<b>(STATUS)</b></h5>
+  <h6>{{ selectedIssue.summary }}</h6>
+  <div class="underline"></div>
+  <div class="issue-details-table">
+    <div class="col-1-details">
+      <span><b>Type:</b> {{ selectedIssue.issueType }}</span><br>
+      <span><b>Priority: </b>{{ selectedIssue.priority }}</span>
     </div>
-    <div class="issue-details">
-      {{ selectedIssue.id }} : {{ selectedIssue.summary }}
-      <br>
-      Type: {{ selectedIssue.issueType }}
-      <br>
-      Priority: {{ selectedIssue.priority }}
+    <div class="col-2-details">
+      <span><b>Created at: </b>{{ selectedIssue.createdDate }}</span><br>
+      <span><b>Updated at: </b>{{ selectedIssue.lastUpdate }}</span>
+    </div>
+    <div class="col-3-details">
+      <span><b>Estimated time: </b>{{ selectedIssue.estimateTime }}</span><br>
+      <span><b>Remaining time: </b>{{ selectedIssue.remainingTime }}</span>
+    </div>
+    <div class="col-4-details">
+      <span><b>Reporter: </b>{{ selectedIssue.reporter.username }}</span><br>
+      <span>
+        <b>Assignees:</b>
+        <span *ngFor="let user of selectedIssue.assignees">{{ user.username }}</span>
+      </span>
     </div>
   </div>
+  <div class="more-details">
+    <b>Description</b>
+    <div class="issue-description">{{ selectedIssue.description }}</div>
+  </div>
+</div>
+
+<div class="no-issues-found" *ngIf="!showIssueList()" >
+  <h4>Sorry, we didn't find issues for this project</h4>
 </div>
