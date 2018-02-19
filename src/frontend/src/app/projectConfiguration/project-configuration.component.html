@@ -1,0 +1,53 @@
+<div>
+  <h1>Project Configuration</h1>
+
+  <div>
+    Project name:
+    <br/>
+    {{project.name}}
+    <br/>
+  </div>
+  <div>
+    Description:
+    <br/>
+    {{project.description}}
+
+  </div>
+
+  <div>
+  Members:
+    <ul>
+      <li *ngFor="let members of project.members">
+        {{members.username}}
+      </li>
+    </ul>
+  </div>
+
+
+  <div>
+    <br/>
+    <h4>Add user</h4>
+    Search:
+    <input #search (keyup)="0" placeholder="search for member">
+
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>User</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let u of (users | filter : search.value)">
+    <tr>
+      <td>{{u.username}} ({{u.firstname}} {{u.lastname}})</td>
+      <td>
+        <button class="button bg-dark" (click)="addUserToProject(u)">Add</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <button class="button btn-danger" [routerLink]="['/home']">Back</button>
+</div>

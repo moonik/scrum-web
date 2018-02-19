@@ -1,11 +1,12 @@
-import {RouterModule, Routes} from "@angular/router";
+import {RouterModule, Routes} from '@angular/router';
 
-import {NgModule} from "@angular/core";
+import {NgModule} from '@angular/core';
 import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {AuthGuard} from './security/auth.service';
 import {HomeComponent} from './home/home.component';
-import {ProjectComponent} from "./project/project.component";
+import {ProjectComponent} from './project/project.component';
+import {ProjectConfigurationComponent} from './projectConfiguration/project-configuration.component';
 
 const routes: Routes = [
   {
@@ -30,12 +31,18 @@ const routes: Routes = [
     path: '',
     redirectTo: '/',
     pathMatch: 'full'
+  },
+  {
+    path: 'project/:id',
+    component: ProjectConfigurationComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
 @NgModule({
-    imports: [ RouterModule.forRoot(routes) ],
-    exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

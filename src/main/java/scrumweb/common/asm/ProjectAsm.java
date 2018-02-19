@@ -8,6 +8,7 @@ import scrumweb.project.domain.Project;
 import scrumweb.project.domain.ProjectMember.Role;
 import scrumweb.project.domain.ProjectMember;
 
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -32,6 +33,11 @@ public class ProjectAsm {
     }
 
     public ProjectDto convertFromProjectToProjectDto(Project project){
-        return new ProjectDto(project.getName(), project.getDescription(), project.getIcon(), project.getKey());
+        Set<ProjectMemberDto> memberDtoSet =
+            project.getMembers().stream()
+                .map(member -> makeProjectMemberDto(member, project.getId()))
+                .collect(Collectors.toSet());
+        return new ProjectDto(project.getName(), project.getDescription(),
+            project.getIcon(), memberDtoSet, project.getKey());
     }
 }
