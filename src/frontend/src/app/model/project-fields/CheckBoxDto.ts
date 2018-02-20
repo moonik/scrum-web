@@ -1,4 +1,4 @@
 export class CheckBoxDto {
-    id: number;
-    value: string;
+    public id: number;
+    public value: string;
 }

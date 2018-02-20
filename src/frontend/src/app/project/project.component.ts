@@ -12,9 +12,9 @@ import { HttpClient } from "../shared/http.client.service";
 })
 export class ProjectComponent implements OnInit {
 
-  projectDto: ProjectDto = new ProjectDto();
-  projectForm: FormGroup;
-  error = '';
+  public projectDto: ProjectDto = new ProjectDto();
+  public projectForm: FormGroup;
+  public error = '';
 
   constructor(fb: FormBuilder, private router: Router, private projectService: ProjectService, httpClient: HttpClient) {
 

@@ -1,4 +1,4 @@
 export class FieldContentDto {
-    projectFieldId: number;
-    projectFieldName: string;
+    public projectFieldId: number;
+    public projectFieldName: string;
 }

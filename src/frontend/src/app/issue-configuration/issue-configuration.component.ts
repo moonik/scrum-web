@@ -15,10 +15,10 @@ import * as fieldTypes from '../constants/field-type';
 })
 export class IssueConfigurationComponent implements OnInit {
 
-  fields = [];
-  fieldTypes = fieldTypes.default;
-  fieldTypesArray = Object.values(this.fieldTypes);
-  projectFieldsCollector: ProjectFieldsCollector = new ProjectFieldsCollector();
+  public fields = [];
+  public fieldTypes = fieldTypes.default;
+  public fieldTypesArray = Object.values(this.fieldTypes);
+  public projectFieldsCollector: ProjectFieldsCollector = new ProjectFieldsCollector();
 
   constructor() {}
 

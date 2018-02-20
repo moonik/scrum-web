@@ -1,5 +1,5 @@
 export class ProjectDto {
-  name: string;
-  projectKey: string;
-  description: string;
+  public name: string;
+  public projectKey: string;
+  public description: string;
 }

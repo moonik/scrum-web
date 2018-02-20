@@ -1,4 +1,4 @@
 export class RadioButtonDto {
-    id: number;
-    value: string;
+    public id: number;
+    public value: string;
 }
