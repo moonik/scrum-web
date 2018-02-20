@@ -4,7 +4,7 @@ import { ListElementsContainerDto } from './ListElementsContainerDto';
 import { RadioButtonContainerDto } from './RadioButtonContainerDto';
 import { TextAreaDto } from './TextAreaDto';
 
-export class FieldsContentCollector {
+export class ProjectFieldsCollector {
     checkBoxContainerDtos: Array<CheckBoxContainerDto> = [];
     inputFieldDtos: Array<InputFieldDto> = [];
     listElementsContainerDtos: Array<ListElementsContainerDto> = [];

@@ -8,6 +8,7 @@ import {HomeComponent} from './home/home.component';
 import {ProjectComponent} from "./project/project.component"
 import {ProjectDetailsComponent} from './project-details/project-details.component';
 import {IssueComponent} from './issue/issue.component';
+import {IssueConfigurationComponent} from './issue-configuration/issue-configuration.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,11 @@ const routes: Routes = [
   {
     path: 'project/details/:projectKey',
     component: ProjectDetailsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'project/configuration/issues',
+    component: IssueConfigurationComponent,
     canActivate: [AuthGuard]
   },
   {
