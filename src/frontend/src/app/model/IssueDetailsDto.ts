@@ -1,6 +1,6 @@
 import { UserProfileDto } from './UserProfileDto';
-import { FieldsContentCollector } from './FieldsContentCollector';
-import { FieldContentDto } from './FieldContentDto';
+import { FieldsContentCollector } from './fields-content/FieldsContentCollector';
+import { FieldContentDto } from './fields-content/FieldContentDto';
 
 export class IssueDetailsDto {
     id: number;

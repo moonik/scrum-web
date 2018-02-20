@@ -20,6 +20,7 @@ import { ProjectDetailsComponent } from './project-details/project-details.compo
 import {ApplicationConstants} from './shared/applicatins-contants';
 import { IssueComponent } from './issue/issue.component';
 import { FooterComponent } from './footer/footer.component';
+import { IssueConfigurationComponent } from './issue-configuration/issue-configuration.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { FooterComponent } from './footer/footer.component';
     ProjectComponent,
     ProjectDetailsComponent,
     IssueComponent,
-    FooterComponent
+    FooterComponent,
+    IssueConfigurationComponent
   ],
   imports: [
     BrowserModule,
