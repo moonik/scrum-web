@@ -16,6 +16,8 @@ export class ProjectConfigurationComponent implements OnInit {
 
   users: UserDto[] = [];
   project: ProjectDto = new ProjectDto();
+  roles: string[] = ['developer', 'tester' , 'project manager'];
+  selectedRole: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -43,7 +45,7 @@ export class ProjectConfigurationComponent implements OnInit {
     const member: ProjectMemberDto = new ProjectMemberDto();
     member.username = user.username;
     member.projectId = this.project.id;
-    member.role = 'developer';
+    member.role = this.selectedRole;
 
     this.confService.addMemberToProject(member)
       .subscribe(data => {
@@ -53,4 +55,7 @@ export class ProjectConfigurationComponent implements OnInit {
       );
   }
 
+  updateSelected(event: string) {
+    this.selectedRole = event;
+  }
 }

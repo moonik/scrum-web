@@ -1,53 +1,63 @@
 <div>
-  <h1>Project Configuration</h1>
+  <div class="main">
+    <h3>Project Configuration</h3>
 
-  <div>
-    Project name:
+    <div>
+      <h6>Project name:</h6>
+      {{project.name}}
+      <br/>
+    </div>
+
+    <div>
+      <br/>
+      <h6>Description:</h6>
+      {{project.description}}
+
+    </div>
     <br/>
-    {{project.name}}
+    <div class="table-member-main">
+      <br/>
+      <h6><b>Members:</b></h6>
+      <div class="col-1-details"><b>Username</b></div>
+      <div class="col-2-details"><b>Role</b></div>
+      <div class="members-table" *ngFor="let members of project.members">
+        <div class="col-1-details">{{members.username}}</div>
+        <div class="col-2-details">{{members.role}}</div>
+        <div class="col-3-details">
+          <button class="button btn-danger">Remove form project</button>
+        </div>
+      </div>
+      <br/>
+    </div>
+
     <br/>
+    <table class="table">
+      <thead>
+      <tr>
+        <th class="td-user">Add member &nbsp;&nbsp;<input #search (keyup)="0" placeholder="Search for member"></th>
+        <th class="td-role"><span [hidden]="search.value.toString() === ''">Assign role</span></th>
+        <th class="td-button"></th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let u of (users | filter : search.value)">
+      <tr>
+        <td class="td-user">{{u.username}} ({{u.firstname}} {{u.lastname}})</td>
+        <td class="td-role">
+          <select [ngModel]="selectedRole" (ngModelChange)="updateSelected($event)">
+            <option *ngFor="let role of roles"
+                    [value]="role">{{role}}
+            </option>
+          </select>
+        </td>
+        <td class="td-button">
+          <button class="button btn-success" (click)="addUserToProject(u)">Add {{selectedRole}}</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
-  <div>
-    Description:
-    <br/>
-    {{project.description}}
-
+  <br/>
+  <div class="backBut" align="right">
+    <button class="button btn-primary" [routerLink]="['/home']">Back</button>
   </div>
-
-  <div>
-  Members:
-    <ul>
-      <li *ngFor="let members of project.members">
-        {{members.username}} - {{members.role}}
-      </li>
-    </ul>
-  </div>
-
-
-  <div>
-    <br/>
-    <h4>Add user</h4>
-    Search:
-    <input #search (keyup)="0" placeholder="search for member">
-
-  </div>
-
-  <table class="table table-hover">
-    <thead>
-    <tr>
-      <th>User</th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody *ngFor="let u of (users | filter : search.value)">
-    <tr>
-      <td>{{u.username}} ({{u.firstname}} {{u.lastname}})</td>
-      <td>
-        <button class="button bg-dark" (click)="addUserToProject(u)">Add</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-
-  <button class="button btn-danger" [routerLink]="['/home']">Back</button>
 </div>
