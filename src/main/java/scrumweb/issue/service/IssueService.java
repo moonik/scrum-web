@@ -22,6 +22,8 @@ import scrumweb.project.repository.ProjectRepository;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -44,7 +46,7 @@ public class IssueService {
         Set<Issue> issues = project.getIssues();
         issues.add(createIssue(issueDetailsDto, fieldContentsDto, project));
         projectRepository.save(project);
-        return issueDetailsDto;
+        return prepareIssueDetails(issueDetailsDto);
     }
 
     protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, Project project) {
@@ -86,5 +88,13 @@ public class IssueService {
                 .filter(i -> i.getName().equalsIgnoreCase(issueType))
                 .findFirst()
                 .orElse(null);
+    }
+
+    private IssueDetailsDto prepareIssueDetails(IssueDetailsDto issueDetailsDto) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
+        String date = LocalDateTime.now().format(formatter);
+        issueDetailsDto.setCreatedDate(date);
+        issueDetailsDto.setLastUpdate(date);
+        return issueDetailsDto;
     }
 }

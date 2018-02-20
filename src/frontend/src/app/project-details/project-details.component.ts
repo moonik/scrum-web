@@ -46,4 +46,10 @@ export class ProjectDetailsComponent implements OnInit {
   public showIssueList() {
     return this.projectDetails && this.projectDetails.issues.length > 0;
   }
+
+  public onIssueCreate(issueDto: IssueDto) {
+    issueDto.id = this.projectDetails.issues.length+1;
+    this.projectDetails.issues.unshift(issueDto);
+    this.selectIssue(issueDto.id);
+  }
 }
