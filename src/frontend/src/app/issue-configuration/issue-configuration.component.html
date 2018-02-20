@@ -1,12 +1,13 @@
-<p>
-  issue-configuration works!
-</p>
-
 <div>
-  <button (click)="onAddButton('fieldType', 'fieldName')">Create new field</button>
+  <button (click)="addField(fields.length)">Create new field</button>
 </div>
 
-<div *ngFor="let field of fields">
-  <label for="input-field">Field name</label>
-  <input name="input-field"/>
-</div>
+<form>
+  <div *ngFor="let field of fields">
+    <label for="input-field">Field name</label>
+    <input name="input-field"/>
+    <select name="field-type" id="field-type">
+      <option *ngFor="let type of fieldTypesArray">{{ type }}</option>
+    </select>
+  </div>
+</form>

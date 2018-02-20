@@ -17,7 +17,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ProjectComponent } from './project/project.component';
 import {ProjectService} from "./project/project.service";
 import { ProjectDetailsComponent } from './project-details/project-details.component';
-import {ApplicationConstants} from './shared/applicatins-contants';
 import { IssueComponent } from './issue/issue.component';
 import { FooterComponent } from './footer/footer.component';
 import { IssueConfigurationComponent } from './issue-configuration/issue-configuration.component';
@@ -45,7 +44,7 @@ import { IssueConfigurationComponent } from './issue-configuration/issue-configu
     ModalModule.forRoot(),
     AngularMultiSelectModule
   ],
-  providers: [AuthGuard, AuthenticationService, HttpClient, ProjectService, ApplicationConstants],
+  providers: [AuthGuard, AuthenticationService, HttpClient, ProjectService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
