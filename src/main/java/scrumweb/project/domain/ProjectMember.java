@@ -19,8 +19,9 @@ public class ProjectMember {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "projectMember_seq")
-    @SequenceGenerator(name = "projectMember_seq", sequenceName = "projectMember_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "projectMember_seq")
+//    @SequenceGenerator(name = "projectMember_seq", sequenceName = "projectMember_seq", allocationSize = 1)
     private Long Id;
 
     @NotNull

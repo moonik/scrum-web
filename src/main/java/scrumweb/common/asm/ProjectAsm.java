@@ -1,6 +1,8 @@
 package scrumweb.common.asm;
 
 import org.springframework.stereotype.Component;
+import scrumweb.dto.issue.IssueDto;
+import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
 import scrumweb.user.account.domain.UserAccount;
@@ -28,8 +30,12 @@ public class ProjectAsm {
         return  new ProjectMember(userAccount, role);
     }
 
-    private ProjectMemberDto makeProjectMemberDto(ProjectMember projectMember, Long projectId){
+    public ProjectMemberDto makeProjectMemberDto(ProjectMember projectMember, Long projectId){
         return new ProjectMemberDto(projectId, projectMember.getUserAccount().getUsername(),projectMember.getRole().getRoleString());
+    }
+
+    public ProjectDetailsDto makeProjectDetailsDro(ProjectDto projectDto, Set<IssueDto> issues) {
+        return new ProjectDetailsDto(projectDto, issues);
     }
 
     public ProjectDto convertFromProjectToProjectDto(Project project){

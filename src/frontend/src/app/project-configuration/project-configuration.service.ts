@@ -10,7 +10,7 @@ export class ProjectConfigurationService {
   }
 
   getUsers(members: string[]) {
-    return this._http.get('/api/scrum-web/profile/all')
+    return this._http.get('profile/all')
       .map(res => {
         const data = res.json();
         console.log('service data: ' + data);
@@ -30,6 +30,6 @@ export class ProjectConfigurationService {
   }
 
   addMemberToProject(member: ProjectMemberDto) {
-    return this._http.post('/api/scrum-web/project/member/add', member);
+    return this._http.post('project/member/add', member);
   }
 }

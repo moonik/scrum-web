@@ -19,7 +19,7 @@ export class AuthenticationService {
   }
 
   login(userDto: UserDto): Observable<any> {
-        return this.httpClientService.post(`/api/scrum-web/auth`, userDto)
+        return this.httpClientService.post(`auth`, userDto)
       .map(response => {
         let token = response.json() && response.json().token;
         if (token) {
@@ -34,10 +34,11 @@ export class AuthenticationService {
   logout(): void {
     this.token = null;
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
   }
 
   save(userDto: UserDto): Observable<number>{
-      return this.httpClientService.post('/api/scrum-web/user-account/save', userDto)
+      return this.httpClientService.post('user-account/save', userDto)
       .map(
         response =>  {
           // console.info('test');
@@ -48,7 +49,7 @@ export class AuthenticationService {
 
   refresh(token: string, username: string): Observable<any>{
     const tokenObj = {"token": token, "username": username};
-    return this.httpClientService.post('/api/scrum-web/refresh', tokenObj)
+    return this.httpClientService.post('refresh', tokenObj)
       .map(
         response =>  {
           let token = response.json() && response.json().token;

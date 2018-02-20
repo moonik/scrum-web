@@ -1,0 +1,54 @@
+<div class="issue-creation">
+    <a class="text-create" (click)="issueModal.show()" id="btn-create-issue">Create issue</a>
+ 
+    <div bsModal #issueModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="issueModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Create issue</h4>
+                    <button type="button" class="close pull-right" (click)="issueModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <label for="summary">Summary<span class="required-star">*</span></label><br>
+                        <input name="summary" [(ngModel)]="issueDetails.summary"><br>
+                            
+                        <label for="description">Description</label><br>
+                        <textarea name="description" cols="50" [(ngModel)]="issueDetails.description"></textarea><br>
+                            
+                        <label for="assignees">Assignees</label><br>
+                        <div class="assignees-multi-select" *ngIf="projectMembers">
+                            <angular2-multiselect [data]="projectMembers" 
+                            [(ngModel)]="selectedItems" 
+                            [settings]="settings"
+                            name="assignees">
+                            </angular2-multiselect>
+                        </div><br>
+
+                        <label for="estimateTime">Estimate time</label><br>
+                        <input name="estimateTime" [(ngModel)]="issueDetails.estimateTime"><br><br>
+                            
+                        <label for="priority">Priority<span class="required-star">*</span></label>
+                        <select name="priority" [(ngModel)]="issueDetails.priority">
+                            <option value="HIGH">HIGH</option>
+                            <option value="LOW">LOW</option>
+                        </select><br>
+                            
+                        <label for="type">Issue type<span class="required-star">*</span></label>
+                        <select name="type" [(ngModel)]="issueDetails.issueType">
+                            <option value="TASK">TASK</option>
+                            <option value="BUG">BUG</option>
+                            <option value="FEATURE">FEATURE</option>
+                        </select><br>
+                    </form>
+                </div>
+                <span class="modal-footer">
+                    <button class="btn btn-primary" id="btn-create" (click)="createIssue(); issueModal.hide()" [disabled]="!isValid()">Create</button>
+                    <button class="btn btn-primary" id="btn-cancel" (click)="issueModal.hide()">Cancel</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

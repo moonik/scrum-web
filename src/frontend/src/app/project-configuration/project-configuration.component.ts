@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {UserDto} from '../model/userDto';
 import {ProjectConfigurationService} from './project-configuration.service';
-import {Subscription} from 'rxjs/Subscription';
 import {ProjectDto} from '../model/projectDto';
 import {StorageService} from '../shared/storage.service';
 import {ProjectMemberDto} from '../model/projectMemberDto';
@@ -25,8 +24,8 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.project = this.storageService.getScope();
-    this.getAllUsers();
+      this.project = this.storageService.getScope();
+      this.getAllUsers();
   }
 
   getAllUsers() {
@@ -41,14 +40,16 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   addUserToProject(user: UserDto) {
-    const member: ProjectMemberDto =  new ProjectMemberDto();
+    const member: ProjectMemberDto = new ProjectMemberDto();
     member.username = user.username;
     member.projectId = this.project.id;
     member.role = 'developer';
 
     this.confService.addMemberToProject(member)
-      .subscribe(data =>
-        console.log(data)
+      .subscribe(data => {
+          this.project.members.push(member);
+          this.ngOnInit();
+        }
       );
   }
 

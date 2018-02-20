@@ -22,6 +22,7 @@ import scrumweb.project.repository.ProjectRepository;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,28 +35,30 @@ public class IssueService {
     private UserAccountRepository userAccountRepository;
     private SecurityContextService securityContextService;
     private ProjectFieldRepository projectFieldRepository;
-    private IssueTypeRepository issueTypeRepository;
     private ProjectRepository projectRepository;
     private UserProfileAsm userProfileAsm;
     private FieldContentConverter fieldContentAsm;
 
-    public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, Long projectId) {
-        final Project project = projectRepository.findOne(projectId);
+    public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String projectKey) {
+        final Project project = projectRepository.findByKey(projectKey);
         Set<Issue> issues = project.getIssues();
-        issues.add(createIssue(issueDetailsDto, fieldContentsDto));
+        issues.add(createIssue(issueDetailsDto, fieldContentsDto, project));
         projectRepository.save(project);
         return issueDetailsDto;
     }
 
-    protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto) {
+    protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, Project project) {
         final UserAccount reporter = securityContextService.getCurrentUserAccount();
-        Set<UserAccount> assignees = userAccountRepository.findUsers(extractUserNames(issueDetailsDto.getAssignees()));
+        Set<UserAccount> assignees = new HashSet<>();
+        if (!issueDetailsDto.getAssignees().isEmpty()) {
+            assignees = userAccountRepository.findUsers(extractUserNames(issueDetailsDto.getAssignees()));
+        }
         Set<FieldContent> fieldContents = extractContents(fieldContentsDto);
-        IssueType issueType = issueTypeRepository.findByName(issueDetailsDto.getIssueType());
+        IssueType issueType = getIssueType(project.getIssueTypes(), issueDetailsDto.getIssueType());
         return issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
     }
 
-    public IssueDetailsDto getIssue(Long id) {
+    public IssueDetailsDto getDetails(Long id) {
         Issue issue = issueRepository.findOne(id);
         Set<UserProfileDto> assignees = issue.getAssignees().stream().map(userAccount -> userProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile())).collect(Collectors.toSet());
         UserProfileDto reporter = userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
@@ -76,5 +79,12 @@ public class IssueService {
                 .map(fieldContentDto -> fieldContentAsm.createObjectEntity(
                         projectFieldRepository.findOne(fieldContentDto.getProjectFieldId()), fieldContentDto))
                 .collect(Collectors.toSet());
+    }
+
+    private IssueType getIssueType(Set<IssueType> issueTypes, String issueType) {
+        return issueTypes.stream()
+                .filter(i -> i.getName().equalsIgnoreCase(issueType))
+                .findFirst()
+                .orElse(null);
     }
 }
