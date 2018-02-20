@@ -24,7 +24,7 @@
         <div class="col-1-details">{{members.username}}</div>
         <div class="col-2-details">{{members.role}}</div>
         <div class="col-3-details">
-          <button class="button btn-danger">Remove form project</button>
+          <button class="button btn-danger" (click)="removeMemberFromProject(members)">Remove form project</button>
         </div>
       </div>
       <br/>

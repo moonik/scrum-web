@@ -32,4 +32,8 @@ export class ProjectConfigurationService {
   addMemberToProject(member: ProjectMemberDto) {
     return this._http.post('project/member/add', member);
   }
+
+  removeMemberFromProject(member: string) {
+    return this._http.delete('project/member/delete/' + member);
+  }
 }

@@ -35,6 +35,12 @@ public class ProjectController {
         projectService.addMember(projectMemberDto);
     }
 
+    @DeleteMapping("/member/delete/{username}/{projectId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removeMember(@PathVariable String username, @PathVariable Long projectId) {
+        projectService.removeMember(username, projectId);
+    }
+
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProjectDto editProject(@PathVariable Long id,@RequestBody ProjectDto projectDto){

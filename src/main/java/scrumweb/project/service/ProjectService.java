@@ -103,4 +103,14 @@ public class ProjectService {
                 .map(project -> projectAsm.convertFromProjectToProjectDto(project))
                         .collect(Collectors.toList());
     }
+
+    public void removeMember(String username, Long projectId) {
+        Project project = projectRepository.findOne(projectId);
+        Optional<ProjectMember> projectMember = project.getMembers().stream()
+            .filter(member -> member.getUserAccount().getUsername().equals(username))
+            .findAny();
+        project.getMembers().remove(projectMember);
+        projectRepository.save(project);
+
+    }
 }

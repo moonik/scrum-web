@@ -16,7 +16,7 @@ export class ProjectConfigurationComponent implements OnInit {
 
   users: UserDto[] = [];
   project: ProjectDto = new ProjectDto();
-  roles: string[] = ['developer', 'tester' , 'project manager'];
+  roles: string[] = ['developer', 'tester', 'project manager'];
   selectedRole: string;
 
   constructor(private route: ActivatedRoute,
@@ -26,8 +26,8 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.project = this.storageService.getScope();
-      this.getAllUsers();
+    this.project = this.storageService.getScope();
+    this.getAllUsers();
   }
 
   getAllUsers() {
@@ -58,4 +58,14 @@ export class ProjectConfigurationComponent implements OnInit {
   updateSelected(event: string) {
     this.selectedRole = event;
   }
+
+  removeMemberFromProject(member: ProjectMemberDto) {
+    this.confService.removeMemberFromProject(member.username + '/' + member.projectId)
+      .subscribe(data => {
+          this.project.members.splice(this.project.members.indexOf(member), 1);
+          this.ngOnInit();
+        }
+      );
+  }
+
 }
