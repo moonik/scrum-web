@@ -46,7 +46,7 @@ public class IssueService {
         Set<Issue> issues = project.getIssues();
         issues.add(createIssue(issueDetailsDto, fieldContentsDto, project));
         projectRepository.save(project);
-        return prepareIssueDetails(issueDetailsDto);
+        return issueDetailsDto;
     }
 
     protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, Project project) {
@@ -88,13 +88,5 @@ public class IssueService {
                 .filter(i -> i.getName().equalsIgnoreCase(issueType))
                 .findFirst()
                 .orElse(null);
-    }
-
-    private IssueDetailsDto prepareIssueDetails(IssueDetailsDto issueDetailsDto) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
-        String date = LocalDateTime.now().format(formatter);
-        issueDetailsDto.setCreatedDate(date);
-        issueDetailsDto.setLastUpdate(date);
-        return issueDetailsDto;
     }
 }
