@@ -48,7 +48,9 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   public onIssueCreate(issueDto: IssueDto) {
-    issueDto.id = this.projectDetails.issues.length+1;
+    let length = this.projectDetails.issues.length+1;
+    issueDto.id = length;
+    issueDto.key = this.projectDetails.projectDto.name + '-' + length;
     this.projectDetails.issues.unshift(issueDto);
     this.selectIssue(issueDto.id);
   }
