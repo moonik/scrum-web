@@ -4,7 +4,7 @@
     <h3>{{ projectDetails?.projectDto?.name }}</h3>
   </div>
 
-  <span><app-issue-creation [projectKey]="projectKey" (onIssueCreate)="onIssueCreate($event)"></app-issue-creation></span>
+  <span><app-issue-creation [projectKey]="projectKey" (onIssueCreate)="onIssueCreate($event)" *ngIf="!loading"></app-issue-creation></span>
 
   <div class="list-panel" id="list-panel" *ngIf="showIssueList()">
         <ul class="issue-list">
