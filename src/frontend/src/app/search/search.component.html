@@ -5,22 +5,22 @@ Search results for phrase: <b>{{ results }}</b>
   <table class="table table-hover projects-table">
     <thead>
 
-    <tr>
-      <td colspan="3"><b>Projects</b></td>
-    </tr>
-    <tr>
-      <td class="project-key"><b>Key</b></td>
-      <td><b>Name</b></td>
-      <td><b>Description</b></td>
-    </tr>
+      <tr>
+        <td colspan="3"><b>Projects</b></td>
+      </tr>
+      <tr>
+        <td class="project-key"><b>Key</b></td>
+        <td><b>Name</b></td>
+        <td><b>Description</b></td>
+      </tr>
     </thead>
 
     <tbody *ngFor="let project of projects">
-    <tr (click)="goToProjectDetails(project.projectKey)">
-        <td class="project-key">{{project.projectKey}}</td>
-        <td class="project-type">{{project.name}}</td>
-        <td class="project-description">{{project.description}}</td>
-    </tr>
+      <tr (click)="goToProjectDetails(project.projectKey)">
+          <td class="project-key">{{project.projectKey}}</td>
+          <td class="project-type">{{project.name}}</td>
+          <td class="project-description">{{project.description}}</td>
+      </tr>
     </tbody>
 
   </table>
@@ -30,27 +30,23 @@ Search results for phrase: <b>{{ results }}</b>
   <table class="table table-hover">
     <thead>
 
-    <tr>
-      <td colspan="3"><b>Issues</b></td>
-    </tr>
-    <tr>
-      <td class="project-key"><b>Key</b></td>
-      <td class="project-type"><b>Type</b></td>
-      <td><b>Summary</b></td>
-    </tr>
+      <tr>
+        <td colspan="3"><b>Issues</b></td>
+      </tr>
+      <tr>
+        <td class="project-key"><b>Key</b></td>
+        <td class="project-type"><b>Type</b></td>
+        <td><b>Summary</b></td>
+      </tr>
     </thead>
 
     <tbody *ngFor="let issue of issues">
-    <tr>
-    <td class="project-key">{{issue.issueKey}}</td>
-    <td class="project-type">{{issue.issueType}}</td>
-    <td class="project-description">{{issue.summary}}</td>
-    </tr>
+      <tr>
+        <td class="project-key">{{issue.issueKey}}</td>
+        <td class="project-type">{{issue.issueType}}</td>
+        <td class="project-description">{{issue.summary}}</td>
+      </tr>
     </tbody>
 
   </table>
 </form>
-
-<br/>
-<br/>
-<br/>

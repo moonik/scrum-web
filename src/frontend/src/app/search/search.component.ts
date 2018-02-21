@@ -18,8 +18,8 @@ export class SearchComponent implements OnInit {
   results: string;
 
 
-  constructor(private searchService: SearchService, private _activeRout: ActivatedRoute, private _router: Router) {
-    this._activeRout.params.subscribe((params: Params) => {
+  constructor(private searchService: SearchService, private _activeRoute: ActivatedRoute, private _router: Router) {
+    this._activeRoute.params.subscribe((params: Params) => {
       this.searchProjects(params['query']);
       this.searchIssues(params['query']);
     });
