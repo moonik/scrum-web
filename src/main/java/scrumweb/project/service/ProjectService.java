@@ -1,6 +1,7 @@
 package scrumweb.project.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import scrumweb.common.SecurityContextService;
 import scrumweb.common.asm.IssueAsm;
@@ -75,11 +76,24 @@ public class ProjectService {
         return projectAsm.makeProjectDetailsDro(projectDto, issues);
     }
 
+//    public void addMember(ProjectMemberDto projectMemberDto){
+//        Project project = projectRepository.findOne(projectMemberDto.getProjectId());
+//        UserAccount userAccount = userAccountRepository.findByUsername(projectMemberDto.getUsername());
+//        List<Project> projects = userAccountRepository.findByUsername(projectMemberDto.getUsername()).getProjects();
+//        project.getMembers().add(new ProjectMember(userAccount, Role.getRole(projectMemberDto.getRole())));
+//        projects.add(project);
+//        userAccount.setProjects(projects);
+//        userAccountRepository.save(userAccount);
+//        UserAccount user = userAccountRepository.findByUsername(projectMemberDto.getUsername());
+//        System.out.print("sdfsdf");
+//    }
+
     public ProjectMemberDto addMember(ProjectMemberDto projectMemberDto){
         Project project = projectRepository.findOne(projectMemberDto.getProjectId());
         UserAccount userAccount = userAccountRepository.findByUsername(projectMemberDto.getUsername());
         project.getMembers().add(new ProjectMember(userAccount, Role.getRole(projectMemberDto.getRole())));
         projectRepository.save(project);
+//        UserAccount user = userAccountRepository.findByUsername(projectMemberDto.getUsername());
         return projectMemberDto;
     }
 
@@ -98,19 +112,27 @@ public class ProjectService {
     }
 
     public List<ProjectDto> getAllProjects(UserAccount userAccount){
-
-        return userAccount.getProjects().stream()
-                .map(project -> projectAsm.convertFromProjectToProjectDto(project))
-                        .collect(Collectors.toList());
+        List<ProjectDto> projectDtos = new ArrayList<>();
+        for (Project project: projectRepository.findAll()) {
+            if (!project.getMembers().stream()
+                .map(ProjectMember::getUserAccount)
+                .filter(member -> member.equals(userAccount))
+                .collect(Collectors.toList()).isEmpty()) {
+                projectDtos.add(projectAsm.convertFromProjectToProjectDto(project));
+            }
+        }
+        return projectDtos;
     }
 
     public void removeMember(String username, Long projectId) {
         Project project = projectRepository.findOne(projectId);
-        ProjectMember projectMember = project.getMembers().stream()
-            .filter(member -> member.getUserAccount().getUsername().equals(username))
-            .findFirst()
-            .orElse(null);
-        project.getMembers().remove(projectMember);
-        projectRepository.save(project);
+        if (!project.getOwner().getUsername().equals(username)) {
+            ProjectMember projectMember = project.getMembers().stream()
+                .filter(member -> member.getUserAccount().getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
+            project.getMembers().remove(projectMember);
+            projectRepository.save(project);
+        }
     }
 }

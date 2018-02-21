@@ -9,6 +9,7 @@ import scrumweb.common.SecurityContextService;
 import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
 import scrumweb.project.service.ProjectService;
+import scrumweb.user.account.domain.UserAccount;
 
 import java.util.List;
 import java.util.Set;
