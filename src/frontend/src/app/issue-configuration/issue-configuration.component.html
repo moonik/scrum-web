@@ -4,10 +4,13 @@
 
 <form>
   <div *ngFor="let field of fields">
+    <span (click)="removeField(field)">X</span>
     <label for="input-field">Field name</label>
     <input name="input-field"/>
     <select name="field-type" id="field-type">
       <option *ngFor="let type of fieldTypesArray">{{ type }}</option>
     </select>
+    <label for="is-required"></label> Is required?
+    <input type="checkbox" name="is-required">
   </div>
 </form>

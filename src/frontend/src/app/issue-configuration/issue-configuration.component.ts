@@ -28,6 +28,11 @@ export class IssueConfigurationComponent implements OnInit {
     this.fields.push({id: id});
   }
 
+  public removeField(field: any) {
+    let index = this.fields.indexOf(field);
+    this.fields.splice(index, 1);
+  }
+
   public collectField(field: ProjectFieldDto) {
     if (field.fieldType === this.fieldTypes.inputField) {
       this.projectFieldsCollector.inputFieldDtos.push(field as InputFieldDto);
