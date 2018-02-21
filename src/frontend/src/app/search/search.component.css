@@ -1,13 +1,21 @@
 td {
   text-align: center;
-  width: 100px;
-}
-th {
-  width: 100px;
 }
 
 .projects-table tr{
   cursor: pointer;
   margin-left:auto;
   margin-right:auto;
+}
+
+.project-key{
+  width: 10%;
+}
+
+.project-type{
+  width: 35%;
+}
+
+.project-description{
+  width: 50%;
 }

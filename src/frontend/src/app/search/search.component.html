@@ -9,7 +9,7 @@ Search results for phrase: <b>{{ results }}</b>
       <td colspan="3"><b>Projects</b></td>
     </tr>
     <tr>
-      <td><b>Key</b></td>
+      <td class="project-key"><b>Key</b></td>
       <td><b>Name</b></td>
       <td><b>Description</b></td>
     </tr>
@@ -17,9 +17,9 @@ Search results for phrase: <b>{{ results }}</b>
 
     <tbody *ngFor="let project of projects">
     <tr (click)="goToProjectDetails(project.projectKey)">
-        <td>{{project.projectKey}}</td>
-        <td>{{project.name}}</td>
-        <td>{{project.description}}</td>
+        <td class="project-key">{{project.projectKey}}</td>
+        <td class="project-type">{{project.name}}</td>
+        <td class="project-description">{{project.description}}</td>
     </tr>
     </tbody>
 
@@ -34,17 +34,17 @@ Search results for phrase: <b>{{ results }}</b>
       <td colspan="3"><b>Issues</b></td>
     </tr>
     <tr>
-      <td><b>Key</b></td>
+      <td class="project-key"><b>Key</b></td>
+      <td class="project-type"><b>Type</b></td>
       <td><b>Summary</b></td>
-      <td><b>Type</b></td>
     </tr>
     </thead>
 
     <tbody *ngFor="let issue of issues">
     <tr>
-    <td>{{issue.issueKey}}</td>
-    <td>{{issue.summary}}</td>
-    <td>{{issue.issueType}}</td>
+    <td class="project-key">{{issue.issueKey}}</td>
+    <td class="project-type">{{issue.issueType}}</td>
+    <td class="project-description">{{issue.summary}}</td>
     </tr>
     </tbody>
 
