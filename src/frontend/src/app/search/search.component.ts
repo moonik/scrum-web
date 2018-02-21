@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ProjectDto} from "../model/projectDto";
 import {SearchService} from "./search.service";
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {IssueDto} from "../model/IssueDto";
 
 @Component({
   selector: 'app-search',
@@ -12,11 +13,15 @@ import {ActivatedRoute, Params} from '@angular/router';
 export class SearchComponent implements OnInit {
 
   projects: ProjectDto[] = [];
+  issues: IssueDto[] = [];
+
   results: string;
 
-  constructor(private searchService: SearchService, private _activeRout: ActivatedRoute) {
+
+  constructor(private searchService: SearchService, private _activeRout: ActivatedRoute, private _router: Router) {
     this._activeRout.params.subscribe((params: Params) => {
-      this.search(params['query']);
+      this.searchProjects(params['query']);
+      this.searchIssues(params['query']);
     });
   }
 
@@ -24,9 +29,9 @@ export class SearchComponent implements OnInit {
 
   }
 
-  search(query: any){
+  searchProjects(query: any){
     this.results = query;
-    this.searchService.search(query)
+    this.searchService.searchProjects(query)
       .subscribe(
         data => {
           this.projects = data;
@@ -34,5 +39,18 @@ export class SearchComponent implements OnInit {
       );
   }
 
+  searchIssues(query: any){
+    this.results = query;
+    this.searchService.searchIssues(query)
+      .subscribe(
+        data => {
+          this.issues = data;
+        }
+      );
+  }
+
+  goToProjectDetails(projectKey: string) {
+    this._router.navigate(['project/details/'+projectKey]);
+  }
 
 }

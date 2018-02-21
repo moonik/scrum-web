@@ -1,0 +1,13 @@
+td {
+  text-align: center;
+  width: 100px;
+}
+th {
+  width: 100px;
+}
+
+.projects-table tr{
+  cursor: pointer;
+  margin-left:auto;
+  margin-right:auto;
+}

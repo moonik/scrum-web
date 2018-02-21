@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import scrumweb.dto.fieldcontent.FieldsContentCollector;
 import scrumweb.dto.issue.IssueDetailsDto;
+import scrumweb.dto.issue.IssueDto;
 import scrumweb.issue.service.IssueService;
+
+import java.util.List;
 
 import static scrumweb.common.ApplicationConstants.API_URL;
 
@@ -33,5 +36,11 @@ public class IssueController {
     @ResponseStatus(HttpStatus.OK)
     public IssueDetailsDto getDetails(@PathVariable Long id) {
         return issueService.getDetails(id);
+    }
+
+    @GetMapping("/search/{paramkey}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<IssueDto> findIssuesByKeyQuery(@PathVariable String paramkey){
+        return issueService.findIssuesByKeyQuery(paramkey);
     }
 }

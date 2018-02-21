@@ -8,6 +8,7 @@ import scrumweb.common.asm.UserProfileAsm;
 import scrumweb.common.asm.fieldcontent.FieldContentConverter;
 import scrumweb.dto.fieldcontent.FieldContentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
+import scrumweb.dto.issue.IssueDto;
 import scrumweb.dto.user.UserProfileDto;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
@@ -20,6 +21,7 @@ import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -86,5 +88,12 @@ public class IssueService {
                 .filter(i -> i.getName().equalsIgnoreCase(issueType))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public List<IssueDto> findIssuesByKeyQuery(String paramkey){
+
+        return issueRepository.findIssuesByKeyQuery(paramkey).stream()
+                .map(issue -> issueAsm.createIssueDto(issue))
+                .collect(Collectors.toList());
     }
 }
