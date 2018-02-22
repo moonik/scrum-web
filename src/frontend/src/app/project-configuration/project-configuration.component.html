@@ -1,6 +1,9 @@
 <div>
   <div class="main">
-    <h3>Project Configuration</h3>
+    <div class="header">
+      <button class="button btn-primary backButton" [routerLink]="['/home']">Back</button>
+      <h3>Project Configuration</h3>
+    </div>
 
     <table class="projectInfo">
       <tbody>
@@ -60,10 +63,5 @@
       </tr>
       </tbody>
     </table>
-  </div>
-
-  <div class="backBut" align="right">
-    <br/>
-    <button class="button btn-primary" [routerLink]="['/home']">Back</button>
   </div>
 </div>
