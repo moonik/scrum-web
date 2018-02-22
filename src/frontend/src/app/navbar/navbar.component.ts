@@ -12,16 +12,16 @@ import {ProjectDto} from "../model/projectDto";
 })
 export class NavbarComponent implements OnInit {
 
-  netImage:any = "../assets/images/searchicon.png";
+  public searchIcon:string = "../assets/images/searchicon.png";
 
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
   }
 
-  search(phrase){
-    console.log(phrase);
-    this.router.navigate(['/search/'+phrase]);
+  search(query){
+    console.log(query);
+    this.router.navigate(['/search/'+query]);
   }
 
   checkLogin(): boolean{

@@ -38,9 +38,9 @@ public class IssueController {
         return issueService.getDetails(id);
     }
 
-    @GetMapping("/search/{paramkey}")
+    @GetMapping("/search/{param}")
     @ResponseStatus(HttpStatus.OK)
-    public List<IssueDto> findIssuesByKeyQuery(@PathVariable String paramkey){
-        return issueService.findIssuesByKeyQuery(paramkey);
+    public List<IssueDto> findIssuesByKeyQuery(@PathVariable String param){
+        return issueService.findIssuesByKeyQuery(param);
     }
 }

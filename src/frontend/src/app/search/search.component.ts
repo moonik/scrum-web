@@ -12,11 +12,10 @@ import {IssueDto} from "../model/IssueDto";
 })
 export class SearchComponent implements OnInit {
 
-  projects: ProjectDto[] = [];
-  issues: IssueDto[] = [];
+  public projects: ProjectDto[] = [];
+  public issues: IssueDto[] = [];
 
-  results: string;
-
+  public results: string;
 
   constructor(private searchService: SearchService, private _activeRoute: ActivatedRoute, private _router: Router) {
     this._activeRoute.params.subscribe((params: Params) => {
@@ -29,7 +28,7 @@ export class SearchComponent implements OnInit {
 
   }
 
-  searchProjects(query: any){
+  public searchProjects(query: any){
     this.results = query;
     this.searchService.searchProjects(query)
       .subscribe(
@@ -39,7 +38,7 @@ export class SearchComponent implements OnInit {
       );
   }
 
-  searchIssues(query: any){
+  public searchIssues(query: any){
     this.results = query;
     this.searchService.searchIssues(query)
       .subscribe(
@@ -49,7 +48,7 @@ export class SearchComponent implements OnInit {
       );
   }
 
-  goToProjectDetails(projectKey: string) {
+  public goToProjectDetails(projectKey: string) {
     this._router.navigate(['project/details/'+projectKey]);
   }
 

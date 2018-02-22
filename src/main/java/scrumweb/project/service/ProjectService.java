@@ -105,9 +105,8 @@ public class ProjectService {
     }
 
 
-    public List<ProjectDto> findProjectsByKeyQuery(String paramkey){
-
-        return projectRepository.findProjectsByKeyQuery(paramkey).stream()
+    public List<ProjectDto> findProjectsByKeyQuery(String param){
+        return projectRepository.findProjectsByKeyQuery(param).stream()
                 .map(project -> projectAsm.convertFromProjectToProjectDto(project))
                     .collect(Collectors.toList());
     }

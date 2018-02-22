@@ -90,9 +90,8 @@ public class IssueService {
                 .orElse(null);
     }
 
-    public List<IssueDto> findIssuesByKeyQuery(String paramkey){
-
-        return issueRepository.findIssuesByKeyQuery(paramkey).stream()
+    public List<IssueDto> findIssuesByKeyQuery(String param){
+        return issueRepository.findIssuesByKeyQuery(param).stream()
                 .map(issue -> issueAsm.createIssueDto(issue))
                 .collect(Collectors.toList());
     }

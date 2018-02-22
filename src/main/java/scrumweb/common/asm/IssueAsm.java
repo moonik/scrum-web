@@ -29,7 +29,8 @@ public class IssueAsm {
     public IssueDetailsDto createIssueDetailsDto(Issue issue, Set<UserProfileDto> assignees, UserProfileDto reporter) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
         return new IssueDetailsDto(
-                issue.getId(), issue.getKey(),
+                issue.getId(),
+                issue.getKey(),
                 issue.getSummary(),
                 issue.getDescription(),
                 assignees,

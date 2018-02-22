@@ -13,14 +13,13 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item nav-link" *ngIf="checkLogin()">Hello {{ getCurrentUser() }}!</li> &nbsp; &nbsp;
-
         <form #formSearch="ngForm" (ngSubmit)="search(formSearch.value.query)">
           <div class="row">
             <li class="nav-item">
               <input type="text" name="query" ngModel #query="ngModel" class="form-control" placeholder="Search..."/>
             </li>
             <li class="nav-item">
-              <input type="image" [src]="netImage" alt="Submit"/>
+              <input type="image" [src]="searchIcon" alt="Submit"/>
             </li>
           </div>
         </form>
