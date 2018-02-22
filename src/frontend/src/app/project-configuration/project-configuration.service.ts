@@ -13,11 +13,9 @@ export class ProjectConfigurationService {
     return this._http.get('profile/all')
       .map(res => {
         const data = res.json();
-        console.log('service data: ' + data);
         const users: UserDto[] = [];
         for (const i in data) {
           if (!(members.includes(data[i].username))) {
-            console.log('member to add: ' + data[i].username);
             const user: UserDto = new UserDto();
             user.firstname = data[i].firstname;
             user.lastname = data[i].lastname;

@@ -18,6 +18,7 @@ export class ProjectConfigurationComponent implements OnInit {
   project: ProjectDto = new ProjectDto();
   roles: string[] = ['developer', 'tester', 'project manager'];
   selectedRole: string;
+  error: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -26,14 +27,17 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.storageService.getScope()) {
+      this.router.navigate(['/home']);
+    }
     this.project = this.storageService.getScope();
     this.getAllUsers();
+    this.error = '';
   }
 
   getAllUsers() {
     const members: string[] = [];
     for (const i of this.project.members) {
-      console.log('getAllUsers: ' + i.username);
       members.push(i.username);
     }
     this.confService.getUsers(members).subscribe(
@@ -41,11 +45,11 @@ export class ProjectConfigurationComponent implements OnInit {
     );
   }
 
-  addUserToProject(user: UserDto) {
+  addUserToProject(user: string, role: string) {
     const member: ProjectMemberDto = new ProjectMemberDto();
-    member.username = user.username;
     member.projectId = this.project.id;
-    member.role = this.selectedRole;
+    member.username = user;
+    member.role = role;
 
     this.confService.addMemberToProject(member)
       .subscribe(data => {
@@ -55,17 +59,16 @@ export class ProjectConfigurationComponent implements OnInit {
       );
   }
 
-  updateSelected(event: string) {
-    this.selectedRole = event;
-  }
-
   removeMemberFromProject(member: ProjectMemberDto) {
     this.confService.removeMemberFromProject(member.username + '/' + member.projectId)
       .subscribe(data => {
           this.project.members.splice(this.project.members.indexOf(member), 1);
           this.ngOnInit();
+        }, error => {
+        if (error.status === 418) {
+          this.error  = 'You cannot remove project owner!';
         }
-      );
+      });
   }
 
 }
