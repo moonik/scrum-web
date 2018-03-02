@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import scrumweb.dto.issue.IssueDto;
 
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -14,6 +15,6 @@ import java.util.Set;
 public class ProjectDetailsDto {
 
     private ProjectDto projectDto;
-    private Set<IssueDto> issues;
+    private List<IssueDto> issues;
     //TODO add boards
 }

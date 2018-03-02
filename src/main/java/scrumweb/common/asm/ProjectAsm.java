@@ -10,6 +10,7 @@ import scrumweb.project.domain.Project;
 import scrumweb.project.domain.ProjectMember.Role;
 import scrumweb.project.domain.ProjectMember;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,7 @@ public class ProjectAsm {
         return new ProjectMemberDto(projectId, projectMember.getUserAccount().getUsername(),projectMember.getRole().getRoleString());
     }
 
-    public ProjectDetailsDto makeProjectDetailsDro(ProjectDto projectDto, Set<IssueDto> issues) {
+    public ProjectDetailsDto makeProjectDetailsDro(ProjectDto projectDto, List<IssueDto> issues) {
         return new ProjectDetailsDto(projectDto, issues);
     }
 

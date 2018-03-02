@@ -71,7 +71,10 @@ public class ProjectService {
         final Project project = projectRepository.findByKey(projectKey);
         final ProjectDto projectDto = projectAsm.makeProjectDto(project);
         projectDto.setOwner(userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile()));
-        final Set<IssueDto> issues = project.getIssues().stream().map(issue -> issueAsm.createIssueDto(issue)).collect(Collectors.toSet());
+        final List<IssueDto> issues = project.getIssues().stream()
+                .map(issue -> issueAsm.createIssueDto(issue))
+                .sorted((i1, i2) -> Long.compare(i2.getId(), i1.getId()))
+                .collect(Collectors.toList());
         return projectAsm.makeProjectDetailsDro(projectDto, issues);
     }
 

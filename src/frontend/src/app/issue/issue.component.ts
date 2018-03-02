@@ -1,9 +1,10 @@
-import { Component, TemplateRef, OnInit, Input } from '@angular/core';
+import { Component, TemplateRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { IssueService } from './issue.service';
 import { IssueDetailsDto } from '../model/IssueDetailsDto';
 import { UserProfileDto } from '../model/UserProfileDto';
+import { IssueDto } from '../model/IssueDto';
 
 @Component({
   selector: 'app-issue-creation',
@@ -22,6 +23,7 @@ export class IssueComponent implements OnInit {
   };
   
   @Input() projectKey: string;
+  @Output() onIssueCreate = new EventEmitter<IssueDto>();
   public issueDetails: IssueDetailsDto = new IssueDetailsDto();
   projectMembers: Array<any> = [];
   selectedItems = [];
@@ -60,9 +62,11 @@ export class IssueComponent implements OnInit {
 
   createIssue() {
     this.issueDetails.assignees = this.selectedItems.map(item => new UserProfileDto(item.itemName));
-    console.log(this.issueDetails);
     return this._issueService.createIssue(this.projectKey, this.issueDetails)
-      .subscribe();
+      .subscribe( data => {
+        this.onIssueCreate.emit(data);
+        this.issueDetails = new IssueDetailsDto(); 
+      });
   }
 
   isValid() {
