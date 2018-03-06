@@ -35,7 +35,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'project/configuration/issues',
+    path: 'project/:projectKey/configuration/issues',
     component: IssueConfigurationComponent,
     canActivate: [AuthGuard]
   },
