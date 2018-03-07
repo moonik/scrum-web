@@ -54,6 +54,7 @@ public class ProjectController {
     }
 
     @GetMapping("/members/{projectKey}")
+    @ResponseStatus(HttpStatus.OK)
     public Set<ItemAssignee> getProjectMembers(@PathVariable String projectKey) {
         return projectService.getProjectMembers(projectKey);
     }

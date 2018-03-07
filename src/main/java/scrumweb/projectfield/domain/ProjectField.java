@@ -23,7 +23,6 @@ public class ProjectField {
     @NotNull
     private String name;
 
-    @NotNull
     private Boolean isRequired;
 
     public ProjectField(FieldType fieldType, String name, Boolean isRequired) {

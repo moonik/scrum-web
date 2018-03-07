@@ -6,8 +6,9 @@ import { InputFieldDto } from '../model/project-fields/InputFieldDto';
 import { ListElementsContainerDto } from '../model/project-fields/ListElementsContainerDto';
 import { RadioButtonContainerDto } from '../model/project-fields/RadioButtonContainerDto';
 import { TextAreaDto } from '../model/project-fields/TextAreaDto';
-import {Router, ActivatedRoute, Params} from '@angular/router';
-import {FieldCreator} from './field-creator';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { FieldCreator } from './field-creator';
+import { IssueConfigurationService } from './issue-configuration.service';
 
 import * as fieldTypes from '../constants/field-type';
 
@@ -15,7 +16,7 @@ import * as fieldTypes from '../constants/field-type';
   selector: 'app-issue-configuration',
   templateUrl: './issue-configuration.component.html',
   styleUrls: ['./issue-configuration.component.css'],
-  providers: [FieldCreator]
+  providers: [FieldCreator, IssueConfigurationService]
 })
 export class IssueConfigurationComponent implements OnInit {
 
@@ -25,7 +26,7 @@ export class IssueConfigurationComponent implements OnInit {
   public projectFieldsCollector: ProjectFieldsCollector = null;
   private projectKey = '';
 
-  constructor(private _activatedRoute: ActivatedRoute, private _fieldCreator: FieldCreator) {
+  constructor(private _activatedRoute: ActivatedRoute, private _fieldCreator: FieldCreator, private _issueConfService: IssueConfigurationService) {
     this._activatedRoute.params.subscribe((params: Params) => {
         this.projectKey = params['projectKey'];
     });
@@ -58,7 +59,11 @@ export class IssueConfigurationComponent implements OnInit {
   }
 
   public editField(field) {
-    return field.submitted = false;
+    field.submitted = false;
+  }
+
+  public isValid(formData) {
+    return this.isValidGeneralData;
   }
 
   public isValidGeneralData(formData) {
@@ -77,5 +82,10 @@ export class IssueConfigurationComponent implements OnInit {
     } else if (fieldType === this.fieldTypes.list) {
       return 'listElementsContainerDtos';
     }
+  }
+
+  public createFields() {
+    return this._issueConfService.createFields(this.projectFieldsCollector, this.projectKey)
+      .subscribe();
   }
 }

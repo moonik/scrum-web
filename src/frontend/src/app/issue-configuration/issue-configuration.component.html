@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <button class="btn btn-primary" id="btn-create" [disabled]="!isValidGeneralData(form.value)">Submit</button>
+    <button class="btn btn-primary" id="btn-create" [disabled]="!isValid(form.value)">Submit</button>
   </div>
 
   <div class="submitted-field" [hidden]="!field.submitted">
@@ -38,3 +38,4 @@
   </span>
   </div>
 </form>
+<button (click)="createFields()">Create fields</button>

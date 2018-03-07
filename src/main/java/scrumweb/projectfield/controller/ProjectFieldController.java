@@ -1,12 +1,14 @@
 package scrumweb.projectfield.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import scrumweb.dto.projectfield.ProjectFieldDto;
 import scrumweb.dto.projectfield.ProjectFieldsCollector;
@@ -25,12 +27,14 @@ public class ProjectFieldController {
     private ProjectFieldService projectFieldService;
 
     @PostMapping("")
+    @ResponseStatus(HttpStatus.OK)
     public void createProjectField(@RequestParam String issuetype, @RequestParam String projectKey,
                                    @RequestBody ProjectFieldsCollector projectFieldsCollector) {
         projectFieldService.createFields(projectFieldsCollector.extractFields(), issuetype, projectKey);
     }
 
     @GetMapping("")
+    @ResponseStatus(HttpStatus.OK)
     public Set<ProjectFieldDto> getIssueFields(@RequestParam String issuetype, @RequestParam String projectName) {
         return projectFieldService.getIssueFields(issuetype, projectName);
     }
