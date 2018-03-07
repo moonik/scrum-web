@@ -3,6 +3,7 @@ import {ProjectDto} from "../model/projectDto";
 import {SearchService} from "./search.service";
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {IssueDto} from "../model/IssueDto";
+import {SearchResultsDto} from "../model/SearchResultsDto";
 
 @Component({
   selector: 'app-search',
@@ -12,15 +13,13 @@ import {IssueDto} from "../model/IssueDto";
 })
 export class SearchComponent implements OnInit {
 
-  public projects: ProjectDto[] = [];
-  public issues: IssueDto[] = [];
+  public searchresults: SearchResultsDto[] = [];
 
   public results: string;
 
   constructor(private searchService: SearchService, private _activeRoute: ActivatedRoute, private _router: Router) {
     this._activeRoute.params.subscribe((params: Params) => {
-      this.searchProjects(params['query']);
-      this.searchIssues(params['query']);
+      this.searchResults(params['query']);
     });
   }
 
@@ -28,24 +27,14 @@ export class SearchComponent implements OnInit {
 
   }
 
-  public searchProjects(query: any){
+  public searchResults(query: any){
     this.results = query;
-    this.searchService.searchProjects(query)
+    this.searchService.searchResults(query)
       .subscribe(
         data => {
-          this.projects = data;
+          this.searchresults = data;
         }
-      );
-  }
-
-  public searchIssues(query: any){
-    this.results = query;
-    this.searchService.searchIssues(query)
-      .subscribe(
-        data => {
-          this.issues = data;
-        }
-      );
+      )
   }
 
   public goToProjectDetails(projectKey: string) {

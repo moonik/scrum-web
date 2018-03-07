@@ -13,11 +13,11 @@ Search results for phrase: <b>{{ results }}</b>
         <td><b>Description</b></td>
       </tr>
     </thead>
-    <tbody *ngFor="let project of projects">
-      <tr (click)="goToProjectDetails(project.projectKey)">
-          <td class="project-key">{{project.projectKey}}</td>
-          <td class="project-type">{{project.name}}</td>
-          <td class="project-description">{{project.description}}</td>
+    <tbody *ngFor="let results of searchresults.projects">
+      <tr (click)="goToProjectDetails(results.projectKey)">
+          <td class="project-key">{{results.name}}</td>
+          <td class="project-type">{{results.projectKey}}</td>
+          <td class="project-description">{{results.description}}</td>
       </tr>
     </tbody>
   </table>
@@ -35,11 +35,11 @@ Search results for phrase: <b>{{ results }}</b>
         <td><b>Summary</b></td>
       </tr>
     </thead>
-    <tbody *ngFor="let issue of issues">
+    <tbody *ngFor="let results of searchresults.issues">
       <tr>
-        <td class="project-key">{{issue.issueKey}}</td>
-        <td class="project-type">{{issue.issueType}}</td>
-        <td class="project-description">{{issue.summary}}</td>
+        <td class="project-key">{{results.issueKey}}</td>
+        <td class="project-type">{{results.issueType}}</td>
+        <td class="project-description">{{results.summary}}</td>
       </tr>
     </tbody>
   </table>

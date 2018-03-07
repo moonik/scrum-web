@@ -11,9 +11,11 @@ import scrumweb.dto.issue.ItemAssignee;
 import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
+import scrumweb.dto.search.SearchResultsDto;
 import scrumweb.exception.ProjectAlreadyExsistsException;
 import scrumweb.exception.ProjectNotFoundException;
 import scrumweb.issue.domain.IssueType;
+import scrumweb.issue.repository.IssueRepository;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 import scrumweb.project.domain.Project;
@@ -35,6 +37,7 @@ public class ProjectService {
     private IssueAsm issueAsm;
     private UserProfileAsm userProfileAsm;
     private static final String[] DEFAULT_ISSUE_TYPES = {"TASK", "BUG", "FEATURE"};
+    private IssueRepository issueRepository;
 
     public ProjectDto create(ProjectDto projectDto){
         if (projectRepository.findByKey(projectDto.getProjectKey()) == null) {
@@ -108,9 +111,20 @@ public class ProjectService {
     }
 
 
-    public List<ProjectDto> findProjectsByKeyQuery(String param){
+    public SearchResultsDto findProjectsAndIssuesByKeyQuery(String param){
+        return new SearchResultsDto(getIssues(param), getProjects(param));
+    }
+
+    private List<ProjectDto> getProjects(String param) {
         return projectRepository.findProjectsByKeyQuery(param).stream()
                 .map(project -> projectAsm.convertFromProjectToProjectDto(project))
-                    .collect(Collectors.toList());
+                .collect(Collectors.toList());
     }
+
+    private List<IssueDto> getIssues(String param) {
+        return issueRepository.findIssuesByKeyQuery(param).stream()
+                .map(issue -> issueAsm.createIssueDto(issue))
+                .collect(Collectors.toList());
+    }
+
 }

@@ -8,6 +8,7 @@ import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.common.SecurityContextService;
 import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
+import scrumweb.dto.search.SearchResultsDto;
 import scrumweb.project.service.ProjectService;
 
 import java.util.List;
@@ -55,8 +56,8 @@ public class ProjectController {
 
     @GetMapping("/search/{paramkey}")
     @ResponseStatus(HttpStatus.OK)
-    public List<ProjectDto> findProjectsByKeyQuery(@PathVariable String paramkey){
-        return projectService.findProjectsByKeyQuery(paramkey);
+    public SearchResultsDto findProjectsAndIssuesByKeyQuery(@PathVariable String paramkey){
+        return projectService.findProjectsAndIssuesByKeyQuery(paramkey);
     }
 
     @GetMapping("/members/{projectKey}")

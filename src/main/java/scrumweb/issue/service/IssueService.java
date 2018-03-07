@@ -9,6 +9,7 @@ import scrumweb.common.asm.fieldcontent.FieldContentConverter;
 import scrumweb.dto.fieldcontent.FieldContentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.issue.IssueDto;
+import scrumweb.dto.search.SearchResultsDto;
 import scrumweb.dto.user.UserProfileDto;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
@@ -39,6 +40,7 @@ public class IssueService {
     private ProjectRepository projectRepository;
     private UserProfileAsm userProfileAsm;
     private FieldContentConverter fieldContentAsm;
+    //private SearchResultsDto searchResultsDto;
 
     public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String projectKey) {
         final Project project = projectRepository.findByKey(projectKey);
@@ -92,9 +94,4 @@ public class IssueService {
                 .orElse(null);
     }
 
-    public List<IssueDto> findIssuesByKeyQuery(String param){
-        return issueRepository.findIssuesByKeyQuery(param).stream()
-                .map(issue -> issueAsm.createIssueDto(issue))
-                .collect(Collectors.toList());
-    }
 }

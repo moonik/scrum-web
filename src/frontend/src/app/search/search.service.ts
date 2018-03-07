@@ -6,13 +6,8 @@ export class SearchService {
 
   constructor(private _http: HttpClient) { }
 
-  public searchProjects(query){
+  public searchResults(query){
     return this._http.get('project/search/'+query)
-      .map(res => res.json());
-  }
-
-  public searchIssues(query){
-    return this._http.get('project/issue/search/'+query)
       .map(res => res.json());
   }
 
