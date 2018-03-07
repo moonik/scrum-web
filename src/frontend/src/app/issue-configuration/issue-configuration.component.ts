@@ -7,13 +7,15 @@ import { ListElementsContainerDto } from '../model/project-fields/ListElementsCo
 import { RadioButtonContainerDto } from '../model/project-fields/RadioButtonContainerDto';
 import { TextAreaDto } from '../model/project-fields/TextAreaDto';
 import {Router, ActivatedRoute, Params} from '@angular/router';
+import {FieldCreator} from './field-creator';
 
 import * as fieldTypes from '../constants/field-type';
 
 @Component({
   selector: 'app-issue-configuration',
   templateUrl: './issue-configuration.component.html',
-  styleUrls: ['./issue-configuration.component.css']
+  styleUrls: ['./issue-configuration.component.css'],
+  providers: [FieldCreator]
 })
 export class IssueConfigurationComponent implements OnInit {
 
@@ -21,10 +23,9 @@ export class IssueConfigurationComponent implements OnInit {
   public fieldTypes = fieldTypes.default;
   public fieldTypesArray = Object.values(this.fieldTypes);
   public projectFieldsCollector: ProjectFieldsCollector = null;
-
   private projectKey = '';
 
-  constructor(private _activatedRoute: ActivatedRoute) {
+  constructor(private _activatedRoute: ActivatedRoute, private _fieldCreator: FieldCreator) {
     this._activatedRoute.params.subscribe((params: Params) => {
         this.projectKey = params['projectKey'];
     });
@@ -33,36 +34,44 @@ export class IssueConfigurationComponent implements OnInit {
   ngOnInit() {}
 
   public addField(id: number) {
-    this.fields.push({id: id});
+    this.fields.push({id: id, submitted: false});
   }
 
-  public removeField(fieldId: number, fieldType: string) {
-    let index = this.fields.indexOf(fieldId);
+  public removeField(field: any, fieldType: string) {
+    let index = this.fields.indexOf(field);
     this.fields.splice(index, 1);
     if (this.projectFieldsCollector) {
-      this.removeFieldFromCollector(fieldId, this.convertFieldTypeToField(fieldType));
+      this.removeFieldFromCollector(field.id, this.convertFieldTypeToField(fieldType));
     }
   }
 
-  public determineField(formData: any) {
-    if (formData.fieldType === this.fieldTypes.inputField) {
-      this.projectFieldsCollector = new ProjectFieldsCollector();
-      this.projectFieldsCollector.inputFieldDtos.push(this.createInputField(formData));
-    }
+  public submitField(formData: any, field: any) {
+    field.submitted = true;
+    this.projectFieldsCollector = new ProjectFieldsCollector();
+    return this.projectFieldsCollector[this.convertFieldTypeToField(formData.fieldType)]
+      .push(this._fieldCreator.createField(formData, this.fields.length));
   }
   
-  public removeFieldFromCollector(fieldId: number, fieldType: string) {
-    this.projectFieldsCollector[fieldType].filter(field => field.id != fieldId);
-    console.log(this.projectFieldsCollector);
+  private removeFieldFromCollector(fieldId: number, fieldType: string) {
+    let index = this.fields.indexOf(fieldId);
+    this.projectFieldsCollector[fieldType].splice(index, 1);
   }
 
-  private createInputField(formData: any): InputFieldDto {
-    return new InputFieldDto(this.fields.length, formData.fieldType, formData.fieldName, formData.isRequired, formData.maxChars, formData.minChars);
+  public editField(field) {
+    return field.submitted = false;
   }
 
   private convertFieldTypeToField(fieldType: string): string {
     if (fieldType === this.fieldTypes.inputField) {
       return 'inputFieldDtos';
+    } else if (fieldType === this.fieldTypes.textArea) {
+      return 'textAreaDtos';
+    } else if (fieldType === this.fieldTypes.checkBox) {
+      return 'checkBoxContainerDtos';
+    } else if (fieldType === this.fieldTypes.radioButton) {
+      return 'radioButtonContainerDtos';
+    } else if (fieldType === this.fieldTypes.list) {
+      return 'listElementsContainerDtos';
     }
   }
 }

@@ -1,0 +1,27 @@
+#create-new-field:hover {
+    border: 0.5px black solid;
+    border-radius: 5px;
+    background-color: rgb(222, 226, 226);
+    cursor: pointer;
+}
+
+#create-new-field {
+    padding: 10px;
+    margin: 5px;
+    margin-bottom: 15px;
+}
+
+.field-creation-form {
+    border-bottom: 0.5px black solid;
+    width: 50%;
+    margin: 15px;
+}
+
+#btn-create {
+    margin-bottom: 5px;
+}
+
+.fa {
+    cursor: pointer !important;
+    float: right !important;
+}

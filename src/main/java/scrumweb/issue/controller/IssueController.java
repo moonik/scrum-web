@@ -21,12 +21,11 @@ import static scrumweb.common.ApplicationConstants.API_URL;
 public class IssueController {
 
     private IssueService issueService;
-    private FieldsContentCollector fieldsContentCollector;
 
     @PostMapping("/{projectKey}")
     @ResponseStatus(HttpStatus.OK)
     public IssueDetailsDto createIssue(@PathVariable String projectKey, @RequestBody IssueDetailsDto issueDetailsDto) {
-        return issueService.create(issueDetailsDto, fieldsContentCollector.extractFields(issueDetailsDto.getProjectFields()), projectKey);
+        return issueService.create(issueDetailsDto, issueDetailsDto.getFieldsContentCollector().extractFields(), projectKey);
     }
 
     @GetMapping("/details/{id}")

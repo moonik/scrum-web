@@ -2,10 +2,10 @@ import { RadioButtonDto } from './RadioButtonDto';
 import { ProjectFieldDto } from './ProjectFieldDto';
 
 export class RadioButtonContainerDto extends ProjectFieldDto {
-    public radioButton: RadioButtonDto;
+    public radioButtons: Array<RadioButtonDto> = [];
 
-    constructor(id: number, fieldType: string, fieldName: string, isRequired: boolean, radioButton: RadioButtonDto) {
+    constructor(id: number, fieldType: string, fieldName: string, isRequired: boolean, radioButtons: Array<RadioButtonDto>) {
         super(id, fieldType, fieldName, isRequired);
-        this.radioButton = radioButton;
+        this.radioButtons = radioButtons;
     }
 }

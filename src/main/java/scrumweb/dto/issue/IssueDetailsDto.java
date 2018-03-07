@@ -27,7 +27,7 @@ public class IssueDetailsDto {
     private String remainingTime;
     private String priority;
     private String issueType;
-    private FieldsContentCollector projectFields;
+    private FieldsContentCollector fieldsContentCollector;
     private Set<FieldContentDto> fieldContents;
     private String createdDate;
     private String lastUpdate;

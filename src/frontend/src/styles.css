@@ -34,3 +34,8 @@ footer{
     animation: borderscale 200ms ease-in;
     background: #212529;
 }
+
+#btn-create, #btn-cancel {
+    background-color: #212529;
+    border-color: #212529;
+}
