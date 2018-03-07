@@ -61,6 +61,10 @@ export class IssueConfigurationComponent implements OnInit {
     return field.submitted = false;
   }
 
+  public isValidGeneralData(formData) {
+    return formData.fieldType != '' && formData.fieldName != '';
+  }
+
   private convertFieldTypeToField(fieldType: string): string {
     if (fieldType === this.fieldTypes.inputField) {
       return 'inputFieldDtos';

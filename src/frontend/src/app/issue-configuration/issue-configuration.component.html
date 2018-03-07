@@ -3,24 +3,24 @@
 <form class="field-creation-form" #form="ngForm" *ngFor="let field of fields" (ngSubmit)="submitField(form.value, field)">
   <div [hidden]="field.submitted">
     <label for="fieldName">Field name</label>
-    <input name="fieldName" ngModel #fieldName="ngModel" required>
-    <select name="fieldType" id="field-type" ngModel #fieldType="ngModel" required>
+    <input name="fieldName" ngModel #fieldName="ngModel">
+    <select name="fieldType" id="field-type" ngModel #fieldType="ngModel">
       <option *ngFor="let type of fieldTypesArray" [ngValue]="type">{{ type }}</option>
     </select>
     <label for="isRequired">Is required?</label>
-    <input type="checkbox" name="isRequired" ngModel #isRequired="ngModel" required>
+    <input type="checkbox" name="isRequired" ngModel #isRequired="ngModel">
     <span class="fa fa-close" id="remove-field" (click)="removeField(field, form.value.fieldType)"></span>
     <br>
     <div class="additional-params">
       <div class="params-input-field" *ngIf="form.value.fieldType==='INPUT_FIELD'">
         <label for="maxChars">Maximum characters</label>
-        <input type="number" name="maxChars" ngModel #maxChars="ngModel" required>
+        <input type="number" name="maxChars" ngModel #maxChars="ngModel">
 
         <label for="minChars">Minimum characters</label>
-        <input type="number" name="minChars" ngModel #minChars="ngModel" required>
+        <input type="number" name="minChars" ngModel #minChars="ngModel">
       </div>
     </div>
-    <button class="btn btn-primary" id="btn-create" (click)="submitField(form.value, field)">Submit</button>
+    <button class="btn btn-primary" id="btn-create" (click)="submitField(form.value, field)" [disabled]="!isValidGeneralData(form.value)">Submit</button>
   </div>
   <div class="submitted-field" [hidden]="!field.submitted">
     <span>
