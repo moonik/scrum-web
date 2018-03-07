@@ -47,8 +47,12 @@ export class IssueConfigurationComponent implements OnInit {
   }
 
   public submitField(formData: any, field: any) {
+    console.log(this.projectFieldsCollector);
+    //AFTER EACH SUBMIT FIELD ADDS (EVEN WHILE EDITTING)
     field.submitted = true;
-    this.projectFieldsCollector = new ProjectFieldsCollector();
+    if (!this.projectFieldsCollector) {
+      this.projectFieldsCollector = new ProjectFieldsCollector();
+    }
     return this.projectFieldsCollector[this.convertFieldTypeToField(formData.fieldType)]
       .push(this._fieldCreator.createField(formData, this.fields.length));
   }
