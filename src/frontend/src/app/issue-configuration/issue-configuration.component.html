@@ -10,7 +10,9 @@
     <label for="isRequired">Is required?</label>
     <input type="checkbox" name="isRequired" ngModel #isRequired="ngModel">
     <span class="fa fa-close" id="remove-field" (click)="removeField(field, form.value.fieldType)"></span>
+
     <br>
+
     <div class="additional-params">
       <div class="params-input-field" *ngIf="form.value.fieldType==='INPUT_FIELD'">
         <label for="maxChars">Maximum characters</label>
@@ -20,13 +22,15 @@
         <input type="number" name="minChars" ngModel #minChars="ngModel">
       </div>
     </div>
-    <button class="btn btn-primary" id="btn-create" (click)="submitField(form.value, field)" [disabled]="!isValidGeneralData(form.value)">Submit</button>
+
+    <button class="btn btn-primary" id="btn-create" [disabled]="!isValidGeneralData(form.value)">Submit</button>
   </div>
+
   <div class="submitted-field" [hidden]="!field.submitted">
     <span>
      <h4>
         <a (click)="editField(field)">
-            {{ form.value.fieldName }}
+            {{ form.value.fieldName }} ->
             {{ form.value.fieldType?.toLowerCase().replace('_', ' ') }}
         </a>
         <span class="fa fa-close" (click)="removeField(field, form.value.fieldType)"></span>
