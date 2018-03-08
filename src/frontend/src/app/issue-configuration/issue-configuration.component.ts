@@ -54,7 +54,6 @@ export class IssueConfigurationComponent implements OnInit {
     }
     let createdField = this._fieldCreator.createField(formData, field.id);
     let index = this.findField(fieldType, createdField);
-    console.log(this.projectFieldsCollector);
     if (index !== -1) {
       this.projectFieldsCollector[fieldType][index] = createdField;
     } else
