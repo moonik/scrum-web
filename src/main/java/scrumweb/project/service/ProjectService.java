@@ -111,6 +111,7 @@ public class ProjectService {
         return projectDtos;
     }
 
+    // todo check if member has issues and bl
     public HttpStatus removeMember(String username, Long projectId) {
         Project project = projectRepository.findOne(projectId);
         if (!project.getOwner().getUsername().equals(username)) {

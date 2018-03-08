@@ -1,5 +1,5 @@
 export class ProjectMemberDto {
-  projectId: number;
-  username: string;
-  role: string;
+  public projectId: number;
+  public username: string;
+  public role: string;
 }
