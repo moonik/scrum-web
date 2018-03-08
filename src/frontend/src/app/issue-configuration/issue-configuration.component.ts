@@ -47,14 +47,23 @@ export class IssueConfigurationComponent implements OnInit {
   }
 
   public submitField(formData: any, field: any) {
-    console.log(this.projectFieldsCollector);
-    //AFTER EACH SUBMIT FIELD ADDS (EVEN WHILE EDITTING)
     field.submitted = true;
+    let fieldType = this.convertFieldTypeToField(formData.fieldType);
     if (!this.projectFieldsCollector) {
       this.projectFieldsCollector = new ProjectFieldsCollector();
     }
-    return this.projectFieldsCollector[this.convertFieldTypeToField(formData.fieldType)]
-      .push(this._fieldCreator.createField(formData, this.fields.length));
+    let createdField = this._fieldCreator.createField(formData, field.id);
+    let index = this.findField(fieldType, createdField);
+    console.log(this.projectFieldsCollector);
+    if (index !== -1) {
+      this.projectFieldsCollector[fieldType][index] = createdField;
+    } else
+      return this.projectFieldsCollector[fieldType].push(createdField);
+  }
+
+  private findField(fieldType: string, field) {
+    return this.projectFieldsCollector[fieldType]
+      .findIndex(f => f.id === field.id);
   }
   
   private removeFieldFromCollector(fieldId: number, fieldType: string) {
