@@ -109,3 +109,10 @@
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: #555;
 }
+
+#loading {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}

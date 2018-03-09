@@ -28,6 +28,9 @@ import scrumweb.user.account.service.UserAccountService
 import spock.lang.Specification
 import spock.lang.Subject
 
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 class ProjectServiceTest extends Specification{
 
     def securityContextService = Mock(SecurityContextService)
@@ -43,6 +46,10 @@ class ProjectServiceTest extends Specification{
     def userProfileAsm = Mock(UserProfileAsm)
     private final static String USERNAME = "testUser"
     private final static String PASSWORD = "testUser"
+
+    LocalDateTime now = LocalDateTime.now()
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm")
+    String date = now.format(formatter)
 
     def setup() {
         securityContext.getAuthentication() >> authentication
@@ -119,11 +126,11 @@ class ProjectServiceTest extends Specification{
 
         Set<UserAccount> users = new HashSet<>(Arrays.asList(TestData.USER_ACCOUNT))
         IssueType issueType = new IssueType(issuetype, TestData.PROJECT)
-        Issue issue = new Issue(summary, description, users, TestData.USER_ACCOUNT, estimateTime, remainingTime, Priority.HIGH, issueType, null)
+        Issue issue = new Issue(summary, description, users, TestData.USER_ACCOUNT, estimateTime, remainingTime, Priority.HIGH, issueType, null, now)
 
         def issues = new HashSet<>(Arrays.asList(issue))
         def anyNames = new HashSet<>(Arrays.asList(anyAssignee, anyAssignee))
-        def anyIssueDto = new IssueDto(anyId, anySummary, anyType, anyPriority, anyNames)
+        def anyIssueDto = new IssueDto(anyId, anyKey, anySummary, anyType, anyPriority, anyNames)
         def project = TestData.PROJECT
         project.setIssues(issues)
         project.setOwner(TestData.USER_ACCOUNT)

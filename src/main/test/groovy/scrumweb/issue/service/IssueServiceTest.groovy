@@ -16,6 +16,7 @@ import scrumweb.issue.fieldcontent.FieldContent
 import scrumweb.issue.fieldcontent.InputFieldContent
 import scrumweb.issue.repository.IssueRepository
 import scrumweb.issue.repository.IssueTypeRepository
+import scrumweb.project.domain.Project
 import scrumweb.project.repository.ProjectRepository
 import scrumweb.projectfield.domain.ProjectField
 import scrumweb.projectfield.domain.ProjectField.FieldType
@@ -24,6 +25,9 @@ import scrumweb.user.account.domain.UserAccount
 import scrumweb.user.account.repository.UserAccountRepository
 import spock.lang.Specification
 import spock.lang.Subject
+
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class IssueServiceTest extends Specification {
 
@@ -56,8 +60,12 @@ class IssueServiceTest extends Specification {
     def priority = "HIGH"
     def issueType = "TASK"
 
+    LocalDateTime now = LocalDateTime.now()
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm")
+    String date = now.format(formatter)
+
     @Subject
-    def issueService = new IssueService(issueAsm, issueRepository, userAccountRepository, securityContextService, projectFieldRepository, issueTypeRepository, projectRepository, userProfileAsm, fieldContentAsm)
+    def issueService = new IssueService(issueAsm, issueRepository, userAccountRepository, securityContextService, projectFieldRepository, projectRepository, userProfileAsm, fieldContentAsm)
 
     def "should create issue"() {
         given:
@@ -68,20 +76,22 @@ class IssueServiceTest extends Specification {
         ProjectField projectField = new ProjectField(FieldType.INPUT_FIELD, projectFieldName, true)
         FieldContent inputFieldContent = new InputFieldContent(projectField, content)
         Set<FieldContent> fieldContents = new HashSet<>(Arrays.asList(inputFieldContent))
-        IssueDetailsDto issueDetailsDto = new IssueDetailsDto(issueId, key, summary, description, assignees, userProfileDto, estimateTime, remainingTime, priority, issueType)
+        IssueDetailsDto issueDetailsDto = new IssueDetailsDto(issueId, key, summary, description, assignees, userProfileDto, estimateTime, remainingTime, priority, issueType, date, date)
         Set<UserAccount> users = new HashSet<>(Arrays.asList(TestData.USER_ACCOUNT))
         IssueType issueType = new IssueType(issueType, TestData.PROJECT)
-        Issue issue = new Issue(summary, description, users, TestData.USER_ACCOUNT, estimateTime, remainingTime, Priority.HIGH, issueType, fieldContents)
+        Set<IssueType> issueTypes = new HashSet<>(Arrays.asList(issueType))
+        Issue issue = new Issue(summary, description, users, TestData.USER_ACCOUNT, estimateTime, remainingTime, Priority.HIGH, issueType, fieldContents, now)
+        Project project = TestData.PROJECT
+        project.setIssueTypes(issueTypes)
 
         when:
-        Issue createdIssue = issueService.createIssue(issueDetailsDto, fieldContentDtos)
+        Issue createdIssue = issueService.createIssue(issueDetailsDto, fieldContentDtos, project)
 
         then:
         1 * securityContextService.getCurrentUserAccount() >> TestData.USER_ACCOUNT
         1 * userAccountRepository.findUsers(_) >> users
         1 * projectFieldRepository.findOne(projectFieldId) >> projectField
         1 * fieldContentAsm.createObjectEntity(projectField, fieldContentDto) >> inputFieldContent
-        1 * issueTypeRepository.findByName(_) >> issueType
         1 * issueAsm.createIssueEntityObject(issueDetailsDto, users, TestData.USER_ACCOUNT, fieldContents, issueType) >> issue
         createdIssue == issue
     }
@@ -93,10 +103,10 @@ class IssueServiceTest extends Specification {
         ProjectField projectField = new ProjectField(FieldType.INPUT_FIELD, projectFieldName, true)
         FieldContent inputFieldContent = new InputFieldContent(projectField, content)
         Set<FieldContent> fieldContents = new HashSet<>(Arrays.asList(inputFieldContent))
-        IssueDetailsDto issueDetailsDto = new IssueDetailsDto(issueId, key, summary, description, assignees, userProfileDto, estimateTime, remainingTime, priority, issueType)
+        IssueDetailsDto issueDetailsDto = new IssueDetailsDto(issueId, key, summary, description, assignees, userProfileDto, estimateTime, remainingTime, priority, issueType, date, date)
         Set<UserAccount> users = new HashSet<>(Arrays.asList(TestData.USER_ACCOUNT))
         IssueType issueType = new IssueType(issueType, TestData.PROJECT)
-        Issue createdIssue = new Issue(summary, description, users, TestData.USER_ACCOUNT, estimateTime, remainingTime, Priority.HIGH, issueType, fieldContents)
+        Issue createdIssue = new Issue(summary, description, users, TestData.USER_ACCOUNT, estimateTime, remainingTime, Priority.HIGH, issueType, fieldContents, now)
 
         and:
         createdIssue.getAssignees() >> users
