@@ -49,7 +49,6 @@ export class ProjectConfigurationComponent implements OnInit {
     const member: ProjectMemberDto = new ProjectMemberDto();
     member.projectId = this.project.id;
     member.username = user;
-    console.log(role);
     member.role = role;
 
     this.confService.addMemberToProject(member)

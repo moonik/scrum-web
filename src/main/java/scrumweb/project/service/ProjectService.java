@@ -76,12 +76,17 @@ public class ProjectService {
         return projectAsm.makeProjectDetailsDro(projectDto, issues);
     }
 
-    public ProjectMemberDto addMember(ProjectMemberDto projectMemberDto) {
+    public HttpStatus addMember(ProjectMemberDto projectMemberDto) {
         Project project = projectRepository.findOne(projectMemberDto.getProjectId());
         UserAccount userAccount = userAccountRepository.findByUsername(projectMemberDto.getUsername());
-        project.getMembers().add(new ProjectMember(userAccount, Role.getRole(projectMemberDto.getRole())));
-        projectRepository.save(project);
-        return projectMemberDto;
+        if (project.getMembers().stream()
+            .filter(member -> member.getUserAccount().getUsername().equals(userAccount.getUsername()))
+            .collect(Collectors.toList())
+            .isEmpty()) {
+            project.getMembers().add(new ProjectMember(userAccount, Role.getRole(projectMemberDto.getRole())));
+            projectRepository.save(project);
+            return HttpStatus.OK;
+        } else return HttpStatus.CONFLICT;
     }
 
     public Set<ItemAssignee> getProjectMembers(String projectKey) {
@@ -111,7 +116,7 @@ public class ProjectService {
         return projectDtos;
     }
 
-    // todo check if member has issues and bl
+    // todo check if member has issues before removing
     public HttpStatus removeMember(String username, Long projectId) {
         Project project = projectRepository.findOne(projectId);
         if (!project.getOwner().getUsername().equals(username)) {

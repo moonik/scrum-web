@@ -33,8 +33,8 @@ public class ProjectController {
 
     @PostMapping("/member/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addMember(@RequestBody ProjectMemberDto projectMemberDto) {
-        projectService.addMember(projectMemberDto);
+    public ResponseEntity<?> addMember(@RequestBody ProjectMemberDto projectMemberDto) {
+        return ResponseEntity.status(projectService.addMember(projectMemberDto)).build();
     }
 
     @DeleteMapping("/member/delete/{username}/{projectId}")
