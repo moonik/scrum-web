@@ -19,7 +19,6 @@ import * as fieldTypes from '../constants/field-type';
   providers: [FieldCreator, IssueConfigurationService]
 })
 export class IssueConfigurationComponent implements OnInit {
-
   public fields = [];
   public fieldTypes = fieldTypes.default;
   public fieldTypesArray = Object.values(this.fieldTypes);
@@ -74,12 +73,12 @@ export class IssueConfigurationComponent implements OnInit {
     field.submitted = false;
   }
 
-  public isValid(formData) {
-    return this.isValidGeneralData;
-  }
-
   public isValidGeneralData(formData) {
     return formData.fieldType != '' && formData.fieldName != '';
+  }
+
+  public isValidAdditionalDataInputField(formData) {
+    return formData.maxChars != '' && formData.minChars != '';
   }
 
   private convertFieldTypeToField(fieldType: string): string {
