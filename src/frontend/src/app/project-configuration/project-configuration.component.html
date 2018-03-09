@@ -54,7 +54,7 @@
         <select class="button btn-success"
                 [ngModel]="selectedRole"
                 (ngModelChange)="addUserToProject(u.username, $event)">
-          <option *ngFor="let role of roles"
+          <option *ngFor="let role of rolesTypes"
                   [value]="role">{{role.toLocaleUpperCase()}}
           </option>
         </select>

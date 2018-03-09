@@ -6,6 +6,8 @@ import {ProjectDto} from '../model/projectDto';
 import {StorageService} from '../shared/storage.service';
 import {ProjectMemberDto} from '../model/projectMemberDto';
 
+import * as roles from '../constants/roles';
+
 @Component({
   selector: 'app-project-configuration',
   templateUrl: './project-configuration.component.html',
@@ -16,7 +18,8 @@ export class ProjectConfigurationComponent implements OnInit {
 
   users: UserDto[] = [];
   project: ProjectDto = new ProjectDto();
-  roles: string[] = ['developer', 'tester', 'project manager'];
+  roles = roles.default;
+  rolesTypes = Object.values(this.roles);
   selectedRole: string;
   error: string;
 
@@ -36,10 +39,7 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   getAllUsers() {
-    const members: string[] = [];
-    for (const i of this.project.members) {
-      members.push(i.username);
-    }
+    const members: string[] = this.project.members.map(m => m.username);
     this.confService.getUsers(members).subscribe(
       users => this.users = users
     );
@@ -49,6 +49,7 @@ export class ProjectConfigurationComponent implements OnInit {
     const member: ProjectMemberDto = new ProjectMemberDto();
     member.projectId = this.project.id;
     member.username = user;
+    console.log(role);
     member.role = role;
 
     this.confService.addMemberToProject(member)
