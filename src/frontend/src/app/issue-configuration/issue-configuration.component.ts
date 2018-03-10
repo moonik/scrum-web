@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectFieldsCollector } from '../model/project-fields/ProjectFieldsCollector';
 import { ProjectFieldDto } from '../model/project-fields/ProjectFieldDto';
 import { CheckBoxContainerDto } from '../model/project-fields/CheckBoxContainerDto';
+import { CheckBoxDto } from '../model/project-fields/CheckBoxDto';
 import { InputFieldDto } from '../model/project-fields/InputFieldDto';
 import { ListElementsContainerDto } from '../model/project-fields/ListElementsContainerDto';
+import { ListElementDto } from '../model/project-fields/ListElementDto';
 import { RadioButtonContainerDto } from '../model/project-fields/RadioButtonContainerDto';
+import { RadioButtonDto } from '../model/project-fields/RadioButtonDto';
 import { TextAreaDto } from '../model/project-fields/TextAreaDto';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FieldCreator } from './field-creator';
@@ -34,14 +37,19 @@ export class IssueConfigurationComponent implements OnInit {
   ngOnInit() {}
 
   public addField(id: number) {
-    this.fields.push({id: id, submitted: false});
+    this.fields.push({id: id, submitted: false, elements: []});
+  }
+
+  public addFieldElement(field: any, id: number) {
+    console.log(this.fields);
+    field.elements.push({id: id});
   }
 
   public removeField(field: any, fieldType: string) {
     let index = this.fields.indexOf(field);
     this.fields.splice(index, 1);
     if (this.projectFieldsCollector) {
-      this.removeFieldFromCollector(field.id, this.convertFieldTypeToField(fieldType));
+      this.removeFieldFromCollector(field, this.convertFieldTypeToField(fieldType));
     }
   }
 
@@ -54,7 +62,7 @@ export class IssueConfigurationComponent implements OnInit {
     let createdField = this._fieldCreator.createField(formData, field.id);
     let index = this.findField(fieldType, createdField);
     if (index !== -1) {
-      this.projectFieldsCollector[fieldType][index] = createdField;
+      return this.projectFieldsCollector[fieldType][index] = createdField;
     } else
       return this.projectFieldsCollector[fieldType].push(createdField);
   }
@@ -64,8 +72,8 @@ export class IssueConfigurationComponent implements OnInit {
       .findIndex(f => f.id === field.id);
   }
   
-  private removeFieldFromCollector(fieldId: number, fieldType: string) {
-    let index = this.fields.indexOf(fieldId);
+  private removeFieldFromCollector(field: any, fieldType: string) {
+    let index = this.findField(fieldType, field);
     this.projectFieldsCollector[fieldType].splice(index, 1);
   }
 
