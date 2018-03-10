@@ -21,13 +21,12 @@
         <label for="minChars">Minimum characters</label>
         <input type="number" name="minChars" ngModel #minChars="ngModel">
       </div>
-      <a (click)="addFieldElement(field, field.elements.length)" *ngIf="form.value.fieldType==='CHECKBOX'">Add checkbox</a>
-      <div class="params-checkbox" *ngFor="let element of field.elements">
+      <a (click)="addFieldElement(field, field.elements.length)" *ngIf="form.value.fieldType!=='INPUT_FIELD' && form.value.fieldType!=='TEXT_AREA' && form.value.fieldType!==''">Add checkbox</a>
+      <div class="params-elements" *ngFor="let element of field.elements">
         <label>Checkbox: {{ element.id+1 }}</label>
         <input class="field-element" id="element" name="checkbox" [(ngModel)]="element.value" placeholder="{{element.value}}">
       </div>
     </div>
-
     <button class="btn btn-primary" id="btn-create" [disabled]="!isValidGeneralData(form.value)">Submit</button>
   </div>
 

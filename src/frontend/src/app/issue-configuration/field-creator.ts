@@ -57,7 +57,7 @@ export class FieldCreator {
             formData.fieldType, 
             formData.fieldName, 
             formData.isRequired,
-            formData.checkBoxes
+            formData.elements
         );
     }
 
@@ -67,7 +67,7 @@ export class FieldCreator {
             formData.fieldType, 
             formData.fieldName, 
             formData.isRequired,
-            formData.radioButtons
+            formData.elements
         );
     }
 
@@ -77,7 +77,7 @@ export class FieldCreator {
             formData.fieldType, 
             formData.fieldName, 
             formData.isRequired,
-            formData.listElements
+            formData.elements
         );
     }
 }

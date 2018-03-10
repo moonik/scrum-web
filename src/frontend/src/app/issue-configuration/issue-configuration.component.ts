@@ -37,11 +37,11 @@ export class IssueConfigurationComponent implements OnInit {
   ngOnInit() {}
 
   public addField(id: number) {
+    console.log(this.projectFieldsCollector);
     this.fields.push({id: id, submitted: false, elements: []});
   }
 
   public addFieldElement(field: any, id: number) {
-    console.log(this.fields);
     field.elements.push({id: id});
   }
 
@@ -55,6 +55,7 @@ export class IssueConfigurationComponent implements OnInit {
 
   public submitField(formData: any, field: any) {
     field.submitted = true;
+    formData.elements = field.elements;
     let fieldType = this.convertFieldTypeToField(formData.fieldType);
     if (!this.projectFieldsCollector) {
       this.projectFieldsCollector = new ProjectFieldsCollector();
