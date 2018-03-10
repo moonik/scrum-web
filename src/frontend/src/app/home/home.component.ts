@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {ProjectDto} from "../model/projectDto";
-import {HomeService} from "./home.service";
+import {Component, OnInit} from '@angular/core';
+import {ProjectDto} from '../model/projectDto';
+import {HomeService} from './home.service';
 import {Router} from '@angular/router';
+import {StorageService} from '../shared/storage.service';
+
 
 @Component({
   selector: 'app-home',
@@ -13,11 +15,14 @@ export class HomeComponent implements OnInit {
 
   projects: ProjectDto[] = [];
 
-  constructor(private _homeService: HomeService, private _router: Router) {
+  constructor(private _homeService: HomeService,
+              private _router: Router,
+              private storage: StorageService) {
     this.getAllOwnProjects();
   }
 
   ngOnInit() {
+    this.getAllOwnProjects();
   }
 
   getAllOwnProjects() {
@@ -29,7 +34,13 @@ export class HomeComponent implements OnInit {
       );
   }
 
-  goToProjectDetails(projectKey: string) {
-    this._router.navigate(['project/details/'+projectKey]);
+  onConfigureProject(project: ProjectDto) {
+    this.storage.setScope(project);
+    this._router.navigate(['project/configure', project.projectKey]);
   }
+
+  goToProjectDetails(projectKey: string) {
+    this._router.navigate(['project/details/' + projectKey]);
+  }
+
 }
