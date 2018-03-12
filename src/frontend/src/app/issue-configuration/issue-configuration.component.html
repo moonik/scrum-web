@@ -3,25 +3,25 @@
 <form class="field-creation-form" #form="ngForm" *ngFor="let field of fields" (ngSubmit)="submitField(form.value, field)">
   <div [hidden]="field.submitted">
     <label for="fieldName">Field name</label>
-    <input name="fieldName" ngModel #fieldName="ngModel">
-    <select name="fieldType" id="field-type" ngModel #fieldType="ngModel">
+    <input name="fieldName" [(ngModel)]="field.fieldName">
+    <select name="fieldType" id="field-type" [(ngModel)]="field.fieldType">
       <option *ngFor="let type of fieldTypesArray" [ngValue]="type">{{ type }}</option>
     </select>
     <label for="isRequired">Is required?</label>
-    <input type="checkbox" name="isRequired" ngModel #isRequired="ngModel">
+    <input type="checkbox" name="isRequired" [(ngModel)]="field.isRequired">
     <span class="fa fa-close" id="remove-field" (click)="removeField(field, form.value.fieldType)"></span>
 
     <br>
 
     <div class="additional-params">
-      <div class="params-input-field" *ngIf="isParamsTextField(form.value.fieldType)">
+      <div class="params-input-field" *ngIf="isParamsTextField(field.fieldType)">
         <label for="maxChars">Maximum characters</label>
         <input type="number" name="maxChars" ngModel #maxChars="ngModel">
 
         <label for="minChars">Minimum characters</label>
         <input type="number" name="minChars" ngModel #minChars="ngModel">
       </div>
-      <a (click)="addFieldElement(field, field.elements.length)" *ngIf="isParamsElements(form.value.fieldType)"><b>Add {{ getFieldElement(form.value.fieldType) }}</b></a>
+      <a (click)="addFieldElement(field, field.elements.length)" *ngIf="isParamsElements(field.fieldType)"><b>Add {{ getFieldElement(field.fieldType) }}</b></a>
       <div class="params-elements" *ngFor="let element of field.elements">
         <label>{{ getFieldElement(form.value.fieldType) }}: {{ element.id+1 }}</label>
         <input class="field-element" id="element" name="element" [(ngModel)]="element.value" placeholder="{{element.value}}">
@@ -35,10 +35,10 @@
     <span>
      <h4>
         <a (click)="editField(field)">
-            {{ form.value.fieldName }} ->
-            {{ form.value.fieldType?.toLowerCase().replace('_', ' ') }}
+            {{ field.fieldName }} ->
+            {{ field.fieldType?.toLowerCase().replace('_', ' ') }}
         </a>
-        <span class="fa fa-close" (click)="removeField(field, form.value.fieldType)"></span>
+        <span class="fa fa-close" (click)="removeField(field, field.fieldType)"></span>
      </h4>
   </span>
   </div>

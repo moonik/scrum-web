@@ -38,6 +38,9 @@ export class IssueConfigurationComponent implements OnInit {
   ngOnInit() {
     this._issueConfService.getIssueTypes(this.projectKey)
       .subscribe(data => this.issueTypes = data);
+
+    this._issueConfService.getProjectFields(this.projectKey, 'task')
+      .subscribe(data => this.fields = data);
   }
 
   public addField(id: number) {

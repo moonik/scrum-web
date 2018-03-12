@@ -14,4 +14,9 @@ export class IssueConfigurationService {
         return this._http.get('project/' + projectKey + '/issue-types')
             .map(res => res.json());
     }
+
+    public getProjectFields(projectKey: string, issuetype: string) {
+        return this._http.get('project-field?projectKey='+projectKey+'&issuetype='+issuetype)
+            .map(res => res.json());  
+    }
 }
