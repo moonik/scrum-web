@@ -1,1 +1,18 @@
+.projects-table tr{
+    cursor: pointer;
+}
 
+.config {
+  width: 150px;
+  height: 50px;
+}
+
+.placeForImage {
+  width: 75px;
+  height: 75px;
+}
+
+.middlealign {
+  text-align: center;
+  vertical-align: middle;
+}

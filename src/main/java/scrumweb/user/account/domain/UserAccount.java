@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import scrumweb.project.domain.Project;
-import scrumweb.security.model.Authority;
+import scrumweb.security.domain.Authority;
 import scrumweb.user.profile.domain.UserProfile;
 
 import javax.persistence.*;
@@ -18,7 +18,7 @@ import java.util.List;
 public class UserAccount {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull

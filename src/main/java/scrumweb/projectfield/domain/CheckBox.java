@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class CheckBox {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String value;

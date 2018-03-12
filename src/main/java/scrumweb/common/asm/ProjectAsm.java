@@ -1,6 +1,8 @@
 package scrumweb.common.asm;
 
 import org.springframework.stereotype.Component;
+import scrumweb.dto.issue.IssueDto;
+import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
 import scrumweb.user.account.domain.UserAccount;
@@ -8,6 +10,8 @@ import scrumweb.project.domain.Project;
 import scrumweb.project.domain.ProjectMember.Role;
 import scrumweb.project.domain.ProjectMember;
 
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -17,7 +21,7 @@ public class ProjectAsm {
     }
 
     public ProjectDto makeProjectDto(Project project) {
-        return new ProjectDto(project.getName(), project.getDescription(), project.getIcon(),
+        return new ProjectDto(project.getId(), project.getName(), project.getDescription(), project.getIcon(),
                 project.getMembers().stream()
                         .map(member -> makeProjectMemberDto(member, project.getId()))
                         .collect(Collectors.toSet()), project.getKey());
@@ -27,11 +31,20 @@ public class ProjectAsm {
         return  new ProjectMember(userAccount, role);
     }
 
-    private ProjectMemberDto makeProjectMemberDto(ProjectMember projectMember, Long projectId){
+    public ProjectMemberDto makeProjectMemberDto(ProjectMember projectMember, Long projectId){
         return new ProjectMemberDto(projectId, projectMember.getUserAccount().getUsername(),projectMember.getRole().getRoleString());
     }
 
+    public ProjectDetailsDto makeProjectDetailsDro(ProjectDto projectDto, List<IssueDto> issues) {
+        return new ProjectDetailsDto(projectDto, issues);
+    }
+
     public ProjectDto convertFromProjectToProjectDto(Project project){
-        return new ProjectDto(project.getName(), project.getDescription(), project.getIcon(), project.getKey());
+        Set<ProjectMemberDto> memberDtoSet =
+            project.getMembers().stream()
+                .map(member -> makeProjectMemberDto(member, project.getId()))
+                .collect(Collectors.toSet());
+        return new ProjectDto(project.getId(), project.getName(), project.getDescription(),
+            project.getIcon(), memberDtoSet, project.getKey());
     }
 }

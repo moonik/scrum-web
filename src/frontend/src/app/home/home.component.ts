@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ProjectDto} from '../model/projectDto';
 import {HomeService} from './home.service';
 import {FileUploadService} from '../shared/file-upload.service';
+import {Router} from '@angular/router';
+import {StorageService} from '../shared/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -13,8 +15,11 @@ export class HomeComponent implements OnInit {
 
   projects: ProjectDto[] = [];
 
-  constructor(private homeService: HomeService,
+  constructor(private _homeService: HomeService,
+              private _router: Router,
+              private storage: StorageService,
               private uploadService: FileUploadService) {
+    this.getAllOwnProjects();
   }
 
   ngOnInit() {
@@ -22,7 +27,7 @@ export class HomeComponent implements OnInit {
   }
 
   getAllOwnProjects() {
-    this.homeService.getAllOwnProjects()
+    this._homeService.getAllOwnProjects()
       .subscribe(
         data => {
           this.projects = data;
@@ -54,4 +59,14 @@ export class HomeComponent implements OnInit {
         }
       );
   }
+
+  onConfigureProject(project: ProjectDto) {
+    this.storage.setScope(project);
+    this._router.navigate(['project/configure', project.projectKey]);
+  }
+
+  goToProjectDetails(projectKey: string) {
+    this._router.navigate(['project/details/' + projectKey]);
+  }
+
 }

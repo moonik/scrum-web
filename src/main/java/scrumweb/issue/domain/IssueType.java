@@ -16,8 +16,7 @@ import java.util.Set;
 @Setter
 public class IssueType {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull

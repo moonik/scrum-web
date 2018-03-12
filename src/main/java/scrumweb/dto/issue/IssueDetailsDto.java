@@ -27,8 +27,11 @@ public class IssueDetailsDto {
     private String issueType;
     private FieldsContentCollector projectFields;
     private Set<FieldContentDto> fieldContents;
+    private String createdDate;
+    private String lastUpdate;
 
-    public IssueDetailsDto(Long id, String key, String summary, String description, Set<UserProfileDto> assignees, UserProfileDto reporter, String estimateTime, String remainingTime, String priority, String issueType) {
+    public IssueDetailsDto(Long id, String key, String summary, String description, Set<UserProfileDto> assignees, UserProfileDto reporter,
+                           String estimateTime, String remainingTime, String priority, String issueType,String createdDate, String lastUpdate) {
         this.id = id;
         this.key = key;
         this.summary = summary;
@@ -39,5 +42,7 @@ public class IssueDetailsDto {
         this.remainingTime = remainingTime;
         this.priority = priority;
         this.issueType = issueType;
+        this.createdDate = createdDate;
+        this.lastUpdate = lastUpdate;
     }
 }

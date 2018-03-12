@@ -56,7 +56,7 @@ export class RegistrationComponent implements OnInit {
         success => {
           this.router.navigate(['/login']);
         }, error => {
-            if(error.status === 409){
+            if (error.status === 409) {
               this.usernameExistError = error._body;
             }
       });
