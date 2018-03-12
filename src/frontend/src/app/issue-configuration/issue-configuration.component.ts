@@ -37,7 +37,6 @@ export class IssueConfigurationComponent implements OnInit {
   ngOnInit() {}
 
   public addField(id: number) {
-    console.log(this.projectFieldsCollector);
     this.fields.push({id: id, submitted: false, elements: []});
   }
 
@@ -51,6 +50,11 @@ export class IssueConfigurationComponent implements OnInit {
     if (this.projectFieldsCollector) {
       this.removeFieldFromCollector(field, this.convertFieldTypeToField(fieldType));
     }
+  }
+
+  public removeFieldElement(field: any, element: any) {
+    let index = this.fields.indexOf(element);
+    field.elements.splice(index, 1);
   }
 
   public submitField(formData: any, field: any) {
@@ -88,6 +92,24 @@ export class IssueConfigurationComponent implements OnInit {
 
   public isValidAdditionalDataInputField(formData) {
     return formData.maxChars != '' && formData.minChars != '';
+  }
+
+  public isParamsElements(fieldType: string) {
+    return fieldType !=='INPUT_FIELD' && fieldType !=='TEXT_AREA' && fieldType!=='';
+  }
+
+  public isParamsTextField(fieldType: string) {
+    return fieldType ==='INPUT_FIELD' || fieldType ==='TEXT_AREA';
+  }
+
+  public getFieldElement(fieldType: string) {
+    if (fieldType === this.fieldTypes.checkBox) {
+      return 'checkbox';
+    } else if (fieldType === this.fieldTypes.list) {
+      return 'list element';
+    } else if (fieldType === this.fieldTypes.radioButton) {
+      return 'radio button';
+    }
   }
 
   private convertFieldTypeToField(fieldType: string): string {
