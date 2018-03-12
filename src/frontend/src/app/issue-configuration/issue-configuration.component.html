@@ -21,7 +21,7 @@
         <label for="minChars">Minimum characters</label>
         <input type="number" name="minChars" ngModel #minChars="ngModel">
       </div>
-      <a (click)="addFieldElement(field, field.elements.length)" *ngIf="isParamsElements(form.value.fieldType)">Add {{getFieldElement(form.value.fieldType)}}</a>
+      <a (click)="addFieldElement(field, field.elements.length)" *ngIf="isParamsElements(form.value.fieldType)"><b>Add {{ getFieldElement(form.value.fieldType) }}</b></a>
       <div class="params-elements" *ngFor="let element of field.elements">
         <label>{{ getFieldElement(form.value.fieldType) }}: {{ element.id+1 }}</label>
         <input class="field-element" id="element" name="element" [(ngModel)]="element.value" placeholder="{{element.value}}">

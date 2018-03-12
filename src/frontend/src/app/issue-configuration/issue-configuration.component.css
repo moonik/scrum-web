@@ -38,3 +38,12 @@
 .submit-form {
     margin: 15px !important;
 }
+
+.params-elements:hover, .submitted-field:hover {
+    background-color: rgb(222, 226, 226) !important;
+    cursor: pointer !important;
+}
+
+.params-elements {
+    margin: 10px !important;
+}
