@@ -43,4 +43,11 @@
   </span>
   </div>
 </form>
-<button (click)="createFields()">Create fields</button>
+<form class="submit-form" #form="ngForm" *ngIf="submitted()">
+  <button class="btn btn-primary" (click)="createFields(form.value.issueType)" [disabled]="form.value.issueType === ''">Create fields</button>
+  <span> for issue:</span>
+  <select name="issueType" ngModel #issueType="ngModel">
+    <option *ngFor="let type of issueTypes">{{ type }}</option>
+  </select>
+</form>
+

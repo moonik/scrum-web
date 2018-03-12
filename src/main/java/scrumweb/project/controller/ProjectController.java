@@ -58,4 +58,10 @@ public class ProjectController {
     public Set<ItemAssignee> getProjectMembers(@PathVariable String projectKey) {
         return projectService.getProjectMembers(projectKey);
     }
+
+    @GetMapping("/{key}/issue-types")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getIssueTypes(@PathVariable String key) {
+        return projectService.getIssueTypes(key);
+    }
 }

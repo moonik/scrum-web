@@ -35,7 +35,7 @@ public class ProjectFieldController {
 
     @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public Set<ProjectFieldDto> getIssueFields(@RequestParam String issuetype, @RequestParam String projectName) {
-        return projectFieldService.getIssueFields(issuetype, projectName);
+    public Set<ProjectFieldDto> getIssueFields(@RequestParam String issuetype, @RequestParam String projectKey) {
+        return projectFieldService.getIssueFields(issuetype, projectKey);
     }
 }

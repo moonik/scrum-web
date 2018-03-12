@@ -5,7 +5,13 @@ import {HttpClient} from '../shared/http.client.service';
 export class IssueConfigurationService {
     constructor(private _http: HttpClient){}
 
-    public createFields(data, projectKey) {
-        return this._http.post('project-field?projectKey='+projectKey+'&issuetype='+'task', data).map(res => res.json());
+    public createFields(data, projectKey, issuetype) {
+        return this._http.post('project-field?projectKey='+projectKey+'&issuetype='+issuetype, data)
+            .map(res => res.status);
+    }
+
+    public getIssueTypes(projectKey) {
+        return this._http.get('project/' + projectKey + '/issue-types')
+            .map(res => res.json());
     }
 }

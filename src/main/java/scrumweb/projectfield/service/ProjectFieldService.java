@@ -23,6 +23,7 @@ public class ProjectFieldService {
     private ProjectFieldConverter projectFieldAsm;
     private ProjectRepository projectRepository;
     private IssueTypeRepository issueTypeRepository;
+    private ProjectFieldRepository projectFieldRepository;
 
     public void createFields(Set<ProjectFieldDto> projectFieldsDto, String issuetype, String projectKey) {
         Project project = projectRepository.findByKey(projectKey);

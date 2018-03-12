@@ -86,6 +86,13 @@ public class ProjectService {
         return projectMemberDto;
     }
 
+    public List<String> getIssueTypes(String key) {
+        return projectRepository.findByKey(key).getIssueTypes()
+                .stream()
+                .map(IssueType::getName)
+                .collect(Collectors.toList());
+    }
+
     public Set<ItemAssignee> getProjectMembers(String projectKey) {
         return projectRepository.findByKey(projectKey)
                 .getMembers().stream()

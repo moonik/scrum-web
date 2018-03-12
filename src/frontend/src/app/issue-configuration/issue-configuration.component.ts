@@ -26,6 +26,7 @@ export class IssueConfigurationComponent implements OnInit {
   public fieldTypes = fieldTypes.default;
   public fieldTypesArray = Object.values(this.fieldTypes);
   public projectFieldsCollector: ProjectFieldsCollector = null;
+  public issueTypes: Array<string> = []
   private projectKey = '';
 
   constructor(private _activatedRoute: ActivatedRoute, private _fieldCreator: FieldCreator, private _issueConfService: IssueConfigurationService) {
@@ -34,7 +35,10 @@ export class IssueConfigurationComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._issueConfService.getIssueTypes(this.projectKey)
+      .subscribe(data => this.issueTypes = data);
+  }
 
   public addField(id: number) {
     this.fields.push({id: id, submitted: false, elements: []});
@@ -72,7 +76,7 @@ export class IssueConfigurationComponent implements OnInit {
       return this.projectFieldsCollector[fieldType].push(createdField);
   }
 
-  private findField(fieldType: string, field) {
+  private findField(fieldType: string, field: any) {
     return this.projectFieldsCollector[fieldType]
       .findIndex(f => f.id === field.id);
   }
@@ -82,15 +86,15 @@ export class IssueConfigurationComponent implements OnInit {
     this.projectFieldsCollector[fieldType].splice(index, 1);
   }
 
-  public editField(field) {
+  public editField(field: any) {
     field.submitted = false;
   }
 
-  public isValidGeneralData(formData) {
+  public isValidGeneralData(formData: any) {
     return formData.fieldType != '' && formData.fieldName != '';
   }
 
-  public isValidAdditionalDataInputField(formData) {
+  public isValidAdditionalDataInputField(formData: any) {
     return formData.maxChars != '' && formData.minChars != '';
   }
 
@@ -112,6 +116,10 @@ export class IssueConfigurationComponent implements OnInit {
     }
   }
 
+  public submitted() {
+    return this.fields.filter(field => field.submitted).length > 0;
+  }
+
   private convertFieldTypeToField(fieldType: string): string {
     if (fieldType === this.fieldTypes.inputField) {
       return 'inputFieldDtos';
@@ -126,8 +134,8 @@ export class IssueConfigurationComponent implements OnInit {
     }
   }
 
-  public createFields() {
-    return this._issueConfService.createFields(this.projectFieldsCollector, this.projectKey)
+  public createFields(issueType: string) {
+    return this._issueConfService.createFields(this.projectFieldsCollector, this.projectKey, issueType)
       .subscribe();
   }
 }

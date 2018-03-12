@@ -29,3 +29,12 @@
 .field-element::placeholder {
     color: black !important;
 }
+
+.btn {
+    background-color: #212529 !important;
+    border-color: #212529 !important;
+}
+
+.submit-form {
+    margin: 15px !important;
+}
