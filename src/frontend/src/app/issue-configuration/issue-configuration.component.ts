@@ -37,6 +37,7 @@ export class IssueConfigurationComponent implements OnInit {
     this._issueConfService.getIssueTypes(this.projectKey)
       .subscribe(data => this.issueTypes = data);
 
+      //TODO SOMETHING WITH hardcoded task
     this._issueConfService.getProjectFields(this.projectKey, 'task')
       .subscribe(data => this.fields = data);
   }
@@ -59,7 +60,7 @@ export class IssueConfigurationComponent implements OnInit {
     field.elements.splice(index, 1);
   }
 
-  public submitField(formData: any, field: any) {
+  public submitField(field: any) {
     field.submitted = true;
   }
 
@@ -71,12 +72,8 @@ export class IssueConfigurationComponent implements OnInit {
     return formData.fieldType != '' && formData.fieldName != '';
   }
 
-  public isValidAdditionalDataInputField(formData: any) {
-    return formData.maxChars != '' && formData.minChars != '';
-  }
-
   public isParamsElements(fieldType: string) {
-    return fieldType !=='INPUT_FIELD' && fieldType !=='TEXT_AREA' && fieldType!=='';
+    return fieldType !=='INPUT_FIELD' && fieldType !=='TEXT_AREA' && fieldType;
   }
 
   public isParamsTextField(fieldType: string) {

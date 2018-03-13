@@ -1,6 +1,6 @@
 <a class="create-new-field" id="create-new-field" (click)="addField(fields.length)"><b>Create new field</b></a>
 
-<form class="field-creation-form" #form="ngForm" *ngFor="let field of fields" (ngSubmit)="submitField(form.value, field)">
+<form class="field-creation-form"  *ngFor="let field of fields" (ngSubmit)="submitField(field)">
   <div [hidden]="field.submitted">
     <label for="fieldName">Field name</label>
     <input name="fieldName" [(ngModel)]="field.fieldName">
@@ -16,19 +16,19 @@
     <div class="additional-params">
       <div class="params-input-field" *ngIf="isParamsTextField(field.fieldType)">
         <label for="maxChars">Maximum characters</label>
-        <input type="number" name="maxChars" [(ngModel)]="field.maxChars">
+        <input type="number" name="maxChars" [(ngModel)]="field.maxCharacters">
 
         <label for="minChars">Minimum characters</label>
-        <input type="number" name="minChars" [(ngModel)]="field.minChars">
+        <input type="number" name="minChars" [(ngModel)]="field.minCharacters">
       </div>
       <a (click)="addFieldElement(field, field.elements.length)" *ngIf="isParamsElements(field.fieldType)"><b>Add {{ getFieldElement(field.fieldType) }}</b></a>
-      <div class="params-elements" *ngFor="let element of field.elements">
-        <label>{{ getFieldElement(form.value.fieldType) }}: {{ element.id+1 }}</label>
-        <input class="field-element" id="element" name="element" [(ngModel)]="element.value" placeholder="{{element.value}}">
+      <div class="params-elements" *ngFor="let element of field.elements; let i = index" [attr.data-index]="i">
+        <label>{{ getFieldElement(field.fieldType) }}: {{ i+1 }}</label>
+        <input class="field-element" id="{{i+1}}" name="{{i+1}}" [(ngModel)]="element.value" placeholder="{{element.value}}">
         <span class="fa fa-close" (click)="removeFieldElement(field, element)"></span>
       </div>
     </div>
-    <button class="btn btn-primary" id="btn-create" [disabled]="!isValidGeneralData(form.value)">Submit</button>
+    <button class="btn btn-primary" id="btn-create" [disabled]="!isValidGeneralData(field)">Submit</button>
   </div>
 
   <div class="submitted-field" [hidden]="!field.submitted">
@@ -43,6 +43,7 @@
   </span>
   </div>
 </form>
+
 <form class="submit-form" #form="ngForm" *ngIf="submitted()">
   <button class="btn btn-primary" (click)="createFields(form.value.issueType)" [disabled]="form.value.issueType === ''">Submit fields</button>
   <span>for issue type:</span>

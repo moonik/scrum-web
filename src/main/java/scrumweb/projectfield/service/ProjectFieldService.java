@@ -13,6 +13,7 @@ import scrumweb.project.repository.ProjectRepository;
 import scrumweb.projectfield.domain.ProjectField;
 import scrumweb.projectfield.repository.ProjectFieldRepository;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,7 @@ public class ProjectFieldService {
             Set<ProjectField> issueTypeFields = issueType.getFields();
             Set<ProjectField> fieldsToBeSaved = createEntities(projectFieldsDto);
             issueTypeFields.addAll(fieldsToBeSaved);
-            issueTypeRepository.save(issueType);
+            issueTypeRepository.saveAndFlush(issueType);
         } else
             throw new IssueTypeDoesNotExists(issuetype);
     }
@@ -53,8 +54,15 @@ public class ProjectFieldService {
     }
 
     private Set<ProjectField> createEntities(Set<ProjectFieldDto> projectFieldsDto) {
-        return projectFieldsDto.stream()
-                .map(field -> projectFieldAsm.createEntityObject(field))
-                .collect(Collectors.toSet());
+        Set<ProjectField> fieldsToBeSaved = new HashSet<>();
+        projectFieldsDto.forEach(f -> {
+            if (f.getId() != null) {
+                ProjectField projectField = projectFieldRepository.findOne(f.getId());
+                projectField.edit(projectFieldAsm.createEntityObject(f));
+                fieldsToBeSaved.add(projectField);
+            } else
+                fieldsToBeSaved.add(projectFieldAsm.createEntityObject(f));
+        });
+        return fieldsToBeSaved;
     }
 }

@@ -37,8 +37,8 @@ export class FieldCreator {
             field.fieldType, 
             field.fieldName, 
             field.isRequired, 
-            field.maxChars, 
-            field.minChars
+            field.maxCharacters, 
+            field.minCharacters
         );
     }
 
@@ -48,8 +48,8 @@ export class FieldCreator {
             field.fieldType, 
             field.fieldName, 
             field.isRequired, 
-            field.maxChars, 
-            field.minChars
+            field.maxCharacters, 
+            field.minCharacters
         );
     }
 

@@ -3,6 +3,7 @@ package scrumweb.projectfield.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import scrumweb.dto.projectfield.ProjectFieldDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,7 +12,7 @@ import java.util.Arrays;
 @Entity
 @NoArgsConstructor
 @Getter @Setter
-public class ProjectField {
+public abstract class ProjectField {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +32,8 @@ public class ProjectField {
         this.isRequired = isRequired;
     }
 
+    public abstract void edit(ProjectField projectField);
+
     public enum FieldType {
         CHECKBOX,
         RADIO_BUTTON,
@@ -45,5 +48,4 @@ public class ProjectField {
                     .orElse(null);
         }
     }
-
 }
