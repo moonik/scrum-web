@@ -2,6 +2,6 @@ import {ProjectDto} from "./projectDto";
 import {IssueDto} from "./IssueDto";
 
 export class SearchResultsDto {
-  project: Array<ProjectDto> = [];
-  issue: Array<IssueDto> = [];
+  public project: Array<ProjectDto> = [];
+  public issue: Array<IssueDto> = [];
 }

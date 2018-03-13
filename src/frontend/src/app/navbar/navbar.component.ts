@@ -20,7 +20,6 @@ export class NavbarComponent implements OnInit {
   }
 
   search(query){
-    console.log(query);
     this.router.navigate(['/search/'+query]);
   }
 
