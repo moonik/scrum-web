@@ -5,9 +5,11 @@ import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {AuthGuard} from './security/auth.guard';
 import {HomeComponent} from './home/home.component';
+import {ProjectDetailsComponent} from './project-details/project-details.component';
+import {SearchComponent} from "./search/search.component";
 import {ProjectComponent} from './project/project.component';
 import {ProjectConfigurationComponent} from './project-configuration/project-configuration.component';
-import {ProjectDetailsComponent} from './project-details/project-details.component';
+
 
 const routes: Routes = [
   {
@@ -31,6 +33,11 @@ const routes: Routes = [
   {
     path: 'project/details/:projectKey',
     component: ProjectDetailsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'search/:query',
+    component: SearchComponent,
     canActivate: [AuthGuard]
   },
   {

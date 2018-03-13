@@ -13,15 +13,12 @@ import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.fieldcontent.FieldContent;
 import scrumweb.issue.repository.IssueRepository;
-import scrumweb.issue.repository.IssueTypeRepository;
 import scrumweb.project.domain.Project;
 import scrumweb.project.repository.ProjectRepository;
 import scrumweb.projectfield.repository.ProjectFieldRepository;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -42,12 +39,13 @@ public class IssueService {
     public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String projectKey) {
         final Project project = projectRepository.findByKey(projectKey);
         Set<Issue> issues = project.getIssues();
-        issues.add(createIssue(issueDetailsDto, fieldContentsDto, project));
+        String issueKey = project.getKey().concat("-").concat(project.getIssues().size() + 1 + "");
+        issues.add(createIssue(issueDetailsDto, fieldContentsDto, issueKey, project));
         projectRepository.save(project);
         return issueDetailsDto;
     }
 
-    protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, Project project) {
+    protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String issueKey, Project project) {
         final UserAccount reporter = securityContextService.getCurrentUserAccount();
         Set<UserAccount> assignees = new HashSet<>();
         if (!issueDetailsDto.getAssignees().isEmpty()) {
@@ -55,7 +53,9 @@ public class IssueService {
         }
         Set<FieldContent> fieldContents = extractContents(fieldContentsDto);
         IssueType issueType = getIssueType(project.getIssueTypes(), issueDetailsDto.getIssueType());
-        return issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
+        Issue issue = issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
+        issue.setKey(issueKey);
+        return issue;
     }
 
     public IssueDetailsDto getDetails(Long id) {
@@ -70,21 +70,22 @@ public class IssueService {
 
     private Set<String> extractUserNames(Set<UserProfileDto> userProfileDtos) {
         return userProfileDtos.stream()
-                .map(UserProfileDto::getUsername)
-                .collect(Collectors.toSet());
+            .map(UserProfileDto::getUsername)
+            .collect(Collectors.toSet());
     }
 
     private Set<FieldContent> extractContents(Set<FieldContentDto> fieldContentsDto) {
         return fieldContentsDto.stream()
-                .map(fieldContentDto -> fieldContentAsm.createObjectEntity(
-                        projectFieldRepository.findOne(fieldContentDto.getProjectFieldId()), fieldContentDto))
-                .collect(Collectors.toSet());
+            .map(fieldContentDto -> fieldContentAsm.createObjectEntity(
+                projectFieldRepository.findOne(fieldContentDto.getProjectFieldId()), fieldContentDto))
+            .collect(Collectors.toSet());
     }
 
     private IssueType getIssueType(Set<IssueType> issueTypes, String issueType) {
         return issueTypes.stream()
-                .filter(i -> i.getName().equalsIgnoreCase(issueType))
-                .findFirst()
-                .orElse(null);
+            .filter(i -> i.getName().equalsIgnoreCase(issueType))
+            .findFirst()
+            .orElse(null);
     }
+
 }

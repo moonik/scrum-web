@@ -6,14 +6,14 @@
 
   <span><app-issue-creation [projectKey]="projectKey" (onIssueCreate)="onIssueCreate($event)" *ngIf="!loading"></app-issue-creation></span>
 
-  <div class="list-panel" id="list-panel" *ngIf="showIssueList()">
-        <ul class="issue-list">
-          <li *ngFor="let issue of projectDetails.issues" (click)="selectIssue(issue.id)">
-              <p class="key"><b>{{ issue.key }}</b></p>
-              <p>{{ issue.summary }}</p>
-          </li>
-    </ul>
-  </div>
+<div class="list-panel" id="list-panel" *ngIf="showIssueList()">
+      <ul class="issue-list">
+        <li *ngFor="let issue of projectDetails.issues" (click)="selectIssue(issue.id)">
+            <p class="key"><b>{{ issue.issueKey }}</b></p>
+            <p>{{ issue.summary }}</p>
+        </li>
+  </ul>
+</div>
 
   <div class="issue-details" id="issue-details" *ngIf="selectedIssue">
     <h5>{{ selectedIssue.key }}<b>(STATUS)</b></h5>
