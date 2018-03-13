@@ -25,6 +25,7 @@ export class IssueConfigurationComponent implements OnInit {
   public fields = [];
   public fieldTypes = fieldTypes.default;
   public fieldTypesArray = Object.values(this.fieldTypes);
+  public ifActionWas = false;
   private issueType = '';
   private projectKey = '';
 
@@ -37,10 +38,10 @@ export class IssueConfigurationComponent implements OnInit {
 
   ngOnInit() {
     this._issueConfService.getProjectFields(this.projectKey, this.issueType)
-      .subscribe(data => this.fields = data);
+      .subscribe(data => this.fields = data );
   }
 
-  public addField(id: number) {
+  public addField() {
     this.fields.push({id: null, submitted: false, elements: []});
   }
 
@@ -64,6 +65,7 @@ export class IssueConfigurationComponent implements OnInit {
 
   public editField(field: any) {
     field.submitted = false;
+    field.editted = true;
   }
 
   public isValidGeneralData(formData: any) {
@@ -71,11 +73,11 @@ export class IssueConfigurationComponent implements OnInit {
   }
 
   public isParamsElements(fieldType: string) {
-    return fieldType !=='INPUT_FIELD' && fieldType !=='TEXT_AREA' && fieldType;
+    return fieldType !== this.fieldTypes.inputField && fieldType !== this.fieldTypes.textArea && fieldType;
   }
 
   public isParamsTextField(fieldType: string) {
-    return fieldType ==='INPUT_FIELD' || fieldType ==='TEXT_AREA';
+    return fieldType === this.fieldTypes.inputField || fieldType === this.fieldTypes.textArea;
   }
 
   public getFieldElement(fieldType: string) {
@@ -88,18 +90,19 @@ export class IssueConfigurationComponent implements OnInit {
     }
   }
 
-  public submitted() {
-    return this.fields.filter(field => field.submitted).length > 0;
+  public canSubmit() {
+    return this.collectFields().length > 0 && this.fields.length > 0 && this.fields.filter(field => field.submitted).length === this.fields.length;
   }
 
   public createFields() {
-    this._issueConfService.createFields(this.collectFields(), this.projectKey, this.issueType)
-      .subscribe(data => this.fields = data);
-    this._fieldCreator.projectFieldsCollector = new ProjectFieldsCollector();
+    if (this.collectFields().length > 0) {
+      this._issueConfService.createFields(this._fieldCreator.projectFieldsCollector, this.projectKey, this.issueType)
+        .subscribe(data => this.fields = data);
+      this._fieldCreator.projectFieldsCollector = new ProjectFieldsCollector();
+    }
   }
 
   private collectFields() {
-    this.fields.map(field => this._fieldCreator.createField(field));
-    return this._fieldCreator.projectFieldsCollector;
+    return this.fields.filter(field => field.id === null || field.editted === true).map(field => this._fieldCreator.createField(field));
   }
 }

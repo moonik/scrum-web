@@ -1,4 +1,4 @@
-<a class="create-new-field" id="create-new-field" (click)="addField(fields.length)"><b>Create new field</b></a>
+<a class="create-new-field" id="create-new-field" (click)="addField()"><b>Create new field</b></a>
 
 <form class="field-creation-form"  *ngFor="let field of fields" (ngSubmit)="submitField(field)">
   <div [hidden]="field.submitted">
@@ -44,7 +44,7 @@
   </div>
 </form>
 
-<form class="submit-form" #form="ngForm" *ngIf="submitted()" (ngSubmit)="createFields()">
+<form class="submit-form" #form="ngForm" *ngIf="canSubmit()" (ngSubmit)="createFields()">
   <button class="btn btn-primary" [disabled]="form.value.issueType === ''">Submit fields</button>
 </form>
 
