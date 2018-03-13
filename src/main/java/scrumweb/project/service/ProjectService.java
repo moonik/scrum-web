@@ -2,6 +2,7 @@ package scrumweb.project.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import scrumweb.common.SecurityContextService;
 import scrumweb.common.asm.IssueAsm;
@@ -122,8 +123,8 @@ public class ProjectService {
     }
 
     // todo check if member has issues before removing
-    public HttpStatus removeMember(String username, Long projectId) {
-        Project project = projectRepository.findOne(projectId);
+    public HttpStatus removeMember(String username, Long id) {
+        Project project = projectRepository.findOne(id);
         if (!project.getOwner().getUsername().equals(username)) {
             ProjectMember projectMember = project.getMembers().stream()
                 .filter(member -> member.getUserAccount().getUsername().equals(username))
@@ -133,5 +134,13 @@ public class ProjectService {
             projectRepository.save(project);
             return HttpStatus.OK;
         } else return HttpStatus.I_AM_A_TEAPOT;
+    }
+
+    // todo block adding changing to invalid file
+    public HttpStatus changeProjectIcon(String filename, String key) {
+        Project project = projectRepository.findByKey(key);
+        project.setIcon(filename);
+        projectRepository.save(project);
+        return HttpStatus.OK;
     }
 }

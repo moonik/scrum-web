@@ -55,6 +55,7 @@ export class ProjectComponent implements OnInit {
     this.icon = files.item(0);
     this.loading = true;
     this.goodIcon = true;
+    console.log(this.projectDto.icon);
     if (this.projectDto.icon != null) {
       this.fileUploadService.deleteFile(this.projectDto.icon).subscribe(data => {
       });

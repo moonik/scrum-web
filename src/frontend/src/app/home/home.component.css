@@ -1,5 +1,5 @@
-.projects-table tr{
-    cursor: pointer;
+.projects-table tr {
+  cursor: pointer;
 }
 
 .config {
@@ -12,7 +12,12 @@
   height: 75px;
 }
 
-.middlealign {
+td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+th {
   text-align: center;
   vertical-align: middle;
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '../shared/http.client.service';
 import {UserDto} from '../model/userDto';
-import {ProjectMemberDto} from "../model/projectMemberDto";
+import {ProjectMemberDto} from '../model/projectMemberDto';
 
 @Injectable()
 export class ProjectConfigurationService {
@@ -28,10 +28,15 @@ export class ProjectConfigurationService {
   }
 
   addMemberToProject(member: ProjectMemberDto) {
-    return this._http.post('project/member/add', member);
+    return this._http.post('project/members/', member);
   }
 
-  removeMemberFromProject(member: string) {
-    return this._http.delete('project/member/delete/' + member);
+  removeMemberFromProject(member: string, id: number) {
+    return this._http.delete('project/' + id + '/members/' + member);
+  }
+
+  changeProjectIcon(key: string, filename: string) {
+    console.log("cyccki: " + filename);
+    return this._http.post('project/' + key + '/icon/' + filename, null);
   }
 }

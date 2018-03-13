@@ -36,13 +36,13 @@ export class HttpClient {
   upload(url: string, formData: any): Observable<Response> {
     const headers = new Headers();
     headers.append('Authorization', localStorage.getItem('token'));
-    return this._http.post(url, formData, {headers: headers});
+    return this._http.post(this._constants.API_URL + url, formData, {headers: headers});
   }
 
   load(url: string) {
     const headers = new Headers();
     headers.append('Authorization', localStorage.getItem('token'));
-    return this._http.get(url, {headers: headers, responseType: ResponseContentType.Blob})
+    return this._http.get(this._constants.API_URL + url, {headers: headers, responseType: ResponseContentType.Blob})
       .map((res: Response) => res.blob());
   }
 }

@@ -7,6 +7,7 @@ import {StorageService} from '../shared/storage.service';
 import {ProjectMemberDto} from '../model/projectMemberDto';
 
 import * as roles from '../constants/roles';
+import {FileUploadService} from "../shared/file-upload.service";
 
 @Component({
   selector: 'app-project-configuration',
@@ -22,11 +23,15 @@ export class ProjectConfigurationComponent implements OnInit {
   rolesTypes = Object.values(this.roles);
   selectedRole: string;
   error: string;
+  icon: File = null;
+  loading = false;
+  goodIcon = true;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private confService: ProjectConfigurationService,
-              private storageService: StorageService) {
+              private storageService: StorageService,
+              private uploadService: FileUploadService) {
   }
 
   ngOnInit() {
@@ -60,7 +65,7 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   removeMemberFromProject(member: ProjectMemberDto) {
-    this.confService.removeMemberFromProject(member.username + '/' + member.projectId)
+    this.confService.removeMemberFromProject(member.username, member.projectId)
       .subscribe(data => {
           this.project.members.splice(this.project.members.indexOf(member), 1);
           this.ngOnInit();
@@ -71,4 +76,52 @@ export class ProjectConfigurationComponent implements OnInit {
       });
   }
 
+  createImageFromBlob(image: Blob) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      this.project.image = reader.result;
+    }, false);
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+
+  loadIcon(filename: string) {
+    return this.uploadService.loadFile(filename)
+      .subscribe(
+        data => {
+          this.createImageFromBlob(data);
+        }
+      );
+  }
+
+  chooseIcon(files: FileList) {
+    this.icon = files.item(0);
+    this.loading = true;
+    this.goodIcon = true;
+    console.log(this.project.icon);
+
+    if (this.project.icon != null) {
+      this.uploadService.deleteFile(this.project.icon).subscribe(data => {
+      });
+    }
+    this.uploadService.uploadFile(this.icon)
+      .subscribe(data => {
+          const link = data.json()['link'];
+          this.project.icon = link.substr(link.lastIndexOf('/') + 1);
+          console.log(this.project.icon);
+
+          this.confService.changeProjectIcon(this.project.projectKey, this.project.icon).subscribe();
+          this.loadIcon(this.project.icon);
+          this.loading = false;
+        },
+        error => {
+          if (error.status !== 200) {
+            this.uploadService.deleteFile(this.project.icon).subscribe(data => {
+            });
+            this.goodIcon = false;
+          }
+        });
+  }
 }

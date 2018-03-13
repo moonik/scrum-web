@@ -11,14 +11,14 @@ export class FileUploadService {
   uploadFile(file: File) {
     const formData: FormData = new FormData();
     formData.append('file', file);
-    return this._http.upload('/api/scrum-web/storage/filename', formData);
+    return this._http.upload('storage/filename', formData);
   }
 
   loadFile(filename: string): Observable<Blob> {
-    return this._http.load('/api/scrum-web/storage/' + filename);
+    return this._http.load('storage/' + filename);
   }
 
   deleteFile(filename: string) {
-    return this._http.delete('/api/scrum-web/storage/' + filename);
+    return this._http.delete('storage/' + filename);
   }
 }

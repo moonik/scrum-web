@@ -31,15 +31,14 @@ public class ProjectController {
         return projectService.create(projectDto);
     }
 
-    @PostMapping("/member/add")
-    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/members/")
     public ResponseEntity<?> addMember(@RequestBody ProjectMemberDto projectMemberDto) {
         return ResponseEntity.status(projectService.addMember(projectMemberDto)).build();
     }
 
-    @DeleteMapping("/member/delete/{username}/{projectId}")
-    public ResponseEntity<?> removeMember(@PathVariable String username, @PathVariable Long projectId) {
-        return ResponseEntity.status(projectService.removeMember(username, projectId)).build();
+    @DeleteMapping("{id}/members/{username}")
+    public ResponseEntity<?> removeMember(@PathVariable Long id,@PathVariable String username) {
+        return ResponseEntity.status(projectService.removeMember(username, id)).build();
     }
 
     @PutMapping("/{id}")
@@ -63,5 +62,11 @@ public class ProjectController {
     @GetMapping("/members/{projectKey}")
     public Set<ItemAssignee> getProjectMembers(@PathVariable String projectKey) {
         return projectService.getProjectMembers(projectKey);
+    }
+
+
+    @PostMapping("/{key}/icon/{filename:.+}")
+    public ResponseEntity<?> changeProjectIcon(@PathVariable String key, @PathVariable String filename) {
+        return ResponseEntity.status(projectService.changeProjectIcon(filename, key)).build();
     }
 }
