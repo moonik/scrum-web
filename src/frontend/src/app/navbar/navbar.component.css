@@ -1,7 +1,19 @@
 a{
   cursor: pointer;
 }
+body{
+  background: #343d46;
+}
 
-.navbar-fixed-top{
-
+.form-control {
+  width: 85px;
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  transition: all .5s ease;
+}
+.form-control:hover{
+  width: 220px;
+}
+.form-control:focus{
+  width: 220px;
 }

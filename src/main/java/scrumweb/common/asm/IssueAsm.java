@@ -1,7 +1,6 @@
 package scrumweb.common.asm;
 
 import org.springframework.stereotype.Component;
-import scrumweb.dto.fieldcontent.FieldContentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.issue.IssueDto;
 import scrumweb.dto.user.UserProfileDto;
@@ -14,7 +13,6 @@ import scrumweb.user.account.domain.UserAccount;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,7 +30,7 @@ public class IssueAsm {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
         return new IssueDetailsDto(
                 issue.getId(),
-                "",
+                issue.getKey(),
                 issue.getSummary(),
                 issue.getDescription(),
                 assignees,
@@ -49,7 +47,7 @@ public class IssueAsm {
     public IssueDto createIssueDto(Issue issue) {
         return new IssueDto(
                 issue.getId(),
-                "",
+                issue.getKey(),
                 issue.getSummary(),
                 issue.getIssueType().getName(),
                 issue.getPriority().toString(),

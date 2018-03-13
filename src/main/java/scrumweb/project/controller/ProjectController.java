@@ -9,6 +9,7 @@ import scrumweb.dto.issue.ItemAssignee;
 import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
+import scrumweb.dto.search.SearchResultsDto;
 import scrumweb.project.service.ProjectService;
 
 import java.math.BigDecimal;
@@ -58,6 +59,12 @@ public class ProjectController {
     @ResponseStatus(HttpStatus.OK)
     public List<ProjectDto> allProjects() {
         return projectService.getAllProjects(securityContextService.getCurrentUserAccount());
+    }
+
+    @GetMapping("/search/{paramkey}")
+    @ResponseStatus(HttpStatus.OK)
+    public SearchResultsDto findProjectsAndIssuesByKeyQuery(@PathVariable String paramkey){
+        return projectService.findProjectsAndIssuesByKeyQuery(paramkey);
     }
 
     @GetMapping("/members/{projectKey}")

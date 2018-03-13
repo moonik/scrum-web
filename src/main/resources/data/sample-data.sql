@@ -21,7 +21,7 @@ INSERT INTO user_authority (user_id, authority_id) VALUES (-1, 2);
 INSERT INTO user_authority (user_id, authority_id) VALUES (99999, 2);
 
 --Project
-INSERT INTO project (id, description, icon, name, owner_id, key) VALUES (-1, 'test description', '', 'project name', -1, 'projkey');
+-- INSERT INTO project (id, description, icon, name, owner_id, key) VALUES (1, 'test description', '', 'project name', 1, 'projkey');
 
 --Project Issue Types
 INSERT  INTO project_issue_types(project_id, issue_types_id) VALUES (-1, -1);
