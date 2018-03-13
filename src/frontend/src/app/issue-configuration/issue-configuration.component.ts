@@ -91,18 +91,25 @@ export class IssueConfigurationComponent implements OnInit {
   }
 
   public canSubmit() {
-    return this.collectFields().length > 0 && this.fields.length > 0 && this.fields.filter(field => field.submitted).length === this.fields.length;
+    return this.filterOut().length > 0 && this.fields.length > 0 && this.fields.filter(field => field.submitted).length === this.fields.length;
   }
 
   public createFields() {
-    if (this.collectFields().length > 0) {
-      this._issueConfService.createFields(this._fieldCreator.projectFieldsCollector, this.projectKey, this.issueType)
+    if (this.filterOut().length > 0) {
+      console.log(this.collectFields());
+      console.log(this._fieldCreator.projectFieldsCollector);
+      this._issueConfService.createFields(this.collectFields(), this.projectKey, this.issueType)
         .subscribe(data => this.fields = data);
       this._fieldCreator.projectFieldsCollector = new ProjectFieldsCollector();
     }
   }
 
+  private filterOut() {
+    return this.fields.filter(field => field.id === null || field.editted === true);
+  }
+
   private collectFields() {
-    return this.fields.filter(field => field.id === null || field.editted === true).map(field => this._fieldCreator.createField(field));
+    this.fields.map(field => this._fieldCreator.createField(field));
+    return this._fieldCreator.projectFieldsCollector;
   }
 }
