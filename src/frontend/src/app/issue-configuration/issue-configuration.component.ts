@@ -13,6 +13,7 @@ import { FieldCreator } from './field-creator';
 import { IssueConfigurationService } from './issue-configuration.service';
 
 import * as fieldTypes from '../constants/field-type';
+import { ProjectFieldsCollector } from '../model/project-fields/ProjectFieldsCollector';
 
 @Component({
   selector: 'app-issue-configuration',
@@ -24,21 +25,18 @@ export class IssueConfigurationComponent implements OnInit {
   public fields = [];
   public fieldTypes = fieldTypes.default;
   public fieldTypesArray = Object.values(this.fieldTypes);
-  public issueTypes: Array<string> = []
+  private issueType = '';
   private projectKey = '';
 
   constructor(private _activatedRoute: ActivatedRoute, private _fieldCreator: FieldCreator, private _issueConfService: IssueConfigurationService) {
     this._activatedRoute.params.subscribe((params: Params) => {
         this.projectKey = params['projectKey'];
+        this.issueType = params['issueType']
     });
   }
 
   ngOnInit() {
-    this._issueConfService.getIssueTypes(this.projectKey)
-      .subscribe(data => this.issueTypes = data);
-
-      //TODO SOMETHING WITH hardcoded task
-    this._issueConfService.getProjectFields(this.projectKey, 'task')
+    this._issueConfService.getProjectFields(this.projectKey, this.issueType)
       .subscribe(data => this.fields = data);
   }
 
@@ -94,13 +92,14 @@ export class IssueConfigurationComponent implements OnInit {
     return this.fields.filter(field => field.submitted).length > 0;
   }
 
-  public createFields(issueType: string) {
-    return this._issueConfService.createFields(this.collectFields(), this.projectKey, issueType)
-      .subscribe();
+  public createFields() {
+    this._issueConfService.createFields(this.collectFields(), this.projectKey, this.issueType)
+      .subscribe(data => this.fields = data);
+    this._fieldCreator.projectFieldsCollector = new ProjectFieldsCollector();
   }
 
-  public collectFields() {
+  private collectFields() {
     this.fields.map(field => this._fieldCreator.createField(field));
-    return this._fieldCreator.getProjectFieldCollector();
+    return this._fieldCreator.projectFieldsCollector;
   }
 }

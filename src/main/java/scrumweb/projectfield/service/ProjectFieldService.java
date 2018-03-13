@@ -26,14 +26,17 @@ public class ProjectFieldService {
     private IssueTypeRepository issueTypeRepository;
     private ProjectFieldRepository projectFieldRepository;
 
-    public void createFields(Set<ProjectFieldDto> projectFieldsDto, String issuetype, String projectKey) {
+    public Set<ProjectFieldDto> createFields(Set<ProjectFieldDto> projectFieldsDto, String issuetype, String projectKey) {
         Project project = projectRepository.findByKey(projectKey);
         IssueType issueType = findIssueType(project.getIssueTypes(), issuetype.toUpperCase());
         if (issueType != null) {
             Set<ProjectField> issueTypeFields = issueType.getFields();
             Set<ProjectField> fieldsToBeSaved = createEntities(projectFieldsDto);
             issueTypeFields.addAll(fieldsToBeSaved);
-            issueTypeRepository.saveAndFlush(issueType);
+            issueType = issueTypeRepository.saveAndFlush(issueType);
+            return issueType.getFields().stream()
+                    .map(f -> projectFieldAsm.createDtoObject(f))
+                    .collect(Collectors.toSet());
         } else
             throw new IssueTypeDoesNotExists(issuetype);
     }

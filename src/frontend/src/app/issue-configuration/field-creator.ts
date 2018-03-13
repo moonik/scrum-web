@@ -13,7 +13,7 @@ import * as fieldTypes from '../constants/field-type';
 export class FieldCreator {
 
     private fieldTypes = fieldTypes.default;
-    private projectFieldsCollector: ProjectFieldsCollector = new ProjectFieldsCollector();
+    public projectFieldsCollector: ProjectFieldsCollector = new ProjectFieldsCollector();
 
     constructor(){}
 
@@ -81,9 +81,5 @@ export class FieldCreator {
             field.isRequired,
             field.elements
         );
-    }
-
-    public getProjectFieldCollector():ProjectFieldsCollector {
-        return this.projectFieldsCollector;
     }
 }

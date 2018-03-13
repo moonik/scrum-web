@@ -28,9 +28,9 @@ public class ProjectFieldController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public void createProjectField(@RequestParam String issuetype, @RequestParam String projectKey,
+    public Set<ProjectFieldDto> createProjectField(@RequestParam String issuetype, @RequestParam String projectKey,
                                    @RequestBody ProjectFieldsCollector projectFieldsCollector) {
-        projectFieldService.createFields(projectFieldsCollector.extractFields(), issuetype, projectKey);
+        return projectFieldService.createFields(projectFieldsCollector.extractFields(), issuetype, projectKey);
     }
 
     @GetMapping("")

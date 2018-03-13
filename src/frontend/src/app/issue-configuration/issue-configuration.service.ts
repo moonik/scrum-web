@@ -7,7 +7,7 @@ export class IssueConfigurationService {
 
     public createFields(data, projectKey, issuetype) {
         return this._http.post('project-field?projectKey='+projectKey+'&issuetype='+issuetype, data)
-            .map(res => res.status);
+            .map(res => res.json());
     }
 
     public getIssueTypes(projectKey) {
