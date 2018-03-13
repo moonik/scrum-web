@@ -1,3 +1,3 @@
 export class ApplicationConstants {
-    API_URL: string = '/api/scrum-web/'
+    API_URL = '/api/scrum-web/';
 }

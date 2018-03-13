@@ -21,7 +21,7 @@ public class ProjectAsm {
     }
 
     public ProjectDto makeProjectDto(Project project) {
-        return new ProjectDto(project.getName(), project.getDescription(), project.getIcon(),
+        return new ProjectDto(project.getId(), project.getName(), project.getDescription(), project.getIcon(),
                 project.getMembers().stream()
                         .map(member -> makeProjectMemberDto(member, project.getId()))
                         .collect(Collectors.toSet()), project.getKey());
@@ -40,6 +40,11 @@ public class ProjectAsm {
     }
 
     public ProjectDto convertFromProjectToProjectDto(Project project){
-        return new ProjectDto(project.getName(), project.getDescription(), project.getIcon(), project.getKey());
+        Set<ProjectMemberDto> memberDtoSet =
+            project.getMembers().stream()
+                .map(member -> makeProjectMemberDto(member, project.getId()))
+                .collect(Collectors.toSet());
+        return new ProjectDto(project.getId(), project.getName(), project.getDescription(),
+            project.getIcon(), memberDtoSet, project.getKey());
     }
 }
