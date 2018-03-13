@@ -7,11 +7,11 @@
   <table class="projectInfo">
     <tbody>
     <tr>
-      <td colspan="2">
+      <td>
         <h6>Project name:</h6>
         {{project.name}}
       </td>
-      <td><h6 align="center">Icon: </h6>
+      <td align="center" rowspan="2"><h6>Icon: </h6>
           <input *ngIf="goodIcon && !loading" type="image" src="{{project.image}}" (click)="changeIcon.click()" alt=""/>
           <input *ngIf="!goodIcon && !loading" type="image" src="../../assets/images/error.gif" (click)="changeIcon.click()" alt=""/>
           <input *ngIf="loading" type="image" src="../../assets/images/loading_boobs.gif" (click)="changeIcon.click()" alt=""/>
