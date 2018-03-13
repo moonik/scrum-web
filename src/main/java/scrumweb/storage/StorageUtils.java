@@ -101,4 +101,8 @@ public class StorageUtils {
             .header(HttpHeaders.X_FRAME_OPTIONS, "*")
             .body(StorageLink.from(link.toString()));
     }
+
+    public static boolean checkFile(String filename, Path location) {
+        return Files.exists(location.resolve(filename));
+    }
 }

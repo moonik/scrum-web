@@ -36,7 +36,6 @@ export class ProjectConfigurationService {
   }
 
   changeProjectIcon(key: string, filename: string) {
-    console.log("cyccki: " + filename);
     return this._http.post('project/' + key + '/icon/' + filename, null);
   }
 }

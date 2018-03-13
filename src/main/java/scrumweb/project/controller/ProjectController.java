@@ -64,7 +64,6 @@ public class ProjectController {
         return projectService.getProjectMembers(projectKey);
     }
 
-
     @PostMapping("/{key}/icon/{filename:.+}")
     public ResponseEntity<?> changeProjectIcon(@PathVariable String key, @PathVariable String filename) {
         return ResponseEntity.status(projectService.changeProjectIcon(filename, key)).build();

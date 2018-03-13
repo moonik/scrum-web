@@ -1,3 +1,8 @@
 .error{
   color: red;
 }
+
+input {
+  width: 120px;
+  height: 120px;
+}

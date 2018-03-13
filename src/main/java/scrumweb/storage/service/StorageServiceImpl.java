@@ -66,6 +66,4 @@ public class StorageServiceImpl implements StorageService {
     private Path location() {
         return location.toPath();
     }
-
-
 }

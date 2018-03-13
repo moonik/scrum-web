@@ -7,7 +7,7 @@ import {StorageService} from '../shared/storage.service';
 import {ProjectMemberDto} from '../model/projectMemberDto';
 
 import * as roles from '../constants/roles';
-import {FileUploadService} from "../shared/file-upload.service";
+import {FileUploadService} from '../shared/file-upload.service';
 
 @Component({
   selector: 'app-project-configuration',
@@ -39,6 +39,9 @@ export class ProjectConfigurationComponent implements OnInit {
       this.router.navigate(['/home']);
     }
     this.project = this.storageService.getScope();
+    if (this.project.icon == null) {
+     this.goodIcon = false;
+    }
     this.getAllUsers();
     this.error = '';
   }
@@ -100,26 +103,21 @@ export class ProjectConfigurationComponent implements OnInit {
     this.icon = files.item(0);
     this.loading = true;
     this.goodIcon = true;
-    console.log(this.project.icon);
+    const oldIcon = this.project.icon;
 
-    if (this.project.icon != null) {
-      this.uploadService.deleteFile(this.project.icon).subscribe(data => {
-      });
-    }
     this.uploadService.uploadFile(this.icon)
       .subscribe(data => {
           const link = data.json()['link'];
           this.project.icon = link.substr(link.lastIndexOf('/') + 1);
-          console.log(this.project.icon);
-
           this.confService.changeProjectIcon(this.project.projectKey, this.project.icon).subscribe();
           this.loadIcon(this.project.icon);
+          if (oldIcon !== this.project.icon) {
+            this.uploadService.deleteFile(oldIcon).subscribe();
+          }
           this.loading = false;
         },
         error => {
           if (error.status !== 200) {
-            this.uploadService.deleteFile(this.project.icon).subscribe(data => {
-            });
             this.goodIcon = false;
           }
         });

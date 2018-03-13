@@ -20,6 +20,8 @@ import scrumweb.project.domain.Project;
 import scrumweb.project.domain.ProjectMember;
 import scrumweb.project.domain.ProjectMember.Role;
 import scrumweb.project.repository.ProjectRepository;
+import scrumweb.storage.StorageUtils;
+import scrumweb.storage.service.Location;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
@@ -37,6 +39,7 @@ public class ProjectService {
     private IssueAsm issueAsm;
     private UserProfileAsm userProfileAsm;
     private static final String[] DEFAULT_ISSUE_TYPES = {"TASK", "BUG", "FEATURE"};
+    private final Location location;
 
     public ProjectDto create(ProjectDto projectDto) {
         if (projectRepository.findByKey(projectDto.getProjectKey()) == null) {
@@ -136,11 +139,12 @@ public class ProjectService {
         } else return HttpStatus.I_AM_A_TEAPOT;
     }
 
-    // todo block adding changing to invalid file
     public HttpStatus changeProjectIcon(String filename, String key) {
-        Project project = projectRepository.findByKey(key);
-        project.setIcon(filename);
-        projectRepository.save(project);
-        return HttpStatus.OK;
+        if (StorageUtils.checkFile(filename, location.toPath())) {
+            Project project = projectRepository.findByKey(key);
+            project.setIcon(filename);
+            projectRepository.save(project);
+            return HttpStatus.OK;
+        } else return HttpStatus.NOT_FOUND;
     }
 }
