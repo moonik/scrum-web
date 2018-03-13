@@ -23,6 +23,7 @@ import { ProjectFieldsCollector } from '../model/project-fields/ProjectFieldsCol
 })
 export class IssueConfigurationComponent implements OnInit {
   public fields = [];
+  public oldFields: any = '';
   public fieldTypes = fieldTypes.default;
   public fieldTypesArray = Object.values(this.fieldTypes);
   public ifActionWas = false;
@@ -38,7 +39,7 @@ export class IssueConfigurationComponent implements OnInit {
 
   ngOnInit() {
     this._issueConfService.getProjectFields(this.projectKey, this.issueType)
-      .subscribe(data => this.fields = data );
+      .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data) });
   }
 
   public addField() {
@@ -65,7 +66,6 @@ export class IssueConfigurationComponent implements OnInit {
 
   public editField(field: any) {
     field.submitted = false;
-    field.editted = true;
   }
 
   public isValidGeneralData(formData: any) {
@@ -91,21 +91,27 @@ export class IssueConfigurationComponent implements OnInit {
   }
 
   public canSubmit() {
-    return this.filterOut().length > 0 && this.fields.length > 0 && this.fields.filter(field => field.submitted).length === this.fields.length;
+    return this.compare() && this.fields.length > 0 && this.fields.filter(field => field.submitted).length === this.fields.length;
   }
 
   public createFields() {
     if (this.filterOut().length > 0) {
-      console.log(this.collectFields());
-      console.log(this._fieldCreator.projectFieldsCollector);
       this._issueConfService.createFields(this.collectFields(), this.projectKey, this.issueType)
-        .subscribe(data => this.fields = data);
+        .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data) });
       this._fieldCreator.projectFieldsCollector = new ProjectFieldsCollector();
     }
   }
 
   private filterOut() {
-    return this.fields.filter(field => field.id === null || field.editted === true);
+    return this.fields.filter(field => field.id === null || this.searchField(field) === true);
+  }
+
+  private searchField(field: any) {
+    return JSON.parse(this.oldFields).filter(f => JSON.stringify(f) !== JSON.stringify(field)).length > 0;
+  }
+
+  private compare() {
+    return this.oldFields !== JSON.stringify(this.fields);
   }
 
   private collectFields() {
