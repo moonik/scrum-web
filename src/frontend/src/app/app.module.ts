@@ -13,7 +13,6 @@ import { HomeComponent} from './home/home.component';
 import { NavbarComponent} from './navbar/navbar.component';
 import { ProjectComponent} from './project/project.component';
 import { ProjectService} from './project/project.service';
-import { FooterComponent} from './footer/footer.component';
 import { SearchPipe} from './shared/search.pipe';
 import { ProjectConfigurationComponent} from './project-configuration/project-configuration.component';
 import { ProjectConfigurationService} from './project-configuration/project-configuration.service';
@@ -23,12 +22,9 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { ApplicationConstants} from './shared/applicatins-contants';
 import { IssueComponent } from './issue/issue.component';
-<<<<<<< HEAD
-import {FileUploadService} from './shared/file-upload.service';
-=======
+import { FileUploadService} from './shared/file-upload.service';
 import { FooterComponent } from './footer/footer.component';
 import { SearchComponent } from './search/search.component';
->>>>>>> 502690c001c6b2a2bc72f9da072325966a433ef3
 
 @NgModule({
   declarations: [
