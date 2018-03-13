@@ -9,17 +9,17 @@
     </select>
     <label for="isRequired">Is required?</label>
     <input type="checkbox" name="isRequired" [(ngModel)]="field.isRequired">
-    <span class="fa fa-close" id="remove-field" (click)="removeField(field, form.value.fieldType)"></span>
+    <span class="fa fa-close" id="remove-field" (click)="removeField(field, field.fieldType)"></span>
 
     <br>
 
     <div class="additional-params">
       <div class="params-input-field" *ngIf="isParamsTextField(field.fieldType)">
         <label for="maxChars">Maximum characters</label>
-        <input type="number" name="maxChars" ngModel #maxChars="ngModel">
+        <input type="number" name="maxChars" [(ngModel)]="field.maxChars">
 
         <label for="minChars">Minimum characters</label>
-        <input type="number" name="minChars" ngModel #minChars="ngModel">
+        <input type="number" name="minChars" [(ngModel)]="field.minChars">
       </div>
       <a (click)="addFieldElement(field, field.elements.length)" *ngIf="isParamsElements(field.fieldType)"><b>Add {{ getFieldElement(field.fieldType) }}</b></a>
       <div class="params-elements" *ngFor="let element of field.elements">
@@ -44,7 +44,7 @@
   </div>
 </form>
 <form class="submit-form" #form="ngForm" *ngIf="submitted()">
-  <button class="btn btn-primary" (click)="createFields(form.value.issueType)" [disabled]="form.value.issueType === ''">Create fields</button>
+  <button class="btn btn-primary" (click)="createFields(form.value.issueType)" [disabled]="form.value.issueType === ''">Submit fields</button>
   <span>for issue type:</span>
   <select name="issueType" ngModel #issueType="ngModel">
     <option *ngFor="let type of issueTypes">{{ type }}</option>

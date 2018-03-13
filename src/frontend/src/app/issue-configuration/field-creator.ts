@@ -4,6 +4,7 @@ import { InputFieldDto } from '../model/project-fields/InputFieldDto';
 import { ListElementsContainerDto } from '../model/project-fields/ListElementsContainerDto';
 import { RadioButtonContainerDto } from '../model/project-fields/RadioButtonContainerDto';
 import { TextAreaDto } from '../model/project-fields/TextAreaDto';
+import { ProjectFieldsCollector } from '../model/project-fields/ProjectFieldsCollector';
 import { Injectable } from '@angular/core';
 
 import * as fieldTypes from '../constants/field-type';
@@ -12,72 +13,77 @@ import * as fieldTypes from '../constants/field-type';
 export class FieldCreator {
 
     private fieldTypes = fieldTypes.default;
+    private projectFieldsCollector: ProjectFieldsCollector = new ProjectFieldsCollector();
 
     constructor(){}
 
-    public createField(formData: any, id: number): ProjectFieldDto {
-        if (formData.fieldType === this.fieldTypes.inputField) {
-            return this.createInputField(formData, id);
-        } else if (formData.fieldType === this.fieldTypes.textArea) {
-            return this.createTextArea(formData, id);
-        } else if (formData.fieldType === this.fieldTypes.checkBox) {
-            return this.createCheckBoxContainer(formData, id);
-        } else if (formData.fieldType === this.fieldTypes.list) {
-            return this.createListElementsContainer(formData, id);
-        } else if (formData.fieldType === this.fieldTypes.radioButton) {
-            return this.createRadioButtonContainer(formData, id);
+    public createField(field: any): void {
+        if (field.fieldType === this.fieldTypes.inputField) {
+            this.projectFieldsCollector.inputFieldDtos.push(this.createInputField(field));
+        } else if (field.fieldType === this.fieldTypes.textArea) {
+            this.projectFieldsCollector.textAreaDtos.push(this.createTextArea(field));
+        } else if (field.fieldType === this.fieldTypes.checkBox) {
+            this.projectFieldsCollector.checkBoxContainerDtos.push(this.createCheckBoxContainer(field));
+        } else if (field.fieldType === this.fieldTypes.list) {
+            this.projectFieldsCollector.listElementsContainerDtos.push(this.createListElementsContainer(field));
+        } else if (field.fieldType === this.fieldTypes.radioButton) {
+            this.projectFieldsCollector.radioButtonContainerDtos.push(this.createRadioButtonContainer(field));
         }
     }
 
-    private createInputField(formData: any, id: number): InputFieldDto {
+    private createInputField(field: any): InputFieldDto {
         return new InputFieldDto(
-            id, 
-            formData.fieldType, 
-            formData.fieldName, 
-            formData.isRequired, 
-            formData.maxChars, 
-            formData.minChars
+            field.id, 
+            field.fieldType, 
+            field.fieldName, 
+            field.isRequired, 
+            field.maxChars, 
+            field.minChars
         );
     }
 
-    private createTextArea(formData: any, id: number): TextAreaDto {
+    private createTextArea(field: any): TextAreaDto {
         return new TextAreaDto(
-            id, 
-            formData.fieldType, 
-            formData.fieldName, 
-            formData.isRequired, 
-            formData.maxChars, 
-            formData.minChars
+            field.id, 
+            field.fieldType, 
+            field.fieldName, 
+            field.isRequired, 
+            field.maxChars, 
+            field.minChars
         );
     }
 
-    private createCheckBoxContainer(formData: any, id: number): CheckBoxContainerDto {
+    private createCheckBoxContainer(field: any): CheckBoxContainerDto {
         return new CheckBoxContainerDto(
-            id, 
-            formData.fieldType, 
-            formData.fieldName, 
-            formData.isRequired,
-            formData.elements
+            field.id, 
+            field.fieldType, 
+            field.fieldName, 
+            field.isRequired,
+            field.elements
         );
     }
 
-    private createRadioButtonContainer(formData: any, id: number): RadioButtonContainerDto {
+    private createRadioButtonContainer(field: any): RadioButtonContainerDto {
         return new RadioButtonContainerDto(
-            id, 
-            formData.fieldType, 
-            formData.fieldName, 
-            formData.isRequired,
-            formData.elements
+            field.id, 
+            field.fieldType, 
+            field.fieldName, 
+            field.isRequired,
+            field.elements
         );
     }
 
-    private createListElementsContainer(formData: any, id: number): ListElementsContainerDto {
+    private createListElementsContainer(field: any): ListElementsContainerDto {
         return new ListElementsContainerDto(
-            id, 
-            formData.fieldType, 
-            formData.fieldName, 
-            formData.isRequired,
-            formData.elements
+            field.id, 
+            field.fieldType, 
+            field.fieldName, 
+            field.isRequired,
+            field.elements
         );
+    }
+
+    public getProjectFieldCollector():ProjectFieldsCollector {
+        return this.projectFieldsCollector;
     }
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectFieldsCollector } from '../model/project-fields/ProjectFieldsCollector';
 import { ProjectFieldDto } from '../model/project-fields/ProjectFieldDto';
 import { CheckBoxContainerDto } from '../model/project-fields/CheckBoxContainerDto';
 import { CheckBoxDto } from '../model/project-fields/CheckBoxDto';
@@ -25,7 +24,6 @@ export class IssueConfigurationComponent implements OnInit {
   public fields = [];
   public fieldTypes = fieldTypes.default;
   public fieldTypesArray = Object.values(this.fieldTypes);
-  public projectFieldsCollector: ProjectFieldsCollector = null;
   public issueTypes: Array<string> = []
   private projectKey = '';
 
@@ -44,7 +42,7 @@ export class IssueConfigurationComponent implements OnInit {
   }
 
   public addField(id: number) {
-    this.fields.push({id: id, submitted: false, elements: []});
+    this.fields.push({id: null, submitted: false, elements: []});
   }
 
   public addFieldElement(field: any, id: number) {
@@ -54,9 +52,6 @@ export class IssueConfigurationComponent implements OnInit {
   public removeField(field: any, fieldType: string) {
     let index = this.fields.indexOf(field);
     this.fields.splice(index, 1);
-    if (this.projectFieldsCollector) {
-      this.removeFieldFromCollector(field, this.convertFieldTypeToField(fieldType));
-    }
   }
 
   public removeFieldElement(field: any, element: any) {
@@ -66,27 +61,6 @@ export class IssueConfigurationComponent implements OnInit {
 
   public submitField(formData: any, field: any) {
     field.submitted = true;
-    formData.elements = field.elements;
-    let fieldType = this.convertFieldTypeToField(formData.fieldType);
-    if (!this.projectFieldsCollector) {
-      this.projectFieldsCollector = new ProjectFieldsCollector();
-    }
-    let createdField = this._fieldCreator.createField(formData, field.id);
-    let index = this.findField(fieldType, createdField);
-    if (index !== -1) {
-      return this.projectFieldsCollector[fieldType][index] = createdField;
-    } else
-      return this.projectFieldsCollector[fieldType].push(createdField);
-  }
-
-  private findField(fieldType: string, field: any) {
-    return this.projectFieldsCollector[fieldType]
-      .findIndex(f => f.id === field.id);
-  }
-  
-  private removeFieldFromCollector(field: any, fieldType: string) {
-    let index = this.findField(fieldType, field);
-    this.projectFieldsCollector[fieldType].splice(index, 1);
   }
 
   public editField(field: any) {
@@ -123,22 +97,13 @@ export class IssueConfigurationComponent implements OnInit {
     return this.fields.filter(field => field.submitted).length > 0;
   }
 
-  private convertFieldTypeToField(fieldType: string): string {
-    if (fieldType === this.fieldTypes.inputField) {
-      return 'inputFieldDtos';
-    } else if (fieldType === this.fieldTypes.textArea) {
-      return 'textAreaDtos';
-    } else if (fieldType === this.fieldTypes.checkBox) {
-      return 'checkBoxContainerDtos';
-    } else if (fieldType === this.fieldTypes.radioButton) {
-      return 'radioButtonContainerDtos';
-    } else if (fieldType === this.fieldTypes.list) {
-      return 'listElementsContainerDtos';
-    }
+  public createFields(issueType: string) {
+    return this._issueConfService.createFields(this.collectFields(), this.projectKey, issueType)
+      .subscribe();
   }
 
-  public createFields(issueType: string) {
-    return this._issueConfService.createFields(this.projectFieldsCollector, this.projectKey, issueType)
-      .subscribe();
+  public collectFields() {
+    this.fields.map(field => this._fieldCreator.createField(field));
+    return this._fieldCreator.getProjectFieldCollector();
   }
 }
