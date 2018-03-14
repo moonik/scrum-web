@@ -12,7 +12,6 @@ import scrumweb.dto.project.ProjectMemberDto;
 import scrumweb.dto.search.SearchResultsDto;
 import scrumweb.project.service.ProjectService;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -44,8 +43,8 @@ public class ProjectController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ProjectDto editProject(@PathVariable Long id, @RequestBody ProjectDto projectDto) {
-        return projectService.editName(projectDto.getName(), id);
+    public void editProject(@PathVariable Long id, @RequestBody ProjectDto projectDto) {
+        projectService.editName(projectDto.getName(), id);
     }
 
     @GetMapping("/details/{projectKey}")
@@ -54,9 +53,9 @@ public class ProjectController {
         return projectService.getProjectDetails(projectKey);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/allOwnProjects")
     @ResponseStatus(HttpStatus.OK)
-    public List<ProjectDto> allProjects() {
+    public List<ProjectDto> allOwnProjects() {
         return projectService.getAllProjects(securityContextService.getCurrentUserAccount());
     }
 
@@ -74,5 +73,11 @@ public class ProjectController {
     @PostMapping("/{key}/icon/{filename:.+}")
     public ResponseEntity<?> changeProjectIcon(@PathVariable String key, @PathVariable String filename) {
         return ResponseEntity.status(projectService.changeProjectIcon(filename, key)).build();
+    }
+
+    @GetMapping("/allProjects")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProjectDto> allProjects() {
+        return projectService.findAllProjects();
     }
 }

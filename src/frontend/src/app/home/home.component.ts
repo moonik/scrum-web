@@ -69,4 +69,12 @@ export class HomeComponent implements OnInit {
     this._router.navigate(['project/details/' + projectKey]);
   }
 
+  getCurrentUser(): string{
+    return localStorage.getItem('currentUser');
+  }
+
+  isOwner(owner: string): boolean{
+    return owner === this.getCurrentUser();
+  }
+
 }
