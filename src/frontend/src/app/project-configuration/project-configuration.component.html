@@ -12,13 +12,15 @@
         {{project.name}}
       </td>
       <td align="center" rowspan="2"><h6>Icon: </h6>
-          <input *ngIf="goodIcon && !loading" type="image" src="{{project.image}}" (click)="changeIcon.click()" alt=""/>
-          <input *ngIf="!goodIcon && !loading" type="image" src="../../assets/images/error.gif" (click)="changeIcon.click()" alt=""/>
-          <input *ngIf="loading" type="image" src="../../assets/images/loading_boobs.gif" (click)="changeIcon.click()" alt=""/>
-          <input type="file" #changeIcon
-                 style="display: none;"
-                 (change)="chooseIcon($event.target.files)"
-                 accept="image/jpeg, image/png"/>
+        <input *ngIf="goodIcon && !loading" type="image" src="{{project.image}}" (click)="changeIcon.click()" alt=""/>
+        <input *ngIf="!goodIcon && !loading" type="image" src="../../assets/images/error.gif"
+               (click)="changeIcon.click()" alt=""/>
+        <input *ngIf="loading" type="image" src="../../assets/images/loading_boobs.gif" (click)="changeIcon.click()"
+               alt=""/>
+        <input type="file" #changeIcon
+               style="display: none;"
+               (change)="chooseIcon($event.target.files)"
+               accept="image/jpeg, image/png"/>
         <div *ngIf="!goodIcon">
           <small id="fileUploadError" class="form-text text-danger">Icon must be in .jpg or .png format</small>
         </div>
@@ -39,15 +41,29 @@
       <small class="form-text">{{error}}</small>
     </div>
     <h6><b>Members:</b></h6>
-    <div class="members-table" *ngFor="let members of project.members">
-      <div class="col-1-details">{{members.username}}</div>
-      <div class="col-2-details">{{members.role}}</div>
+    <div class="members-table" *ngFor="let member of project.members">
+      <div class="col-1-details">{{member.username}}</div>
+      <div class="col-2-details">{{member.role}}</div>
       <div class="col-3-details">
-        <button class="button btn-danger" (click)="removeMemberFromProject(members)">Remove form project</button>
+        <button class="button btn-danger" (click)="removeMemberFromProject(member)">Remove form project</button>
       </div>
       <br/>
     </div>
     <br/>
+  </div>
+
+  <div class="request-table">
+    <h6><b>Requests for access:</b></h6>
+    <div  *ngFor="let member of project.members">
+      <div class="col-1-details">{{member.username}}</div>
+      <div class="col-2-details">
+        <button class="button btn-success" (click)="acceptRequest(member)">Accept</button>
+      </div>
+      <div class="col-3-details">
+        <button class="button btn-danger" (click)="declineRequest(member)">Decline</button>
+      </div>
+      <br/>
+    </div>
   </div>
 
   <table class="table">

@@ -11,4 +11,8 @@ export class SearchService {
       .map(res => res.json());
   }
 
+  askForAccess(key: string, username: string) {
+    return this._http.post('project/' + key + '/access', username);
+  }
+
 }

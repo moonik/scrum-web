@@ -122,4 +122,12 @@ export class ProjectConfigurationComponent implements OnInit {
           }
         });
   }
+
+  acceptRequest(member: ProjectMemberDto) {
+
+  }
+
+  declineRequest(member: ProjectMemberDto) {
+
+  }
 }
