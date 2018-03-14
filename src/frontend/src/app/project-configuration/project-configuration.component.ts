@@ -136,8 +136,8 @@ export class ProjectConfigurationComponent implements OnInit {
       );
   }
 
-  declineRequest(member: string) {
-    this.confService.declineRequestForAccess(member).subscribe();
+  declineRequest(id: number, username: string) {
+    this.confService.declineRequestForAccess(id, username).subscribe();
 
   }
 }

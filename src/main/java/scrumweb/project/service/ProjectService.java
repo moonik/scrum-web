@@ -2,7 +2,6 @@ package scrumweb.project.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import scrumweb.common.SecurityContextService;
 import scrumweb.common.asm.IssueAsm;
@@ -18,8 +17,6 @@ import scrumweb.exception.ProjectAlreadyExsistsException;
 import scrumweb.exception.ProjectNotFoundException;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.repository.IssueRepository;
-import scrumweb.user.account.domain.UserAccount;
-import scrumweb.user.account.repository.UserAccountRepository;
 import scrumweb.project.domain.Project;
 import scrumweb.project.domain.ProjectMember;
 import scrumweb.project.domain.ProjectMember.Role;
@@ -29,7 +26,11 @@ import scrumweb.storage.service.Location;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -83,9 +84,9 @@ public class ProjectService {
         final ProjectDto projectDto = projectAsm.makeProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile()));
         projectDto.setOwner(userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile()));
         final List<IssueDto> issues = project.getIssues().stream()
-                .map(issue -> issueAsm.createIssueDto(issue))
-                .sorted((i1, i2) -> Long.compare(i2.getId(), i1.getId()))
-                .collect(Collectors.toList());
+            .map(issue -> issueAsm.createIssueDto(issue))
+            .sorted((i1, i2) -> Long.compare(i2.getId(), i1.getId()))
+            .collect(Collectors.toList());
         return projectAsm.makeProjectDetailsDro(projectDto, issues);
     }
 
@@ -152,26 +153,26 @@ public class ProjectService {
         } else return HttpStatus.NOT_FOUND;
     }
 
-    public SearchResultsDto findProjectsAndIssuesByKeyQuery(String param){
+    public SearchResultsDto findProjectsAndIssuesByKeyQuery(String param) {
         return new SearchResultsDto(getIssues(param), getProjects(param));
     }
 
     private List<ProjectDto> getProjects(String param) {
         return projectRepository.findProjectsByKeyQuery(param).stream()
-                .map(project -> projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())))
-                .collect(Collectors.toList());
+            .map(project -> projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())))
+            .collect(Collectors.toList());
     }
 
     private List<IssueDto> getIssues(String param) {
         return issueRepository.findIssuesByKeyQuery(param).stream()
-                .map(issue -> issueAsm.createIssueDto(issue))
-                .collect(Collectors.toList());
+            .map(issue -> issueAsm.createIssueDto(issue))
+            .collect(Collectors.toList());
     }
 
     public List<ProjectDto> findAllProjects() {
         return projectRepository.findAll().stream()
-                .map(project -> projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())))
-                .collect(Collectors.toList());
+            .map(project -> projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())))
+            .collect(Collectors.toList());
     }
 
     public HttpStatus askForAccess(ProjectMemberDto projectMemberDto) {
@@ -186,4 +187,25 @@ public class ProjectService {
             return HttpStatus.OK;
         } else return HttpStatus.CONFLICT;
     }
+
+    public HttpStatus declineRequestForAccess(Long id, String member) {
+        Project project = projectRepository.findOne(id);
+        ProjectMember projectMember = project.getRequests().stream()
+            .filter(request -> request.getUserAccount().getUsername().equals(member))
+            .findFirst()
+            .orElse(null);
+        project.getRequests().remove(projectMember);
+        projectRepository.save(project);
+        return HttpStatus.OK;
+    }
+
+    public HttpStatus acceptRequestForAccess(ProjectMemberDto projectMemberDto) {
+        if (addMember(projectMemberDto).equals(HttpStatus.OK) &&
+            declineRequestForAccess(projectMemberDto.getProjectId(), projectMemberDto.getUsername()).equals(HttpStatus.OK)) {
+            return HttpStatus.OK;
+        } else return HttpStatus.CONFLICT;
+
+    }
+
+
 }

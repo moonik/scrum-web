@@ -52,7 +52,7 @@
     <br/>
   </div>
 
-  <div class="request-table" *ngIf="project.requests === null">
+  <div class="request-table">
     <h6><b>Requests for access:</b></h6>
     <div *ngFor="let request of project.requests">
       <div class="col-1-details">{{request.username}}</div>
@@ -65,7 +65,7 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="requestDropdown">
             <a class="dropdown-item" *ngFor="let role of rolesTypes"
-               (click)="acceptRequest(request)"
+               (click)="acceptRequest(request.username, role)"
             >
               {{role.toLocaleUpperCase()}}
             </a>
@@ -73,7 +73,7 @@
         </div>
       </div>
       <div class="col-4-details">
-        <button class="button btn-danger" (click)="declineRequest(member)">Decline</button>
+        <button class="button btn-danger" (click)="declineRequest(request.projectId, request.username)">Decline</button>
       </div>
       <br/>
     </div>

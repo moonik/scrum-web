@@ -89,8 +89,18 @@ public class ProjectController {
         return projectService.findAllProjects();
     }
 
-    @PostMapping("/members/access")
+    @PostMapping("/access")
     public ResponseEntity <?> askForAccess(@RequestBody ProjectMemberDto projectMemberDto) {
         return ResponseEntity.status(projectService.askForAccess(projectMemberDto)).build();
+    }
+
+    @DeleteMapping("{id}/requests/{member}")
+    public ResponseEntity <?> declineRequestForAccess(@PathVariable Long id, @PathVariable String member) {
+        return ResponseEntity.status(projectService.declineRequestForAccess(id, member)).build();
+    }
+
+    @PostMapping("/requests")
+    public ResponseEntity <?> acceptRequestForAccess(@RequestBody ProjectMemberDto projectMemberDto) {
+        return ResponseEntity.status(projectService.acceptRequestForAccess(projectMemberDto)).build();
     }
 }

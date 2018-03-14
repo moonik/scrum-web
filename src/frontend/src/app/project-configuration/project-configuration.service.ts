@@ -39,11 +39,11 @@ export class ProjectConfigurationService {
     return this._http.post('project/' + key + '/icon/' + filename, null);
   }
 
-  acceptRequestForAccess(member: ProjectMemberDto, ) {
-    return this._http.post('project/members/request', member);
+  acceptRequestForAccess(member: ProjectMemberDto) {
+    return this._http.post('project/requests', member);
   }
 
-  declineRequestForAccess(member: string) {
-    return this._http.delete('project/members/request/' + member);
+  declineRequestForAccess(id: number, member: string) {
+    return this._http.delete('project/' + id + '/requests/' + member);
   }
 }
