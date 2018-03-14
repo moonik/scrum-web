@@ -3,7 +3,15 @@ package scrumweb.project.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import scrumweb.common.SecurityContextService;
 import scrumweb.dto.issue.ItemAssignee;
 import scrumweb.dto.project.ProjectDetailsDto;
@@ -37,7 +45,7 @@ public class ProjectController {
     }
 
     @DeleteMapping("{id}/members/{username}")
-    public ResponseEntity<?> removeMember(@PathVariable Long id,@PathVariable String username) {
+    public ResponseEntity<?> removeMember(@PathVariable Long id, @PathVariable String username) {
         return ResponseEntity.status(projectService.removeMember(username, id)).build();
     }
 
@@ -61,7 +69,7 @@ public class ProjectController {
 
     @GetMapping("/search/{paramkey}")
     @ResponseStatus(HttpStatus.OK)
-    public SearchResultsDto findProjectsAndIssuesByKeyQuery(@PathVariable String paramkey){
+    public SearchResultsDto findProjectsAndIssuesByKeyQuery(@PathVariable String paramkey) {
         return projectService.findProjectsAndIssuesByKeyQuery(paramkey);
     }
 
