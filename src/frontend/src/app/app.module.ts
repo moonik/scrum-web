@@ -24,7 +24,6 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { ApplicationConstants} from './shared/applicatins-contants';
 import { IssueComponent } from './issue/issue.component';
-import { FooterComponent } from './footer/footer.component';
 import { SearchComponent } from './search/search.component';
 
 @NgModule({

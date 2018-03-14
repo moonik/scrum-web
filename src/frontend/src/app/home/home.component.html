@@ -7,6 +7,7 @@
         <th>Name</th>
         <th>Key</th>
         <th>Description</th>
+        <th>Owner</th>
         <th></th>
       </tr>
     </thead>
@@ -15,7 +16,8 @@
         <td>{{project.name}}</td>
         <td>{{project.projectKey}}</td>
         <td>{{project.description}}</td>
-        <td><button class="button btn-primary" (click)="onConfigureProject(project)">Configure Project</button></td>
+        <td>{{project.owner.username}}</td>
+        <td><button class="button btn-primary" (click)="onConfigureProject(project)" *ngIf=isOwner(project.owner.username)>Configure Project</button></td>
       </tr>
     </tbody>
   </table>

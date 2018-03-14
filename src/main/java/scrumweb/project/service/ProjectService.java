@@ -63,11 +63,10 @@ public class ProjectService {
         }
     }
 
-    public ProjectDto editName(String projectName, Long id) {
+    public void editName(String projectName, Long id) {
         Project project = projectRepository.findOne(id);
         if (project != null) {
             project.setName(projectName);
-            return projectAsm.makeProjectDto(projectRepository.save(project));
         } else {
             throw new ProjectNotFoundException(id);
         }
@@ -75,7 +74,7 @@ public class ProjectService {
 
     public ProjectDetailsDto getProjectDetails(String projectKey) {
         final Project project = projectRepository.findByKey(projectKey);
-        final ProjectDto projectDto = projectAsm.makeProjectDto(project);
+        final ProjectDto projectDto = projectAsm.makeProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile()));
         projectDto.setOwner(userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile()));
         final List<IssueDto> issues = project.getIssues().stream()
                 .map(issue -> issueAsm.createIssueDto(issue))
@@ -118,7 +117,7 @@ public class ProjectService {
                 .map(ProjectMember::getUserAccount)
                 .filter(member -> member.equals(userAccount))
                 .collect(Collectors.toList()).isEmpty()) {
-                projectDtos.add(projectAsm.convertFromProjectToProjectDto(project));
+                projectDtos.add(projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())));
             }
         }
         return projectDtos;
@@ -145,13 +144,19 @@ public class ProjectService {
 
     private List<ProjectDto> getProjects(String param) {
         return projectRepository.findProjectsByKeyQuery(param).stream()
-                .map(project -> projectAsm.convertFromProjectToProjectDto(project))
+                .map(project -> projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())))
                 .collect(Collectors.toList());
     }
 
     private List<IssueDto> getIssues(String param) {
         return issueRepository.findIssuesByKeyQuery(param).stream()
                 .map(issue -> issueAsm.createIssueDto(issue))
+                .collect(Collectors.toList());
+    }
+
+    public List<ProjectDto> findAllProjects() {
+        return projectRepository.findAll().stream()
+                .map(project -> projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())))
                 .collect(Collectors.toList());
     }
 
