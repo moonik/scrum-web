@@ -53,6 +53,9 @@ public class Project {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<IssueType> issueTypes;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<ProjectMember> requests;
+
     public Project(String name, String description, String icon, String key) {
         this.name = name;
         this.key = key;

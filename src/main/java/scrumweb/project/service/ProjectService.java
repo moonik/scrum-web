@@ -173,4 +173,17 @@ public class ProjectService {
                 .map(project -> projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())))
                 .collect(Collectors.toList());
     }
+
+    public HttpStatus askForAccess(ProjectMemberDto projectMemberDto) {
+        Project project = projectRepository.findOne(projectMemberDto.getProjectId());
+        UserAccount userAccount = userAccountRepository.findByUsername(projectMemberDto.getUsername());
+        if (project.getRequests().stream()
+            .filter(request -> request.getUserAccount().getUsername().equals(userAccount.getUsername()))
+            .collect(Collectors.toList())
+            .isEmpty()) {
+            project.getRequests().add(new ProjectMember(userAccount, Role.getRole(projectMemberDto.getRole())));
+            projectRepository.save(project);
+            return HttpStatus.OK;
+        } else return HttpStatus.CONFLICT;
+    }
 }

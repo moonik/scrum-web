@@ -20,8 +20,11 @@ public class ProjectDto {
     private UserProfileDto owner;
     private String icon;
     private Set<ProjectMemberDto> members;
+    private Set<ProjectMemberDto> requests;
 
-    public ProjectDto(Long id, String name, String description, String icon, Set<ProjectMemberDto> members, String projectKey, UserProfileDto owner) {
+    public ProjectDto(Long id, String name, String description,
+                      String icon, Set<ProjectMemberDto> members, String projectKey,
+                      UserProfileDto owner, Set<ProjectMemberDto> requests) {
         this.id = id;
         this.name = name;
         this.projectKey = projectKey;
@@ -29,6 +32,7 @@ public class ProjectDto {
         this.icon = icon;
         this.members = members;
         this.owner = owner;
+        this.requests = requests;
     }
 
     public ProjectDto(String name, String description, String icon, String projectKey){

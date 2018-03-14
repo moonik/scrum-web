@@ -88,4 +88,9 @@ public class ProjectController {
     public List<ProjectDto> allProjects() {
         return projectService.findAllProjects();
     }
+
+    @PostMapping("/members/access")
+    public ResponseEntity <?> askForAccess(@RequestBody ProjectMemberDto projectMemberDto) {
+        return ResponseEntity.status(projectService.askForAccess(projectMemberDto)).build();
+    }
 }
