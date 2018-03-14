@@ -87,3 +87,7 @@ h3 {
 .request-table {
   border-bottom: 2px slategray solid;
 }
+
+.dropdown-item {
+  cursor: pointer;
+}

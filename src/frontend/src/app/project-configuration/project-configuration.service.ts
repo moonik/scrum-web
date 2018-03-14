@@ -38,4 +38,12 @@ export class ProjectConfigurationService {
   changeProjectIcon(key: string, filename: string) {
     return this._http.post('project/' + key + '/icon/' + filename, null);
   }
+
+  acceptRequestForAccess(member: ProjectMemberDto, ) {
+    return this._http.post('project/members/request', member);
+  }
+
+  declineRequestForAccess(member: string) {
+    return this._http.delete('project/members/request/' + member);
+  }
 }

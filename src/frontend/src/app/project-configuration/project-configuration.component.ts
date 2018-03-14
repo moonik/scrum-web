@@ -21,7 +21,6 @@ export class ProjectConfigurationComponent implements OnInit {
   project: ProjectDto = new ProjectDto();
   roles = roles.default;
   rolesTypes = Object.values(this.roles);
-  selectedRole: string;
   error: string;
   icon: File = null;
   loading = false;
@@ -123,11 +122,22 @@ export class ProjectConfigurationComponent implements OnInit {
         });
   }
 
-  acceptRequest(member: ProjectMemberDto) {
+  acceptRequest(user: string, role: string) {
+    const member: ProjectMemberDto = new ProjectMemberDto();
+    member.projectId = this.project.id;
+    member.username = user;
+    member.role = role;
 
+    this.confService.acceptRequestForAccess(member)
+      .subscribe(data => {
+          this.project.members.push(member);
+          this.ngOnInit();
+        }
+      );
   }
 
-  declineRequest(member: ProjectMemberDto) {
+  declineRequest(member: string) {
+    this.confService.declineRequestForAccess(member).subscribe();
 
   }
 }
