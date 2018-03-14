@@ -4,14 +4,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import scrumweb.common.SecurityContextService;
 import scrumweb.common.asm.IssueAsm;
+import scrumweb.common.asm.IssueCommentAsm;
 import scrumweb.common.asm.UserProfileAsm;
 import scrumweb.common.asm.fieldcontent.FieldContentConverter;
 import scrumweb.dto.fieldcontent.FieldContentDto;
+import scrumweb.dto.issue.IssueCommentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
-import scrumweb.dto.issue.IssueDto;
-import scrumweb.dto.search.SearchResultsDto;
 import scrumweb.dto.user.UserProfileDto;
 import scrumweb.issue.domain.Issue;
+import scrumweb.issue.domain.IssueComment;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.fieldcontent.FieldContent;
 import scrumweb.issue.repository.IssueRepository;
@@ -22,7 +23,6 @@ import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,6 +41,7 @@ public class IssueService {
     private UserProfileAsm userProfileAsm;
     private FieldContentConverter fieldContentAsm;
     //private SearchResultsDto searchResultsDto;
+    private IssueCommentAsm issueCommentAsm;
 
     public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String projectKey) {
         final Project project = projectRepository.findByKey(projectKey);
@@ -92,6 +93,36 @@ public class IssueService {
                 .filter(i -> i.getName().equalsIgnoreCase(issueType))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public String addComment(String content, Long id){
+        Issue issue = issueRepository.findOne(id);
+        UserAccount commentOwner = securityContextService.getCurrentUserAccount();
+
+        List<IssueComment> comments = issue.getComments();
+
+        IssueComment issueComment = new IssueComment();
+
+        issueComment.setContent(content);
+        issueComment.setCreatedDate(LocalDateTime.now());
+        issueComment.setOwner(commentOwner);
+
+        comments.add(issueComment);
+
+        issueRepository.save(issue);
+
+        return content;
+    }
+
+    public List<IssueCommentDto> getCommentsForIssue(Long id){
+        Issue issue = issueRepository.findOne(id);
+
+        List<IssueComment> comments = issue.getComments();
+
+        return comments.stream()
+                .map(comment -> issueCommentAsm.fromIssueCommentToIssueCommentDto(comment, userProfileAsm.makeUserProfileDto(comment.getOwner(), comment.getOwner().getUserProfile())))
+                .collect(Collectors.toList());
+
     }
 
 }

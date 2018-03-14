@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import scrumweb.dto.fieldcontent.FieldsContentCollector;
+import scrumweb.dto.issue.IssueCommentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.issue.IssueDto;
 import scrumweb.issue.service.IssueService;
@@ -36,6 +37,19 @@ public class IssueController {
     @ResponseStatus(HttpStatus.OK)
     public IssueDetailsDto getDetails(@PathVariable Long id) {
         return issueService.getDetails(id);
+    }
+
+    @PostMapping("/addcomment/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public String addComment(@PathVariable Long id, @RequestBody String content) {
+        issueService.addComment(content, id);
+        return content;
+    }
+
+    @GetMapping("/showcomments/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<IssueCommentDto> showComments(@PathVariable Long id){
+        return issueService.getCommentsForIssue(id);
     }
 
 }
