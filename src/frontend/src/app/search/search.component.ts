@@ -5,6 +5,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {IssueDto} from "../model/IssueDto";
 import {SearchResultsDto} from "../model/SearchResultsDto";
 import {ProjectMemberDto} from "../model/projectMemberDto";
+import * as roles from "../constants/roles";
 
 @Component({
   selector: 'app-search',
@@ -17,7 +18,8 @@ export class SearchComponent implements OnInit {
   public searchresults: SearchResultsDto[] = [];
 
   public results: string;
-  result: any;
+  roles = roles.default;
+  rolesTypes = Object.values(this.roles);
 
   constructor(private searchService: SearchService,
               private _activeRoute: ActivatedRoute,
@@ -28,7 +30,6 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   public searchResults(query: any){
@@ -46,8 +47,12 @@ export class SearchComponent implements OnInit {
     this._router.navigate(['project/details/' + projectKey]);
   }
 
-  requestAccess(key: string) {
-    this.searchService.askForAccess(key, localStorage.getItem('currentUser')).subscribe();
+  requestAccess(role: string, id: number) {
+    const member: ProjectMemberDto = new ProjectMemberDto();
+    member.projectId = id;
+    member.username = localStorage.getItem('currentUser')
+    member.role = role;
+    this.searchService.askForAccess(member).subscribe();
   }
 
   checkMembers(result: ProjectMemberDto[]): boolean {

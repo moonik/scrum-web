@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '../shared/http.client.service';
+import {ProjectMemberDto} from "../model/projectMemberDto";
 
 @Injectable()
 export class SearchService {
@@ -11,8 +12,8 @@ export class SearchService {
       .map(res => res.json());
   }
 
-  askForAccess(key: string, username: string) {
-    return this._http.post('project/' + key + '/access', username);
+  askForAccess(member: ProjectMemberDto) {
+    return this._http.post('project/members/access', member);
   }
 
 }

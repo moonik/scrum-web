@@ -1,5 +1,5 @@
 import {ProjectMemberDto} from './projectMemberDto';
-import {UserProfileDto} from "./UserProfileDto";
+import {UserProfileDto} from './UserProfileDto';
 
 export class ProjectDto {
   id: number;
@@ -10,4 +10,5 @@ export class ProjectDto {
   image: any;
   owner: UserProfileDto[];
   members: ProjectMemberDto[];
+  requests: ProjectMemberDto[];
 }
