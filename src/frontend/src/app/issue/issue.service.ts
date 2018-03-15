@@ -23,4 +23,9 @@ export class IssueService {
         return this._http.get(this._URL+'details/'+id)
             .map(res => res.json());
     }
+
+  public getIssueComments(issueId: number) {
+    return this._http.get(this._URL+'showcomments/' + issueId)
+      .map(res => res.json());
+  }
 }

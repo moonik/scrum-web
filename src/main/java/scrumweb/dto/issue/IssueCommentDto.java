@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import scrumweb.dto.user.UserProfileDto;
-import scrumweb.user.account.domain.UserAccount;
 
 @NoArgsConstructor
 @Setter

@@ -5,6 +5,7 @@ import {ProjectDetailsDto} from '../model/ProjectDetailsDto';
 import {IssueDto} from '../model/IssueDto';
 import {IssueService} from '../issue/issue.service';
 import {IssueDetailsDto} from '../model/IssueDetailsDto';
+import {IssueComment} from "../model/IssueComment";
 
 @Component({
   selector: 'app-project-details',
@@ -18,6 +19,8 @@ export class ProjectDetailsComponent implements OnInit {
   public projectDetails: ProjectDetailsDto = new ProjectDetailsDto();
   public selectedIssue: IssueDetailsDto;
   public loading: boolean = false;
+  public issueId: number;
+  public comments: IssueComment[] = [];
 
   constructor(private _activatedRoute: ActivatedRoute, private _projectDetailsService: ProjectDetailsService,
     private _issueService: IssueService) {
@@ -35,7 +38,10 @@ export class ProjectDetailsComponent implements OnInit {
       .subscribe(
         data => {
           this.selectedIssue = data;
+          this.issueId = data.id;
           this.loading = false;
+          console.log(this.issueId);
+          this.getIssueComments(this.issueId)
         });
   }
 
@@ -62,4 +68,14 @@ export class ProjectDetailsComponent implements OnInit {
     this.projectDetails.issues.unshift(issueDto);
     this.selectIssue(issueDto.id);
   }
+
+  public getIssueComments(issueId: number) {
+    return this._issueService.getIssueComments(issueId)
+      .subscribe(
+        data => {
+          this.comments = data;
+        }
+      )
+  }
+
 }

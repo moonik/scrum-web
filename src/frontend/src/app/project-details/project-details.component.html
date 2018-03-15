@@ -43,10 +43,29 @@
     <div class="more-details">
       <b>Description</b>
       <div class="issue-description">{{ selectedIssue.description }}</div>
+      <div class="comments">
+        <p align="center"><b>Comments:</b></p>
+        <table>
+          <tr>
+            <th>Content</th>
+            <th>Author</th>
+            <th>Posted</th>
+          </tr>
+          <tbody *ngFor="let comment of comments">
+          <tr>
+            <td>{{comment.content}}</td>
+            <td>{{comment.owner.username}}</td>
+            <td>{{comment.createdDate}}</td>
+            <hr>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
   <div class="no-issues-found" *ngIf="!showIssueList() && !loading">
     <h4>Sorry, we didn't find issues for this project</h4>
   </div>
+
 </div>

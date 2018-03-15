@@ -51,7 +51,8 @@
 	margin-left: 50px;
 	width: 65% !important;
 	overflow-y: auto;
-    height: 31.5em;
+    /*height: 31.5em;*/
+  height: 100%;
     font-size: 16px;
     display: inline-block;
 }
@@ -89,7 +90,7 @@
 
 .more-details .issue-description {
 	overflow-y: auto;
-    height: 12em;
+  height: 3em;
 	margin-top: 5px;
 }
 
