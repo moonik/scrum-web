@@ -20,7 +20,6 @@ Search results for phrase: <b>{{ results }}</b>
       <td class="project-type" (click)="goToProjectDetails(results.projectKey)">{{results.name}}</td>
       <td class="project-description" (click)="goToProjectDetails(results.projectKey)">{{results.description}}</td>
       <td class="project-request">
-        <!--<button class="button btn-primary" *ngIf=!checkMembers(results.members) (click)="requestAccess(results.projectKey)">Request for access</button>-->
         <div class="dropdown" *ngIf=!checkMembers(results)>
           <button class="btn btn-success dropdown-toggle" type="button" id="requestDropdown" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">

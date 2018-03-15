@@ -46,16 +46,10 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   getAllUsers() {
-    // let members: string[] = this.project.members.map(m => m.username);
-    // const requests: string[] = this.project.requests.map(r => r.username);
     const members = [...this.project.members.map(m => m.username),
       ...this.project.requests.map(r => r.username)];
-    // members.concat(this.project.requests.map(r => r.username));
-    console.log("members: " + members);
-    // console.log("req: " + requests);
     this.confService.getUsers(members).subscribe(
       users => {
-        console.log("users: " + users);
         this.users = users;
       }    );
   }

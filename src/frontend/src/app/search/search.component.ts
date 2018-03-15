@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {ProjectDto} from "../model/projectDto";
-import {SearchService} from "./search.service";
+import {ProjectDto} from '../model/projectDto';
+import {SearchService} from './search.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {SearchResultsDto} from "../model/SearchResultsDto";
-import {ProjectMemberDto} from "../model/projectMemberDto";
-import * as roles from "../constants/roles";
+import {SearchResultsDto} from '../model/SearchResultsDto';
+import {ProjectMemberDto} from '../model/projectMemberDto';
+import * as roles from '../constants/roles';
 
 @Component({
   selector: 'app-search',
@@ -36,7 +36,6 @@ export class SearchComponent implements OnInit {
     this.searchService.searchResults(query)
       .subscribe(
         data => {
-          console.log(data);
           this.searchresults = data;
         }
       );
@@ -49,10 +48,10 @@ export class SearchComponent implements OnInit {
   requestAccess(role: string, id: number) {
     const member: ProjectMemberDto = new ProjectMemberDto();
     member.projectId = id;
-    member.username = localStorage.getItem('currentUser')
+    member.username = localStorage.getItem('currentUser');
     member.role = role;
     this.searchService.askForAccess(member).subscribe(
-      data => {
+      () => {
         this.ngOnInit();
       });
   }
