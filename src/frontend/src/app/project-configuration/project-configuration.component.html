@@ -75,8 +75,9 @@
       <div class="col-4-details">
         <button class="button btn-danger" (click)="declineRequest(request)">Decline</button>
       </div>
-      <br/>
     </div>
+    <div *ngIf="!project.requests.length">No requests for access to the project</div>
+    <br/>
   </div>
 
   <table class="table">
