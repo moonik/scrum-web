@@ -131,13 +131,19 @@ export class ProjectConfigurationComponent implements OnInit {
     this.confService.acceptRequestForAccess(member)
       .subscribe(data => {
           this.project.members.push(member);
+          this.project.requests.splice(this.project.requests.indexOf(member), 1);
           this.ngOnInit();
         }
       );
   }
 
-  declineRequest(id: number, username: string) {
-    this.confService.declineRequestForAccess(id, username).subscribe();
+  declineRequest(request: ProjectMemberDto) {
+    this.confService.declineRequestForAccess(request.projectId, request.username).subscribe(
+      data => {
+        this.project.requests.splice(this.project.requests.indexOf(request), 1);
+        this.ngOnInit();
+      }
+    );
 
   }
 }

@@ -204,8 +204,5 @@ public class ProjectService {
             declineRequestForAccess(projectMemberDto.getProjectId(), projectMemberDto.getUsername()).equals(HttpStatus.OK)) {
             return HttpStatus.OK;
         } else return HttpStatus.CONFLICT;
-
     }
-
-
 }

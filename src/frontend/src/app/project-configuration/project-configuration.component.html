@@ -56,7 +56,7 @@
     <h6><b>Requests for access:</b></h6>
     <div *ngFor="let request of project.requests">
       <div class="col-1-details">{{request.username}}</div>
-      <div class="col-2-details">Suggested role: {{request.role}}</div>
+      <div class="col-2-details">Suggested role: <b>{{request.role}}</b></div>
       <div class="col-3-details">
         <div class="dropdown">
           <button class="btn btn-success dropdown-toggle" type="button" id="requestDropdown" data-toggle="dropdown"
@@ -73,7 +73,7 @@
         </div>
       </div>
       <div class="col-4-details">
-        <button class="button btn-danger" (click)="declineRequest(request.projectId, request.username)">Decline</button>
+        <button class="button btn-danger" (click)="declineRequest(request)">Decline</button>
       </div>
       <br/>
     </div>
