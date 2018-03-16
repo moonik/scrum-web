@@ -41,7 +41,7 @@ export class ProjectComponent implements OnInit {
   createproject() {
     this.projectService.createProject(this.projectDto)
       .subscribe(
-        success => {
+        () => {
           this.router.navigate(['/home']);
         },
         error => {
@@ -57,18 +57,17 @@ export class ProjectComponent implements OnInit {
     this.goodIcon = true;
     console.log(this.projectDto.icon);
     if (this.projectDto.icon != null) {
-      this.fileUploadService.deleteFile(this.projectDto.icon).subscribe(data => {
+      this.fileUploadService.deleteFile(this.projectDto.icon).subscribe(() => {
       });
     }
     this.fileUploadService.uploadFile(this.icon)
       .subscribe(data => {
-          const link = data.json()['link'];
-          this.projectDto.icon = link.substr(link.lastIndexOf('/') + 1);
+          this.projectDto.icon = data.json()['link'];
           this.loading = false;
         },
         error => {
           if (error.status !== 200) {
-            this.fileUploadService.deleteFile(this.projectDto.icon).subscribe(data => {
+            this.fileUploadService.deleteFile(this.projectDto.icon).subscribe(() => {
             });
             this.goodIcon = false;
           }

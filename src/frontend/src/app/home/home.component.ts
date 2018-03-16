@@ -31,34 +31,34 @@ export class HomeComponent implements OnInit {
       .subscribe(
         data => {
           this.projects = data;
-          for (let i = 0; i < this.projects.length; i++) {
-            if (this.projects[i].icon != null) {
-              this.loadIcon(this.projects[i].icon, i);
-            }
-          }
+          // for (let i = 0; i < this.projects.length; i++) {
+          //   if (this.projects[i].icon != null) {
+          //     this.loadIcon(this.projects[i].icon, i);
+          //   }
+          // }
         }
       );
   }
 
-  createImageFromBlob(image: Blob, i: number) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => {
-      this.projects[i].image = reader.result;
-    }, false);
-
-    if (image) {
-      reader.readAsDataURL(image);
-    }
-  }
-
-  loadIcon(filename: string, i: number) {
-    return this.uploadService.loadFile(filename)
-      .subscribe(
-        data => {
-          this.createImageFromBlob(data, i);
-        }
-      );
-  }
+  // createImageFromBlob(image: Blob, i: number) {
+  //   const reader = new FileReader();
+  //   reader.addEventListener('load', () => {
+  //     this.projects[i].image = reader.result;
+  //   }, false);
+  //
+  //   if (image) {
+  //     reader.readAsDataURL(image);
+  //   }
+  // }
+  //
+  // loadIcon(filename: string, i: number) {
+  //   return this.uploadService.loadFile(filename)
+  //     .subscribe(
+  //       data => {
+  //         this.createImageFromBlob(data, i);
+  //       }
+  //     );
+  // }
 
   onConfigureProject(project: ProjectDto) {
     this.storage.setScope(project);
