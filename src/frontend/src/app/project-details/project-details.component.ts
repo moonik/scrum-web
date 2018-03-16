@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Params} from '@angular/router';
 import {ProjectDetailsService} from './project-details.service';
 import {ProjectDetailsDto} from '../model/ProjectDetailsDto';
 import {IssueDto} from '../model/IssueDto';
@@ -17,17 +17,19 @@ export class ProjectDetailsComponent implements OnInit {
   public projectKey: string;
   public projectDetails: ProjectDetailsDto = new ProjectDetailsDto();
   public selectedIssue: IssueDetailsDto;
-  public loading: boolean = false;
+  public loading = false;
 
-  constructor(private _activatedRoute: ActivatedRoute, private _projectDetailsService: ProjectDetailsService,
-    private _issueService: IssueService) {
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _projectDetailsService: ProjectDetailsService,
+              private _issueService: IssueService) {
     this._activatedRoute.params.subscribe((params: Params) => {
-        this.projectKey = params['projectKey'];
+      this.projectKey = params['projectKey'];
     });
     this.getProjectDetails();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   public selectIssue(issueId: number) {
     this.loading = true;
@@ -42,13 +44,13 @@ export class ProjectDetailsComponent implements OnInit {
   public getProjectDetails() {
     this.loading = true;
     return this._projectDetailsService.getProjectDetails(this.projectKey)
-      .subscribe( data => {
-          this.projectDetails = data;
-          if (data.issues.length > 0) {
-            this.selectIssue(data.issues[0].id);
-          }
-          this.loading = false;
-        });
+      .subscribe(data => {
+        this.projectDetails = data;
+        if (data.issues.length > 0) {
+          this.selectIssue(data.issues[0].id);
+        }
+        this.loading = false;
+      });
   }
 
   public showIssueList() {
@@ -56,10 +58,30 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   public onIssueCreate(issueDto: IssueDto) {
-    let length = this.projectDetails.issues.length+1;
+    const length = this.projectDetails.issues.length + 1;
     issueDto.id = length;
     issueDto.issueKey = this.projectDetails.projectDto.name + '-' + length;
     this.projectDetails.issues.unshift(issueDto);
     this.selectIssue(issueDto.id);
+  }
+
+  onAddtoIssue() {
+    // this._projectDetailsService.requestAssign().subscribe();
+  }
+
+  checkAssignees(): boolean {
+    return !this.selectedIssue.assignees.map(a => a.username).includes(localStorage.getItem('currentUser'));
+  }
+
+  isOwner(): boolean {
+    return this.selectedIssue.reporter.username === localStorage.getItem('currentUser');
+  }
+
+  onDeclineAssign() {
+
+  }
+
+  onAcceptAssign() {
+
   }
 }
