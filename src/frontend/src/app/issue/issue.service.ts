@@ -24,8 +24,12 @@ export class IssueService {
             .map(res => res.json());
     }
 
-  public getIssueComments(issueId: number) {
-    return this._http.get(this._URL+'showcomments/' + issueId)
-      .map(res => res.json());
-  }
+    public getIssueComments(issueId: number) {
+      return this._http.get(this._URL+'showcomments/' + issueId)
+        .map(res => res.json());
+    }
+
+    public addComment(issueId: number, content: string) {
+        return this._http.post(this._URL+'addcomment/' + issueId, content)
+    }
 }

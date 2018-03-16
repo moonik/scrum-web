@@ -6,6 +6,7 @@ import {IssueDto} from '../model/IssueDto';
 import {IssueService} from '../issue/issue.service';
 import {IssueDetailsDto} from '../model/IssueDetailsDto';
 import {IssueComment} from "../model/IssueComment";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-project-details',
@@ -21,6 +22,7 @@ export class ProjectDetailsComponent implements OnInit {
   public loading: boolean = false;
   public issueId: number;
   public comments: IssueComment[] = [];
+  public commentForm: FormGroup;
 
   constructor(private _activatedRoute: ActivatedRoute, private _projectDetailsService: ProjectDetailsService,
     private _issueService: IssueService) {
@@ -76,6 +78,10 @@ export class ProjectDetailsComponent implements OnInit {
           this.comments = data;
         }
       )
+  }
+
+  public addcomment(content: string, issueId: number){
+    return this._issueService.addComment(issueId, content)
   }
 
 }
