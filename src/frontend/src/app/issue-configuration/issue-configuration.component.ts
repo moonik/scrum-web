@@ -51,6 +51,10 @@ export class IssueConfigurationComponent implements OnInit {
   }
 
   public removeField(field: any, fieldType: string) {
+    if (field.id != null) {
+      this._issueConfService.removeField(field.id, this.projectKey, this.issueType)
+        .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data) });
+    }
     let index = this.fields.indexOf(field);
     this.fields.splice(index, 1);
   }

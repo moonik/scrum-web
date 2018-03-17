@@ -2,6 +2,7 @@ package scrumweb.projectfield.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,5 +38,10 @@ public class ProjectFieldController {
     @ResponseStatus(HttpStatus.OK)
     public Set<ProjectFieldDto> getIssueFields(@RequestParam String issuetype, @RequestParam String projectKey) {
         return projectFieldService.getIssueFields(issuetype, projectKey);
+    }
+
+    @DeleteMapping("")
+    public Set<ProjectFieldDto> deleteField(@RequestParam Long id, @RequestParam String issuetype, @RequestParam String projectKey) {
+        return projectFieldService.removeField(id, projectKey, issuetype);
     }
 }

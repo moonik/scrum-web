@@ -24,7 +24,7 @@ public class IssueType {
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<ProjectField> fields;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Project project;
 
     public IssueType(String name, Project project) {

@@ -28,11 +28,10 @@ public class ProjectFieldService {
 
     public Set<ProjectFieldDto> createFields(Set<ProjectFieldDto> projectFieldsDto, String issuetype, String projectKey) {
         Project project = projectRepository.findByKey(projectKey);
-        IssueType issueType = findIssueType(project.getIssueTypes(), issuetype.toUpperCase());
+        IssueType issueType = findIssueType(project.getIssueTypes(), issuetype);
         if (issueType != null) {
             Set<ProjectField> issueTypeFields = issueType.getFields();
-            Set<ProjectField> fieldsToBeSaved = createEntities(projectFieldsDto);
-            issueTypeFields.addAll(fieldsToBeSaved);
+            issueTypeFields.addAll(createEntities(projectFieldsDto));
             issueType = issueTypeRepository.saveAndFlush(issueType);
             return issueType.getFields().stream()
                     .map(f -> projectFieldAsm.createDtoObject(f))
@@ -43,15 +42,25 @@ public class ProjectFieldService {
 
     public Set<ProjectFieldDto> getIssueFields(String issueType, String projectKey) {
         final Project project = projectRepository.findByKey(projectKey);
-        final IssueType issueTypeFromDb = findIssueType(project.getIssueTypes(), issueType.toUpperCase());
+        final IssueType issueTypeFromDb = findIssueType(project.getIssueTypes(), issueType);
         return issueTypeFromDb.getFields().stream()
                 .map(field -> projectFieldAsm.createDtoObject(field))
                 .collect(Collectors.toSet());
     }
 
+    public Set<ProjectFieldDto> removeField(Long id, String projectKey, String issueType) {
+        IssueType issuetype = findIssueType(projectRepository.findByKey(projectKey).getIssueTypes(), issueType);
+        issuetype.setFields(issuetype.getFields().stream().filter(f -> !f.getId().equals(id)).collect(Collectors.toSet()));
+        issueTypeRepository.saveAndFlush(issuetype);
+        projectFieldRepository.delete(id);
+        return issuetype.getFields().stream()
+                .map(f -> projectFieldAsm.createDtoObject(f))
+                .collect(Collectors.toSet());
+    }
+
     private IssueType findIssueType(Set<IssueType> issueTypes, String issuetype) {
         return issueTypes.stream()
-                .filter(type -> type.getName().equals(issuetype))
+                .filter(type -> type.getName().equalsIgnoreCase(issuetype))
                 .findFirst()
                 .orElse(null);
     }
