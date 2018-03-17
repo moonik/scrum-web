@@ -3,7 +3,15 @@ package scrumweb.project.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import scrumweb.common.SecurityContextService;
 import scrumweb.dto.issue.ItemAssignee;
 import scrumweb.dto.project.ProjectDetailsDto;
@@ -12,7 +20,6 @@ import scrumweb.dto.project.ProjectMemberDto;
 import scrumweb.dto.search.SearchResultsDto;
 import scrumweb.project.service.ProjectService;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -38,14 +45,14 @@ public class ProjectController {
     }
 
     @DeleteMapping("{id}/members/{username}")
-    public ResponseEntity<?> removeMember(@PathVariable Long id,@PathVariable String username) {
+    public ResponseEntity<?> removeMember(@PathVariable Long id, @PathVariable String username) {
         return ResponseEntity.status(projectService.removeMember(username, id)).build();
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ProjectDto editProject(@PathVariable Long id, @RequestBody ProjectDto projectDto) {
-        return projectService.editName(projectDto.getName(), id);
+    public void editProject(@PathVariable Long id, @RequestBody ProjectDto projectDto) {
+        projectService.editName(projectDto.getName(), id);
     }
 
     @GetMapping("/details/{projectKey}")
@@ -54,15 +61,15 @@ public class ProjectController {
         return projectService.getProjectDetails(projectKey);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/allOwnProjects")
     @ResponseStatus(HttpStatus.OK)
-    public List<ProjectDto> allProjects() {
+    public List<ProjectDto> allOwnProjects() {
         return projectService.getAllProjects(securityContextService.getCurrentUserAccount());
     }
 
     @GetMapping("/search/{paramkey}")
     @ResponseStatus(HttpStatus.OK)
-    public SearchResultsDto findProjectsAndIssuesByKeyQuery(@PathVariable String paramkey){
+    public SearchResultsDto findProjectsAndIssuesByKeyQuery(@PathVariable String paramkey) {
         return projectService.findProjectsAndIssuesByKeyQuery(paramkey);
     }
 
@@ -74,5 +81,11 @@ public class ProjectController {
     @PostMapping("/{key}/icon/{filename:.+}")
     public ResponseEntity<?> changeProjectIcon(@PathVariable String key, @PathVariable String filename) {
         return ResponseEntity.status(projectService.changeProjectIcon(filename, key)).build();
+    }
+
+    @GetMapping("/allProjects")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProjectDto> allProjects() {
+        return projectService.findAllProjects();
     }
 }

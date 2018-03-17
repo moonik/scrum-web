@@ -9,7 +9,7 @@ export class HomeService {
   constructor(private _http: HttpClient) { }
 
   getAllOwnProjects() {
-    return this._http.get(this._URL+'all').map(res => res.json());
+    return this._http.get(this._URL+'allProjects').map(res => res.json());
   }
 
 }

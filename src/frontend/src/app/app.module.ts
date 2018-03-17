@@ -25,7 +25,7 @@ import { IssueComponent } from './issue/issue.component';
 import { FileUploadService} from './shared/file-upload.service';
 import { FooterComponent } from './footer/footer.component';
 import { SearchComponent } from './search/search.component';
-import {ImagePipe} from "./shared/image.pipe";
+import { ImagePipe} from './shared/image.pipe';
 
 @NgModule({
   declarations: [
