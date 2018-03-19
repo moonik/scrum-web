@@ -79,27 +79,6 @@ export class ProjectConfigurationComponent implements OnInit {
       });
   }
 
-  //
-  // createImageFromBlob(image: Blob) {
-  //   const reader = new FileReader();
-  //   reader.addEventListener('load', () => {
-  //     this.project.image = reader.result;
-  //   }, false);
-  //
-  //   if (image) {
-  //     reader.readAsDataURL(image);
-  //   }
-  // }
-  //
-  // loadIcon(filename: string) {
-  //   return this.uploadService.loadFile(filename)
-  //     .subscribe(
-  //       data => {
-  //         this.createImageFromBlob(data);
-  //       }
-  //     );
-  // }
-
   chooseIcon(files: FileList) {
     this.icon = files.item(0);
     this.loading = true;
@@ -109,7 +88,6 @@ export class ProjectConfigurationComponent implements OnInit {
     this.uploadService.uploadFile(this.icon)
       .subscribe(data => {
           this.project.icon = data.json()['link'];
-          console.log(this.project.icon);
           this.confService.changeProjectIcon(this.project.projectKey, this.project.icon).subscribe();
           if (oldIcon !== this.project.icon) {
             this.uploadService.deleteFile(oldIcon).subscribe();
