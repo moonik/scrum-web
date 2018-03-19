@@ -11,16 +11,18 @@ export class ImagePipe implements PipeTransform {
   }
 
   transform(url: string) {
-    return this._http.load('storage/' + url)
-      .map(response => response.blob())
-      .switchMap(blob => {
-        return Observable.create(observer => {
-          const reader = new FileReader();
-          reader.readAsDataURL(blob);
-          reader.onloadend = function () {
-            observer.next(reader.result);
-          };
-        });
+    return new Observable<string>((observer) => {
+      observer.next('data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');
+
+      this._http.load('storage/' + url).subscribe(response => {
+        const reader = new FileReader();
+        reader.readAsDataURL(response.blob());
+        reader.onloadend = function() {
+          observer.next(reader.result);
+        };
       });
+      return {unsubscribe() {  }};
+    });
+
   }
 }
