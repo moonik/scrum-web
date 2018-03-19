@@ -103,7 +103,7 @@ public class IssueService {
 
         IssueComment issueComment = new IssueComment();
 
-        issueComment.setContent(content);
+        issueComment.setContent(content.substring(1, content.length()-1));
         issueComment.setCreatedDate(LocalDateTime.now());
         issueComment.setOwner(commentOwner);
 
@@ -112,8 +112,6 @@ public class IssueService {
         issueRepository.save(issue);
 
         return issueCommentAsm.fromIssueCommentToIssueCommentDto(issueComment, userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile()));
-
-        //return content;
     }
 
     public List<IssueCommentDto> getCommentsForIssue(Long id){
