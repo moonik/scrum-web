@@ -41,9 +41,8 @@ public class IssueController {
 
     @PostMapping("/addcomment/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String addComment(@PathVariable Long id, @RequestBody String content) {
-        issueService.addComment(content, id);
-        return content;
+    public IssueCommentDto addComment(@PathVariable Long id, @RequestBody String content) {
+        return issueService.addComment(content, id);
     }
 
     @GetMapping("/showcomments/{id}")

@@ -23,6 +23,7 @@ export class ProjectDetailsComponent implements OnInit {
   public issueId: number;
   public comments: IssueComment[] = [];
   public commentForm: FormGroup;
+  public newComment: IssueComment;
 
   constructor(private _activatedRoute: ActivatedRoute, private _projectDetailsService: ProjectDetailsService,
     private _issueService: IssueService, fb: FormBuilder) {
@@ -84,8 +85,13 @@ export class ProjectDetailsComponent implements OnInit {
       )
   }
 
-  public addcomment(content: string, issueId: number){
-    return this._issueService.addComment(issueId, content)
+  public addcomment(){
+    return this._issueService.addComment(this.issueId, this.newComment)
+      .subscribe(
+        data => {
+          this.comments.push(data);
+        }
+      );
   }
 
 }

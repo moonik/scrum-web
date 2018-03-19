@@ -95,7 +95,7 @@ public class IssueService {
                 .orElse(null);
     }
 
-    public String addComment(String content, Long id){
+    public IssueCommentDto addComment(String content, Long id){
         Issue issue = issueRepository.findOne(id);
         UserAccount commentOwner = securityContextService.getCurrentUserAccount();
 
@@ -111,7 +111,9 @@ public class IssueService {
 
         issueRepository.save(issue);
 
-        return content;
+        return issueCommentAsm.fromIssueCommentToIssueCommentDto(issueComment, userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile()));
+
+        //return content;
     }
 
     public List<IssueCommentDto> getCommentsForIssue(Long id){

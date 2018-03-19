@@ -45,8 +45,9 @@
       <div class="issue-description">{{ selectedIssue.description }}</div>
 
       <form [formGroup] = "commentForm" (ngSubmit)="addcomment()">
-      <input type="text" class="form-control w-100" id="inputName"
-             placeholder="Add comment" [(ngModel)]="comments.content" formControlName="content">
+
+      <input type="text" class="form-control w-100" id="inputContent"
+             placeholder="Add comment" [(ngModel)]="newComment" formControlName="content">
         <p align="right"><button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">Add</button></p>
       </form>
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "../shared/http.client.service";
 import { IssueDetailsDto } from '../model/IssueDetailsDto';
+import {IssueComment} from "../model/IssueComment";
 
 @Injectable()
 export class IssueService {
@@ -29,7 +30,8 @@ export class IssueService {
         .map(res => res.json());
     }
 
-    public addComment(issueId: number, content: string) {
-        return this._http.post(this._URL+'addcomment/' + issueId, content)
+    public addComment(issueId: number, comment: IssueComment) {
+        return this._http.post(this._URL+'addcomment/' + issueId, comment)
+          .map(res => res.json());
     }
 }
