@@ -23,7 +23,7 @@ import { ProjectFieldsCollector } from '../model/project-fields/ProjectFieldsCol
 })
 export class IssueConfigurationComponent implements OnInit {
   public fields = [];
-  public oldFields: any = '';
+  public oldFields: string = '';
   public fieldTypes = fieldTypes.default;
   public fieldTypesArray = Object.values(this.fieldTypes);
   private issueType = '';
