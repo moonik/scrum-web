@@ -6,7 +6,7 @@ import {IssueDto} from '../model/IssueDto';
 import {IssueService} from '../issue/issue.service';
 import {IssueDetailsDto} from '../model/IssueDetailsDto';
 import {IssueComment} from "../model/IssueComment";
-import {FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-project-details',
@@ -25,11 +25,16 @@ export class ProjectDetailsComponent implements OnInit {
   public commentForm: FormGroup;
 
   constructor(private _activatedRoute: ActivatedRoute, private _projectDetailsService: ProjectDetailsService,
-    private _issueService: IssueService) {
+    private _issueService: IssueService, fb: FormBuilder) {
     this._activatedRoute.params.subscribe((params: Params) => {
         this.projectKey = params['projectKey'];
     });
     this.getProjectDetails();
+
+    this.commentForm = fb.group({
+      content:[null, [Validators.required]]
+    });
+
   }
 
   ngOnInit() {}
@@ -42,7 +47,6 @@ export class ProjectDetailsComponent implements OnInit {
           this.selectedIssue = data;
           this.issueId = data.id;
           this.loading = false;
-          console.log(this.issueId);
           this.getIssueComments(this.issueId)
         });
   }

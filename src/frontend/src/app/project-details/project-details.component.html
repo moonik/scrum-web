@@ -46,28 +46,35 @@
 
       <form [formGroup] = "commentForm" (ngSubmit)="addcomment()">
       <input type="text" class="form-control w-100" id="inputName"
-             placeholder="Add comment" [(ngModel)]="comments.content" formControlName="comment">
+             placeholder="Add comment" [(ngModel)]="comments.content" formControlName="content">
         <p align="right"><button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">Add</button></p>
       </form>
 
-      <div class="comments">
-        <p align="center"><b>Comments:</b></p>
+
+      <p align="center"><b>{{ comments.length }} comment(s)</b></p>
+
+      <div class="comments-found" *ngIf="comments.length > 0">
         <table>
           <tr>
-            <th>Content</th>
-            <th>Author</th>
-            <th>Posted</th>
+            <th width="70%">Content</th>
+            <th width="15%">Author</th>
+            <th width="15%">Posted</th>
           </tr>
           <tbody *ngFor="let comment of comments">
           <tr>
             <td>{{comment.content}}</td>
             <td>{{comment.owner.username}}</td>
             <td>{{comment.createdDate}}</td>
-            <hr>
+            <br>
           </tr>
           </tbody>
         </table>
       </div>
+
+      <div class="no-comments-found" *ngIf="comments.length === 0">
+        No comments found! Type for first comments in this issue.
+      </div>
+
     </div>
   </div>
 
