@@ -19,6 +19,8 @@ import {ProjectService} from "./project/project.service";
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { IssueComponent } from './issue/issue.component';
 import { FooterComponent } from './footer/footer.component';
+import { IssueFieldsConfigurationComponent } from './issue-configuration/issue-fields-configuration.component';
+import { IssueTypeConfigurationComponent } from './issue-configuration/issue-type-configuration.component';
 import { IssueConfigurationComponent } from './issue-configuration/issue-configuration.component';
 
 
@@ -33,6 +35,8 @@ import { IssueConfigurationComponent } from './issue-configuration/issue-configu
     ProjectDetailsComponent,
     IssueComponent,
     FooterComponent,
+    IssueFieldsConfigurationComponent,
+    IssueTypeConfigurationComponent,
     IssueConfigurationComponent
   ],
   imports: [
