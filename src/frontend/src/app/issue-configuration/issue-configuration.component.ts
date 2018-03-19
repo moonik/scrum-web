@@ -26,7 +26,6 @@ export class IssueConfigurationComponent implements OnInit {
   public oldFields: any = '';
   public fieldTypes = fieldTypes.default;
   public fieldTypesArray = Object.values(this.fieldTypes);
-  public ifActionWas = false;
   private issueType = '';
   private projectKey = '';
 
