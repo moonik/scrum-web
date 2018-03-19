@@ -111,7 +111,7 @@ public class IssueService {
 
         issueRepository.save(issue);
 
-        return issueCommentAsm.fromIssueCommentToIssueCommentDto(issueComment, userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile()));
+        return issueCommentAsm.fromIssueCommentToIssueCommentDto(issueComment, userProfileAsm.makeUserProfileDto(commentOwner, commentOwner.getUserProfile()));
     }
 
     public List<IssueCommentDto> getCommentsForIssue(Long id){

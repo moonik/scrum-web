@@ -90,6 +90,7 @@ export class ProjectDetailsComponent implements OnInit {
       .subscribe(
         data => {
           this.comments.push(data);
+          this.newComment = null;
         }
       );
   }
