@@ -26,7 +26,7 @@ public class IssueAsm {
                 issueType, fieldContents, LocalDateTime.now());
     }
 
-    public IssueDetailsDto createIssueDetailsDto(Issue issue, Set<UserProfileDto> assignees, UserProfileDto reporter) {
+    public IssueDetailsDto createIssueDetailsDto(Issue issue, Set<UserProfileDto> assignees, Set<UserProfileDto> requesters, UserProfileDto reporter) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
         return new IssueDetailsDto(
                 issue.getId(),
@@ -34,6 +34,7 @@ public class IssueAsm {
                 issue.getSummary(),
                 issue.getDescription(),
                 assignees,
+                requesters,
                 reporter,
                 issue.getEstimateTime(),
                 issue.getRemainingTime(),

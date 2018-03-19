@@ -22,6 +22,7 @@ public class IssueDetailsDto {
     private String summary;
     private String description;
     private Set<UserProfileDto> assignees;
+    private Set<UserProfileDto> requesters;
     private UserProfileDto reporter;
     private String estimateTime;
     private String remainingTime;
@@ -32,13 +33,16 @@ public class IssueDetailsDto {
     private String createdDate;
     private String lastUpdate;
 
-    public IssueDetailsDto(Long id, String key, String summary, String description, Set<UserProfileDto> assignees, UserProfileDto reporter,
-                           String estimateTime, String remainingTime, String priority, String issueType,String createdDate, String lastUpdate) {
+    public IssueDetailsDto(Long id, String key, String summary, String description,
+                           Set<UserProfileDto> assignees, Set<UserProfileDto> requesters,
+                           UserProfileDto reporter, String estimateTime, String remainingTime,
+                           String priority, String issueType,String createdDate, String lastUpdate) {
         this.id = id;
         this.key = key;
         this.summary = summary;
         this.description = description;
         this.assignees = assignees;
+        this.requesters = requesters;
         this.reporter = reporter;
         this.estimateTime = estimateTime;
         this.remainingTime = remainingTime;

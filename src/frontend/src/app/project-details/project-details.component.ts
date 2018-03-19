@@ -29,6 +29,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getProjectDetails();
   }
 
   public selectIssue(issueId: number) {
@@ -66,11 +67,15 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   onAddtoIssue() {
-    // this._projectDetailsService.requestAssign().subscribe();
+    this._issueService.requestAssign(this.selectedIssue.id, localStorage.getItem('currentUser'))
+      .subscribe(() => {
+        this.ngOnInit();
+      });
   }
 
   checkAssignees(): boolean {
-    return !this.selectedIssue.assignees.map(a => a.username).includes(localStorage.getItem('currentUser'));
+    return !this.selectedIssue.assignees.map(a => a.username).includes(localStorage.getItem('currentUser'))
+       && !this.selectedIssue.requesters.map(a => a.username).includes(localStorage.getItem('currentUser'));
   }
 
   isOwner(): boolean {

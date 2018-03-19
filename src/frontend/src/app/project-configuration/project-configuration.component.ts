@@ -52,7 +52,7 @@ export class ProjectConfigurationComponent implements OnInit {
     member.role = role;
 
     this.confService.addMemberToProject(member)
-      .subscribe(data => {
+      .subscribe(() => {
           this.project.members.push(member);
           this.ngOnInit();
         }
@@ -61,7 +61,7 @@ export class ProjectConfigurationComponent implements OnInit {
 
   removeMemberFromProject(member: ProjectMemberDto) {
     this.confService.removeMemberFromProject(member.username + '/' + member.projectId)
-      .subscribe(data => {
+      .subscribe(() => {
           this.project.members.splice(this.project.members.indexOf(member), 1);
           this.ngOnInit();
         }, error => {

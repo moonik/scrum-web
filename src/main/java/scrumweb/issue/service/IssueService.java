@@ -1,6 +1,7 @@
 package scrumweb.issue.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import scrumweb.common.SecurityContextService;
 import scrumweb.common.asm.IssueAsm;
@@ -8,23 +9,18 @@ import scrumweb.common.asm.UserProfileAsm;
 import scrumweb.common.asm.fieldcontent.FieldContentConverter;
 import scrumweb.dto.fieldcontent.FieldContentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
-import scrumweb.dto.issue.IssueDto;
-import scrumweb.dto.search.SearchResultsDto;
 import scrumweb.dto.user.UserProfileDto;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.fieldcontent.FieldContent;
 import scrumweb.issue.repository.IssueRepository;
 import scrumweb.project.domain.Project;
-import scrumweb.projectfield.repository.ProjectFieldRepository;
 import scrumweb.project.repository.ProjectRepository;
+import scrumweb.projectfield.repository.ProjectFieldRepository;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -45,7 +41,7 @@ public class IssueService {
     public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String projectKey) {
         final Project project = projectRepository.findByKey(projectKey);
         Set<Issue> issues = project.getIssues();
-        String issueKey = project.getKey().concat("-").concat(project.getIssues().size()+1+"");
+        String issueKey = project.getKey().concat("-").concat(project.getIssues().size() + 1 + "");
         issues.add(createIssue(issueDetailsDto, fieldContentsDto, issueKey, project));
         projectRepository.save(project);
         return issueDetailsDto;
@@ -67,31 +63,49 @@ public class IssueService {
     public IssueDetailsDto getDetails(Long id) {
         Issue issue = issueRepository.findOne(id);
         Set<UserProfileDto> assignees = issue.getAssignees().stream().map(userAccount -> userProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile())).collect(Collectors.toSet());
+        Set<UserProfileDto> requesters = issue.getRequesters().stream().map(userAccount -> userProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile())).collect(Collectors.toSet());
         UserProfileDto reporter = userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
         Set<FieldContentDto> fieldsContentsDto = issue.getFieldContents().stream().map(fieldContent -> fieldContentAsm.createDtoObject(fieldContent)).collect(Collectors.toSet());
-        IssueDetailsDto issueDetailsDto = issueAsm.createIssueDetailsDto(issue, assignees, reporter);
+        IssueDetailsDto issueDetailsDto = issueAsm.createIssueDetailsDto(issue, assignees, requesters, reporter);
         issueDetailsDto.setFieldContents(fieldsContentsDto);
         return issueDetailsDto;
     }
 
     private Set<String> extractUserNames(Set<UserProfileDto> userProfileDtos) {
         return userProfileDtos.stream()
-                .map(UserProfileDto::getUsername)
-                .collect(Collectors.toSet());
+            .map(UserProfileDto::getUsername)
+            .collect(Collectors.toSet());
     }
 
     private Set<FieldContent> extractContents(Set<FieldContentDto> fieldContentsDto) {
         return fieldContentsDto.stream()
-                .map(fieldContentDto -> fieldContentAsm.createObjectEntity(
-                        projectFieldRepository.findOne(fieldContentDto.getProjectFieldId()), fieldContentDto))
-                .collect(Collectors.toSet());
+            .map(fieldContentDto -> fieldContentAsm.createObjectEntity(
+                projectFieldRepository.findOne(fieldContentDto.getProjectFieldId()), fieldContentDto))
+            .collect(Collectors.toSet());
     }
 
     private IssueType getIssueType(Set<IssueType> issueTypes, String issueType) {
         return issueTypes.stream()
-                .filter(i -> i.getName().equalsIgnoreCase(issueType))
-                .findFirst()
-                .orElse(null);
+            .filter(i -> i.getName().equalsIgnoreCase(issueType))
+            .findFirst()
+            .orElse(null);
     }
 
+    public HttpStatus addRequestToJoin(Long id, String username) {
+        try {
+            Issue issue = issueRepository.findOne(id);
+            UserAccount user = userAccountRepository.findByUsername(username);
+            if (issue.getReporter().equals(user)) {
+                issue.getAssignees().add(user);
+                issueRepository.save(issue);
+                return HttpStatus.OK;
+            } else {
+                issue.getRequesters().add(user);
+                issueRepository.save(issue);
+                return HttpStatus.OK;
+            }
+        } catch (NullPointerException npe) {
+            return HttpStatus.NOT_FOUND;
+        }
+    }
 }

@@ -46,7 +46,9 @@
     </div>
 
     <div>
-      <div><button class="btn btn-primary" *ngIf=checkAssignees() (click)="onAddtoIssue()">Assign me to issue</button></div>
+      <div>
+        <button class="btn btn-primary" *ngIf=checkAssignees() (click)="onAddtoIssue()">Assign me to issue</button>
+      </div>
       <div class="requestsManager" *ngIf=isOwner()>
         <h6><b>Members:</b></h6>
         <div *ngIf="selectedIssue.requesters; else noRequesters">

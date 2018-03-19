@@ -32,6 +32,9 @@ public class Issue {
     @ManyToMany
     private Set<UserAccount> assignees;
 
+    @ManyToMany
+    private Set<UserAccount> requesters;
+
     @OneToOne
     @NotNull
     private UserAccount reporter;
@@ -60,6 +63,23 @@ public class Issue {
         this.summary = summary;
         this.description = description;
         this.assignees = assignees;
+        this.reporter = reporter;
+        this.estimateTime = estimateTime;
+        this.remainingTime = remainingTime;
+        this.priority = priority;
+        this.issueType = issueType;
+        this.fieldContents = fieldContents;
+        this.createdDate = createdDate;
+    }
+
+    public Issue(String summary, String description, Set<UserAccount> assignees,
+                 Set<UserAccount> requesters, UserAccount reporter, String estimateTime,
+                 String remainingTime, Priority priority, IssueType issueType,
+                 Set<FieldContent> fieldContents, LocalDateTime createdDate) {
+        this.summary = summary;
+        this.description = description;
+        this.assignees = assignees;
+        this.requesters = requesters;
         this.reporter = reporter;
         this.estimateTime = estimateTime;
         this.remainingTime = remainingTime;
