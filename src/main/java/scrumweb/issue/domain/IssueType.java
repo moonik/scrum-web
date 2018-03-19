@@ -12,7 +12,8 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class IssueType {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

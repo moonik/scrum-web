@@ -2,19 +2,8 @@ package scrumweb.common.asm.projectfield;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import scrumweb.dto.projectfield.CheckBoxContainerDto;
-import scrumweb.dto.projectfield.InputFieldDto;
-import scrumweb.dto.projectfield.ListElementsContainerDto;
-import scrumweb.dto.projectfield.ProjectFieldDto;
-import scrumweb.dto.projectfield.RadioButtonContainerDto;
-import scrumweb.dto.projectfield.TextAreaDto;
-import scrumweb.projectfield.domain.CheckBoxContainer;
-import scrumweb.projectfield.domain.InputField;
-import scrumweb.projectfield.domain.ListElementsContainer;
-import scrumweb.projectfield.domain.ProjectField;
-import scrumweb.projectfield.domain.RadioButton;
-import scrumweb.projectfield.domain.RadioButtonContainer;
-import scrumweb.projectfield.domain.TextArea;
+import scrumweb.dto.projectfield.*;
+import scrumweb.projectfield.domain.*;
 
 @Component
 @AllArgsConstructor

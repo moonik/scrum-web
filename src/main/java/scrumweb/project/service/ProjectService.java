@@ -17,16 +17,20 @@ import scrumweb.exception.ProjectAlreadyExsistsException;
 import scrumweb.exception.ProjectNotFoundException;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.repository.IssueRepository;
-import scrumweb.user.account.domain.UserAccount;
-import scrumweb.user.account.repository.UserAccountRepository;
 import scrumweb.project.domain.Project;
 import scrumweb.project.domain.ProjectMember;
 import scrumweb.project.domain.ProjectMember.Role;
 import scrumweb.project.repository.ProjectRepository;
+import scrumweb.storage.StorageUtils;
+import scrumweb.storage.service.Location;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,6 +44,7 @@ public class ProjectService {
     private IssueAsm issueAsm;
     private UserProfileAsm userProfileAsm;
     private static final String[] DEFAULT_ISSUE_TYPES = {"TASK", "BUG", "FEATURE"};
+    private final Location location;
     private IssueRepository issueRepository;
 
     public ProjectDto create(ProjectDto projectDto) {
@@ -54,6 +59,8 @@ public class ProjectService {
             projectMembers.add(projectAsm.makeProjectMember(projectOwner, Role.PROJECT_MANAGER));
             project.setMembers(projectMembers);
             project.setIssueTypes(createIssueTypes(project));
+
+            project.setIcon(projectDto.getIcon());
 
             projects.add(project);
             userAccountRepository.save(projectOwner);
@@ -77,9 +84,9 @@ public class ProjectService {
         final ProjectDto projectDto = projectAsm.makeProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile()));
         projectDto.setOwner(userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile()));
         final List<IssueDto> issues = project.getIssues().stream()
-                .map(issue -> issueAsm.createIssueDto(issue))
-                .sorted((i1, i2) -> Long.compare(i2.getId(), i1.getId()))
-                .collect(Collectors.toList());
+            .map(issue -> issueAsm.createIssueDto(issue))
+            .sorted((i1, i2) -> Long.compare(i2.getId(), i1.getId()))
+            .collect(Collectors.toList());
         return projectAsm.makeProjectDetailsDro(projectDto, issues);
     }
 
@@ -124,8 +131,8 @@ public class ProjectService {
     }
 
     // todo check if member has issues before removing
-    public HttpStatus removeMember(String username, Long projectId) {
-        Project project = projectRepository.findOne(projectId);
+    public HttpStatus removeMember(String username, Long id) {
+        Project project = projectRepository.findOne(id);
         if (!project.getOwner().getUsername().equals(username)) {
             ProjectMember projectMember = project.getMembers().stream()
                 .filter(member -> member.getUserAccount().getUsername().equals(username))
@@ -137,27 +144,34 @@ public class ProjectService {
         } else return HttpStatus.I_AM_A_TEAPOT;
     }
 
+    public HttpStatus changeProjectIcon(String filename, String key) {
+        if (StorageUtils.checkFile(filename, location.toPath())) {
+            Project project = projectRepository.findByKey(key);
+            project.setIcon(filename);
+            projectRepository.save(project);
+            return HttpStatus.OK;
+        } else return HttpStatus.NOT_FOUND;
+    }
 
-    public SearchResultsDto findProjectsAndIssuesByKeyQuery(String param){
+    public SearchResultsDto findProjectsAndIssuesByKeyQuery(String param) {
         return new SearchResultsDto(getIssues(param), getProjects(param));
     }
 
     private List<ProjectDto> getProjects(String param) {
         return projectRepository.findProjectsByKeyQuery(param).stream()
-                .map(project -> projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())))
-                .collect(Collectors.toList());
+            .map(project -> projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())))
+            .collect(Collectors.toList());
     }
 
     private List<IssueDto> getIssues(String param) {
         return issueRepository.findIssuesByKeyQuery(param).stream()
-                .map(issue -> issueAsm.createIssueDto(issue))
-                .collect(Collectors.toList());
+            .map(issue -> issueAsm.createIssueDto(issue))
+            .collect(Collectors.toList());
     }
 
     public List<ProjectDto> findAllProjects() {
         return projectRepository.findAll().stream()
-                .map(project -> projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())))
-                .collect(Collectors.toList());
+            .map(project -> projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())))
+            .collect(Collectors.toList());
     }
-
 }

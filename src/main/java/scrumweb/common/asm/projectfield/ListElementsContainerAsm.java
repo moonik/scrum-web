@@ -8,8 +8,6 @@ import scrumweb.dto.projectfield.ListElementsContainerDto;
 import scrumweb.projectfield.domain.ListElement;
 import scrumweb.projectfield.domain.ListElementsContainer;
 import scrumweb.projectfield.domain.ProjectField.FieldType;
-import scrumweb.projectfield.repository.ListElementRepository;
-import scrumweb.projectfield.repository.RadioButtonRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;

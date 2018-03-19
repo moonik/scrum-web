@@ -13,18 +13,19 @@ import { HomeComponent} from './home/home.component';
 import { NavbarComponent} from './navbar/navbar.component';
 import { ProjectComponent} from './project/project.component';
 import { ProjectService} from './project/project.service';
-import { FooterComponent} from './footer/footer.component';
 import { SearchPipe} from './shared/search.pipe';
 import { ProjectConfigurationComponent} from './project-configuration/project-configuration.component';
 import { ProjectConfigurationService} from './project-configuration/project-configuration.service';
 import { StorageService} from './shared/storage.service';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
-
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { ApplicationConstants} from './shared/applicatins-contants';
 import { IssueComponent } from './issue/issue.component';
+import { FileUploadService} from './shared/file-upload.service';
+import { FooterComponent } from './footer/footer.component';
 import { SearchComponent } from './search/search.component';
+import { ImagePipe} from './shared/image.pipe';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { SearchComponent } from './search/search.component';
     ProjectDetailsComponent,
     IssueComponent,
     FooterComponent,
-    SearchComponent
+    SearchComponent,
+    ImagePipe
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,8 @@ import { SearchComponent } from './search/search.component';
     ProjectService,
     ProjectConfigurationService,
     StorageService,
-    ApplicationConstants
+    ApplicationConstants,
+    FileUploadService
   ],
   bootstrap: [AppComponent]
 })

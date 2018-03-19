@@ -8,7 +8,6 @@ import scrumweb.dto.projectfield.CheckBoxDto;
 import scrumweb.projectfield.domain.CheckBox;
 import scrumweb.projectfield.domain.CheckBoxContainer;
 import scrumweb.projectfield.domain.ProjectField.FieldType;
-import scrumweb.projectfield.repository.CheckBoxRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,11 +28,11 @@ public class CheckBoxContainerAsm implements ProjectFieldAsm<CheckBoxContainer, 
     public CheckBoxContainerDto createDtoObject(CheckBoxContainer projectField) {
         Set<CheckBoxDto> checkBoxes = projectField.getCheckBoxes().stream().map(checkBox -> fieldElementsAsm.convertToDtoObject(checkBox)).collect(Collectors.toSet());
         return new CheckBoxContainerDto(
-                projectField.getId(),
-                projectField.getFieldType().toString(),
-                projectField.getName(),
-                projectField.getIsRequired(),
-                checkBoxes
+            projectField.getId(),
+            projectField.getFieldType().toString(),
+            projectField.getName(),
+            projectField.getIsRequired(),
+            checkBoxes
         );
     }
 }

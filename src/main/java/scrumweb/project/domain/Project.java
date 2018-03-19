@@ -38,6 +38,7 @@ public class Project {
 //    @Column(unique = true)
     private UserAccount owner;
 
+
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Issue> issues;
 

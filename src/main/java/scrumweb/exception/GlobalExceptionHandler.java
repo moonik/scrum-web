@@ -39,4 +39,10 @@ public class GlobalExceptionHandler {
     public String handleUserAlreadyExistsException(Exception ex){
         return ex.getMessage();
     }
+
+    @ExceptionHandler(EmptyFileException.class)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public String handleEmptyFileException(Exception ex) {
+        return ex.getMessage();
+    }
 }

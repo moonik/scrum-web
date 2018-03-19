@@ -5,13 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import scrumweb.dto.user.UserProfileDto;
-import scrumweb.user.account.domain.UserAccount;
 
 import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class ProjectDto {
 
     private Long id;
@@ -32,7 +32,7 @@ public class ProjectDto {
         this.owner = owner;
     }
 
-    public ProjectDto(String name, String description, String icon, String projectKey){
+    public ProjectDto(String name, String description, String icon, String projectKey) {
         this.name = name;
         this.projectKey = projectKey;
         this.description = description;
