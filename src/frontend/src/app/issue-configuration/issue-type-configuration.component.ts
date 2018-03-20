@@ -14,4 +14,9 @@ import { Component, OnInit } from '@angular/core';
     public addNewType() {
       this.types.push({id: null});
     }
+
+    public removeType(type: any) {
+      let index = this.types.indexOf(type);
+      this.types.splice(index, 1);
+    }
   }

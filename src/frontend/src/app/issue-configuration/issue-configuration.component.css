@@ -11,6 +11,14 @@
     margin-bottom: 15px;
 }
 
+.type-form {
+    margin-top: 15px !important;
+}
+
+.issue-type {
+    margin-left: 10px !important;
+}
+
 .field-creation-form {
     border-bottom: 0.5px black solid;
     width: 50%;
@@ -56,10 +64,14 @@
     display: table-cell !important;
 }
 
-.cel2 {
-    margin-left: 200px !important;
+.cel1 {
+    width: 70em;
 }
 
-.cel1 {
-    width: 100em;
+.cel2 {
+    margin-right: 25px;
+}
+
+.chars-length {
+    width: 75px !important;
 }
