@@ -46,14 +46,9 @@ public class IssueController {
         return ResponseEntity.status(issueService.assignToIssue(id, username)).build();
     }
 
-//    @PostMapping("/{id}/request/{username}/accept")
-//    public ResponseEntity<?> acceptAssignRequest(@PathVariable Long id, @PathVariable String username) {
-//        return ResponseEntity.status(issueService.acceptAssignRequest(id, username)).build();
-//    }
-//
-//    @DeleteMapping("/{id}/request/{username}/decline")
-//    public ResponseEntity<?>declineAssignRequest(@PathVariable Long id, @PathVariable String username) {
-//        return ResponseEntity.status(issueService.declineAssignRequest(id, username)).build();
-//    }
+    @DeleteMapping("/{id}/assign/{username}")
+    public ResponseEntity<?> removeFromIssue(@PathVariable Long id, @PathVariable String username) {
+        return ResponseEntity.status(issueService.removeFromIssue(id, username)).build();
+    }
 
 }

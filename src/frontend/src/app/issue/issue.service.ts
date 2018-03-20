@@ -29,11 +29,7 @@ export class IssueService {
     return this._http.post(this._URL + id + '/assign/' + username, null);
   }
 
-  // acceptAssignRequest(username: string, id: number) {
-  //   return this._http.post(this._URL + id + '/request/' + username + '/accept', null);
-  // }
-  //
-  // declineAssignRequest(username: string, id: number) {
-  //   return this._http.delete(this._URL + id + '/request/' + username + '/decline');
-  // }
+  removeFromIssue(username: string, id: number) {
+    return this._http.delete(this._URL + id + '/assign/' + username);
+  }
 }

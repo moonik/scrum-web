@@ -18,6 +18,7 @@ export class ProjectDetailsComponent implements OnInit {
   public projectDetails: ProjectDetailsDto = new ProjectDetailsDto();
   public selectedIssue: IssueDetailsDto;
   public loading = false;
+  projectMembers: Array<any> = [];
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _projectDetailsService: ProjectDetailsService,
@@ -30,6 +31,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.getProjectDetails();
+    this.getAssignees();
   }
 
   public selectIssue(issueId: number) {
@@ -66,31 +68,36 @@ export class ProjectDetailsComponent implements OnInit {
     this.selectIssue(issueDto.id);
   }
 
-  onAssignToIssue() {
-    this._issueService.assignToIssue(this.selectedIssue.id, localStorage.getItem('currentUser'))
+  onAssignToIssue(username: string) {
+    if (!username) {
+      username = localStorage.getItem('currentUser');
+    }
+    this._issueService.assignToIssue(this.selectedIssue.id, username)
       .subscribe(() => {
         this.ngOnInit();
       });
   }
 
   checkAssignees(): boolean {
-    return !this.selectedIssue.assignees.map(a => a.username).includes(localStorage.getItem('currentUser'));
+    return !this.selectedIssue.assignees.map(a => a.username).includes(localStorage.getItem('currentUser'))
+      && this.projectDetails.projectDto.members.map(m => m.username).includes(localStorage.getItem('currentUser'));
   }
 
   isOwner(): boolean {
     return this.selectedIssue.reporter.username === localStorage.getItem('currentUser');
   }
 
-  // onAcceptAssign(username: string) {
-  //   this._issueService.acceptAssignRequest(username, this.selectedIssue.id)
-  //     .subscribe( () => this.ngOnInit());
-  // }
-  //
-  // onDeclineAssign(username: string) {
-  //   this._issueService.declineAssignRequest(username, this.selectedIssue.id)
-  //     .subscribe( () => this.ngOnInit());
-  // }
-  manageAssignees() {
+  getAssignees() {
+    return this._issueService.getAssignees(this.projectKey)
+      .subscribe(data => this.projectMembers = data);
+  }
 
+  onRemoveFromAssign(username: string) {
+    this._issueService.removeFromIssue(username, this.selectedIssue.id)
+      .subscribe( () => this.ngOnInit());
+  }
+
+  isAssigned(username: string) {
+    return !this.selectedIssue.assignees.map(a => a.username).includes(username);
   }
 }

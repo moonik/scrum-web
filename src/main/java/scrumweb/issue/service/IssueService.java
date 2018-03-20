@@ -116,20 +116,16 @@ public class IssueService {
             }
     }
 
-//    public HttpStatus acceptAssignRequest(Long id, String username) {
-//        Issue issue = issueRepository.findOne(id);
-//        UserAccount user = userAccountRepository.findByUsername(username);
-//
-//        issue.getAssignees().add(user);
-//        issueRepository.save(issue);
-//        return HttpStatus.OK;
-//    }
-//
-//    public HttpStatus declineAssignRequest(Long id, String username) {
-//        Issue issue = issueRepository.findOne(id);
-//        UserAccount user = userAccountRepository.findByUsername(username);
-//
-//        issueRepository.save(issue);
-//        return HttpStatus.OK;
-//    }
+    public HttpStatus removeFromIssue(Long id, String username) {
+        Issue issue = issueRepository.findOne(id);
+        UserAccount user = userAccountRepository.findByUsername(username);
+
+        if (checkIfMember(username, issue)) {
+            issue.getAssignees().remove(user);
+            issueRepository.save(issue);
+            return HttpStatus.OK;
+        } else {
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
 }
