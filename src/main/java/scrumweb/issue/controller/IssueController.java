@@ -7,11 +7,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import scrumweb.dto.fieldcontent.FieldsContentCollector;
 import scrumweb.dto.issue.IssueDetailsDto;
+import scrumweb.dto.issue.IssueTypeDto;
 import scrumweb.issue.service.IssueService;
+
+import java.util.Set;
 
 import static scrumweb.common.ApplicationConstants.API_URL;
 
@@ -32,5 +36,15 @@ public class IssueController {
     @ResponseStatus(HttpStatus.OK)
     public IssueDetailsDto getDetails(@PathVariable Long id) {
         return issueService.getDetails(id);
+    }
+
+    @PostMapping("/types/{projectKey}")
+    public Set<IssueTypeDto> createIssueType(@PathVariable String projectKey,@RequestParam Set<IssueTypeDto> issueTypes) {
+        return issueService.createIssueType(projectKey, issueTypes);
+    }
+
+    @GetMapping("/types/{projectKey}")
+    public Set<IssueTypeDto> getIssueTypes(@PathVariable String projectKey) {
+        return issueService.getIssueTypes(projectKey);
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import scrumweb.dto.fieldcontent.FieldContentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.issue.IssueDto;
+import scrumweb.dto.issue.IssueTypeDto;
 import scrumweb.dto.user.UserProfileDto;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.Issue.Priority;

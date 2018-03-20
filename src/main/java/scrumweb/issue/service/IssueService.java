@@ -9,6 +9,7 @@ import scrumweb.common.asm.UserProfileAsm;
 import scrumweb.common.asm.fieldcontent.FieldContentConverter;
 import scrumweb.dto.fieldcontent.FieldContentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
+import scrumweb.dto.issue.IssueTypeDto;
 import scrumweb.dto.user.UserProfileDto;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
@@ -24,7 +25,9 @@ import scrumweb.user.account.repository.UserAccountRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,6 +43,7 @@ public class IssueService {
     private ProjectRepository projectRepository;
     private UserProfileAsm userProfileAsm;
     private FieldContentConverter fieldContentAsm;
+    private IssueTypeRepository issueTypeRepository;
 
     public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String projectKey) {
         final Project project = projectRepository.findByKey(projectKey);
@@ -68,6 +72,27 @@ public class IssueService {
         IssueDetailsDto issueDetailsDto = issueAsm.createIssueDetailsDto(issue, assignees, reporter);
         issueDetailsDto.setFieldContents(fieldsContentsDto);
         return issueDetailsDto;
+    }
+
+    public Set<IssueTypeDto> createIssueType(String projectKey, Set<IssueTypeDto> issueTypes) {
+        Project project = projectRepository.findByKey(projectKey);
+        return convertIssueTypes(issueTypeRepository.save(convertIssueTypes(issueTypes, project)));
+    }
+
+    public Set<IssueTypeDto> getIssueTypes(String projectKey) {
+        return convertIssueTypes(projectRepository.findByKey(projectKey).getIssueTypes());
+    }
+
+    private Set<IssueType> convertIssueTypes(Set<IssueTypeDto> issueType, Project project) {
+        return issueType.stream()
+                .map(type -> new IssueType(type.getIssueType(), project, false))
+                .collect(Collectors.toSet());
+    }
+
+    private Set<IssueTypeDto> convertIssueTypes(Collection<IssueType> issueTypes) {
+        return issueTypes.stream()
+                .map(type -> new IssueTypeDto(type.getId(), type.getName(), type.getIsDefault()))
+                .collect(Collectors.toSet());
     }
 
     private Set<String> extractUserNames(Set<UserProfileDto> userProfileDtos) {

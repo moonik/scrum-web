@@ -103,7 +103,7 @@ public class ProjectService {
 
     private Set<IssueType> createIssueTypes(Project project) {
         return Arrays.stream(DEFAULT_ISSUE_TYPES)
-                .map(type -> new IssueType(type, project))
+                .map(type -> new IssueType(type, project, true))
                 .collect(Collectors.toSet());
     }
 
