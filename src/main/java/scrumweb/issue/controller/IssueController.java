@@ -39,7 +39,7 @@ public class IssueController {
     }
 
     @PostMapping("/types/{projectKey}")
-    public Set<IssueTypeDto> createIssueType(@PathVariable String projectKey,@RequestParam Set<IssueTypeDto> issueTypes) {
+    public Set<IssueTypeDto> createIssueType(@PathVariable String projectKey, @RequestBody Set<IssueTypeDto> issueTypes) {
         return issueService.createIssueType(projectKey, issueTypes);
     }
 

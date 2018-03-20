@@ -1,1 +1,6 @@
-<a class="create-new-field" id="create-new-field" (click)="addNewType()"><b>Create new type</b></a>
+<div class="issue-type-configuration" style="float:right;">
+    <a class="create-new-type" id="create-new-type" (click)="addNewType()"><b>Create new type</b></a>
+    <form *ngFor="let type of types">
+        <input name="issue-type" [(ngModel)]="type.issueType"> 
+    </form>
+</div>

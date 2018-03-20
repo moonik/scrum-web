@@ -11,8 +11,7 @@ import { Component, OnInit } from '@angular/core';
 
     constructor(){}
 
-    public addNewType(type: string) {
+    public addNewType() {
       this.types.push({id: null});
     }
-
   }

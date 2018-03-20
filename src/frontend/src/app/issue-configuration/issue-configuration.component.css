@@ -1,11 +1,11 @@
-#create-new-field:hover {
+#create-new-field:hover, #create-new-type:hover {
     border: 0.5px black solid;
     border-radius: 5px;
     background-color: rgb(222, 226, 226);
     cursor: pointer;
 }
 
-#create-new-field {
+#create-new-field, #create-new-type {
     padding: 10px;
     margin: 5px;
     margin-bottom: 15px;
@@ -46,4 +46,8 @@
 
 .params-elements {
     margin: 10px !important;
+}
+
+.issue-type-configuration {
+    float: right;
 }
