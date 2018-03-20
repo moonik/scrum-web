@@ -66,27 +66,31 @@ export class ProjectDetailsComponent implements OnInit {
     this.selectIssue(issueDto.id);
   }
 
-  onAddtoIssue() {
-    this._issueService.requestAssign(this.selectedIssue.id, localStorage.getItem('currentUser'))
+  onAssignToIssue() {
+    this._issueService.assignToIssue(this.selectedIssue.id, localStorage.getItem('currentUser'))
       .subscribe(() => {
         this.ngOnInit();
       });
   }
 
   checkAssignees(): boolean {
-    return !this.selectedIssue.assignees.map(a => a.username).includes(localStorage.getItem('currentUser'))
-       && !this.selectedIssue.requesters.map(a => a.username).includes(localStorage.getItem('currentUser'));
+    return !this.selectedIssue.assignees.map(a => a.username).includes(localStorage.getItem('currentUser'));
   }
 
   isOwner(): boolean {
     return this.selectedIssue.reporter.username === localStorage.getItem('currentUser');
   }
 
-  onDeclineAssign() {
-
-  }
-
-  onAcceptAssign() {
+  // onAcceptAssign(username: string) {
+  //   this._issueService.acceptAssignRequest(username, this.selectedIssue.id)
+  //     .subscribe( () => this.ngOnInit());
+  // }
+  //
+  // onDeclineAssign(username: string) {
+  //   this._issueService.declineAssignRequest(username, this.selectedIssue.id)
+  //     .subscribe( () => this.ngOnInit());
+  // }
+  manageAssignees() {
 
   }
 }

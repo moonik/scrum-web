@@ -2,6 +2,7 @@ package scrumweb.issue.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import scrumweb.common.SecurityContextService;
 import scrumweb.common.asm.IssueAsm;
@@ -21,6 +22,8 @@ import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
 import java.util.HashSet;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -63,10 +66,9 @@ public class IssueService {
     public IssueDetailsDto getDetails(Long id) {
         Issue issue = issueRepository.findOne(id);
         Set<UserProfileDto> assignees = issue.getAssignees().stream().map(userAccount -> userProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile())).collect(Collectors.toSet());
-        Set<UserProfileDto> requesters = issue.getRequesters().stream().map(userAccount -> userProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile())).collect(Collectors.toSet());
         UserProfileDto reporter = userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
         Set<FieldContentDto> fieldsContentsDto = issue.getFieldContents().stream().map(fieldContent -> fieldContentAsm.createDtoObject(fieldContent)).collect(Collectors.toSet());
-        IssueDetailsDto issueDetailsDto = issueAsm.createIssueDetailsDto(issue, assignees, requesters, reporter);
+        IssueDetailsDto issueDetailsDto = issueAsm.createIssueDetailsDto(issue, assignees, reporter);
         issueDetailsDto.setFieldContents(fieldsContentsDto);
         return issueDetailsDto;
     }
@@ -91,21 +93,43 @@ public class IssueService {
             .orElse(null);
     }
 
-    public HttpStatus addRequestToJoin(Long id, String username) {
-        try {
+    private boolean checkIfMember(String username, Issue issue) {
+         return projectRepository.findAll().stream()
+             .filter(p -> p.getIssues().contains(issue))
+             .reduce((a, b) -> null)
+             .map(project2 -> project2.getMembers().stream()
+                 .map(m -> m.getUserAccount().getUsername())
+                 .collect(Collectors.toList()).contains(username))
+             .orElse(false);
+    }
+
+    public HttpStatus assignToIssue(Long id, String username) {
             Issue issue = issueRepository.findOne(id);
             UserAccount user = userAccountRepository.findByUsername(username);
-            if (issue.getReporter().equals(user)) {
+
+            if (checkIfMember(username, issue)) {
                 issue.getAssignees().add(user);
                 issueRepository.save(issue);
                 return HttpStatus.OK;
             } else {
-                issue.getRequesters().add(user);
-                issueRepository.save(issue);
-                return HttpStatus.OK;
+                return HttpStatus.BAD_REQUEST;
             }
-        } catch (NullPointerException npe) {
-            return HttpStatus.NOT_FOUND;
-        }
     }
+
+//    public HttpStatus acceptAssignRequest(Long id, String username) {
+//        Issue issue = issueRepository.findOne(id);
+//        UserAccount user = userAccountRepository.findByUsername(username);
+//
+//        issue.getAssignees().add(user);
+//        issueRepository.save(issue);
+//        return HttpStatus.OK;
+//    }
+//
+//    public HttpStatus declineAssignRequest(Long id, String username) {
+//        Issue issue = issueRepository.findOne(id);
+//        UserAccount user = userAccountRepository.findByUsername(username);
+//
+//        issueRepository.save(issue);
+//        return HttpStatus.OK;
+//    }
 }

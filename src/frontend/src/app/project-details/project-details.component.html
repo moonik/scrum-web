@@ -47,21 +47,24 @@
 
     <div>
       <div>
-        <button class="btn btn-primary" *ngIf=checkAssignees() (click)="onAddtoIssue()">Assign me to issue</button>
+        <button class="btn btn-primary" *ngIf=checkAssignees() (click)="onAssignToIssue()">Assign me to issue</button>
       </div>
-      <div class="requestsManager" *ngIf=isOwner()>
-        <h6><b>Members:</b></h6>
-        <div *ngIf="selectedIssue.requesters; else noRequesters">
-          <div class="requestTable" *ngFor="let requests of selectedIssue.requesters">
-            <div class="col-1-details">{{requests.username}}</div>
-            <div class="col-2-details"><button class="btn btn-success" (click)="onAcceptAssign()">Accept</button></div>
-            <div class="col-3-details"><button class="btn btn-warning" (click)="onDeclineAssign()">Decline</button></div>
-          </div>
-        </div>
-        <ng-template #noRequesters>
-          No one wants to join
-        </ng-template>
+      <div>
+        <button class="btn btn-warning" *ngIf=isOwner() (click)="manageAssignees()">Manage assignees</button>
       </div>
+      <!--<div class="requestsManager" *ngIf=isOwner()>-->
+        <!--<h6><b>Members:</b></h6>-->
+        <!--<div *ngIf="selectedIssue.requesters.length; else noRequesters">-->
+          <!--<div class="requestTable" *ngFor="let request of selectedIssue.requesters">-->
+            <!--<div class="col-1-details">{{request.username}}</div>-->
+            <!--<div class="col-2-details"><button class="btn btn-success" (click)="onAcceptAssign(request.username)">Accept</button></div>-->
+            <!--<div class="col-3-details"><button class="btn btn-warning" (click)="onDeclineAssign(request.username)">Decline</button></div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<ng-template #noRequesters>-->
+          <!--No one wants to join-->
+        <!--</ng-template>-->
+      <!--</div>-->
     </div>
   </div>
 

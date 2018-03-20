@@ -8,7 +8,6 @@ export class IssueDetailsDto {
     summary: string;
     description: string;
     assignees: Array<any> = [];
-    requesters: Array<any> = [];
     reporter: UserProfileDto;
     estimateTime: string;
     remainingTime: string;
