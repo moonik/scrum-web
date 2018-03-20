@@ -22,8 +22,7 @@ export class ProjectDetailsComponent implements OnInit {
   public loading: boolean = false;
   public issueId: number;
   public comments: IssueComment[] = [];
-  public commentForm: FormGroup;
-  public newComment: IssueComment;
+  public newComment: IssueComment = new IssueComment();
 
   constructor(private _activatedRoute: ActivatedRoute, private _projectDetailsService: ProjectDetailsService,
     private _issueService: IssueService, fb: FormBuilder) {
@@ -31,10 +30,10 @@ export class ProjectDetailsComponent implements OnInit {
         this.projectKey = params['projectKey'];
     });
     this.getProjectDetails();
-
-    this.commentForm = fb.group({
-      content:[null, [Validators.required]]
-    });
+    //
+    // this.commentForm = fb.group({
+    //   content:[null, [Validators.required]]
+    // });
 
   }
 
@@ -85,12 +84,12 @@ export class ProjectDetailsComponent implements OnInit {
       )
   }
 
-  public addcomment(){
+  public addComment(){
     return this._issueService.addComment(this.issueId, this.newComment)
       .subscribe(
         data => {
           this.comments.push(data);
-          this.newComment = null;
+          this.newComment.content = '';
         }
       );
   }

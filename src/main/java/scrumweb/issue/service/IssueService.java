@@ -95,17 +95,13 @@ public class IssueService {
                 .orElse(null);
     }
 
-    public IssueCommentDto addComment(String content, Long id){
+    public IssueCommentDto addComment(IssueCommentDto issueCommentDto, Long id){
         Issue issue = issueRepository.findOne(id);
         UserAccount commentOwner = securityContextService.getCurrentUserAccount();
 
         List<IssueComment> comments = issue.getComments();
 
-        IssueComment issueComment = new IssueComment();
-
-        issueComment.setContent(content.substring(1, content.length()-1));
-        issueComment.setCreatedDate(LocalDateTime.now());
-        issueComment.setOwner(commentOwner);
+        IssueComment issueComment = new IssueComment(commentOwner, issueCommentDto.getContent(), LocalDateTime.now());
 
         comments.add(issueComment);
 
