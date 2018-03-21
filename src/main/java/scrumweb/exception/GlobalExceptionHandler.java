@@ -45,4 +45,22 @@ public class GlobalExceptionHandler {
     public String handleEmptyFileException(Exception ex) {
         return ex.getMessage();
     }
+
+    @ExceptionHandler(RemoveFromProjectException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleMemberNotFoundException(Exception ex) {
+        return ex.getMessage();
+    }
+
+    @ExceptionHandler(MemberAlreadyAddedException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleMemberAlreadyAddedException(Exception ex) {
+        return ex.getMessage();
+    }
+
+    @ExceptionHandler(ProjectMemberAccessException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleProjectMemberAccessException(Exception ex) {
+        return ex.getMessage();
+    }
 }

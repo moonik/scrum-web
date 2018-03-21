@@ -40,13 +40,15 @@ public class ProjectController {
     }
 
     @PostMapping("/members/")
-    public ResponseEntity<?> addMember(@RequestBody ProjectMemberDto projectMemberDto) {
-        return ResponseEntity.status(projectService.addMember(projectMemberDto)).build();
+    @ResponseStatus(HttpStatus.OK)
+    public void addMember(@RequestBody ProjectMemberDto projectMemberDto) {
+        projectService.addMember(projectMemberDto);
     }
 
     @DeleteMapping("{id}/members/{username}")
-    public ResponseEntity<?> removeMember(@PathVariable Long id, @PathVariable String username) {
-        return ResponseEntity.status(projectService.removeMember(username, id)).build();
+    @ResponseStatus(HttpStatus.OK)
+    public void removeMember(@PathVariable Long id, @PathVariable String username) {
+        projectService.removeMember(username, id);
     }
 
     @PutMapping("/{id}")
@@ -85,17 +87,20 @@ public class ProjectController {
     }
 
     @PostMapping("/access")
-    public ResponseEntity <?> askForAccess(@RequestBody ProjectMemberDto projectMemberDto) {
-        return ResponseEntity.status(projectService.askForAccess(projectMemberDto)).build();
+    @ResponseStatus(HttpStatus.OK)
+    public void askForAccess(@RequestBody ProjectMemberDto projectMemberDto) {
+        projectService.askForAccess(projectMemberDto);
     }
 
     @DeleteMapping("{id}/requests/{member}")
-    public ResponseEntity <?> declineRequestForAccess(@PathVariable Long id, @PathVariable String member) {
-        return ResponseEntity.status(projectService.declineRequestForAccess(id, member)).build();
+    @ResponseStatus(HttpStatus.OK)
+    public void declineRequestForAccess(@PathVariable Long id, @PathVariable String member) {
+        projectService.declineRequestForAccess(id, member);
     }
 
     @PostMapping("/requests")
-    public ResponseEntity <?> acceptRequestForAccess(@RequestBody ProjectMemberDto projectMemberDto) {
-        return ResponseEntity.status(projectService.acceptRequestForAccess(projectMemberDto)).build();
+    @ResponseStatus(HttpStatus.OK)
+    public void acceptRequestForAccess(@RequestBody ProjectMemberDto projectMemberDto) {
+        projectService.acceptRequestForAccess(projectMemberDto);
     }
 }

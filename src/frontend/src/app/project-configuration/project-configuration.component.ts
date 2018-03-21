@@ -73,7 +73,7 @@ export class ProjectConfigurationComponent implements OnInit {
         this.project.members.splice(this.project.members.indexOf(member), 1);
         this.ngOnInit();
       }, error => {
-        if (error.status === 418) {
+        if (error.status !== 200) {
           this.error = 'You cannot remove project owner!';
         }
       });
