@@ -1,8 +1,7 @@
 <div class="issue-type-configuration">
     <a class="create-new-type" id="create-new-type" (click)="addNewType()"><b>Create new issue type</b></a>
     <form class="type-form" *ngFor="let type of types" (ngSubmit)="createType()">
-        <input class="issue-type" name="issue-type" [(ngModel)]="type.issueType" [hidden]="type.isDefault">
-        <span *ngIf="type.isDefault">{{type}}</span>
+        <input class="issue-type" name="issue-type" [(ngModel)]="type.issueType">
         <span class="fa fa-close" (click)="removeType(type)" *ngIf="type.isDefault"></span>
     </form>
     <button class="btn btn-primary field-submit" id="btn-create">Submit</button>

@@ -83,7 +83,7 @@ export class IssueFieldsConfigurationComponent implements OnInit {
   }
 
   public isValidGeneralData(formData: any) {
-    return formData.fieldType != '' && formData.fieldName != '';
+    return (formData.fieldType && formData.fieldName) && (formData.fieldType != '' && formData.fieldName != '');
   }
 
   public isParamsElements(fieldType: string) {

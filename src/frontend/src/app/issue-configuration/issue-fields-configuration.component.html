@@ -2,7 +2,7 @@
     <a class="create-new-field" id="create-new-field" (click)="addField()" *ngIf="showAddFieldButton()"><b>Create new field</b></a>
     <select name="issue-type" [(ngModel)]="chosenIssueType" (change)="fetchFields()">
       <option>{{ chooseIssueType }}</option>
-      <option *ngFor="let type of issueTypes">{{ type }}</option>
+      <option *ngFor="let type of issueTypes">{{ type.issueType }}</option>
       </select>
 </span>
 

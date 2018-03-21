@@ -3,6 +3,7 @@ package scrumweb.project.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import scrumweb.dto.issue.IssueTypeDto;
 import scrumweb.dto.issue.ItemAssignee;
 import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.common.SecurityContextService;
@@ -61,7 +62,7 @@ public class ProjectController {
 
     @GetMapping("/{key}/issue-types")
     @ResponseStatus(HttpStatus.OK)
-    public List<String> getIssueTypes(@PathVariable String key) {
+    public List<IssueTypeDto> getIssueTypes(@PathVariable String key) {
         return projectService.getIssueTypes(key);
     }
 }

@@ -7,6 +7,7 @@ import scrumweb.common.asm.IssueAsm;
 import scrumweb.common.asm.ProjectAsm;
 import scrumweb.common.asm.UserProfileAsm;
 import scrumweb.dto.issue.IssueDto;
+import scrumweb.dto.issue.IssueTypeDto;
 import scrumweb.dto.issue.ItemAssignee;
 import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.dto.project.ProjectDto;
@@ -86,10 +87,10 @@ public class ProjectService {
         return projectMemberDto;
     }
 
-    public List<String> getIssueTypes(String key) {
+    public List<IssueTypeDto> getIssueTypes(String key) {
         return projectRepository.findByKey(key).getIssueTypes()
                 .stream()
-                .map(IssueType::getName)
+                .map(type -> new IssueTypeDto(type.getId(), type.getName(), type.getIsDefault()))
                 .collect(Collectors.toList());
     }
 
