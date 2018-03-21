@@ -11,6 +11,7 @@ import scrumweb.common.asm.fieldcontent.FieldContentConverter;
 import scrumweb.dto.fieldcontent.FieldContentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.user.UserProfileDto;
+import scrumweb.exception.AssignToIssueException;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.fieldcontent.FieldContent;
@@ -103,29 +104,27 @@ public class IssueService {
              .orElse(false);
     }
 
-    public HttpStatus assignToIssue(Long id, String username) {
+    public void assignToIssue(Long id, String username) {
             Issue issue = issueRepository.findOne(id);
             UserAccount user = userAccountRepository.findByUsername(username);
 
             if (checkIfMember(username, issue)) {
                 issue.getAssignees().add(user);
                 issueRepository.save(issue);
-                return HttpStatus.OK;
             } else {
-                return HttpStatus.BAD_REQUEST;
+                throw new AssignToIssueException();
             }
     }
 
-    public HttpStatus removeFromIssue(Long id, String username) {
+    public void unAssignFromIssue(Long id, String username) {
         Issue issue = issueRepository.findOne(id);
         UserAccount user = userAccountRepository.findByUsername(username);
 
         if (checkIfMember(username, issue)) {
             issue.getAssignees().remove(user);
             issueRepository.save(issue);
-            return HttpStatus.OK;
         } else {
-            return HttpStatus.BAD_REQUEST;
+            throw new AssignToIssueException(username);
         }
     }
 }

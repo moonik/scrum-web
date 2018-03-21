@@ -1,7 +1,6 @@
 package scrumweb.issue.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,10 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import scrumweb.dto.fieldcontent.FieldsContentCollector;
 import scrumweb.dto.issue.IssueDetailsDto;
-import scrumweb.dto.issue.IssueDto;
 import scrumweb.issue.service.IssueService;
-
-import java.util.List;
 
 import static scrumweb.common.ApplicationConstants.API_URL;
 
@@ -42,13 +38,15 @@ public class IssueController {
     }
 
     @PostMapping("/{id}/assign/{username}")
-    public ResponseEntity<?> assignToIssue(@PathVariable Long id, @PathVariable String username) {
-        return ResponseEntity.status(issueService.assignToIssue(id, username)).build();
+    @ResponseStatus(HttpStatus.OK)
+    public void assignToIssue(@PathVariable Long id, @PathVariable String username) {
+        issueService.assignToIssue(id, username);
     }
 
     @DeleteMapping("/{id}/assign/{username}")
-    public ResponseEntity<?> removeFromIssue(@PathVariable Long id, @PathVariable String username) {
-        return ResponseEntity.status(issueService.removeFromIssue(id, username)).build();
+    @ResponseStatus(HttpStatus.OK)
+    public void unAssignFromIssue(@PathVariable Long id, @PathVariable String username) {
+        issueService.unAssignFromIssue(id, username);
     }
 
 }

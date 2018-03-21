@@ -29,7 +29,7 @@ export class IssueService {
     return this._http.post(this._URL + id + '/assign/' + username, null);
   }
 
-  removeFromIssue(username: string, id: number) {
+  unAssignFromIssue(username: string, id: number) {
     return this._http.delete(this._URL + id + '/assign/' + username);
   }
 }
