@@ -56,7 +56,7 @@ public class Issue {
     @UpdateTimestamp
     private Timestamp lastUpdate;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "issue")
     private List<IssueComment> comments;
 
     public Issue(String summary, String description, Set<UserAccount> assignees, UserAccount reporter, String estimateTime, String remainingTime,

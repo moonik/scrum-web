@@ -2,13 +2,7 @@ package scrumweb.issue.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import scrumweb.dto.fieldcontent.FieldsContentCollector;
 import scrumweb.dto.issue.IssueCommentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
@@ -49,6 +43,12 @@ public class IssueController {
     @ResponseStatus(HttpStatus.OK)
     public List<IssueCommentDto> showComments(@PathVariable Long id){
         return issueService.getCommentsForIssue(id);
+    }
+
+    @DeleteMapping("/comments/delete/{commentId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteComment(@PathVariable Long commentId){
+        issueService.deleteComment(commentId);
     }
 
 }

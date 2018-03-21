@@ -15,6 +15,7 @@ import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueComment;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.fieldcontent.FieldContent;
+import scrumweb.issue.repository.IssueCommentRepository;
 import scrumweb.issue.repository.IssueRepository;
 import scrumweb.project.domain.Project;
 import scrumweb.projectfield.repository.ProjectFieldRepository;
@@ -42,6 +43,7 @@ public class IssueService {
     private FieldContentConverter fieldContentAsm;
     //private SearchResultsDto searchResultsDto;
     private IssueCommentAsm issueCommentAsm;
+    private IssueCommentRepository issueCommentRepository;
 
     public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String projectKey) {
         final Project project = projectRepository.findByKey(projectKey);
@@ -101,11 +103,11 @@ public class IssueService {
 
         List<IssueComment> comments = issue.getComments();
 
-        IssueComment issueComment = new IssueComment(commentOwner, issueCommentDto.getContent(), LocalDateTime.now());
+        IssueComment issueComment = new IssueComment(commentOwner, issueCommentDto.getContent(), LocalDateTime.now(), issue);
 
         comments.add(issueComment);
-
-        issueRepository.save(issue);
+        issue.setComments(comments);
+        issueCommentRepository.save(comments);
 
         return issueCommentAsm.fromIssueCommentToIssueCommentDto(issueComment, userProfileAsm.makeUserProfileDto(commentOwner, commentOwner.getUserProfile()));
     }
@@ -118,6 +120,12 @@ public class IssueService {
         return comments.stream()
                 .map(comment -> issueCommentAsm.fromIssueCommentToIssueCommentDto(comment, userProfileAsm.makeUserProfileDto(comment.getOwner(), comment.getOwner().getUserProfile())))
                 .collect(Collectors.toList());
+
+    }
+
+    public void deleteComment(Long commentId) {
+
+        issueCommentRepository.delete(commentId);
 
     }
 

@@ -25,9 +25,13 @@ public class IssueComment {
 
     private LocalDateTime createdDate;
 
-    public IssueComment(UserAccount owner, String content, LocalDateTime createdDate) {
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Issue issue;
+
+    public IssueComment(UserAccount owner, String content, LocalDateTime createdDate, Issue issue) {
         this.owner = owner;
         this.content = content;
         this.createdDate = createdDate;
+        this.issue = issue;
     }
 }
