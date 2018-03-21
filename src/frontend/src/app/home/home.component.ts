@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ProjectDto} from '../model/projectDto';
 import {HomeService} from './home.service';
-import {FileUploadService} from '../shared/file-upload.service';
 import {Router} from '@angular/router';
 import {StorageService} from '../shared/storage.service';
 
@@ -17,8 +16,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private _homeService: HomeService,
               private _router: Router,
-              private storage: StorageService,
-              private uploadService: FileUploadService) {
+              private storage: StorageService) {
     this.getAllOwnProjects();
   }
 
@@ -31,31 +29,6 @@ export class HomeComponent implements OnInit {
       .subscribe(
         data => {
           this.projects = data;
-          for (let i = 0; i < this.projects.length; i++) {
-            if (this.projects[i].icon != null) {
-              this.loadIcon(this.projects[i].icon, i);
-            }
-          }
-        }
-      );
-  }
-
-  createImageFromBlob(image: Blob, i: number) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => {
-      this.projects[i].image = reader.result;
-    }, false);
-
-    if (image) {
-      reader.readAsDataURL(image);
-    }
-  }
-
-  loadIcon(filename: string, i: number) {
-    return this.uploadService.loadFile(filename)
-      .subscribe(
-        data => {
-          this.createImageFromBlob(data, i);
         }
       );
   }
@@ -69,11 +42,11 @@ export class HomeComponent implements OnInit {
     this._router.navigate(['project/details/' + projectKey]);
   }
 
-  getCurrentUser(): string{
+  getCurrentUser(): string {
     return localStorage.getItem('currentUser');
   }
 
-  isOwner(owner: string): boolean{
+  isOwner(owner: string): boolean {
     return owner === this.getCurrentUser();
   }
 

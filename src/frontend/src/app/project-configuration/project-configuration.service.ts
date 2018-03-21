@@ -35,10 +35,6 @@ export class ProjectConfigurationService {
     return this._http.delete('project/' + id + '/members/' + member);
   }
 
-  changeProjectIcon(key: string, filename: string) {
-    return this._http.post('project/' + key + '/icon/' + filename, null);
-  }
-
   acceptRequestForAccess(member: ProjectMemberDto) {
     return this._http.post('project/requests', member);
   }

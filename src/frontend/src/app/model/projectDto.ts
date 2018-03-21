@@ -6,8 +6,7 @@ export class ProjectDto {
   name: string;
   projectKey: string;
   description: string;
-  icon: string;
-  image: any;
+  icon: any;
   owner: UserProfileDto[];
   members: ProjectMemberDto[];
   requests: ProjectMemberDto[];

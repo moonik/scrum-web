@@ -7,7 +7,6 @@ import {StorageService} from '../shared/storage.service';
 import {ProjectMemberDto} from '../model/projectMemberDto';
 
 import * as roles from '../constants/roles';
-import {FileUploadService} from '../shared/file-upload.service';
 
 @Component({
   selector: 'app-project-configuration',
@@ -17,20 +16,19 @@ import {FileUploadService} from '../shared/file-upload.service';
 
 export class ProjectConfigurationComponent implements OnInit {
 
-  users: UserDto[] = [];
-  project: ProjectDto = new ProjectDto();
-  roles = roles.default;
-  rolesTypes = Object.values(this.roles);
-  error: string;
-  icon: File = null;
-  loading = false;
-  goodIcon = true;
+  public users: UserDto[] = [];
+  public project: ProjectDto = new ProjectDto();
+  public roles = roles.default;
+  public rolesTypes = Object.values(this.roles);
+  public error: string;
+  public icon: File = null;
+  public loading = false;
+  public goodIcon = true;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private confService: ProjectConfigurationService,
-              private storageService: StorageService,
-              private uploadService: FileUploadService) {
+              private storageService: StorageService) {
   }
 
   ngOnInit() {
@@ -38,8 +36,9 @@ export class ProjectConfigurationComponent implements OnInit {
       this.router.navigate(['/home']);
     }
     this.project = this.storageService.getScope();
+
     if (this.project.icon == null) {
-     this.goodIcon = false;
+      this.goodIcon = false;
     }
     this.getAllUsers();
     this.error = '';
@@ -61,7 +60,7 @@ export class ProjectConfigurationComponent implements OnInit {
     member.role = role;
 
     this.confService.addMemberToProject(member)
-      .subscribe(data => {
+      .subscribe(() => {
           this.project.members.push(member);
           this.ngOnInit();
         }
@@ -70,58 +69,22 @@ export class ProjectConfigurationComponent implements OnInit {
 
   removeMemberFromProject(member: ProjectMemberDto) {
     this.confService.removeMemberFromProject(member.username, member.projectId)
-      .subscribe(data => {
-          this.project.members.splice(this.project.members.indexOf(member), 1);
-          this.ngOnInit();
-        }, error => {
+      .subscribe(() => {
+        this.project.members.splice(this.project.members.indexOf(member), 1);
+        this.ngOnInit();
+      }, error => {
         if (error.status === 418) {
-          this.error  = 'You cannot remove project owner!';
+          this.error = 'You cannot remove project owner!';
         }
       });
-  }
-
-  createImageFromBlob(image: Blob) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => {
-      this.project.image = reader.result;
-    }, false);
-
-    if (image) {
-      reader.readAsDataURL(image);
-    }
-  }
-
-  loadIcon(filename: string) {
-    return this.uploadService.loadFile(filename)
-      .subscribe(
-        data => {
-          this.createImageFromBlob(data);
-        }
-      );
   }
 
   chooseIcon(files: FileList) {
     this.icon = files.item(0);
     this.loading = true;
     this.goodIcon = true;
-    const oldIcon = this.project.icon;
 
-    this.uploadService.uploadFile(this.icon)
-      .subscribe(data => {
-          const link = data.json()['link'];
-          this.project.icon = link.substr(link.lastIndexOf('/') + 1);
-          this.confService.changeProjectIcon(this.project.projectKey, this.project.icon).subscribe();
-          this.loadIcon(this.project.icon);
-          if (oldIcon !== this.project.icon) {
-            this.uploadService.deleteFile(oldIcon).subscribe();
-          }
-          this.loading = false;
-        },
-        error => {
-          if (error.status !== 200) {
-            this.goodIcon = false;
-          }
-        });
+
   }
 
   acceptRequest(user: string, role: string) {

@@ -22,7 +22,6 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { ApplicationConstants} from './shared/applicatins-contants';
 import { IssueComponent } from './issue/issue.component';
-import { FileUploadService} from './shared/file-upload.service';
 import { FooterComponent } from './footer/footer.component';
 import { SearchComponent } from './search/search.component';
 
@@ -58,8 +57,7 @@ import { SearchComponent } from './search/search.component';
     ProjectService,
     ProjectConfigurationService,
     StorageService,
-    ApplicationConstants,
-    FileUploadService
+    ApplicationConstants
   ],
   bootstrap: [AppComponent]
 })

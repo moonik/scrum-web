@@ -22,9 +22,7 @@ export class ProjectComponent implements OnInit {
 
   constructor(fb: FormBuilder,
               private router: Router,
-              private projectService: ProjectService,
-              httpClient: HttpClient,
-              private fileUploadService: FileUploadService) {
+              private projectService: ProjectService) {
 
     this.projectForm = fb.group({
       name: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
@@ -41,7 +39,7 @@ export class ProjectComponent implements OnInit {
   createproject() {
     this.projectService.createProject(this.projectDto)
       .subscribe(
-        success => {
+        () => {
           this.router.navigate(['/home']);
         },
         error => {
@@ -55,24 +53,8 @@ export class ProjectComponent implements OnInit {
     this.icon = files.item(0);
     this.loading = true;
     this.goodIcon = true;
-    console.log(this.projectDto.icon);
-    if (this.projectDto.icon != null) {
-      this.fileUploadService.deleteFile(this.projectDto.icon).subscribe(data => {
-      });
-    }
-    this.fileUploadService.uploadFile(this.icon)
-      .subscribe(data => {
-          const link = data.json()['link'];
-          this.projectDto.icon = link.substr(link.lastIndexOf('/') + 1);
-          this.loading = false;
-        },
-        error => {
-          if (error.status !== 200) {
-            this.fileUploadService.deleteFile(this.projectDto.icon).subscribe(data => {
-            });
-            this.goodIcon = false;
-          }
-        });
+    console.log('load icon');
+    this.loading = false;
   }
 
   checkProjectNameLength(): boolean {

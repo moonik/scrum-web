@@ -6,7 +6,8 @@ import {ApplicationConstants} from './applicatins-contants';
 @Injectable()
 export class HttpClient {
 
-  constructor(private _http: Http, private _constants: ApplicationConstants) {}
+  constructor(private _http: Http, private _constants: ApplicationConstants) {
+  }
 
   private createRequestOptionsArgs(): RequestOptionsArgs {
     const headers = new Headers();
@@ -33,16 +34,4 @@ export class HttpClient {
     return this._http.delete(this._constants.API_URL + url, this.createRequestOptionsArgs());
   }
 
-  upload(url: string, formData: any): Observable<Response> {
-    const headers = new Headers();
-    headers.append('Authorization', localStorage.getItem('token'));
-    return this._http.post(this._constants.API_URL + url, formData, {headers: headers});
-  }
-
-  load(url: string) {
-    const headers = new Headers();
-    headers.append('Authorization', localStorage.getItem('token'));
-    return this._http.get(this._constants.API_URL + url, {headers: headers, responseType: ResponseContentType.Blob})
-      .map((res: Response) => res.blob());
-  }
 }

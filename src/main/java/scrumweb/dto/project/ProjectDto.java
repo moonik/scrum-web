@@ -10,7 +10,8 @@ import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class ProjectDto {
 
     private Long id;
@@ -35,7 +36,7 @@ public class ProjectDto {
         this.requests = requests;
     }
 
-    public ProjectDto(String name, String description, String icon, String projectKey){
+    public ProjectDto(String name, String description, String icon, String projectKey) {
         this.name = name;
         this.projectKey = projectKey;
         this.description = description;

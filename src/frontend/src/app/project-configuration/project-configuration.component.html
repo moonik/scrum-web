@@ -14,11 +14,12 @@
         {{project.name}}
       </td>
       <td align="center" rowspan="2" class="icon"><h6>Icon: </h6>
-        <input *ngIf="goodIcon && !loading" type="image" src="{{project.image}}" (click)="changeIcon.click()" alt=""/>
+        <input *ngIf="goodIcon && !loading" type="image" [src]=""
+               (click)="changeIcon.click()" alt=""/>
         <input *ngIf="!goodIcon && !loading" type="image" src="../../assets/images/error.gif"
                (click)="changeIcon.click()" alt=""/>
-        <input *ngIf="loading" type="image" src="../../assets/images/loading_boobs.gif" (click)="changeIcon.click()"
-               alt=""/>
+        <input *ngIf="loading" type="image" src="../../assets/images/loading_boobs.gif"
+               (click)="changeIcon.click()" alt=""/>
         <input type="file" #changeIcon
                style="display: none;"
                (change)="chooseIcon($event.target.files)"

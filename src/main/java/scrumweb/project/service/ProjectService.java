@@ -144,15 +144,6 @@ public class ProjectService {
         } else return HttpStatus.I_AM_A_TEAPOT;
     }
 
-    public HttpStatus changeProjectIcon(String filename, String key) {
-        if (StorageUtils.checkFile(filename, location.toPath())) {
-            Project project = projectRepository.findByKey(key);
-            project.setIcon(filename);
-            projectRepository.save(project);
-            return HttpStatus.OK;
-        } else return HttpStatus.NOT_FOUND;
-    }
-
     public SearchResultsDto findProjectsAndIssuesByKeyQuery(String param) {
         return new SearchResultsDto(getIssues(param), getProjects(param));
     }
