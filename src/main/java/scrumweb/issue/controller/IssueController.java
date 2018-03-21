@@ -2,6 +2,7 @@ package scrumweb.issue.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,5 +47,10 @@ public class IssueController {
     @GetMapping("/types/{projectKey}")
     public Set<IssueTypeDto> getIssueTypes(@PathVariable String projectKey) {
         return issueService.getIssueTypes(projectKey);
+    }
+
+    @DeleteMapping("/types/{id}")
+    public void deleteIssueType(@PathVariable Long id) {
+        issueService.deleteIssueType(id);
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { ProjectFieldDto } from '../model/project-fields/ProjectFieldDto';
 import { CheckBoxContainerDto } from '../model/project-fields/CheckBoxContainerDto';
 import { CheckBoxDto } from '../model/project-fields/CheckBoxDto';
@@ -26,23 +26,34 @@ export class IssueFieldsConfigurationComponent implements OnInit {
   public oldFields: string = '';
   public fieldTypes = fieldTypes.default;
   public fieldTypesArray = Object.values(this.fieldTypes);
-  private issueType = '';
-  private projectKey = '';
+  public chooseIssueType = 'Choose issue type...';
+  public chosenIssueType = '';
+  @Input()
+  public issueTypes;
+  @Input()
+  private projectKey;
 
-  constructor(private _activatedRoute: ActivatedRoute, private _fieldCreator: FieldCreator, private _issueConfService: IssueConfigurationService) {
-    this._activatedRoute.params.subscribe((params: Params) => {
-        this.projectKey = params['projectKey'];
-        this.issueType = params['issueType']
-    });
+  constructor(private _activatedRoute: ActivatedRoute, private _fieldCreator: FieldCreator, private _issueConfService: IssueConfigurationService) {}
+
+  ngOnInit() {}
+
+  ngOnChanges(changes) {
+    this.fetchFields();
   }
 
-  ngOnInit() {
-    this._issueConfService.getProjectFields(this.projectKey, this.issueType)
+  public fetchFields() {
+    if (this.chosenIssueType && this.chosenIssueType !== this.chooseIssueType) {
+      this._issueConfService.getProjectFields(this.projectKey, this.chosenIssueType)
       .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data) });
+    }
   }
 
   public addField() {
     this.fields.push({id: null, submitted: false, elements: []});
+  }
+
+  public showAddFieldButton() {
+    return this.chosenIssueType !== this.chooseIssueType && this.chosenIssueType !== '';  
   }
 
   public addFieldElement(field: any, id: number) {
@@ -53,7 +64,7 @@ export class IssueFieldsConfigurationComponent implements OnInit {
     let index = this.fields.indexOf(field);
     this.fields.splice(index, 1);
     if (field.id != null) {
-      this._issueConfService.removeField(field.id, this.projectKey, this.issueType)
+      this._issueConfService.removeField(field.id, this.projectKey, this.chosenIssueType)
         .subscribe(data => { this.fields = this.fields.concat(data); this.oldFields = JSON.stringify(data) });
     }
   }
@@ -99,7 +110,7 @@ export class IssueFieldsConfigurationComponent implements OnInit {
 
   public createFields() {
     if (this.filterOut().length > 0) {
-      this._issueConfService.createFields(this.collectFields(), this.projectKey, this.issueType)
+      this._issueConfService.createFields(this.collectFields(), this.projectKey, this.chosenIssueType)
         .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data) });
       this._fieldCreator.projectFieldsCollector = new ProjectFieldsCollector();
     }

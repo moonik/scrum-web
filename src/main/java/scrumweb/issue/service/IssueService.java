@@ -114,4 +114,8 @@ public class IssueService {
                 .findFirst()
                 .orElse(null);
     }
+
+    public void deleteIssueType(Long id) {
+        issueTypeRepository.delete(id);
+    }
 }

@@ -26,6 +26,16 @@ export class IssueConfigurationService {
             .map(res => res.json());
     }
 
+    public createType(data: any, projectKey: string) {
+        return this._http.post('project/issue/types/'+projectKey, data)
+            .map(res => res.json());
+    }
+
+    public deleteType(id: number) {
+        return this._http.delete('project/issue/types/'+id)
+            .map(res => res.status);
+    }
+
     private createRequestParams(data: Object): string {
         let params = Object.entries(data).map(([key, val]) => `${key}=${val}`).join('&');
         return 'project-field?' + params;

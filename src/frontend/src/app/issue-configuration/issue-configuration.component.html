@@ -1,8 +1,8 @@
 <div class="table-configuration">
     <div class="cel1">
-        <app-issue-fields-configuration></app-issue-fields-configuration>
+        <app-issue-fields-configuration [issueTypes]="issueTypes" [projectKey]="projectKey"></app-issue-fields-configuration>
     </div>
     <div class="cel2">
-        <app-issue-type-configuration></app-issue-type-configuration>
+        <app-issue-type-configuration [types]="issueTypes" [projectKey]="projectKey"></app-issue-type-configuration>
     </div>
 </div>

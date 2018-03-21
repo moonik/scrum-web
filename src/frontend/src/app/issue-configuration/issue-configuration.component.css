@@ -11,6 +11,11 @@
     margin-bottom: 15px;
 }
 
+.field-submit {
+    margin-top: 5px;
+    margin-left: 25px;
+}
+
 .type-form {
     margin-top: 15px !important;
 }

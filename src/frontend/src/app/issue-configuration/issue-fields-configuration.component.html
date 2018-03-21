@@ -1,4 +1,10 @@
-<a class="create-new-field" id="create-new-field" (click)="addField()"><b>Create new field</b></a>
+<span>
+    <a class="create-new-field" id="create-new-field" (click)="addField()" *ngIf="showAddFieldButton()"><b>Create new field</b></a>
+    <select name="issue-type" [(ngModel)]="chosenIssueType" (change)="fetchFields()">
+      <option>{{ chooseIssueType }}</option>
+      <option *ngFor="let type of issueTypes">{{ type }}</option>
+      </select>
+</span>
 
 <form class="field-creation-form"  *ngFor="let field of fields" (ngSubmit)="submitField(field)">
   <div [hidden]="field.submitted">
