@@ -94,4 +94,20 @@ export class ProjectDetailsComponent implements OnInit {
       );
   }
 
+  getCurrentUser(): string{
+    return localStorage.getItem('currentUser');
+  }
+
+  isOwner(owner: string): boolean{
+    return owner === this.getCurrentUser();
+  }
+
+  public mouseEnter(comment: any) {
+    comment.hover = true;
+
+  }
+
+  public mouseLeave(comment: any) {
+    comment.hover = false;
+  }
 }

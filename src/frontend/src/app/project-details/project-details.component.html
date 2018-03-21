@@ -55,19 +55,28 @@
       <p align="center"><b>{{ comments.length }} comment(s)</b></p>
 
       <div class="comments-found" *ngIf="comments.length > 0">
-        <table>
+        <table width="100%">
           <tr>
-            <th width="70%">Content</th>
+            <th width="60%">Content</th>
             <th width="15%">Author</th>
             <th width="15%">Posted</th>
+            <th width="5%"></th>
+            <th width="5%"></th>
           </tr>
-          <tbody *ngFor="let comment of comments">
-          <tr>
-            <td>{{comment.content}}</td>
-            <td>{{comment.owner.username}}</td>
-            <td>{{comment.createdDate}}</td>
-            <br>
-          </tr>
+          <tbody *ngFor="let comment of comments" (mouseenter)="mouseEnter(comment)" (mouseleave)="mouseLeave(comment)">
+            <tr class="single-comment">
+              <td>{{comment.content}}</td>
+              <td>{{comment.owner.username}}</td>
+              <td>{{comment.createdDate}}</td>
+              <td>
+                <i [hidden]="!comment.hover" class="fa fa-pencil-square-o"></i>
+              </td>
+              <td>
+                <i [hidden]="!comment.hover" class="fa fa-times"></i>
+              </td>
+              <br>
+              <br>
+            </tr>
           </tbody>
         </table>
       </div>

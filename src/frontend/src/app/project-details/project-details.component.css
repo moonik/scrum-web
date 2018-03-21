@@ -117,3 +117,7 @@
   height: 100vh;
   object-fit: cover;
 }
+
+.single-comment:hover {
+  background-color: #eaeae1;
+}
