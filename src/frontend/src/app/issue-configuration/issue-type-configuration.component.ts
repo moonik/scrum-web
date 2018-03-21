@@ -32,7 +32,20 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
     }
 
-    private filterOut() {
+    public filterOut() {
       return this.types.filter(t => t.id === null || !t.isDefault);
+    }
+
+    public isDisabled(type: any) {
+      return type.isDefault && type.id !== null ? '' : null;
+    }
+
+    public isSubmitDisabled(type: any) {
+      return this.filterOut().length === 0 && type.issueType === '';
+    }
+
+    public isValid() {
+      console.log(this.types.filter(type => type.issueType === '').length > 0);
+      return this.types.filter(type => type.issueType === '').length > 0;
     }
   }
