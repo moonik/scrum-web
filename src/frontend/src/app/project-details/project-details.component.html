@@ -69,10 +69,10 @@
               <td>{{comment.owner.username}}</td>
               <td>{{comment.createdDate}}</td>
               <td>
-                <i [hidden]="!comment.hover" class="fa fa-pencil-square-o"></i>
+                <i [hidden]="!comment.hover || !(comment.owner.username === getCurrentUser())" class="fa fa-pencil-square-o"></i>
               </td>
               <td>
-                <i [hidden]="!comment.hover" class="fa fa-times"></i>
+                <i [hidden]="!comment.hover || !(comment.owner.username === getCurrentUser())" class="fa fa-times"></i>
               </td>
               <br>
               <br>
