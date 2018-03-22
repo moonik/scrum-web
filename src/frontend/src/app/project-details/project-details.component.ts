@@ -24,6 +24,7 @@ export class ProjectDetailsComponent implements OnInit {
   public commentForm: FormGroup;
   public comments: IssueComment[] = [];
   public newComment: IssueComment = new IssueComment();
+  public selectedComment: number;
 
   constructor(private _activatedRoute: ActivatedRoute, private _projectDetailsService: ProjectDetailsService,
     private _issueService: IssueService, fb: FormBuilder) {
@@ -95,6 +96,15 @@ export class ProjectDetailsComponent implements OnInit {
       );
   }
 
+  public deleteComment(commentId: number){
+    return this._issueService.deleteComment(commentId)
+      .subscribe(
+        data => {
+          console.log('poszlo');
+        }
+      )
+  }
+
   getCurrentUser(): string{
     return localStorage.getItem('currentUser');
   }
@@ -104,8 +114,9 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   public mouseEnter(comment: any) {
+    this.selectedComment = comment.id;
+    console.log(this.selectedComment);
     comment.hover = true;
-
   }
 
   public mouseLeave(comment: any) {

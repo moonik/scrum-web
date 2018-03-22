@@ -14,7 +14,7 @@ public class IssueCommentAsm {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
 
-        return new IssueCommentDto(owner, issueComment.getContent(), issueComment.getCreatedDate().format(formatter));
+        return new IssueCommentDto(issueComment.getId(), owner, issueComment.getContent(), issueComment.getCreatedDate().format(formatter));
     }
 
 }

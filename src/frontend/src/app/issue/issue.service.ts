@@ -34,4 +34,8 @@ export class IssueService {
         return this._http.post(this._URL+'addcomment/' + issueId, comment)
           .map(res => res.json());
     }
+
+    public deleteComment(commentId: number) {
+      return this._http.delete(this._URL+'comments/delete'+commentId);
+    }
 }

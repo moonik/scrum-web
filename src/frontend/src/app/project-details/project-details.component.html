@@ -75,7 +75,9 @@
                 <i [hidden]="!comment.hover || !(comment.owner.username === getCurrentUser())" class="fa fa-pencil-square-o"></i>
               </td>
               <td>
-                <i [hidden]="!comment.hover || !(comment.owner.username === getCurrentUser())" class="fa fa-times"></i>
+                <form (ngSubmit)="deleteComment()">
+                  <i  [hidden]="!comment.hover || !(comment.owner.username === getCurrentUser())" class="fa fa-times"></i>
+                </form>
               </td>
               <br>
               <br>

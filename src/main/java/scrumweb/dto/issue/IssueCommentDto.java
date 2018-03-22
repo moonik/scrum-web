@@ -14,6 +14,7 @@ import scrumweb.dto.user.UserProfileDto;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class IssueCommentDto {
 
+    private Long id;
     private UserProfileDto owner;
     private String content;
     private String createdDate;
