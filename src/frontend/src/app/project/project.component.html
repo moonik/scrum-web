@@ -30,7 +30,7 @@
       <label for="inputDescription">Description</label>
       <input type="text" class="form-control w-200" id="inputDescription"
              placeholder="Enter description" [(ngModel)]="projectDto.description" formControlName="description">
-      <div *ngIf="checkControl('projectKey')">
+      <div *ngIf="checkControl('description')">
         <small id="descriptionLengthError" class="form-text text-danger" *ngIf="checkDescriptionLength()">Project description must be between 5 to 300 characters.</small>
       </div>
     </div>

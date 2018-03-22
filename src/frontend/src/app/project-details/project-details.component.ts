@@ -21,6 +21,7 @@ export class ProjectDetailsComponent implements OnInit {
   public selectedIssue: IssueDetailsDto;
   public loading: boolean = false;
   public issueId: number;
+  public commentForm: FormGroup;
   public comments: IssueComment[] = [];
   public newComment: IssueComment = new IssueComment();
 
@@ -30,11 +31,11 @@ export class ProjectDetailsComponent implements OnInit {
         this.projectKey = params['projectKey'];
     });
     this.getProjectDetails();
-    //
-    // this.commentForm = fb.group({
-    //   content:[null, [Validators.required]]
-    // });
 
+    this.commentForm = fb.group({
+      content: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]]
+      //content: [null, [Validators.required]]
+    });
   }
 
   ngOnInit() {}
@@ -109,5 +110,13 @@ export class ProjectDetailsComponent implements OnInit {
 
   public mouseLeave(comment: any) {
     comment.hover = false;
+  }
+
+  checkCommentLength(): boolean {
+    return this.commentForm.controls.content.errors.minlength || this.commentForm.controls.content.errors.maxlength;
+  }
+
+  checkControl(name: string): boolean {
+    return this.commentForm.controls[name].invalid && (this.commentForm.controls[name].touched || this.commentForm.controls[name].dirty);
   }
 }
