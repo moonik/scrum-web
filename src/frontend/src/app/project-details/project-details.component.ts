@@ -35,7 +35,6 @@ export class ProjectDetailsComponent implements OnInit {
 
     this.commentForm = fb.group({
       content: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]]
-      //content: [null, [Validators.required]]
     });
   }
 
@@ -96,11 +95,13 @@ export class ProjectDetailsComponent implements OnInit {
       );
   }
 
-  public deleteComment(commentId: number){
+  public deleteComment(commentId: number, comment: IssueComment){
+
     return this._issueService.deleteComment(commentId)
       .subscribe(
         data => {
-          console.log('poszlo');
+          this.comments.splice(this.comments.indexOf(comment), 1);
+          console.log(this.comments);
         }
       )
   }
@@ -115,7 +116,6 @@ export class ProjectDetailsComponent implements OnInit {
 
   public mouseEnter(comment: any) {
     this.selectedComment = comment.id;
-    console.log(this.selectedComment);
     comment.hover = true;
   }
 

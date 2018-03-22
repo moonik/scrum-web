@@ -36,6 +36,6 @@ export class IssueService {
     }
 
     public deleteComment(commentId: number) {
-      return this._http.delete(this._URL+'comments/delete'+commentId);
+      return this._http.delete(this._URL+'comments/delete/'+commentId);
     }
 }
