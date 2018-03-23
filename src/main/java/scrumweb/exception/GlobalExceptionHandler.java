@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
         return ex.getMessage();
     }
 
-    @ExceptionHandler(AssignToIssueException.class)
+    @ExceptionHandler(CantAssignToIssueException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public String handleAssignToIssueException(Exception ex){
         return ex.getMessage();

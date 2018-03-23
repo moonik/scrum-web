@@ -1,8 +1,6 @@
 package scrumweb.issue.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import scrumweb.common.SecurityContextService;
 import scrumweb.common.asm.IssueAsm;
@@ -11,7 +9,7 @@ import scrumweb.common.asm.fieldcontent.FieldContentConverter;
 import scrumweb.dto.fieldcontent.FieldContentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.user.UserProfileDto;
-import scrumweb.exception.AssignToIssueException;
+import scrumweb.exception.CantAssignToIssueException;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.fieldcontent.FieldContent;
@@ -23,8 +21,6 @@ import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
 import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -112,7 +108,7 @@ public class IssueService {
                 issue.getAssignees().add(user);
                 issueRepository.save(issue);
             } else {
-                throw new AssignToIssueException();
+                throw new CantAssignToIssueException();
             }
     }
 
@@ -124,7 +120,7 @@ public class IssueService {
             issue.getAssignees().remove(user);
             issueRepository.save(issue);
         } else {
-            throw new AssignToIssueException(username);
+            throw new CantAssignToIssueException(username);
         }
     }
 }
