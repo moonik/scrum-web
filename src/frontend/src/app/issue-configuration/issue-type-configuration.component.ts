@@ -35,12 +35,17 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
     public createType() {
       this._service.createType(this.filterOut(), this.projectKey)
-        .subscribe();
+        .subscribe(
+          data => {
+            this.types = data;
+            this.oldTypes = JSON.stringify(data);
+          }
+        );
 
     }
 
     public filterOut() {
-      return this.types.filter(t => t.id === null).filter(t => this.findType(t) === true);
+      return this.types.filter(t => t.id === null || this.findType(t) === true && !t.isDefault);
     }
 
     public isDisabled(type: any) {
@@ -48,17 +53,12 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
     }
 
     public isValid() {
-      let filteredEmpty = this.filterOutEmptyTypes();
       let filteredNotEdited = this.filterOut();
-      return filteredEmpty.length === 0 && filteredNotEdited.length > 0;
+      return filteredNotEdited.length > 0 && this.isEdited();
     }
 
     public isEdited() {
-      return JSON.stringify(this.oldTypes) === JSON.stringify(this.types);
-    }
-
-    private filterOutEmptyTypes() {
-      return this.types.filter(type => type.issueType === '' || !type.issueType);
+      return this.oldTypes !== JSON.stringify(this.types);
     }
 
     private filterOutNotChanged() {
@@ -66,6 +66,6 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
     }
 
     private findType(type: any) {
-      return this.oldTypes.filter(t => JSON.stringify(t) !== JSON.stringify(type)).length > 0;
+      return JSON.parse(this.oldTypes).filter(t => JSON.stringify(t) !== JSON.stringify(type)).length > 0;
     }
   }

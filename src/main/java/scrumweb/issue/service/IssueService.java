@@ -76,13 +76,23 @@ public class IssueService {
 
     public Set<IssueTypeDto> createIssueType(String projectKey, Set<IssueTypeDto> issueTypes) {
         Project project = projectRepository.findByKey(projectKey);
-        return convertIssueTypes(issueTypeRepository.save(convertIssueTypes(issueTypes, project)));
+        Set<IssueType> issueTypesToBeSaved = project.getIssueTypes();
+        issueTypesToBeSaved.addAll(convertIssueTypes(issueTypes, project));
+        projectRepository.save(project);
+        return convertIssueTypes(issueTypesToBeSaved);
     }
 
-    private Set<IssueType> convertIssueTypes(Set<IssueTypeDto> issueType, Project project) {
-        return issueType.stream()
-                .map(type -> new IssueType(type.getIssueType(), project, false))
-                .collect(Collectors.toSet());
+    private Set<IssueType> convertIssueTypes(Set<IssueTypeDto> issueTypes, Project project) {
+        Set<IssueType> issueTypesEntities = new HashSet<>();
+        issueTypes.forEach(type -> {
+            if (type.getId() != null && !type.getIsDefault()) {
+                IssueType issueType = issueTypeRepository.findOne(type.getId());
+                issueType.edit(type.getIssueType());
+                issueTypesEntities.add(issueType);
+            } else
+                issueTypesEntities.add(new IssueType(type.getIssueType(), project, false));
+        });
+        return issueTypesEntities;
     }
 
     private Set<IssueTypeDto> convertIssueTypes(Collection<IssueType> issueTypes) {

@@ -11,12 +11,16 @@ import { IssueConfigurationService } from './issue-configuration.service';
 
     public projectKey: string = '';
     public issueTypes = [];
+    public oldTypes = '';
 
     constructor(private _activatedRoute: ActivatedRoute, private _issueConfService: IssueConfigurationService) {
       this._activatedRoute.params.subscribe((params: Params) => {
           this.projectKey = params['projectKey'];
       });
       this._issueConfService.getIssueTypes(this.projectKey)
-        .subscribe( data => this.issueTypes = data );
+        .subscribe( data => {
+          this.issueTypes = data;
+          this.oldTypes = JSON.stringify(data);
+        });
     }
   }
