@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http, RequestOptionsArgs, Response, ResponseContentType} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {ApplicationConstants} from './applicatins-contants';
+import {ApplicationConstants} from '../constants/applications-constants';
+
 
 @Injectable()
 export class HttpClient {

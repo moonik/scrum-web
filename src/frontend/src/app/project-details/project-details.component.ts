@@ -5,6 +5,7 @@ import {ProjectDetailsDto} from '../model/ProjectDetailsDto';
 import {IssueDto} from '../model/IssueDto';
 import {IssueService} from '../issue/issue.service';
 import {IssueDetailsDto} from '../model/IssueDetailsDto';
+import {ApplicationConstants} from '../constants/applications-constants';
 
 @Component({
   selector: 'app-project-details',
@@ -22,7 +23,8 @@ export class ProjectDetailsComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _projectDetailsService: ProjectDetailsService,
-              private _issueService: IssueService) {
+              private _issueService: IssueService,
+              private _constants: ApplicationConstants) {
     this._activatedRoute.params.subscribe((params: Params) => {
       this.projectKey = params['projectKey'];
     });
@@ -61,6 +63,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   public onIssueCreate(issueDto: IssueDto) {
+    this.loading = true;
     const length = this.projectDetails.issues.length + 1;
     issueDto.id = length;
     issueDto.issueKey = this.projectDetails.projectDto.name + '-' + length;
@@ -69,6 +72,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   onAssignToIssue(username: string) {
+    this.loading = true;
     if (!username) {
       username = localStorage.getItem('currentUser');
     }
@@ -76,6 +80,7 @@ export class ProjectDetailsComponent implements OnInit {
       .subscribe(() => {
         this.ngOnInit();
       });
+    this.loading = false;
   }
 
   checkAssignees(): boolean {
