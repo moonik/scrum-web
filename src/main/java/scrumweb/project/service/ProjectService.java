@@ -1,7 +1,6 @@
 package scrumweb.project.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import scrumweb.common.SecurityContextService;
 import scrumweb.common.asm.IssueAsm;
@@ -13,12 +12,13 @@ import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
 import scrumweb.dto.search.SearchResultsDto;
+import scrumweb.exception.MemberAlreadyAddedException;
 import scrumweb.exception.ProjectAlreadyExsistsException;
+import scrumweb.exception.ProjectMemberAccessException;
 import scrumweb.exception.ProjectNotFoundException;
+import scrumweb.exception.RemoveFromProjectException;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.repository.IssueRepository;
-import scrumweb.user.account.domain.UserAccount;
-import scrumweb.user.account.repository.UserAccountRepository;
 import scrumweb.project.domain.Project;
 import scrumweb.project.domain.ProjectMember;
 import scrumweb.project.domain.ProjectMember.Role;
@@ -26,7 +26,11 @@ import scrumweb.project.repository.ProjectRepository;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,6 +59,8 @@ public class ProjectService {
             project.setMembers(projectMembers);
             project.setIssueTypes(createIssueTypes(project));
 
+            project.setIcon(projectDto.getIcon());
+
             projects.add(project);
             userAccountRepository.save(projectOwner);
             return projectDto;
@@ -77,23 +83,10 @@ public class ProjectService {
         final ProjectDto projectDto = projectAsm.makeProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile()));
         projectDto.setOwner(userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile()));
         final List<IssueDto> issues = project.getIssues().stream()
-                .map(issue -> issueAsm.createIssueDto(issue))
-                .sorted((i1, i2) -> Long.compare(i2.getId(), i1.getId()))
-                .collect(Collectors.toList());
+            .map(issue -> issueAsm.createIssueDto(issue))
+            .sorted((i1, i2) -> Long.compare(i2.getId(), i1.getId()))
+            .collect(Collectors.toList());
         return projectAsm.makeProjectDetailsDro(projectDto, issues);
-    }
-
-    public HttpStatus addMember(ProjectMemberDto projectMemberDto) {
-        Project project = projectRepository.findOne(projectMemberDto.getProjectId());
-        UserAccount userAccount = userAccountRepository.findByUsername(projectMemberDto.getUsername());
-        if (project.getMembers().stream()
-            .filter(member -> member.getUserAccount().getUsername().equals(userAccount.getUsername()))
-            .collect(Collectors.toList())
-            .isEmpty()) {
-            project.getMembers().add(new ProjectMember(userAccount, Role.getRole(projectMemberDto.getRole())));
-            projectRepository.save(project);
-            return HttpStatus.OK;
-        } else return HttpStatus.CONFLICT;
     }
 
     public Set<ItemAssignee> getProjectMembers(String projectKey) {
@@ -123,41 +116,83 @@ public class ProjectService {
         return projectDtos;
     }
 
-    // todo check if member has issues before removing
-    public HttpStatus removeMember(String username, Long projectId) {
-        Project project = projectRepository.findOne(projectId);
-        if (!project.getOwner().getUsername().equals(username)) {
-            ProjectMember projectMember = project.getMembers().stream()
-                .filter(member -> member.getUserAccount().getUsername().equals(username))
-                .findFirst()
-                .orElse(null);
-            project.getMembers().remove(projectMember);
-            projectRepository.save(project);
-            return HttpStatus.OK;
-        } else return HttpStatus.I_AM_A_TEAPOT;
-    }
-
-
-    public SearchResultsDto findProjectsAndIssuesByKeyQuery(String param){
+    public SearchResultsDto findProjectsAndIssuesByKeyQuery(String param) {
         return new SearchResultsDto(getIssues(param), getProjects(param));
     }
 
     private List<ProjectDto> getProjects(String param) {
         return projectRepository.findProjectsByKeyQuery(param).stream()
-                .map(project -> projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())))
-                .collect(Collectors.toList());
+            .map(project -> projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())))
+            .collect(Collectors.toList());
     }
 
     private List<IssueDto> getIssues(String param) {
         return issueRepository.findIssuesByKeyQuery(param).stream()
-                .map(issue -> issueAsm.createIssueDto(issue))
-                .collect(Collectors.toList());
+            .map(issue -> issueAsm.createIssueDto(issue))
+            .collect(Collectors.toList());
     }
 
     public List<ProjectDto> findAllProjects() {
         return projectRepository.findAll().stream()
-                .map(project -> projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())))
-                .collect(Collectors.toList());
+            .map(project -> projectAsm.convertFromProjectToProjectDto(project, userProfileAsm.makeUserProfileDto(project.getOwner(), project.getOwner().getUserProfile())))
+            .collect(Collectors.toList());
     }
 
+    public void addMember(ProjectMemberDto projectMemberDto) {
+        Project project = projectRepository.findOne(projectMemberDto.getProjectId());
+        UserAccount userAccount = userAccountRepository.findByUsername(projectMemberDto.getUsername());
+        if (project.getMembers().stream()
+            .filter(member -> member.getUserAccount().getUsername().equals(userAccount.getUsername()))
+            .collect(Collectors.toList())
+            .isEmpty()) {
+            project.getMembers().add(new ProjectMember(userAccount, Role.getRole(projectMemberDto.getRole())));
+            projectRepository.save(project);
+        } else {
+            throw new MemberAlreadyAddedException(projectMemberDto.getUsername());
+        }
+    }
+
+    // todo check if member has issues before removing
+    public void removeMember(String username, Long id) {
+        Project project = projectRepository.findOne(id);
+        if (!project.getOwner().getUsername().equals(username)) {
+            ProjectMember projectMember = project.getMembers().stream()
+                .filter(member -> member.getUserAccount().getUsername().equals(username))
+                .findFirst()
+                .orElseThrow(() -> new RemoveFromProjectException(username));
+            project.getMembers().remove(projectMember);
+            projectRepository.save(project);
+        } else {
+            throw new RemoveFromProjectException(username, project.getName());
+        }
+    }
+
+    public void askForAccess(ProjectMemberDto projectMemberDto) {
+        Project project = projectRepository.findOne(projectMemberDto.getProjectId());
+        UserAccount userAccount = userAccountRepository.findByUsername(projectMemberDto.getUsername());
+        if (project.getRequests().stream()
+            .filter(request -> request.getUserAccount().getUsername().equals(userAccount.getUsername()))
+            .collect(Collectors.toList())
+            .isEmpty()) {
+            project.getRequests().add(new ProjectMember(userAccount, Role.getRole(projectMemberDto.getRole())));
+            projectRepository.save(project);
+        } else {
+            throw new ProjectMemberAccessException(projectMemberDto.getUsername());
+        }
+    }
+
+    public void declineRequestForAccess(Long id, String member) {
+        Project project = projectRepository.findOne(id);
+        ProjectMember projectMember = project.getRequests().stream()
+            .filter(request -> request.getUserAccount().getUsername().equals(member))
+            .findFirst()
+            .orElseThrow(ProjectMemberAccessException::new);
+        project.getRequests().remove(projectMember);
+        projectRepository.save(project);
+    }
+
+    public void acceptRequestForAccess(ProjectMemberDto projectMemberDto) {
+        addMember(projectMemberDto);
+        declineRequestForAccess(projectMemberDto.getProjectId(), projectMemberDto.getUsername());
+    }
 }

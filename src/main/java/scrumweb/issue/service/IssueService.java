@@ -36,7 +36,6 @@ public class IssueService {
     private ProjectRepository projectRepository;
     private UserProfileAsm userProfileAsm;
     private FieldContentConverter fieldContentAsm;
-    //private SearchResultsDto searchResultsDto;
 
     public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String projectKey) {
         final Project project = projectRepository.findByKey(projectKey);
@@ -91,25 +90,25 @@ public class IssueService {
     }
 
     private boolean checkIfMember(String username, Issue issue) {
-         return projectRepository.findAll().stream()
-             .filter(p -> p.getIssues().contains(issue))
-             .reduce((a, b) -> null)
-             .map(project2 -> project2.getMembers().stream()
-                 .map(m -> m.getUserAccount().getUsername())
-                 .collect(Collectors.toList()).contains(username))
-             .orElse(false);
+        return projectRepository.findAll().stream()
+            .filter(p -> p.getIssues().contains(issue))
+            .reduce((a, b) -> null)
+            .map(project2 -> project2.getMembers().stream()
+                .map(m -> m.getUserAccount().getUsername())
+                .collect(Collectors.toList()).contains(username))
+            .orElse(false);
     }
 
     public void assignToIssue(Long id, String username) {
-            Issue issue = issueRepository.findOne(id);
-            UserAccount user = userAccountRepository.findByUsername(username);
+        Issue issue = issueRepository.findOne(id);
+        UserAccount user = userAccountRepository.findByUsername(username);
 
-            if (checkIfMember(username, issue)) {
-                issue.getAssignees().add(user);
-                issueRepository.save(issue);
-            } else {
-                throw new CantAssignToIssueException();
-            }
+        if (checkIfMember(username, issue)) {
+            issue.getAssignees().add(user);
+            issueRepository.save(issue);
+        } else {
+            throw new CantAssignToIssueException();
+        }
     }
 
     public void unAssignFromIssue(Long id, String username) {

@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import scrumweb.dto.projectfield.ListElementDto;
-import scrumweb.dto.projectfield.ProjectFieldDto;
 
 import java.util.Set;
 

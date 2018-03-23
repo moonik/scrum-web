@@ -16,12 +16,14 @@ import * as roles from '../constants/roles';
 
 export class ProjectConfigurationComponent implements OnInit {
 
-  users: UserDto[] = [];
-  project: ProjectDto = new ProjectDto();
-  roles = roles.default;
-  rolesTypes = Object.values(this.roles);
-  selectedRole: string;
-  error: string;
+  public users: UserDto[] = [];
+  public project: ProjectDto = new ProjectDto();
+  public roles = roles.default;
+  public rolesTypes = Object.values(this.roles);
+  public error: string;
+  public icon: File = null;
+  public loading = false;
+  public validIcon = true;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -34,15 +36,21 @@ export class ProjectConfigurationComponent implements OnInit {
       this.router.navigate(['/home']);
     }
     this.project = this.storageService.getScope();
+
+    if (this.project.icon == null) {
+      this.validIcon = false;
+    }
     this.getAllUsers();
     this.error = '';
   }
 
   getAllUsers() {
-    const members: string[] = this.project.members.map(m => m.username);
+    const members = [...this.project.members.map(m => m.username),
+      ...this.project.requests.map(r => r.username)];
     this.confService.getUsers(members).subscribe(
-      users => this.users = users
-    );
+      users => {
+        this.users = users;
+      }    );
   }
 
   addUserToProject(user: string, role: string) {
@@ -60,15 +68,47 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   removeMemberFromProject(member: ProjectMemberDto) {
-    this.confService.removeMemberFromProject(member.username + '/' + member.projectId)
+    this.confService.removeMemberFromProject(member.username, member.projectId)
       .subscribe(() => {
-          this.project.members.splice(this.project.members.indexOf(member), 1);
-          this.ngOnInit();
-        }, error => {
-        if (error.status === 418) {
-          this.error  = 'You cannot remove project owner!';
+        this.project.members.splice(this.project.members.indexOf(member), 1);
+        this.ngOnInit();
+      }, error => {
+        if (error.status !== 200) {
+          this.error = 'You cannot remove project owner!';
         }
       });
   }
 
+  chooseIcon(files: FileList) {
+    this.icon = files.item(0);
+    this.loading = true;
+    this.validIcon = true;
+
+
+  }
+
+  acceptRequest(user: string, role: string) {
+    const member: ProjectMemberDto = new ProjectMemberDto();
+    member.projectId = this.project.id;
+    member.username = user;
+    member.role = role;
+
+    this.confService.acceptRequestForAccess(member)
+      .subscribe(data => {
+          this.project.members.push(member);
+          this.project.requests.splice(this.project.requests.indexOf(member), 1);
+          this.ngOnInit();
+        }
+      );
+  }
+
+  declineRequest(request: ProjectMemberDto) {
+    this.confService.declineRequestForAccess(request.projectId, request.username).subscribe(
+      () => {
+        this.project.requests.splice(this.project.requests.indexOf(request), 1);
+        this.ngOnInit();
+      }
+    );
+
+  }
 }

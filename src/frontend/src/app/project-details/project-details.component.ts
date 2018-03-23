@@ -94,7 +94,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   onRemoveFromAssign(username: string) {
     this._issueService.unAssignFromIssue(username, this.selectedIssue.id)
-      .subscribe( () => this.ngOnInit());
+      .subscribe(() => this.ngOnInit());
   }
 
   isAssigned(username: string) {

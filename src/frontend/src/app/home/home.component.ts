@@ -4,7 +4,6 @@ import {HomeService} from './home.service';
 import {Router} from '@angular/router';
 import {StorageService} from '../shared/storage.service';
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -43,11 +42,11 @@ export class HomeComponent implements OnInit {
     this._router.navigate(['project/details/' + projectKey]);
   }
 
-  getCurrentUser(): string{
+  getCurrentUser(): string {
     return localStorage.getItem('currentUser');
   }
 
-  isOwner(owner: string): boolean{
+  isOwner(owner: string): boolean {
     return owner === this.getCurrentUser();
   }
 

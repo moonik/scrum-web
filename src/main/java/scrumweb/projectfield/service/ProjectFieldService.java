@@ -2,7 +2,6 @@ package scrumweb.projectfield.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import scrumweb.common.asm.projectfield.ProjectFieldAsm;
 import scrumweb.common.asm.projectfield.ProjectFieldConverter;
 import scrumweb.dto.projectfield.ProjectFieldDto;
 import scrumweb.exception.IssueTypeDoesNotExists;
@@ -11,7 +10,6 @@ import scrumweb.issue.repository.IssueTypeRepository;
 import scrumweb.project.domain.Project;
 import scrumweb.project.repository.ProjectRepository;
 import scrumweb.projectfield.domain.ProjectField;
-import scrumweb.projectfield.repository.ProjectFieldRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
