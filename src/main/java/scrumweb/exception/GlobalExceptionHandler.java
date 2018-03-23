@@ -39,4 +39,10 @@ public class GlobalExceptionHandler {
     public String handleUserAlreadyExistsException(Exception ex){
         return ex.getMessage();
     }
+
+    @ExceptionHandler(CantAssignToIssueException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleAssignToIssueException(Exception ex){
+        return ex.getMessage();
+    }
 }
