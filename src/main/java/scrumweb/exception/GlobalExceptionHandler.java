@@ -12,31 +12,31 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleNotFoundException(Exception ex){
+    public String handleNotFoundException(Exception ex) {
         return ex.getMessage();
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String handleBadCredentailsException(){
+    public String handleBadCredentailsException() {
         return "Sorry, Username or password is incorrect!";
     }
 
     @ExceptionHandler(ProjectNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleProjectNotFoundException(Exception ex){
+    public String handleProjectNotFoundException(Exception ex) {
         return ex.getMessage();
     }
 
     @ExceptionHandler(ProjectAlreadyExsistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String handleProjectAlreadyExistsException(Exception ex){
+    public String handleProjectAlreadyExistsException(Exception ex) {
         return ex.getMessage();
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String handleUserAlreadyExistsException(Exception ex){
+    public String handleUserAlreadyExistsException(Exception ex) {
         return ex.getMessage();
     }
 
@@ -61,6 +61,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ProjectMemberAccessException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public String handleProjectMemberAccessException(Exception ex) {
+        return ex.getMessage();
+    }
+
+    @ExceptionHandler(CantAssignToIssueException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleAssignToIssueException(Exception ex) {
         return ex.getMessage();
     }
 }

@@ -3,8 +3,6 @@ import {ProjectDto} from '../model/projectDto';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ProjectService} from './project.service';
-import {HttpClient} from '../shared/http.client.service';
-import {FileUploadService} from '../shared/file-upload.service';
 
 @Component({
   selector: 'app-project',
@@ -18,7 +16,7 @@ export class ProjectComponent implements OnInit {
   error = '';
   icon: File = null;
   loading = false;
-  goodIcon = true;
+  validIcon = true;
 
   constructor(fb: FormBuilder,
               private router: Router,
@@ -30,13 +28,12 @@ export class ProjectComponent implements OnInit {
       projectKey: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(8)]],
       icon: [null]
     });
-
   }
 
   ngOnInit() {
   }
 
-  createproject() {
+  createProject() {
     this.projectService.createProject(this.projectDto)
       .subscribe(
         () => {
@@ -52,7 +49,7 @@ export class ProjectComponent implements OnInit {
   chooseIcon(files: FileList) {
     this.icon = files.item(0);
     this.loading = true;
-    this.goodIcon = true;
+    this.validIcon = true;
     console.log('load icon');
     this.loading = false;
   }

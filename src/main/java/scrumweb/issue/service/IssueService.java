@@ -9,6 +9,7 @@ import scrumweb.common.asm.fieldcontent.FieldContentConverter;
 import scrumweb.dto.fieldcontent.FieldContentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.user.UserProfileDto;
+import scrumweb.exception.CantAssignToIssueException;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.fieldcontent.FieldContent;
@@ -88,4 +89,37 @@ public class IssueService {
             .orElse(null);
     }
 
+    private boolean checkIfMember(String username, Issue issue) {
+        return projectRepository.findAll().stream()
+            .filter(p -> p.getIssues().contains(issue))
+            .reduce((a, b) -> null)
+            .map(project2 -> project2.getMembers().stream()
+                .map(m -> m.getUserAccount().getUsername())
+                .collect(Collectors.toList()).contains(username))
+            .orElse(false);
+    }
+
+    public void assignToIssue(Long id, String username) {
+        Issue issue = issueRepository.findOne(id);
+        UserAccount user = userAccountRepository.findByUsername(username);
+
+        if (checkIfMember(username, issue)) {
+            issue.getAssignees().add(user);
+            issueRepository.save(issue);
+        } else {
+            throw new CantAssignToIssueException();
+        }
+    }
+
+    public void unAssignFromIssue(Long id, String username) {
+        Issue issue = issueRepository.findOne(id);
+        UserAccount user = userAccountRepository.findByUsername(username);
+
+        if (checkIfMember(username, issue)) {
+            issue.getAssignees().remove(user);
+            issueRepository.save(issue);
+        } else {
+            throw new CantAssignToIssueException(username);
+        }
+    }
 }

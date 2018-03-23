@@ -14,9 +14,9 @@
         {{project.name}}
       </td>
       <td align="center" rowspan="2" class="icon"><h6>Icon: </h6>
-        <input *ngIf="goodIcon && !loading" type="image" [src]=""
+        <input *ngIf="validIcon && !loading" type="image" [src]=""
                (click)="changeIcon.click()" alt=""/>
-        <input *ngIf="!goodIcon && !loading" type="image" src="../../assets/images/error.gif"
+        <input *ngIf="!validIcon && !loading" type="image" src="../../assets/images/error.gif"
                (click)="changeIcon.click()" alt=""/>
         <input *ngIf="loading" type="image" src="../../assets/images/loading_boobs.gif"
                (click)="changeIcon.click()" alt=""/>
@@ -24,7 +24,7 @@
                style="display: none;"
                (change)="chooseIcon($event.target.files)"
                accept="image/jpeg, image/png"/>
-        <div *ngIf="!goodIcon">
+        <div *ngIf="!validIcon">
           <small id="fileUploadError" class="form-text text-danger">Icon must be in .jpg or .png format</small>
         </div>
       </td>

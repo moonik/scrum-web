@@ -23,7 +23,7 @@ export class ProjectConfigurationComponent implements OnInit {
   public error: string;
   public icon: File = null;
   public loading = false;
-  public goodIcon = true;
+  public validIcon = true;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -38,7 +38,7 @@ export class ProjectConfigurationComponent implements OnInit {
     this.project = this.storageService.getScope();
 
     if (this.project.icon == null) {
-      this.goodIcon = false;
+      this.validIcon = false;
     }
     this.getAllUsers();
     this.error = '';
@@ -82,7 +82,7 @@ export class ProjectConfigurationComponent implements OnInit {
   chooseIcon(files: FileList) {
     this.icon = files.item(0);
     this.loading = true;
-    this.goodIcon = true;
+    this.validIcon = true;
 
 
   }
@@ -104,7 +104,7 @@ export class ProjectConfigurationComponent implements OnInit {
 
   declineRequest(request: ProjectMemberDto) {
     this.confService.declineRequestForAccess(request.projectId, request.username).subscribe(
-      data => {
+      () => {
         this.project.requests.splice(this.project.requests.indexOf(request), 1);
         this.ngOnInit();
       }

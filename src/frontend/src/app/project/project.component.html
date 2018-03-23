@@ -1,6 +1,6 @@
 <br>
 <div class="row justify-content-center">
-  <form [formGroup]="projectForm" (ngSubmit)="createproject()">
+  <form [formGroup]="projectForm" (ngSubmit)="createProject()">
 
     <div class="form-group">
 
@@ -47,12 +47,12 @@
              (change)="chooseIcon($event.target.files)"
              accept="image/jpeg, image/png"
              [disabled]="loading">
-      <div *ngIf="!goodIcon">
+      <div *ngIf="!validIcon">
         <small id="fileUploadError" class="form-text text-danger">Icon must be in .jpg or .png format</small>
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="projectForm.invalid || loading || !goodIcon">Create
+    <button type="submit" class="btn btn-primary" [disabled]="projectForm.invalid || loading || !validIcon">Create
       project
     </button>
 
@@ -60,7 +60,6 @@
       <small class="form-text error">Please fill all fields.</small>
       <br/>
     </div>
-
   </form>
 
 </div>
