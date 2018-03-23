@@ -34,4 +34,8 @@ public class IssueType {
         this.project = project;
         this.isDefault = isDefault;
     }
+
+    public void edit(String name) {
+        this.name = name;
+    }
 }

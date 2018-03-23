@@ -13,6 +13,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
     @Input()
     public types;
     @Input()
+    public oldTypes;
+    @Input()
     private projectKey: string;
 
     constructor(private _service: IssueConfigurationService) {}
@@ -22,8 +24,13 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
     }
 
     public removeType(type: any) {
-      let index = this.types.indexOf(type);
-      this.types.splice(index, 1);
+      if (!type.isDefault) {
+        if (type.id) {
+          this._service.deleteType(type.id).subscribe();
+        }
+        let index = this.types.indexOf(type);
+        this.types.splice(index, 1);
+      }
     }
 
     public createType() {
@@ -33,19 +40,32 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
     }
 
     public filterOut() {
-      return this.types.filter(t => t.id === null || !t.isDefault);
+      return this.types.filter(t => t.id === null).filter(t => this.findType(t) === true);
     }
 
     public isDisabled(type: any) {
-      return type.isDefault && type.id !== null ? '' : null;
-    }
-
-    public isSubmitDisabled(type: any) {
-      return this.filterOut().length === 0 && type.issueType === '';
+      return type.isDefault ? '' : null;
     }
 
     public isValid() {
-      console.log(this.types.filter(type => type.issueType === '').length > 0);
-      return this.types.filter(type => type.issueType === '').length > 0;
+      let filteredEmpty = this.filterOutEmptyTypes();
+      let filteredNotEdited = this.filterOut();
+      return filteredEmpty.length === 0 && filteredNotEdited.length > 0;
+    }
+
+    public isEdited() {
+      return JSON.stringify(this.oldTypes) === JSON.stringify(this.types);
+    }
+
+    private filterOutEmptyTypes() {
+      return this.types.filter(type => type.issueType === '' || !type.issueType);
+    }
+
+    private filterOutNotChanged() {
+      return this.types.filter(t => this.findType(t))
+    }
+
+    private findType(type: any) {
+      return this.oldTypes.filter(t => JSON.stringify(t) !== JSON.stringify(type)).length > 0;
     }
   }

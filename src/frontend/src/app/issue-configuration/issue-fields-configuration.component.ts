@@ -105,7 +105,7 @@ export class IssueFieldsConfigurationComponent implements OnInit {
   }
 
   public canSubmit() {
-    return this.compare() && this.fields.length > 0 && this.fields.filter(field => field.submitted).length === this.fields.length;
+    return this.fields.length > 0 && this.compare() && this.checkSumbitted();
   }
 
   public createFields() {
@@ -114,6 +114,10 @@ export class IssueFieldsConfigurationComponent implements OnInit {
         .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data) });
       this._fieldCreator.projectFieldsCollector = new ProjectFieldsCollector();
     }
+  }
+
+  private checkSumbitted() {
+    return this.fields.filter(field => field.submitted).length === this.fields.length;
   }
 
   private filterOut() {

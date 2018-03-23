@@ -79,10 +79,6 @@ public class IssueService {
         return convertIssueTypes(issueTypeRepository.save(convertIssueTypes(issueTypes, project)));
     }
 
-    public Set<IssueTypeDto> getIssueTypes(String projectKey) {
-        return convertIssueTypes(projectRepository.findByKey(projectKey).getIssueTypes());
-    }
-
     private Set<IssueType> convertIssueTypes(Set<IssueTypeDto> issueType, Project project) {
         return issueType.stream()
                 .map(type -> new IssueType(type.getIssueType(), project, false))
@@ -115,7 +111,18 @@ public class IssueService {
                 .orElse(null);
     }
 
+    public void editIssueType(IssueTypeDto issueTypeDto) {
+        IssueType issueType = issueTypeRepository.findOne(issueTypeDto.getId());
+        if (!issueType.getIsDefault()) {
+            issueType.edit(issueTypeDto.getIssueType());
+            issueTypeRepository.saveAndFlush(issueType);
+        }
+    }
+
     public void deleteIssueType(Long id) {
-        issueTypeRepository.delete(id);
+        IssueType issueType = issueTypeRepository.findOne(id);
+        if (!issueType.getIsDefault()) {
+            issueTypeRepository.delete(issueType);
+        }
     }
 }

@@ -7,6 +7,7 @@ export class IssueConfigurationService {
     constructor(private _http: HttpClient){}
 
     public createFields(data: any, projectKey: string, issuetype: string) {
+        console.log(data);
         return this._http.post(this.createRequestParams({projectKey: projectKey, issuetype: issuetype}), data)
             .map(res => res.json());
     }
@@ -29,6 +30,11 @@ export class IssueConfigurationService {
     public createType(data: any, projectKey: string) {
         return this._http.post('project/issue/types/'+projectKey, data)
             .map(res => res.json());
+    }
+
+    public editType(data: any) {
+        return this._http.put('project/issue/edit/types', data)
+            .map(res => res.status);
     }
 
     public deleteType(id: number) {
