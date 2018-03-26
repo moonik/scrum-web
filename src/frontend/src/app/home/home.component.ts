@@ -3,7 +3,6 @@ import {ProjectDto} from '../model/projectDto';
 import {HomeService} from './home.service';
 import {Router} from '@angular/router';
 import {StorageService} from '../shared/storage.service';
-import {ApplicationConstants} from '../constants/applications-constants';
 
 @Component({
   selector: 'app-home',
@@ -18,8 +17,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private _homeService: HomeService,
               private _router: Router,
-              private storage: StorageService,
-              private _constants: ApplicationConstants) {
+              private storage: StorageService) {
 
     this.getAllOwnProjects();
   }

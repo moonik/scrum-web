@@ -38,8 +38,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService,
               fb: FormBuilder,
-              private router: Router,
-              private _constants: ApplicationConstants) {
+              private router: Router) {
 
     this.registrationForm = fb.group({
       username : [null, [Validators.required, Validators.minLength(5), Validators.maxLength(9)]],

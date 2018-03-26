@@ -1,4 +1,4 @@
-1;import { Component, TemplateRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, TemplateRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { IssueService } from './issue.service';

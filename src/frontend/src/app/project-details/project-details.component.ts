@@ -5,7 +5,6 @@ import {ProjectDetailsDto} from '../model/ProjectDetailsDto';
 import {IssueDto} from '../model/IssueDto';
 import {IssueService} from '../issue/issue.service';
 import {IssueDetailsDto} from '../model/IssueDetailsDto';
-import {ApplicationConstants} from '../constants/applications-constants';
 
 @Component({
   selector: 'app-project-details',
@@ -23,8 +22,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _projectDetailsService: ProjectDetailsService,
-              private _issueService: IssueService,
-              private _constants: ApplicationConstants) {
+              private _issueService: IssueService) {
     this._activatedRoute.params.subscribe((params: Params) => {
       this.projectKey = params['projectKey'];
     });

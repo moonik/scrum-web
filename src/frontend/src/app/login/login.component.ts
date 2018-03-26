@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../security/authentication.service';
 import {Router} from '@angular/router';
 import {UserDto} from '../model/userDto';
-import {ApplicationConstants} from "../constants/applications-constants";
 
 @Component({
   selector: 'app-login',
@@ -18,8 +17,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private authenticationService: AuthenticationService,
-              private router: Router,
-              private _constants: ApplicationConstants) {
+              private router: Router) {
     this.loginForm = fb.group({
       login: [null, Validators.required],
       password: [null, [Validators.minLength(8), Validators.required]]
