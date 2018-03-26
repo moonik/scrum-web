@@ -20,7 +20,7 @@ export class ProjectDetailsComponent implements OnInit {
   public projectDetails: ProjectDetailsDto = new ProjectDetailsDto();
   public selectedIssue: IssueDetailsDto;
   public loading: boolean = false;
-  public issueId: number;
+  //public issueId: number;
   public commentForm: FormGroup;
   public comments: IssueComment[] = [];
   public newComment: IssueComment = new IssueComment();
@@ -46,9 +46,8 @@ export class ProjectDetailsComponent implements OnInit {
       .subscribe(
         data => {
           this.selectedIssue = data;
-          this.issueId = data.id;
           this.loading = false;
-          this.getIssueComments(this.issueId)
+          this.getIssueComments(this.selectedIssue.id)
         });
   }
 
@@ -86,7 +85,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   public addComment(){
-    return this._issueService.addComment(this.issueId, this.newComment)
+    return this._issueService.addComment(this.selectedIssue.id, this.newComment)
       .subscribe(
         data => {
           this.comments.push(data);
