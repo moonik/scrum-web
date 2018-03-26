@@ -23,7 +23,9 @@ import { ProjectDetailsComponent } from './project-details/project-details.compo
 import { IssueComponent } from './issue/issue.component';
 import { FooterComponent } from './footer/footer.component';
 import { SearchComponent } from './search/search.component';
-import {ApplicationConstants} from "./constants/applications-constants";
+import { ApplicationConstants} from './constants/applications-constants';
+import { LoaderComponent} from './loader/loader.component';
+import { LoaderService} from './loader/loader.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import {ApplicationConstants} from "./constants/applications-constants";
     ProjectDetailsComponent,
     IssueComponent,
     FooterComponent,
-    SearchComponent
+    SearchComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,8 @@ import {ApplicationConstants} from "./constants/applications-constants";
     ProjectService,
     ProjectConfigurationService,
     StorageService,
-    ApplicationConstants
+    ApplicationConstants,
+    LoaderService,
   ],
   bootstrap: [AppComponent]
 })

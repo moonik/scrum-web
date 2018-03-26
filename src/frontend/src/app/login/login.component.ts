@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../security/authentication.service';
 import {Router} from '@angular/router';
 import {UserDto} from '../model/userDto';
+import {ApplicationConstants} from "../constants/applications-constants";
 
 @Component({
   selector: 'app-login',
@@ -16,10 +17,13 @@ export class LoginComponent implements OnInit {
   userDto: UserDto = new UserDto();
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authenticationService: AuthenticationService,private router: Router) {
+  constructor(private fb: FormBuilder,
+              private authenticationService: AuthenticationService,
+              private router: Router,
+              private _constants: ApplicationConstants) {
     this.loginForm = fb.group({
-      login : [null,  Validators.required],
-      password : [null, [Validators.minLength(8), Validators.required]]
+      login: [null, Validators.required],
+      password: [null, [Validators.minLength(8), Validators.required]]
     });
   }
 
@@ -28,20 +32,20 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.loginForm.valid) {
-      console.info('logged');
+      console.log('logged');
       this.loading = true;
-      this.authenticationService.login (this.userDto)
+      this.authenticationService.login(this.userDto)
         .subscribe(
-          success => {
+          () => {
             this.router.navigate(['/home']);
           },
           error => {
-            if(error.status === 401){
+            if (error.status === 401) {
               this.error = 'Username or password is incorrect';
               this.loading = false;
             }
           });
-    }else{
+    } else {
       this.error = 'Username or password incorrect';
     }
   }

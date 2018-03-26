@@ -3,6 +3,7 @@ import {ProjectDto} from '../model/projectDto';
 import {HomeService} from './home.service';
 import {Router} from '@angular/router';
 import {StorageService} from '../shared/storage.service';
+import {ApplicationConstants} from '../constants/applications-constants';
 
 @Component({
   selector: 'app-home',
@@ -13,10 +14,13 @@ import {StorageService} from '../shared/storage.service';
 export class HomeComponent implements OnInit {
 
   projects: ProjectDto[] = [];
+  public loading = false;
 
   constructor(private _homeService: HomeService,
               private _router: Router,
-              private storage: StorageService) {
+              private storage: StorageService,
+              private _constants: ApplicationConstants) {
+
     this.getAllOwnProjects();
   }
 
@@ -25,12 +29,15 @@ export class HomeComponent implements OnInit {
   }
 
   getAllOwnProjects() {
+    this.loading = true;
     this._homeService.getAllOwnProjects()
       .subscribe(
         data => {
           this.projects = data;
+          this.loading = false;
         }
       );
+    ;
   }
 
   onConfigureProject(project: ProjectDto) {

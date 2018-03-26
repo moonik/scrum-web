@@ -110,13 +110,6 @@
   background-color: #555;
 }
 
-#loading {
-  display: block;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-}
-
 .assign-text:hover {
   background-color: rgb(222, 226, 226);
 }

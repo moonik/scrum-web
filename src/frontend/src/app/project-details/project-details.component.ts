@@ -69,6 +69,7 @@ export class ProjectDetailsComponent implements OnInit {
     issueDto.issueKey = this.projectDetails.projectDto.name + '-' + length;
     this.projectDetails.issues.unshift(issueDto);
     this.selectIssue(issueDto.id);
+    this.loading = false;
   }
 
   onAssignToIssue(username: string) {

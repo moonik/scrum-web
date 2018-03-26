@@ -1,0 +1,18 @@
+.loader-hidden {
+  visibility: hidden;
+}
+.loader-overlay {
+  position: absolute;
+  width:100%;
+  top:0;
+  left: 0;
+  opacity: 1;
+  z-index: 500000;
+}
+
+#loading {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
