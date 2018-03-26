@@ -38,4 +38,8 @@ export class IssueService {
     public deleteComment(commentId: number, issueId: number) {
       return this._http.delete(this._URL+'comments/delete/'+commentId+'/'+issueId);
     }
+
+    public editComment(commentId: number, comment: IssueComment){
+      return this._http.post(this._URL + 'comments/edit/'+commentId, comment);
+    }
 }

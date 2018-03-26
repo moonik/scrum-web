@@ -53,8 +53,8 @@ public class IssueController {
 
     @PostMapping("/comments/edit/{commentId}")
     @ResponseStatus(HttpStatus.OK)
-    public String editComment(@PathVariable Long commentId, @RequestBody String content){
-        return issueService.editComment(commentId, content);
+    public String editComment(@PathVariable Long commentId, @RequestBody IssueCommentDto issueCommentDto){
+        return issueService.editComment(commentId, issueCommentDto.getContent());
     }
 
 }

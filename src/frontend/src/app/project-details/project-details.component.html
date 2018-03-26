@@ -68,7 +68,11 @@
           </tr>
           <tbody *ngFor="let comment of comments" (mouseenter)="mouseEnter(comment)" (mouseleave)="mouseLeave(comment)">
             <tr class="single-comment">
-              <td><input name="content" [(ngModel)]="comment.content" [attr.disabled]="comment.editting? null : ''"><button *ngIf="comment.editting === true">ok</button></td>
+              <td>
+                <div *ngIf="!comment.editting">{{comment.content}}</div>
+                <input *ngIf="comment.editting === true" class="editcomment" id="commentContent" name="content" [(ngModel)]="comment.content" [attr.disabled]="comment.editting? null : ''">&nbsp;
+                <button class="btn btn-primary" *ngIf="comment.editting" (click)="editComment(comment, comment.id)">Edit</button>
+              </td>
               <td>{{comment.owner.username}}</td>
               <td>{{comment.createdDate}}</td>
               <td>

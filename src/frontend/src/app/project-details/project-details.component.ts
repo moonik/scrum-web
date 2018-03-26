@@ -25,7 +25,6 @@ export class ProjectDetailsComponent implements OnInit {
   public comments: IssueComment[] = [];
   public newComment: IssueComment = new IssueComment();
   public selectedComment: number;
-  public editComment: boolean = false;
 
   constructor(private _activatedRoute: ActivatedRoute, private _projectDetailsService: ProjectDetailsService,
     private _issueService: IssueService, fb: FormBuilder) {
@@ -97,12 +96,20 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   public deleteComment(comment: IssueComment){
-    console.log(comment)
     return this._issueService.deleteComment(comment.id, this.selectedIssue.id)
       .subscribe(
         success => {
           this.comments.splice(this.comments.indexOf(comment), 1);
           console.log(this.comments);
+        }
+      )
+  }
+
+  public editComment(comment: IssueComment, commentId: number){
+    return this._issueService.editComment(commentId, comment)
+      .subscribe(
+        success => {
+          this.editCommentNo(comment);
         }
       )
   }
@@ -116,6 +123,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   public mouseEnter(comment: any) {
+    this.selectedComment = comment.id;
     comment.hover = true;
   }
 
@@ -133,9 +141,8 @@ export class ProjectDetailsComponent implements OnInit {
 
   public editCommentYes(comment: any){
     comment.editting = true;
-    this.editComment = true;
   }
-  public editCommentNo(){
-    this.editComment = false;
+  public editCommentNo(comment: any){
+    comment.editting = false;
   }
 }

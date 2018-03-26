@@ -121,3 +121,18 @@
 .single-comment:hover {
   background-color: #eaeae1;
 }
+
+#commentContent:disabled {
+   border: none;
+   background-color: white;
+
+}
+
+#commentContent:hover {
+  border: none;
+  background-color: #eaeae1;
+}
+
+.editcomment {
+  width: 98%;
+}
