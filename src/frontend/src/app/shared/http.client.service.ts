@@ -8,14 +8,14 @@ import * as constants from '../constants/applicatins-contants';
 export class HttpClient {
 
   private _constants = constants.default;
-  
+
   constructor(private _http: Http) {}
 
   private createRequestOptionsArgs(): RequestOptionsArgs {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Authorization', localStorage.getItem('token'));
     headers.append('Content-Type', 'application/json');
-    return { 
+    return {
       headers: headers
     };
   }

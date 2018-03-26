@@ -1,49 +1,121 @@
-<div class="project-name">
-  <h3>{{ projectDetails?.projectDto?.name }}</h3>
-</div>
-
-<span><app-issue-creation [projectKey]="projectKey" (onIssueCreate)="onIssueCreate($event)"></app-issue-creation></span>
-
-<div class="list-panel" id="list-panel" *ngIf="showIssueList()">
-      <ul class="issue-list">
-        <li *ngFor="let issue of projectDetails.issues" (click)="selectIssue(issue.id)">
-            <p class="key"><b>{{ issue.key }}</b></p>
-            <p>{{ issue.summary }}</p>
-        </li>
-  </ul>
-</div>
-
-<div class="issue-details" id="issue-details" *ngIf="selectedIssue">
-  <h5>{{ selectedIssue.key }}<b>(STATUS)</b></h5>
-  <h6>{{ selectedIssue.summary }}</h6>
-  <div class="underline"></div>
-  <div class="issue-details-table">
-    <div class="col-1-details">
-      <span><b>Type:</b> {{ selectedIssue.issueType }}</span><br>
-      <span><b>Priority: </b>{{ selectedIssue.priority }}</span>
-    </div>
-    <div class="col-2-details">
-      <span><b>Created at: </b>{{ selectedIssue.createdDate }}</span><br>
-      <span><b>Updated at: </b>{{ selectedIssue.lastUpdate }}</span>
-    </div>
-    <div class="col-3-details">
-      <span><b>Estimated time: </b>{{ selectedIssue.estimateTime }}</span><br>
-      <span><b>Remaining time: </b>{{ selectedIssue.remainingTime }}</span>
-    </div>
-    <div class="col-4-details">
-      <span><b>Reporter: </b>{{ selectedIssue.reporter.username }}</span><br>
-      <span>
-        <b>Assignees:</b>
-        <span *ngFor="let user of selectedIssue.assignees">{{ user.username }}</span>
-      </span>
-    </div>
+<div>
+  <img id="loading" src="../../assets/images/loading_boobs.gif" alt="loading-boobs" *ngIf="loading">
+  <div class="project-name">
+    <h3>{{ projectDetails?.projectDto?.name }}</h3>
   </div>
-  <div class="more-details">
-    <b>Description</b>
-    <div class="issue-description">{{ selectedIssue.description }}</div>
-  </div>
-</div>
 
-<div class="no-issues-found" *ngIf="!showIssueList()" >
-  <h4>Sorry, we didn't find issues for this project</h4>
+  <span><app-issue-creation [projectKey]="projectKey" (onIssueCreate)="onIssueCreate($event)"
+                            *ngIf="!loading"></app-issue-creation></span>
+
+  <div class="list-panel" id="list-panel" *ngIf="showIssueList()">
+    <ul class="issue-list">
+      <li *ngFor="let issue of projectDetails.issues" (click)="selectIssue(issue.id)">
+        <p class="key"><b>{{ issue.issueKey }}</b></p>
+        <p>{{ issue.summary }}</p>
+      </li>
+    </ul>
+  </div>
+
+  <div class="issue-details" id="issue-details" *ngIf="selectedIssue">
+    <div class="issue-header">
+      <div class="col-1-details">
+        <h5>{{ selectedIssue.key }}<b>(STATUS)</b></h5>
+        <h6>{{ selectedIssue.summary }}</h6>
+      </div>
+      <div class="col-2-details">
+        <a class="assign-text" *ngIf=checkAssignees()
+           (click)="onAssignToIssue()">
+          Assign me to issue
+        </a>
+      </div>
+    </div>
+
+    <div class="underline"></div>
+    <div class="issue-details-table">
+      <div class="col-1-details">
+        <span><b>Type:</b> {{ selectedIssue.issueType }}</span><br>
+        <span><b>Priority: </b>{{ selectedIssue.priority }}</span>
+      </div>
+      <div class="col-2-details">
+        <span><b>Created at: </b>{{ selectedIssue.createdDate }}</span><br>
+        <span><b>Updated at: </b>{{ selectedIssue.lastUpdate }}</span>
+      </div>
+      <div class="col-3-details">
+        <span><b>Estimated time: </b>{{ selectedIssue.estimateTime }}</span><br>
+        <span><b>Remaining time: </b>{{ selectedIssue.remainingTime }}</span>
+      </div>
+      <div class="col-4-details">
+        <span><b>Reporter: </b>{{ selectedIssue.reporter.username }}</span><br>
+        <span>
+          <b>Assignees:</b>
+          <button type="button" class="btn btn-warning" *ngIf="isOwner(); else notOwner" data-toggle="modal"
+                  data-target="#manageModal">Manage assignees</button>
+          <ng-template #notOwner>
+            <span *ngFor="let user of selectedIssue.assignees">{{ user.username }}</span>
+          </ng-template>
+        </span>
+      </div>
+    </div>
+    <div class="more-details">
+      <b>Description</b>
+      <div class="issue-description">{{ selectedIssue.description }}</div>
+    </div>
+
+    <div class="modal fade" id="manageModal" tabindex="-1" role="dialog"
+         aria-labelledby="manageModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="manageModalLongTitle">Manage assignees</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div *ngIf="selectedIssue.assignees.length; else noAssignees">
+              <b>Current assignees:</b>
+              <div *ngFor="let assignee of selectedIssue.assignees">
+                <div class="col-1-details">
+                  {{assignee.username}}
+                </div>
+                <div class="col-2-details">
+                  <button class="btn btn-danger" (click)="onRemoveFromAssign(assignee.username)">X</button>
+                </div>
+              </div>
+            </div>
+            <ng-template #noAssignees>
+              <b>No one is assigned to this issue</b>
+            </ng-template>
+
+            <br/><br/>
+
+            <div class="assign-table">
+              <b>Assign member: &nbsp;&nbsp;</b><input #search (keyup)="0" placeholder="Search for member">
+              <div *ngFor="let member of (projectDetails.projectDto.members | filter : search.value)">
+                <div *ngIf=isAssigned(member.username)>
+                  <div class="col-1-details">
+                    {{member.username}}
+                  </div>
+                  <div class="col-2-details">
+                    <button class="btn btn-success" (click)="onAssignToIssue(member.username)">Assign</button>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="!(projectDetails.projectDto.members | filter : search.value).length && search.value.length">
+                No members found
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="no-issues-found" *ngIf="!showIssueList() && !loading">
+    <h4>Sorry, we didn't find issues for this project</h4>
+  </div>
 </div>

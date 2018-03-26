@@ -28,11 +28,11 @@ public class CheckBoxContainerAsm implements ProjectFieldAsm<CheckBoxContainer, 
     public CheckBoxContainerDto createDtoObject(CheckBoxContainer projectField) {
         Set<CheckBoxDto> checkBoxes = projectField.getCheckBoxes().stream().map(checkBox -> fieldElementsAsm.convertToDtoObject(checkBox)).collect(Collectors.toSet());
         return new CheckBoxContainerDto(
-                projectField.getId(),
-                projectField.getFieldType().toString(),
-                projectField.getName(),
-                projectField.getIsRequired(),
-                checkBoxes
+            projectField.getId(),
+            projectField.getFieldType().toString(),
+            projectField.getName(),
+            projectField.getIsRequired(),
+            checkBoxes
         );
     }
 }

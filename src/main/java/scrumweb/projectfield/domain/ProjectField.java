@@ -6,6 +6,10 @@ import lombok.Setter;
 import scrumweb.dto.projectfield.ProjectFieldDto;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 
@@ -24,6 +28,7 @@ public abstract class ProjectField {
     @NotNull
     private String name;
 
+    @NotNull
     private Boolean isRequired;
 
     public ProjectField(FieldType fieldType, String name, Boolean isRequired) {

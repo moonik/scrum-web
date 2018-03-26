@@ -1,5 +1,13 @@
+import {ProjectMemberDto} from './projectMemberDto';
+import {UserProfileDto} from './UserProfileDto';
+
 export class ProjectDto {
-  public name: string;
-  public projectKey: string;
-  public description: string;
+  id: number;
+  name: string;
+  projectKey: string;
+  description: string;
+  icon: any;
+  owner: UserProfileDto;
+  members: ProjectMemberDto[];
+  requests: ProjectMemberDto[];
 }

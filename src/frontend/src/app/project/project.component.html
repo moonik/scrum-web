@@ -1,6 +1,6 @@
 <br>
 <div class="row justify-content-center">
-  <form [formGroup] = "projectForm" (ngSubmit)="createproject()">
+  <form [formGroup]="projectForm" (ngSubmit)="createProject()">
 
     <div class="form-group">
 
@@ -13,7 +13,9 @@
       <input type="text" class="form-control w-100" id="inputName"
              placeholder="Enter project name" [(ngModel)]="projectDto.name" formControlName="name">
       <div *ngIf="checkControl('name')">
-        <small id="nameLengthError" class="form-text text-danger" *ngIf="checkProjectNameLength()">Project must be between 5 to 30 characters.</small>
+        <small id="nameLengthError" class="form-text text-danger" *ngIf="checkProjectNameLength()">Project must be
+          between 5 to 30 characters.
+        </small>
       </div>
     </div>
 
@@ -22,7 +24,9 @@
       <input type="text" class="form-control w-100" id="inputKey"
              placeholder="Enter project key" [(ngModel)]="projectDto.projectKey" formControlName="projectKey">
       <div *ngIf="checkControl('projectKey')">
-        <small id="projectKeyLengthError" class="form-text text-danger" *ngIf="checkProjectKeyLength()">Project must be between 3 to 8 characters.</small>
+        <small id="projectKeyLengthError" class="form-text text-danger" *ngIf="checkProjectKeyLength()">Project must be
+          between 3 to 8 characters.
+        </small>
       </div>
     </div>
 
@@ -31,11 +35,26 @@
       <input type="text" class="form-control w-200" id="inputDescription"
              placeholder="Enter description" [(ngModel)]="projectDto.description" formControlName="description">
       <div *ngIf="checkControl('projectKey')">
-        <small id="descriptionLengthError" class="form-text text-danger" *ngIf="checkDescriptionLength()">Project description must be between 5 to 300 characters.</small>
+        <small id="descriptionLengthError" class="form-text text-danger" *ngIf="checkDescriptionLength()">Project
+          description must be between 5 to 300 characters.
+        </small>
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="projectForm.invalid">Create project</button>
+    <div class="form-group">
+      <label for="icon">Choose Icon</label>
+      <input type="file" id="icon" class="form-control w-200"
+             (change)="chooseIcon($event.target.files)"
+             accept="image/jpeg, image/png"
+             [disabled]="loading">
+      <div *ngIf="!validIcon">
+        <small id="fileUploadError" class="form-text text-danger">Icon must be in .jpg or .png format</small>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="projectForm.invalid || loading || !validIcon">Create
+      project
+    </button>
 
     <div *ngIf="projectForm.invalid">
       <small class="form-text error">Please fill all fields.</small>

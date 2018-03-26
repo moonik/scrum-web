@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import scrumweb.dto.fieldcontent.FieldsContentCollector;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.issue.IssueTypeDto;
 import scrumweb.issue.service.IssueService;
@@ -54,4 +52,17 @@ public class IssueController {
     public void deleteIssueType(@PathVariable Long id) {
         issueService.deleteIssueType(id);
     }
+
+    @PostMapping("/{id}/assign/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public void assignToIssue(@PathVariable Long id, @PathVariable String username) {
+        issueService.assignToIssue(id, username);
+    }
+
+    @DeleteMapping("/{id}/assign/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public void unAssignFromIssue(@PathVariable Long id, @PathVariable String username) {
+        issueService.unAssignFromIssue(id, username);
+    }
+
 }

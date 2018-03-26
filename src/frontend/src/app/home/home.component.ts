@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {ProjectDto} from "../model/projectDto";
-import {HomeService} from "./home.service";
+import {Component, OnInit} from '@angular/core';
+import {ProjectDto} from '../model/projectDto';
+import {HomeService} from './home.service';
 import {Router} from '@angular/router';
+import {StorageService} from '../shared/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -13,15 +14,18 @@ export class HomeComponent implements OnInit {
 
   projects: ProjectDto[] = [];
 
-  constructor(private _homeService: HomeService, private _router: Router) {
-    this.getAllOwnProjects();
+  constructor(private _homeService: HomeService,
+              private _router: Router,
+              private storage: StorageService) {
+    this.getAllProjects();
   }
 
   ngOnInit() {
+    this.getAllProjects();
   }
 
-  getAllOwnProjects() {
-    this._homeService.getAllOwnProjects()
+  getAllProjects() {
+    this._homeService.getAllProjects()
       .subscribe(
         data => {
           this.projects = data;
@@ -29,7 +33,21 @@ export class HomeComponent implements OnInit {
       );
   }
 
-  goToProjectDetails(projectKey: string) {
-    this._router.navigate(['project/details/'+projectKey]);
+  onConfigureProject(project: ProjectDto) {
+    this.storage.setScope(project);
+    this._router.navigate(['project/configure', project.projectKey]);
   }
+
+  goToProjectDetails(projectKey: string) {
+    this._router.navigate(['project/details/' + projectKey]);
+  }
+
+  getCurrentUser(): string {
+    return localStorage.getItem('currentUser');
+  }
+
+  isOwner(owner: string): boolean {
+    return owner === this.getCurrentUser();
+  }
+
 }

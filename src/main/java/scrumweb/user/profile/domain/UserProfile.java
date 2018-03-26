@@ -3,12 +3,13 @@ package scrumweb.user.profile.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import scrumweb.project.domain.Project;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -21,6 +22,10 @@ public class UserProfile {
 
     @NotNull
     @Size(min = 3, max = 10)
+    private String username;
+
+    @NotNull
+    @Size(min = 3, max = 10)
     private String firstname;
 
     @NotNull
@@ -29,7 +34,8 @@ public class UserProfile {
 
     private String photo;
 
-    public UserProfile(String firstname, String lastname, String photo) {
+    public UserProfile(String username, String firstname, String lastname, String photo) {
+        this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.photo = photo;

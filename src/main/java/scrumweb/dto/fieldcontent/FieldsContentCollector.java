@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 import scrumweb.common.FieldsExtractor;
-import scrumweb.dto.projectfield.ProjectFieldDto;
 
 import java.util.HashSet;
 import java.util.Set;

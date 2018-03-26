@@ -1,0 +1,25 @@
+td {
+  text-align: center;
+}
+
+.projects-table tr{
+  cursor: pointer;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.project-key{
+  width: 10%;
+}
+
+.project-type{
+  width: 20%;
+}
+
+.project-description{
+  width: 40%;
+}
+
+.project-request {
+  width: 15%;
+}

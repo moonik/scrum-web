@@ -11,6 +11,7 @@ import scrumweb.dto.fieldcontent.FieldContentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.issue.IssueTypeDto;
 import scrumweb.dto.user.UserProfileDto;
+import scrumweb.exception.CantAssignToIssueException;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.fieldcontent.FieldContent;
@@ -20,6 +21,7 @@ import scrumweb.project.domain.Project;
 import scrumweb.projectfield.domain.ProjectField;
 import scrumweb.projectfield.repository.ProjectFieldRepository;
 import scrumweb.project.repository.ProjectRepository;
+import scrumweb.projectfield.repository.ProjectFieldRepository;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
@@ -48,12 +50,13 @@ public class IssueService {
     public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String projectKey) {
         final Project project = projectRepository.findByKey(projectKey);
         Set<Issue> issues = project.getIssues();
-        issues.add(createIssue(issueDetailsDto, fieldContentsDto, project));
+        String issueKey = project.getKey().concat("-").concat(project.getIssues().size() + 1 + "");
+        issues.add(createIssue(issueDetailsDto, fieldContentsDto, issueKey, project));
         projectRepository.save(project);
         return issueDetailsDto;
     }
 
-    protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, Project project) {
+    protected Issue createIssue(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String issueKey, Project project) {
         final UserAccount reporter = securityContextService.getCurrentUserAccount();
         Set<UserAccount> assignees = new HashSet<>();
         if (!issueDetailsDto.getAssignees().isEmpty()) {
@@ -61,7 +64,9 @@ public class IssueService {
         }
         Set<FieldContent> fieldContents = extractContents(fieldContentsDto);
         IssueType issueType = getIssueType(project.getIssueTypes(), issueDetailsDto.getIssueType());
-        return issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
+        Issue issue = issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
+        issue.setKey(issueKey);
+        return issue;
     }
 
     public IssueDetailsDto getDetails(Long id) {
@@ -103,22 +108,56 @@ public class IssueService {
 
     private Set<String> extractUserNames(Set<UserProfileDto> userProfileDtos) {
         return userProfileDtos.stream()
-                .map(UserProfileDto::getUsername)
-                .collect(Collectors.toSet());
+            .map(UserProfileDto::getUsername)
+            .collect(Collectors.toSet());
     }
 
     private Set<FieldContent> extractContents(Set<FieldContentDto> fieldContentsDto) {
         return fieldContentsDto.stream()
-                .map(fieldContentDto -> fieldContentAsm.createObjectEntity(
-                        projectFieldRepository.findOne(fieldContentDto.getProjectFieldId()), fieldContentDto))
-                .collect(Collectors.toSet());
+            .map(fieldContentDto -> fieldContentAsm.createObjectEntity(
+                projectFieldRepository.findOne(fieldContentDto.getProjectFieldId()), fieldContentDto))
+            .collect(Collectors.toSet());
     }
 
     private IssueType getIssueType(Set<IssueType> issueTypes, String issueType) {
         return issueTypes.stream()
-                .filter(i -> i.getName().equalsIgnoreCase(issueType))
-                .findFirst()
-                .orElse(null);
+            .filter(i -> i.getName().equalsIgnoreCase(issueType))
+            .findFirst()
+            .orElse(null);
+    }
+
+    private boolean checkIfMember(String username, Issue issue) {
+        return projectRepository.findAll().stream()
+            .filter(p -> p.getIssues().contains(issue))
+            .reduce((a, b) -> null)
+            .map(project2 -> project2.getMembers().stream()
+                .map(m -> m.getUserAccount().getUsername())
+                .collect(Collectors.toList()).contains(username))
+            .orElse(false);
+    }
+
+    public void assignToIssue(Long id, String username) {
+        Issue issue = issueRepository.findOne(id);
+        UserAccount user = userAccountRepository.findByUsername(username);
+
+        if (checkIfMember(username, issue)) {
+            issue.getAssignees().add(user);
+            issueRepository.save(issue);
+        } else {
+            throw new CantAssignToIssueException();
+        }
+    }
+
+    public void unAssignFromIssue(Long id, String username) {
+        Issue issue = issueRepository.findOne(id);
+        UserAccount user = userAccountRepository.findByUsername(username);
+
+        if (checkIfMember(username, issue)) {
+            issue.getAssignees().remove(user);
+            issueRepository.save(issue);
+        } else {
+            throw new CantAssignToIssueException(username);
+        }
     }
 
     public void editIssueType(IssueTypeDto issueTypeDto) {
