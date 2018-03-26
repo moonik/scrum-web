@@ -25,6 +25,7 @@ export class ProjectDetailsComponent implements OnInit {
   public comments: IssueComment[] = [];
   public newComment: IssueComment = new IssueComment();
   public selectedComment: number;
+  public editComment: boolean = false;
 
   constructor(private _activatedRoute: ActivatedRoute, private _projectDetailsService: ProjectDetailsService,
     private _issueService: IssueService, fb: FormBuilder) {
@@ -34,7 +35,7 @@ export class ProjectDetailsComponent implements OnInit {
     this.getProjectDetails();
 
     this.commentForm = fb.group({
-      content: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]]
+      content: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(255)]]
     });
   }
 
@@ -95,11 +96,11 @@ export class ProjectDetailsComponent implements OnInit {
       );
   }
 
-  public deleteComment(commentId: number, comment: IssueComment){
-
-    return this._issueService.deleteComment(commentId)
+  public deleteComment(comment: IssueComment){
+    console.log(comment)
+    return this._issueService.deleteComment(comment.id, this.selectedIssue.id)
       .subscribe(
-        data => {
+        success => {
           this.comments.splice(this.comments.indexOf(comment), 1);
           console.log(this.comments);
         }
@@ -115,7 +116,6 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   public mouseEnter(comment: any) {
-    this.selectedComment = comment.id;
     comment.hover = true;
   }
 
@@ -123,11 +123,19 @@ export class ProjectDetailsComponent implements OnInit {
     comment.hover = false;
   }
 
-  checkCommentLength(): boolean {
+  public checkCommentLength(): boolean {
     return this.commentForm.controls.content.errors.minlength || this.commentForm.controls.content.errors.maxlength;
   }
 
-  checkControl(name: string): boolean {
+  public checkControl(name: string): boolean {
     return this.commentForm.controls[name].invalid && (this.commentForm.controls[name].touched || this.commentForm.controls[name].dirty);
+  }
+
+  public editCommentYes(comment: any){
+    comment.editting = true;
+    this.editComment = true;
+  }
+  public editCommentNo(){
+    this.editComment = false;
   }
 }

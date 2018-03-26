@@ -45,10 +45,16 @@ public class IssueController {
         return issueService.getCommentsForIssue(id);
     }
 
-    @DeleteMapping("/comments/delete/{commentId}")
+    @DeleteMapping("/comments/delete/{commentId}/{issueId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteComment(@PathVariable Long commentId){
-        issueService.deleteComment(commentId);
+    public void deleteComment(@PathVariable Long commentId, @PathVariable Long issueId){
+        issueService.deleteComment(commentId, issueId);
+    }
+
+    @PostMapping("/comments/edit/{commentId}")
+    @ResponseStatus(HttpStatus.OK)
+    public String editComment(@PathVariable Long commentId, @RequestBody String content){
+        return issueService.editComment(commentId, content);
     }
 
 }

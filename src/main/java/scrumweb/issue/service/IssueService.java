@@ -123,10 +123,21 @@ public class IssueService {
 
     }
 
-    public void deleteComment(Long commentId) {
-
+    public void deleteComment(Long commentId, Long issueId) {
+        Issue issue = issueRepository.findOne(issueId);
+        List<IssueComment> comments = issue.getComments().stream().filter(c -> !c.getId().equals(commentId)).collect(Collectors.toList());
+        issue.setComments(comments);
+        issueRepository.saveAndFlush(issue);
         issueCommentRepository.delete(commentId);
 
+    }
+
+    public String editComment(Long commentId, String content) {
+        IssueComment comment = issueCommentRepository.findOne(commentId);
+        comment.setContent(content);
+        issueCommentRepository.save(comment);
+
+        return content;
     }
 
 }

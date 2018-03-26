@@ -49,7 +49,7 @@
       <input formControlName="content" name="commentContent" type="text" class="form-control w-100" id="inputContent"
              placeholder="Add comment" [(ngModel)]="newComment.content">
         <div *ngIf="checkControl('content')">
-          <small id="commentLengthError" class="form-text text-danger" *ngIf="checkCommentLength()">Comment length must be between 5 to 255 characters.</small>
+          <small id="commentLengthError" class="form-text text-danger" *ngIf="checkCommentLength()">Comment length must be between 2 to 255 characters.</small>
         </div>
         <p align="right"><button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">Add</button></p>
       </form>
@@ -68,35 +68,16 @@
           </tr>
           <tbody *ngFor="let comment of comments" (mouseenter)="mouseEnter(comment)" (mouseleave)="mouseLeave(comment)">
             <tr class="single-comment">
-              <td>{{comment.content}}</td>
+              <td><input name="content" [(ngModel)]="comment.content" [attr.disabled]="comment.editting? null : ''"><button *ngIf="comment.editting === true">ok</button></td>
               <td>{{comment.owner.username}}</td>
               <td>{{comment.createdDate}}</td>
               <td>
-                <i [hidden]="!comment.hover || !(comment.owner.username === getCurrentUser())" class="fa fa-pencil-square-o"></i>
+                <button [hidden]="!comment.hover || !(comment.owner.username === getCurrentUser())" class="fa fa-pencil-square-o" (click)="editCommentYes(comment)"></button>
               </td>
               <td>
-                <form >
-                  <button type="button" [hidden]="!comment.hover || !(comment.owner.username === getCurrentUser())" class="fa fa-times" data-toggle="modal" data-target="#exampleModal"></button>
-
-                  <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <b>Warning!</b>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          Do you really want to delete this comment?
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                          <button type="button" class="btn btn-danger" (click)="deleteComment(comment.id, comment)" data-dismiss="modal" >Yes, delete</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <form (ngSubmit)="deleteComment(comment)">
+                <button type="submit" [hidden]="!comment.hover || !(comment.owner.username === getCurrentUser())" class="fa fa-times" data-toggle="modal" data-target="#exampleModal"></button>
+                <!--<app-warning-modal [obj]="comment" (onClickYes)="deleteComment($event)"></app-warning-modal>-->
                 </form>
               </td>
               <br>

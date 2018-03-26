@@ -25,6 +25,7 @@ import { ProjectDetailsComponent } from './project-details/project-details.compo
 import { ApplicationConstants} from './shared/applicatins-contants';
 import { IssueComponent } from './issue/issue.component';
 import { SearchComponent } from './search/search.component';
+import { WarningModalComponent } from './warning-modal/warning-modal.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { SearchComponent } from './search/search.component';
     ProjectDetailsComponent,
     IssueComponent,
     FooterComponent,
-    SearchComponent
+    SearchComponent,
+    WarningModalComponent
   ],
   imports: [
     BrowserModule,

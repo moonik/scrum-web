@@ -35,7 +35,7 @@ export class IssueService {
           .map(res => res.json());
     }
 
-    public deleteComment(commentId: number) {
-      return this._http.delete(this._URL+'comments/delete/'+commentId);
+    public deleteComment(commentId: number, issueId: number) {
+      return this._http.delete(this._URL+'comments/delete/'+commentId+'/'+issueId);
     }
 }
