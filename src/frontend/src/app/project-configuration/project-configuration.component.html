@@ -35,6 +35,11 @@
         {{project.description}}
       </td>
     </tr>
+    <tr class="buttons">
+      <td>
+          <button style="width: 150px;" class="btn btn-primary btn-block " (click)="goToIssueConfiguration()">Configure issues</button>
+      </td>
+    </tr>
     </tbody>
   </table>
 
@@ -101,14 +106,14 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="addDropdown">
             <a class="dropdown-item" *ngFor="let role of rolesTypes"
-               (click)="addUserToProject(u.username, role)"
-            >
+               (click)="addUserToProject(u.username, role)">
               {{role.toLocaleUpperCase()}}
             </a>
           </div>
         </div>
       </td>
     </tr>
+    <tr>
     </tbody>
     <tfoot>
     <tr>

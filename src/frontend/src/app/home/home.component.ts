@@ -17,15 +17,15 @@ export class HomeComponent implements OnInit {
   constructor(private _homeService: HomeService,
               private _router: Router,
               private storage: StorageService) {
-    this.getAllOwnProjects();
+    this.getAllProjects();
   }
 
   ngOnInit() {
-    this.getAllOwnProjects();
+    this.getAllProjects();
   }
 
-  getAllOwnProjects() {
-    this._homeService.getAllOwnProjects()
+  getAllProjects() {
+    this._homeService.getAllProjects()
       .subscribe(
         data => {
           this.projects = data;

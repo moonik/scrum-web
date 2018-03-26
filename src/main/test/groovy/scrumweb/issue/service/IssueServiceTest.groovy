@@ -73,7 +73,6 @@ class IssueServiceTest extends Specification {
         Set<UserProfileDto> assignees = new HashSet<>(Arrays.asList(userProfileDto))
         FieldContentDto fieldContentDto = new InputFieldContentDto(projectFieldId, projectFieldName, content)
         Set<FieldContentDto> fieldContentDtos = new HashSet<>(Arrays.asList(fieldContentDto))
-        ProjectField projectField = new ProjectField(FieldType.INPUT_FIELD, projectFieldName, true)
         FieldContent inputFieldContent = new InputFieldContent(projectField, content)
         Set<FieldContent> fieldContents = new HashSet<>(Arrays.asList(inputFieldContent))
         IssueDetailsDto issueDetailsDto = new IssueDetailsDto(issueId, key, summary, description, assignees, userProfileDto, estimateTime, remainingTime, priority, issueType, date, date)
@@ -100,7 +99,6 @@ class IssueServiceTest extends Specification {
         given:
         UserProfileDto userProfileDto = new UserProfileDto(profileId, firstname, lastname, photo, username)
         Set<UserProfileDto> assignees = new HashSet<>(Arrays.asList(userProfileDto))
-        ProjectField projectField = new ProjectField(FieldType.INPUT_FIELD, projectFieldName, true)
         FieldContent inputFieldContent = new InputFieldContent(projectField, content)
         Set<FieldContent> fieldContents = new HashSet<>(Arrays.asList(inputFieldContent))
         IssueDetailsDto issueDetailsDto = new IssueDetailsDto(issueId, key, summary, description, assignees, userProfileDto, estimateTime, remainingTime, priority, issueType, date, date)

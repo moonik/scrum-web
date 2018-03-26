@@ -1,13 +1,15 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptionsArgs, Response, ResponseContentType} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
-import {ApplicationConstants} from './applicatins-contants';
+import {Headers, Http, RequestOptionsArgs, Response} from "@angular/http";
+import 'rxjs/Rx';
+import {Observable} from "rxjs/Observable";
+import * as constants from '../constants/applicatins-contants';
 
 @Injectable()
 export class HttpClient {
 
-  constructor(private _http: Http, private _constants: ApplicationConstants) {
-  }
+  private _constants = constants.default;
+
+  constructor(private _http: Http) {}
 
   private createRequestOptionsArgs(): RequestOptionsArgs {
     const headers = new Headers();
@@ -33,5 +35,4 @@ export class HttpClient {
   delete(url: string): Observable<Response> {
     return this._http.delete(this._constants.API_URL + url, this.createRequestOptionsArgs());
   }
-
 }

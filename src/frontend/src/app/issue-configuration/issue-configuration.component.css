@@ -1,0 +1,82 @@
+#create-new-field:hover, #create-new-type:hover {
+    border: 0.5px black solid;
+    border-radius: 5px;
+    background-color: rgb(222, 226, 226);
+    cursor: pointer;
+}
+
+#create-new-field, #create-new-type {
+    padding: 10px;
+    margin: 5px;
+    margin-bottom: 15px;
+}
+
+.field-submit {
+    margin-top: 5px;
+    margin-left: 25px;
+}
+
+.type-form {
+    margin-top: 15px !important;
+}
+
+.issue-type {
+    margin-left: 10px !important;
+}
+
+.field-creation-form {
+    border-bottom: 0.5px black solid;
+    width: 50%;
+    margin: 15px;
+}
+
+#btn-create {
+    margin-bottom: 5px;
+}
+
+.fa {
+    cursor: pointer !important;
+    float: right !important;
+}
+
+.field-element::placeholder {
+    color: black !important;
+}
+
+.btn {
+    background-color: #212529 !important;
+    border-color: #212529 !important;
+}
+
+.submit-form {
+    margin: 15px !important;
+}
+
+.params-elements:hover, .submitted-field:hover {
+    background-color: rgb(222, 226, 226) !important;
+    cursor: pointer !important;
+}
+
+.params-elements {
+    margin: 10px !important;
+}
+
+.table-configuration {
+    display: table;
+}
+
+.cel1, .cel2 {
+    display: table-cell !important;
+}
+
+.cel1 {
+    width: 70em;
+}
+
+.cel2 {
+    margin-right: 25px;
+}
+
+.chars-length {
+    width: 75px !important;
+}

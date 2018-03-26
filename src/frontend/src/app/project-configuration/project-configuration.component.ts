@@ -109,6 +109,9 @@ export class ProjectConfigurationComponent implements OnInit {
         this.ngOnInit();
       }
     );
+  }
 
+  public goToIssueConfiguration() {
+    this.router.navigate(['/project/'+this.project.projectKey+'/configuration/issues']);
   }
 }

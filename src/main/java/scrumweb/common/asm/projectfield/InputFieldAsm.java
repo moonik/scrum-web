@@ -23,7 +23,7 @@ public class InputFieldAsm implements ProjectFieldAsm<InputField, InputFieldDto>
     public InputFieldDto createDtoObject(InputField projectField) {
         return new InputFieldDto(
                 projectField.getId(),
-                projectField.getFieldType().toString(),
+                projectField.getFieldType().name(),
                 projectField.getName(),
                 projectField.getIsRequired(),
                 projectField.getMaxCharacters(),

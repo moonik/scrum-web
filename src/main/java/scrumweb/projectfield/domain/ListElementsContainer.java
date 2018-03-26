@@ -21,4 +21,11 @@ public class ListElementsContainer extends ProjectField {
         super(fieldType, name, isRequired);
         this.elements = elements;
     }
+
+    @Override
+    public void edit(ProjectField projectField) {
+        this.elements = ((ListElementsContainer) projectField).getElements();
+        this.setName(projectField.getName());
+        this.setIsRequired(projectField.getIsRequired());
+    }
 }

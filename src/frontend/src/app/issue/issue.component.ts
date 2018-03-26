@@ -25,14 +25,13 @@ export class IssueComponent implements OnInit {
   @Input() projectKey: string;
   @Output() onIssueCreate = new EventEmitter<IssueDto>();
   public issueDetails: IssueDetailsDto = new IssueDetailsDto();
-  projectMembers: Array<any> = [];
-  selectedItems = [];
-  settings = {};
+  public projectMembers: Array<any> = [];
+  public selectedItems = [];
+  public settings = {};
 
   constructor(private _modalService: BsModalService, private _issueService: IssueService) {}
 
   ngOnInit() {
-    this.getAssignees();
     this.settings = {
       singleSelection: false,
       text: 'Select assignees',
@@ -56,8 +55,10 @@ export class IssueComponent implements OnInit {
   }
 
   getAssignees() {
-    return this._issueService.getAssignees(this.projectKey)
-      .subscribe(data => this.projectMembers = data);
+    if (this.projectMembers.length === 0) {
+      this._issueService.getAssignees(this.projectKey)
+        .subscribe(data => this.projectMembers = data);
+    }
   }
 
   createIssue() {

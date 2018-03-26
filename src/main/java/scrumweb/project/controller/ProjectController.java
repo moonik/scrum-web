@@ -2,7 +2,6 @@ package scrumweb.project.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import scrumweb.common.SecurityContextService;
+import org.springframework.web.bind.annotation.*;
+import scrumweb.dto.issue.IssueTypeDto;
 import scrumweb.dto.issue.ItemAssignee;
 import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.dto.project.ProjectDto;
@@ -63,12 +64,6 @@ public class ProjectController {
         return projectService.getProjectDetails(projectKey);
     }
 
-    @GetMapping("/allOwnProjects")
-    @ResponseStatus(HttpStatus.OK)
-    public List<ProjectDto> allOwnProjects() {
-        return projectService.getAllProjects(securityContextService.getCurrentUserAccount());
-    }
-
     @GetMapping("/search/{paramkey}")
     @ResponseStatus(HttpStatus.OK)
     public SearchResultsDto findProjectsAndIssuesByKeyQuery(@PathVariable String paramkey) {
@@ -76,11 +71,12 @@ public class ProjectController {
     }
 
     @GetMapping("/members/{projectKey}")
+    @ResponseStatus(HttpStatus.OK)
     public Set<ItemAssignee> getProjectMembers(@PathVariable String projectKey) {
         return projectService.getProjectMembers(projectKey);
     }
 
-    @GetMapping("/allProjects")
+    @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<ProjectDto> allProjects() {
         return projectService.findAllProjects();
@@ -102,5 +98,11 @@ public class ProjectController {
     @ResponseStatus(HttpStatus.OK)
     public void acceptRequestForAccess(@RequestBody ProjectMemberDto projectMemberDto) {
         projectService.acceptRequestForAccess(projectMemberDto);
+    }
+
+    @GetMapping("/{key}/issue-types")
+    @ResponseStatus(HttpStatus.OK)
+    public List<IssueTypeDto> getIssueTypes(@PathVariable String key) {
+        return projectService.getIssueTypes(key);
     }
 }

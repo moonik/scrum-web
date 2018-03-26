@@ -7,6 +7,7 @@ import scrumweb.common.asm.IssueAsm;
 import scrumweb.common.asm.ProjectAsm;
 import scrumweb.common.asm.UserProfileAsm;
 import scrumweb.dto.issue.IssueDto;
+import scrumweb.dto.issue.IssueTypeDto;
 import scrumweb.dto.issue.ItemAssignee;
 import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.dto.project.ProjectDto;
@@ -59,8 +60,6 @@ public class ProjectService {
             project.setMembers(projectMembers);
             project.setIssueTypes(createIssueTypes(project));
 
-            project.setIcon(projectDto.getIcon());
-
             projects.add(project);
             userAccountRepository.save(projectOwner);
             return projectDto;
@@ -73,6 +72,7 @@ public class ProjectService {
         Project project = projectRepository.findOne(id);
         if (project != null) {
             project.setName(projectName);
+            projectRepository.save(project);
         } else {
             throw new ProjectNotFoundException(id);
         }
@@ -89,6 +89,13 @@ public class ProjectService {
         return projectAsm.makeProjectDetailsDro(projectDto, issues);
     }
 
+    public List<IssueTypeDto> getIssueTypes(String key) {
+        return projectRepository.findByKey(key).getIssueTypes()
+                .stream()
+                .map(type -> new IssueTypeDto(type.getId(), type.getName(), type.getIsDefault()))
+                .collect(Collectors.toList());
+    }
+
     public Set<ItemAssignee> getProjectMembers(String projectKey) {
         return projectRepository.findByKey(projectKey)
             .getMembers().stream()
@@ -99,8 +106,8 @@ public class ProjectService {
 
     private Set<IssueType> createIssueTypes(Project project) {
         return Arrays.stream(DEFAULT_ISSUE_TYPES)
-            .map(type -> new IssueType(type, project))
-            .collect(Collectors.toSet());
+                .map(type -> new IssueType(type, project, true))
+                .collect(Collectors.toSet());
     }
 
     public List<ProjectDto> getAllProjects(UserAccount userAccount) {
