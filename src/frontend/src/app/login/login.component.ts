@@ -12,7 +12,6 @@ import {ApplicationConstants} from "../constants/applications-constants";
 })
 export class LoginComponent implements OnInit {
 
-  loading = false;
   error = '';
   userDto: UserDto = new UserDto();
   loginForm: FormGroup;
@@ -33,7 +32,6 @@ export class LoginComponent implements OnInit {
   login() {
     if (this.loginForm.valid) {
       console.log('logged');
-      this.loading = true;
       this.authenticationService.login(this.userDto)
         .subscribe(
           () => {
@@ -42,7 +40,6 @@ export class LoginComponent implements OnInit {
           error => {
             if (error.status === 401) {
               this.error = 'Username or password is incorrect';
-              this.loading = false;
             }
           });
     } else {

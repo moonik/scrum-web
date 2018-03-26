@@ -37,24 +37,20 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   public selectIssue(issueId: number) {
-    this.loading = true;
     this._issueService.getIssueDetails(issueId)
       .subscribe(
         data => {
           this.selectedIssue = data;
-          this.loading = false;
         });
   }
 
   public getProjectDetails() {
-    this.loading = true;
     return this._projectDetailsService.getProjectDetails(this.projectKey)
       .subscribe(data => {
         this.projectDetails = data;
         if (data.issues.length > 0) {
           this.selectIssue(data.issues[0].id);
         }
-        this.loading = false;
       });
   }
 
@@ -63,17 +59,14 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   public onIssueCreate(issueDto: IssueDto) {
-    this.loading = true;
     const length = this.projectDetails.issues.length + 1;
     issueDto.id = length;
     issueDto.issueKey = this.projectDetails.projectDto.name + '-' + length;
     this.projectDetails.issues.unshift(issueDto);
     this.selectIssue(issueDto.id);
-    this.loading = false;
   }
 
   onAssignToIssue(username: string) {
-    this.loading = true;
     if (!username) {
       username = localStorage.getItem('currentUser');
     }
@@ -81,7 +74,6 @@ export class ProjectDetailsComponent implements OnInit {
       .subscribe(() => {
         this.ngOnInit();
       });
-    this.loading = false;
   }
 
   checkAssignees(): boolean {

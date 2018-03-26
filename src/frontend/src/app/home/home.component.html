@@ -1,9 +1,8 @@
 <div>
-<br>
-
-<form class="table-form">
-  <table class="table table-hover projects-table">
-    <thead>
+  <br>
+  <form class="table-form">
+    <table class="table table-hover projects-table">
+      <thead>
       <tr>
         <th class="placeForImage">Icon</th>
         <th>Name</th>
@@ -12,21 +11,25 @@
         <th>Owner</th>
         <th></th>
       </tr>
-    </thead>
-    <tbody *ngFor="let project of projects">
+      </thead>
+      <tbody *ngFor="let project of projects">
       <tr (click)="goToProjectDetails(project.projectKey)">
         <td class="placeForImage"><img *ngIf="project.icon" [src]="" height="50p" width="50p" alt=""></td>
         <td>{{project.name}}</td>
         <td>{{project.projectKey}}</td>
         <td>{{project.description}}</td>
         <td>{{project.owner.username}}</td>
-        <td><button class="btn btn-primary config" (click)="onConfigureProject(project)" *ngIf=isOwner(project.owner.username)>Configure Project</button></td>
+        <td>
+          <button class="btn btn-primary config" (click)="onConfigureProject(project)"
+                  *ngIf=isOwner(project.owner.username)>Configure Project
+          </button>
+        </td>
       </tr>
-    </tbody>
-  </table>
-</form>
-<br/>
-<br/>
-<br/>
+      </tbody>
+    </table>
+  </form>
+  <br/>
+  <br/>
+  <br/>
 
 </div>

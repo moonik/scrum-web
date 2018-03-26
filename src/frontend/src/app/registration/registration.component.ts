@@ -35,7 +35,6 @@ export class RegistrationComponent implements OnInit {
   userDto: UserDto = new UserDto();
   registrationForm: FormGroup;
   usernameExistError: string;
-  loading = false;
 
   constructor(private authenticationService: AuthenticationService,
               fb: FormBuilder,
@@ -57,7 +56,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   register() {
-    this.loading = true;
     this.authenticationService.save(this.userDto).subscribe(
       () => {
           this.router.navigate(['/login']);
@@ -66,7 +64,6 @@ export class RegistrationComponent implements OnInit {
               this.usernameExistError = error._body;
             }
       });
-    this.loading = false;
   }
 
   checkControl(name: string): boolean {
