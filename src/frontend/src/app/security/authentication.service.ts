@@ -8,7 +8,7 @@ import {HttpClient} from '../shared/http.client.service';
 export class AuthenticationService {
 
   public token: string;
-  headers: Headers = new Headers();
+  public headers: Headers = new Headers();
 
   constructor(private httpClientService: HttpClient) {
 

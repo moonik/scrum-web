@@ -11,10 +11,10 @@ import {UserDto} from '../model/userDto';
 })
 export class LoginComponent implements OnInit {
 
-  loading = false;
-  error = '';
-  userDto: UserDto = new UserDto();
-  loginForm: FormGroup;
+  public loading = false;
+  public error = '';
+  public userDto: UserDto = new UserDto();
+  public loginForm: FormGroup;
 
   constructor(private fb: FormBuilder, private authenticationService: AuthenticationService,private router: Router) {
     this.loginForm = fb.group({
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  login() {
+  public login() {
     if (this.loginForm.valid) {
       console.info('logged');
       this.loading = true;

@@ -1,22 +1,43 @@
 <div class="main">
   <div class="header">
-    <button class="button btn-primary backButton" [routerLink]="['/home']">Back</button>
-    <h3>Project Configuration</h3>
+    <h3 class="col-2-details">
+      Project Configuration
+      <button class="btn btn-primary btn-block " [routerLink]="['/home']">Back</button>
+    </h3>
   </div>
 
   <table class="projectInfo">
     <tbody>
     <tr>
-      <td colspan="2">
+      <td class="desc">
         <h6>Project name:</h6>
         {{project.name}}
       </td>
-      <td><h6 align="center">Icon</h6></td>
+      <td align="center" rowspan="2" class="icon"><h6>Icon: </h6>
+        <input *ngIf="validIcon && !loading" type="image" [src]=""
+               (click)="changeIcon.click()" alt=""/>
+        <input *ngIf="!validIcon && !loading" type="image" src="../../assets/images/error.gif"
+               (click)="changeIcon.click()" alt=""/>
+        <input *ngIf="loading" type="image" src="../../assets/images/loading_boobs.gif"
+               (click)="changeIcon.click()" alt=""/>
+        <input type="file" #changeIcon
+               style="display: none;"
+               (change)="chooseIcon($event.target.files)"
+               accept="image/jpeg, image/png"/>
+        <div *ngIf="!validIcon">
+          <small id="fileUploadError" class="form-text text-danger">Icon must be in .jpg or .png format</small>
+        </div>
+      </td>
     </tr>
     <tr>
-      <td>
+      <td class="desc">
         <h6>Description:</h6>
         {{project.description}}
+      </td>
+    </tr>
+    <tr class="buttons">
+      <td>
+          <button style="width: 150px;" class="btn btn-primary btn-block " (click)="goToIssueConfiguration()">Configure issues</button>
       </td>
     </tr>
     </tbody>
@@ -28,14 +49,42 @@
       <small class="form-text">{{error}}</small>
     </div>
     <h6><b>Members:</b></h6>
-    <div class="members-table" *ngFor="let members of project.members">
-      <div class="col-1-details">{{members.username}}</div>
-      <div class="col-2-details">{{members.role}}</div>
+    <div class="members-table" *ngFor="let member of project.members">
+      <div class="col-1-details">{{member.username}}</div>
+      <div class="col-2-details">{{member.role}}</div>
       <div class="col-3-details">
-        <button class="button btn-danger" (click)="removeMemberFromProject(members)">Remove form project</button>
+        <button class="btn btn-danger btn-block" (click)="removeMemberFromProject(member)">Remove form project</button>
       </div>
       <br/>
     </div>
+    <br/>
+  </div>
+
+  <div class="request-table">
+    <h6><b>Requests for access:</b></h6>
+    <div *ngFor="let request of project.requests">
+      <div class="col-1-details">{{request.username}}</div>
+      <div class="col-2-details">Suggested role: <b>{{request.role}}</b></div>
+      <div class="col-3-details">
+        <div class="dropdown">
+          <button class="btn btn-success dropdown-toggle btn-block" type="button" id="requestDropdown" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+            Accept as
+          </button>
+          <div class="dropdown-menu" aria-labelledby="requestDropdown">
+            <a class="dropdown-item" *ngFor="let role of rolesTypes"
+               (click)="acceptRequest(request.username, role)"
+            >
+              {{role.toLocaleUpperCase()}}
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-4-details">
+        <button class="btn btn-danger btn-block" type="button" (click)="declineRequest(request)">Decline</button>
+      </div>
+    </div>
+    <div *ngIf="!project.requests.length">No requests for access to the project</div>
     <br/>
   </div>
 
@@ -50,16 +99,26 @@
     <tr>
       <td class="td-user">{{u.username}} ({{u.firstname}} {{u.lastname}})</td>
       <td class="td-role">
-        <span><b>Add as: &nbsp;</b></span>
-        <select class="button btn-success"
-                [ngModel]="selectedRole"
-                (ngModelChange)="addUserToProject(u.username, $event)">
-          <option *ngFor="let role of rolesTypes"
-                  [value]="role">{{role.toLocaleUpperCase()}}
-          </option>
-        </select>
+        <div class="dropdown">
+          <button class="btn btn-success dropdown-toggle" type="button" id="addDropdown" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+            Add as
+          </button>
+          <div class="dropdown-menu" aria-labelledby="addDropdown">
+            <a class="dropdown-item" *ngFor="let role of rolesTypes"
+               (click)="addUserToProject(u.username, role)">
+              {{role.toLocaleUpperCase()}}
+            </a>
+          </div>
+        </div>
       </td>
     </tr>
+    <tr>
     </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="2" *ngIf="!(users | filter : search.value).length && search.value.length">No users found</td>
+    </tr>
+    </tfoot>
   </table>
 </div>

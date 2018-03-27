@@ -1,4 +1,8 @@
-.col-1-details, .col-2-details, .col-3-details {
+.col-1-details, .col-2-details, .col-3-details, .col-4-details{
+  display: table-cell !important;
+}
+
+.col-1, .col-2, .col-3 .col-4 {
   display: table-cell !important;
 }
 
@@ -16,7 +20,7 @@
 }
 
 .col-1-details {
-  width: 40%;
+  width: 30%;
 }
 
 .col-2-details {
@@ -28,20 +32,37 @@
   width: 25%;
 }
 
+.request-table .col-1-details {
+  align-content: center;
+  width: 30%;
+}
+.request-table .col-2-details {
+  align-content: center;
+  width: 30%;
+}
+
+.request-table .col-3-details {
+  width: 10%;
+  margin-right: 1%;
+}
+.request-table .col-4-details {
+  width: 10%;
+  margin-left: 1%;
+}
+
 .header {
   border-bottom: 2px slategray solid;
 }
 
-.backButton {
-  margin-left: 2%;
-  margin-right: 2%;
-  width: 50px;
-  height: 30px;
+.header button {
+  width: 10%;
+  float: right;
+  margin-right: 1%;
 }
 
-h3 {
-  display: inline-block;
+.header h3 {
   text-align: center;
+  margin-left: 1%;
 }
 
 .main {
@@ -62,19 +83,38 @@ h3 {
 
 .error {
   color: red;
-  height: 20px;
 }
 
 .projectInfo {
-  margin-bottom: 10px;
-  margin-top: 10px;
-  display: table;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  width: 95%;
 }
 
-.projectInfo td {
-  width: 45%;
-  margin-left: 20px;
-  margin-right: 20px;
-  min-width: 40%;
+.projectInfo.desc{
+  width: 80%;
+  margin-left: 1%;
+  margin-right: 1%;
+  vertical-align: top;
+}
+
+.projectInfo .icon{
+  width: 15%;
+  margin-left: 1%;
+  margin-right: 1%;
+  vertical-align: top;
+}
+
+.projectInfo input {
+  width: 120px;
+  height: 120px;
+}
+
+.request-table {
+  border-bottom: 2px slategray solid;
+}
+
+.dropdown-item {
+  cursor: pointer;
 }
 

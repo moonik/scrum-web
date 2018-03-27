@@ -13,9 +13,13 @@ td {
 }
 
 .project-type{
-  width: 35%;
+  width: 20%;
 }
 
 .project-description{
-  width: 50%;
+  width: 40%;
+}
+
+.project-request {
+  width: 15%;
 }

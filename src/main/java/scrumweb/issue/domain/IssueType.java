@@ -12,7 +12,8 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class IssueType {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +25,18 @@ public class IssueType {
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<ProjectField> fields;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Project project;
 
-    public IssueType(String name, Project project) {
+    private Boolean isDefault;
+
+    public IssueType(String name, Project project, Boolean isDefault) {
         this.name = name;
         this.project = project;
+        this.isDefault = isDefault;
+    }
+
+    public void edit(String name) {
+        this.name = name;
     }
 }

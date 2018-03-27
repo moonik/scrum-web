@@ -1,4 +1,4 @@
-import { Component, TemplateRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
+1;import { Component, TemplateRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { IssueService } from './issue.service';
@@ -21,33 +21,32 @@ export class IssueComponent implements OnInit {
     backdrop: true,
     ignoreBackdropClick: false
   };
-  
+
   @Input() projectKey: string;
   @Output() onIssueCreate = new EventEmitter<IssueDto>();
   public issueDetails: IssueDetailsDto = new IssueDetailsDto();
-  projectMembers: Array<any> = [];
-  selectedItems = [];
-  settings = {};
+  public projectMembers: Array<any> = [];
+  public selectedItems = [];
+  public settings = {};
 
   constructor(private _modalService: BsModalService, private _issueService: IssueService) {}
 
   ngOnInit() {
-    this.getAssignees();
     this.settings = {
       singleSelection: false,
-      text: "Select assignees",
+      text: 'Select assignees',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       enableSearchFilter: true,
       badgeShowLimit: 3,
-      classes: "custom-class-example"
+      classes: 'custom-class-example'
     };
   }
- 
+
   openModal(template: TemplateRef<any>) {
     this.modalRef = this._modalService.show(template, this.config);
   }
- 
+
   openModalWithClass(template: TemplateRef<any>) {
     this.modalRef = this._modalService.show(
       template,
@@ -56,8 +55,10 @@ export class IssueComponent implements OnInit {
   }
 
   getAssignees() {
-    return this._issueService.getAssignees(this.projectKey)
-      .subscribe(data => this.projectMembers = data);
+    if (this.projectMembers.length === 0) {
+      this._issueService.getAssignees(this.projectKey)
+        .subscribe(data => this.projectMembers = data);
+    }
   }
 
   createIssue() {
@@ -65,7 +66,7 @@ export class IssueComponent implements OnInit {
     return this._issueService.createIssue(this.projectKey, this.issueDetails)
       .subscribe( data => {
         this.onIssueCreate.emit(data);
-        this.issueDetails = new IssueDetailsDto(); 
+        this.issueDetails = new IssueDetailsDto();
       });
   }
 

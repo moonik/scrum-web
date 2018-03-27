@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../security/authentication.service';
 import {Router} from '@angular/router';
-import {SearchService} from "../search/search.service";
-import {ProjectDto} from "../model/projectDto";
+import {SearchService} from '../search/search.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,27 +11,30 @@ import {ProjectDto} from "../model/projectDto";
 })
 export class NavbarComponent implements OnInit {
 
-  public searchIcon:string = "../assets/images/searchicon.png";
+  public searchIcon = '../assets/images/searchicon.png';
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router) {
+  }
 
   ngOnInit() {
   }
 
-  search(query){
-    this.router.navigate(['/search/'+query]);
+  search(query) {
+    if (query !== '') {
+      this.router.navigate(['/search/' + query]);
+    }
   }
 
-  checkLogin(): boolean{
+  checkLogin(): boolean {
     return localStorage.getItem('currentUser') ? true : false;
   }
 
-  logout(){
+  logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }
 
-  getCurrentUser(): string{
+  getCurrentUser(): string {
     return localStorage.getItem('currentUser');
   }
 

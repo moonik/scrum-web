@@ -9,10 +9,10 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter @Setter
 public class RadioButtonContainerDto extends ProjectFieldDto {
-    private Set<RadioButtonDto> radioButtons;
+    private Set<RadioButtonDto> elements;
 
-    public RadioButtonContainerDto(Long id, String fieldType, String fieldName, Boolean isRequired, Set<RadioButtonDto> radioButtons) {
+    public RadioButtonContainerDto(Long id, String fieldType, String fieldName, Boolean isRequired, Set<RadioButtonDto> elements) {
         super(id, fieldType, fieldName, isRequired);
-        this.radioButtons = radioButtons;
+        this.elements = elements;
     }
 }

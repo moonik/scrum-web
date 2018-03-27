@@ -22,4 +22,12 @@ public class TextArea extends ProjectField {
         this.minCharacters = minCharacters;
         this.maxCharacters = maxCharacters;
     }
+
+    @Override
+    public void edit(ProjectField projectField) {
+        this.maxCharacters = ((TextArea) projectField).getMaxCharacters();
+        this.minCharacters = ((TextArea) projectField).getMinCharacters();
+        this.setName(projectField.getName());
+        this.setIsRequired(projectField.getIsRequired());
+    }
 }

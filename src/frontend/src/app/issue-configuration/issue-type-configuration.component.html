@@ -1,0 +1,8 @@
+<div class="issue-type-configuration" *ngIf="types">
+    <a class="create-new-type" id="create-new-type" (click)="addNewType()"><b>Create new issue type</b></a>
+    <form class="type-form" *ngFor="let type of types">
+        <input class="issue-type" name="issue-type" [(ngModel)]="type.issueType" [attr.disabled]="isDisabled(type)">
+        <span class="fa fa-close" (click)="removeType(type)" *ngIf="!type.isDefault"></span>
+    </form>
+    <button class="btn btn-primary field-submit" (click)="createType()" id="btn-create" [disabled]="!isValid()">Submit</button>
+</div>

@@ -1,49 +1,49 @@
 .project-name {
-	margin-left: 10px;
-	border-bottom: 2px slategray solid;
-	border-top: 2px slategray solid;
-	margin-top: 5px;
-	width: 99%;
+  margin-left: 10px;
+  border-bottom: 2px slategray solid;
+  border-top: 2px slategray solid;
+  margin-top: 5px;
+  width: 99%;
 }
 
 .issue-list {
-	display: inline;
-	list-style-type: none;
+  display: inline;
+  list-style-type: none;
 }
 
 .issue-list li {
-	cursor: pointer;
-	margin: 0px 5px 0px 5px;
-	border-bottom: 2px slategray solid;
+  cursor: pointer;
+  margin: 0px 5px 0px 5px;
+  border-bottom: 2px slategray solid;
 }
 
 .issue-list li:hover {
-	background-color: rgb(222, 226, 226);
+  background-color: rgb(222, 226, 226);
 }
 
 .issue-list p {
-	margin: 0;
+  margin: 0;
 }
 
 .issue-list .key {
-	font-size: 15px;
+  font-size: 15px;
 }
 
 .list-panel, .issue-details {
-    width:100px;
-    height:100px;
-    margin-right:10px;
-	float:left;
-	margin-left: 15px;
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  float: left;
+  margin-left: 15px;
 }
 
 .list-panel {
-	width: 15% !important;
-	overflow-y: auto;
-    height: 31.5em;
-    font-size: 16px;
-	display: inline-block;
-	margin-top: 1px;
+  width: 15% !important;
+  overflow-y: auto;
+  height: 31.5em;
+  font-size: 16px;
+  display: inline-block;
+  margin-top: 1px;
 }
 
 .issue-details {
@@ -57,34 +57,34 @@
 }
 
 .issue-details span {
-	margin-right: 50px;
-	width: 500px;
+  margin-right: 50px;
+  width: 500px;
 }
 
 .issue-details-table {
-	margin-top: 10px;
-	display: table;
+  margin-top: 10px;
+  display: table;
 }
 
 .col-2-details {
-	width: 250px;
+  width: 250px;
 }
 
 .col-4-details {
-	margin-left: 5px;
+  margin-left: 5px;
 }
 
 .underline {
-	margin-top: 10px;
-	border-bottom: 2px slategray solid;
+  margin-top: 10px;
+  border-bottom: 2px slategray solid;
 }
 
 .col-1-details, .col-2-details, .col-3-details, .col-4-details {
-	display: table-cell !important;
+  display: table-cell !important;
 }
 
 .more-details {
-	margin-top: 5em;
+  margin-top: 5em;
 }
 
 .more-details .issue-description {
@@ -94,20 +94,20 @@
 }
 
 .list-panel::-webkit-scrollbar-track, .more-details .issue-description::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	border-radius: 3px;
-	background-color: #F5F5F5;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  background-color: #F5F5F5;
 }
 
 .list-panel::-webkit-scrollbar, .more-details .issue-description::-webkit-scrollbar {
-	width: 12px;
-	background-color: #F5F5F5;
+  width: 12px;
+  background-color: #F5F5F5;
 }
 
 .list-panel::-webkit-scrollbar-thumb, .more-details .issue-description::-webkit-scrollbar-thumb {
-	border-radius: 3px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #555;
+  border-radius: 3px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #555;
 }
 
 #loading {
@@ -134,4 +134,40 @@
 
 .editcomment {
   width: 98%;
+}
+
+.assign-text:hover {
+  background-color: rgb(222, 226, 226);
+}
+
+.assign-text {
+  border-bottom: 2px black solid !important;
+  color: darkblue;
+  cursor: pointer;
+}
+
+.assign-table .col-1-details {
+  width: 40%;
+}
+
+.modal-body .col-1-details {
+  width: 40%;
+}
+
+.assign-table .col-2-details {
+  width: 10%;
+}
+
+.modal-body .col-2-details {
+  width: 10%;
+}
+
+.issue-header .col-1-details {
+  width: 70%;
+}
+
+.issue-header .col-2-details {
+  margin-right: 1%;
+  vertical-align: bottom;
+
 }

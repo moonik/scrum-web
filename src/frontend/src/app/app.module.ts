@@ -13,17 +13,18 @@ import { HomeComponent} from './home/home.component';
 import { NavbarComponent} from './navbar/navbar.component';
 import { ProjectComponent} from './project/project.component';
 import { ProjectService} from './project/project.service';
-import { FooterComponent} from './footer/footer.component';
 import { SearchPipe} from './shared/search.pipe';
 import { ProjectConfigurationComponent} from './project-configuration/project-configuration.component';
 import { ProjectConfigurationService} from './project-configuration/project-configuration.service';
 import { StorageService} from './shared/storage.service';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
-
 import { ProjectDetailsComponent } from './project-details/project-details.component';
-import { ApplicationConstants} from './shared/applicatins-contants';
 import { IssueComponent } from './issue/issue.component';
+import { FooterComponent } from './footer/footer.component';
+import { IssueFieldsConfigurationComponent } from './issue-configuration/issue-fields-configuration.component';
+import { IssueTypeConfigurationComponent } from './issue-configuration/issue-type-configuration.component';
+import { IssueConfigurationComponent } from './issue-configuration/issue-configuration.component';
 import { SearchComponent } from './search/search.component';
 import { WarningModalComponent } from './warning-modal/warning-modal.component';
 
@@ -43,6 +44,10 @@ import { WarningModalComponent } from './warning-modal/warning-modal.component';
     FooterComponent,
     SearchComponent,
     WarningModalComponent
+    IssueFieldsConfigurationComponent,
+    IssueTypeConfigurationComponent,
+    IssueConfigurationComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -59,8 +64,7 @@ import { WarningModalComponent } from './warning-modal/warning-modal.component';
     HttpClient,
     ProjectService,
     ProjectConfigurationService,
-    StorageService,
-    ApplicationConstants
+    StorageService
   ],
   bootstrap: [AppComponent]
 })
