@@ -11,9 +11,16 @@ import {UserDto} from '../model/userDto';
 })
 export class LoginComponent implements OnInit {
 
+<<<<<<< HEAD
   error = '';
   userDto: UserDto = new UserDto();
   loginForm: FormGroup;
+=======
+  public loading = false;
+  public error = '';
+  public userDto: UserDto = new UserDto();
+  public loginForm: FormGroup;
+>>>>>>> ce78f7396326a017d91c8a064934c2d5820f5502
 
   constructor(private fb: FormBuilder,
               private authenticationService: AuthenticationService,
@@ -27,7 +34,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  login() {
+  public login() {
     if (this.loginForm.valid) {
       console.log('logged');
       this.authenticationService.login(this.userDto)

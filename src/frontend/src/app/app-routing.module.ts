@@ -5,11 +5,11 @@ import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {AuthGuard} from './security/auth.guard';
 import {HomeComponent} from './home/home.component';
-import {ProjectDetailsComponent} from './project-details/project-details.component';
-import {SearchComponent} from "./search/search.component";
 import {ProjectComponent} from './project/project.component';
+import {ProjectDetailsComponent} from './project-details/project-details.component';
+import {SearchComponent} from './search/search.component';
 import {ProjectConfigurationComponent} from './project-configuration/project-configuration.component';
-
+import {IssueConfigurationComponent} from './issue-configuration/issue-configuration.component';
 
 const routes: Routes = [
   {
@@ -38,6 +38,11 @@ const routes: Routes = [
   {
     path: 'search/:query',
     component: SearchComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'project/:projectKey/configuration/issues',
+    component: IssueConfigurationComponent,
     canActivate: [AuthGuard]
   },
   {

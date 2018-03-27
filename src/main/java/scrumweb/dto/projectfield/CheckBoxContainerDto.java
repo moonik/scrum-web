@@ -9,10 +9,10 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter @Setter
 public class CheckBoxContainerDto extends ProjectFieldDto {
-    private Set<CheckBoxDto> checkBoxes;
+    private Set<CheckBoxDto> elements;
 
-    public CheckBoxContainerDto(Long id, String fieldType, String fieldName, Boolean isRequired, Set<CheckBoxDto> checkBoxes) {
+    public CheckBoxContainerDto(Long id, String fieldType, String fieldName, Boolean isRequired, Set<CheckBoxDto> elements) {
         super(id, fieldType, fieldName, isRequired);
-        this.checkBoxes = checkBoxes;
+        this.elements = elements;
     }
 }

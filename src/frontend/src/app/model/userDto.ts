@@ -1,7 +1,6 @@
-export class UserDto{
-  username: string;
-  password: string;
-  // email: string;
-  firstname: string;
-  lastname: string;
+export class UserDto {
+  public username: string;
+  public password: string;
+  public firstname: string;
+  public lastname: string;
 }

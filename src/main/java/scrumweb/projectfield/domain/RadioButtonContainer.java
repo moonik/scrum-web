@@ -24,4 +24,11 @@ public class RadioButtonContainer extends ProjectField {
         super(fieldType, name, isRequired);
         this.radioButtons = radioButtons;
     }
+
+    @Override
+    public void edit(ProjectField projectField) {
+        this.radioButtons = ((RadioButtonContainer) projectField).getRadioButtons();
+        this.setName(projectField.getName());
+        this.setIsRequired(projectField.getIsRequired());
+    }
 }

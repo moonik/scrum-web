@@ -34,8 +34,8 @@ export class ProjectDetailsComponent implements OnInit {
     this.getAssignees();
   }
 
-  public selectIssue(issueId: number) {
-    this._issueService.getIssueDetails(issueId)
+  public selectIssue(issueKey: string) {
+    this._issueService.getIssueDetails(issueKey)
       .subscribe(
         data => {
           this.selectedIssue = data;
@@ -47,7 +47,7 @@ export class ProjectDetailsComponent implements OnInit {
       .subscribe(data => {
         this.projectDetails = data;
         if (data.issues.length > 0) {
-          this.selectIssue(data.issues[0].id);
+          this.selectIssue(data.issues[0].issueKey);
         }
       });
   }
@@ -58,17 +58,16 @@ export class ProjectDetailsComponent implements OnInit {
 
   public onIssueCreate(issueDto: IssueDto) {
     const length = this.projectDetails.issues.length + 1;
-    issueDto.id = length;
-    issueDto.issueKey = this.projectDetails.projectDto.name + '-' + length;
+    issueDto.issueKey = this.projectDetails.projectDto.projectKey + '-' + length;
     this.projectDetails.issues.unshift(issueDto);
-    this.selectIssue(issueDto.id);
+    this.selectIssue(issueDto.issueKey);
   }
 
   onAssignToIssue(username: string) {
     if (!username) {
       username = localStorage.getItem('currentUser');
     }
-    this._issueService.assignToIssue(this.selectedIssue.id, username)
+    this._issueService.assignToIssue(this.selectedIssue.key, username)
       .subscribe(() => {
         this.ngOnInit();
       });
@@ -89,7 +88,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   onRemoveFromAssign(username: string) {
-    this._issueService.unAssignFromIssue(username, this.selectedIssue.id)
+    this._issueService.unAssignFromIssue(username, this.selectedIssue.key)
       .subscribe(() => this.ngOnInit());
   }
 

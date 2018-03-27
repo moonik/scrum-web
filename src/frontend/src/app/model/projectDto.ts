@@ -7,7 +7,7 @@ export class ProjectDto {
   projectKey: string;
   description: string;
   icon: any;
-  owner: UserProfileDto[];
+  owner: UserProfileDto;
   members: ProjectMemberDto[];
   requests: ProjectMemberDto[];
 }

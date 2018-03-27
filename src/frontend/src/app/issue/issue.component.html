@@ -20,7 +20,7 @@
             <textarea name="description" cols="50" [(ngModel)]="issueDetails.description"></textarea><br>
 
             <label for="assignees">Assignees</label><br>
-            <div class="assignees-multi-select" *ngIf="projectMembers">
+            <div class="assignees-multi-select" (click)="getAssignees()">
               <angular2-multiselect [data]="projectMembers"
                                     [(ngModel)]="selectedItems"
                                     [settings]="settings"

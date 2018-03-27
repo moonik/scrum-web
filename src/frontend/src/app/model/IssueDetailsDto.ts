@@ -1,20 +1,20 @@
 import { UserProfileDto } from './UserProfileDto';
-import { FieldsContentCollector } from './FieldsContentCollector';
-import { FieldContentDto } from './FieldContentDto';
+import { FieldsContentCollector } from './fields-content/FieldsContentCollector';
+import { FieldContentDto } from './fields-content/FieldContentDto';
 
 export class IssueDetailsDto {
-    id: number;
-    key: string;
-    summary: string;
-    description: string;
-    assignees: Array<any> = [];
-    reporter: UserProfileDto;
-    estimateTime: string;
-    remainingTime: string;
-    priority: string;
-    issueType: string;
-    createdDate: string;
-    lastUpdate: string;
-    projectFields: FieldsContentCollector = new FieldsContentCollector();
-    fieldContents: Array<FieldContentDto> = [];
+    public id: number;
+    public key: string;
+    public summary: string;
+    public description: string;
+    public assignees: Array<any> = [];
+    public reporter: UserProfileDto;
+    public estimateTime: string;
+    public remainingTime: string;
+    public priority: string;
+    public issueType: string;
+    public createdDate: string;
+    public lastUpdate: string;
+    public fieldsContentCollector: FieldsContentCollector = new FieldsContentCollector();
+    public fieldContents: Array<FieldContentDto> = [];
 }

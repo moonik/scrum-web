@@ -1,22 +1,21 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptionsArgs, Response, ResponseContentType} from '@angular/http';
+import {Headers, Http, RequestOptionsArgs, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {ApplicationConstants} from '../constants/applications-constants';
-
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/observable/throw';
 import {LoaderService} from '../loader/loader.service';
+import * as constants from '../constants/application-constants';
 
 @Injectable()
 export class HttpClient {
 
+  private _constants = constants.default;
+
   constructor(private _http: Http,
-              private _constants: ApplicationConstants,
-              private _loaderService: LoaderService
-              ) {
+              private _loaderService: LoaderService) {
   }
 
   private createRequestOptionsArgs(): RequestOptionsArgs {
@@ -84,16 +83,16 @@ export class HttpClient {
       });
   }
 
-  private onCatch(error: any, caught: Observable<any>): Observable<any> {
+  private onCatch(error: any): Observable<any> {
     return Observable.throw(error);
   }
 
   private onSuccess(res: Response): void {
-    console.log('Request successful');
+    console.log(res.toString());
   }
 
   private onError(res: Response): void {
-    console.log('Error, status code: ' + res.status);
+    console.log(res.toString() + ' - ' + res['_body']);
   }
 
   private onEnd(): void {
@@ -107,5 +106,4 @@ export class HttpClient {
   private hideLoader(): void {
     this._loaderService.hide();
   }
-
 }

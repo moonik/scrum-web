@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-
 import { LoaderState } from './loader';
 
 @Injectable()
-
 export class LoaderService {
 
   private loaderSubject = new Subject<LoaderState>();

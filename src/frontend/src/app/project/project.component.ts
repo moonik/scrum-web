@@ -11,12 +11,12 @@ import {ProjectService} from './project.service';
 })
 export class ProjectComponent implements OnInit {
 
-  projectDto: ProjectDto = new ProjectDto();
-  projectForm: FormGroup;
-  error = '';
-  icon: File = null;
-  loading = false;
-  validIcon = true;
+  public projectDto: ProjectDto = new ProjectDto();
+  public projectForm: FormGroup;
+  public error = '';
+  public icon: File = null;
+  public loading = false;
+  public validIcon = true;
 
   constructor(fb: FormBuilder,
               private router: Router,
@@ -28,6 +28,7 @@ export class ProjectComponent implements OnInit {
       projectKey: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(8)]],
       icon: [null]
     });
+
   }
 
   ngOnInit() {

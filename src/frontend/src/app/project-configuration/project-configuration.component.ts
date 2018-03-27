@@ -22,7 +22,6 @@ export class ProjectConfigurationComponent implements OnInit {
   public rolesTypes = Object.values(this.roles);
   public error: string;
   public icon: File = null;
-  public loading = false;
   public validIcon = true;
 
   constructor(private route: ActivatedRoute,
@@ -33,7 +32,7 @@ export class ProjectConfigurationComponent implements OnInit {
 
   ngOnInit() {
     if (!this.storageService.getScope()) {
-      this.router.navigate(['/home']);
+      return this.router.navigate(['/home']);
     }
     this.project = this.storageService.getScope();
 
@@ -81,10 +80,7 @@ export class ProjectConfigurationComponent implements OnInit {
 
   chooseIcon(files: FileList) {
     this.icon = files.item(0);
-    this.loading = true;
     this.validIcon = true;
-
-
   }
 
   acceptRequest(user: string, role: string) {
@@ -109,6 +105,9 @@ export class ProjectConfigurationComponent implements OnInit {
         this.ngOnInit();
       }
     );
+  }
 
+  public goToIssueConfiguration() {
+    return this.router.navigate(['/project/' + this.project.projectKey + '/configuration/issues']);
   }
 }

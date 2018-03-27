@@ -3,6 +3,9 @@ package scrumweb.projectfield.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import scrumweb.dto.projectfield.CheckBoxContainerDto;
+import scrumweb.dto.projectfield.ListElementsContainerDto;
+import scrumweb.dto.projectfield.ProjectFieldDto;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -23,5 +26,12 @@ public class CheckBoxContainer extends ProjectField{
     public CheckBoxContainer(FieldType fieldType, String name, Boolean isRequired, Set<CheckBox> checkBoxes) {
         super(fieldType, name, isRequired);
         this.checkBoxes = checkBoxes;
+    }
+
+    @Override
+    public void edit(ProjectField projectField) {
+        this.checkBoxes = ((CheckBoxContainer) projectField).getCheckBoxes();
+        this.setName(projectField.getName());
+        this.setIsRequired(projectField.getIsRequired());
     }
 }

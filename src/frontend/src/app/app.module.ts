@@ -22,8 +22,10 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { IssueComponent } from './issue/issue.component';
 import { FooterComponent } from './footer/footer.component';
+import { IssueFieldsConfigurationComponent } from './issue-configuration/issue-fields-configuration.component';
+import { IssueTypeConfigurationComponent } from './issue-configuration/issue-type-configuration.component';
+import { IssueConfigurationComponent } from './issue-configuration/issue-configuration.component';
 import { SearchComponent } from './search/search.component';
-import { ApplicationConstants} from './constants/applications-constants';
 import { LoaderComponent} from './loader/loader.component';
 import { LoaderService} from './loader/loader.service';
 
@@ -42,7 +44,10 @@ import { LoaderService} from './loader/loader.service';
     IssueComponent,
     FooterComponent,
     SearchComponent,
-    LoaderComponent
+    LoaderComponent,
+    IssueFieldsConfigurationComponent,
+    IssueTypeConfigurationComponent,
+    IssueConfigurationComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,8 +65,7 @@ import { LoaderService} from './loader/loader.service';
     ProjectService,
     ProjectConfigurationService,
     StorageService,
-    ApplicationConstants,
-    LoaderService,
+    LoaderService
   ],
   bootstrap: [AppComponent]
 })

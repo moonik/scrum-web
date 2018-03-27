@@ -20,7 +20,7 @@ public class ListElementsContainerAsm implements ProjectFieldAsm<ListElementsCon
 
     @Override
     public ListElementsContainer createEntityObject(ListElementsContainerDto projectFieldDto) {
-        Set<ListElement> listElements = projectFieldDto.getListElements().stream().map(listElementDto -> fieldElementsAsm.convertToEntityObject(listElementDto)).collect(Collectors.toSet());
+        Set<ListElement> listElements = projectFieldDto.getElements().stream().map(listElementDto -> fieldElementsAsm.convertToEntityObject(listElementDto)).collect(Collectors.toSet());
         return new ListElementsContainer(FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), listElements);
     }
 

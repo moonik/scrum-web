@@ -118,3 +118,6 @@
   cursor: pointer;
 }
 
+.input-hidden {
+  display: none;
+}
