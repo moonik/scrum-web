@@ -47,7 +47,7 @@ export class ProjectDetailsComponent implements OnInit {
         data => {
           this.selectedIssue = data;
           this.loading = false;
-          this.getIssueComments(this.selectedIssue.id)
+          this.getIssueComments();
         });
   }
 
@@ -75,8 +75,8 @@ export class ProjectDetailsComponent implements OnInit {
     this.selectIssue(issueDto.id);
   }
 
-  public getIssueComments(issueId: number) {
-    return this._issueService.getIssueComments(issueId)
+  public getIssueComments() {
+    return this._issueService.getIssueComments(this.selectedIssue.id)
       .subscribe(
         data => {
           this.comments = data;

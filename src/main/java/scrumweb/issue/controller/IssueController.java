@@ -33,15 +33,15 @@ public class IssueController {
         return issueService.getDetails(id);
     }
 
-    @PostMapping("/addcomment/{id}")
+    @PostMapping("/comment/{id}")
     @ResponseStatus(HttpStatus.OK)
     public IssueCommentDto addComment(@PathVariable Long id, @RequestBody IssueCommentDto issueCommentDto) {
         return issueService.addComment(issueCommentDto, id);
     }
 
-    @GetMapping("/showcomments/{id}")
+    @GetMapping("/comments/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<IssueCommentDto> showComments(@PathVariable Long id){
+    public List<IssueCommentDto> getComments(@PathVariable Long id){
         return issueService.getCommentsForIssue(id);
     }
 

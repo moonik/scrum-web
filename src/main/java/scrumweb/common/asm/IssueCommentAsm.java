@@ -11,9 +11,7 @@ import java.time.format.DateTimeFormatter;
 public class IssueCommentAsm {
 
     public IssueCommentDto fromIssueCommentToIssueCommentDto(IssueComment issueComment, UserProfileDto owner){
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
-
         return new IssueCommentDto(issueComment.getId(), owner, issueComment.getContent(), issueComment.getCreatedDate().format(formatter));
     }
 

@@ -26,12 +26,12 @@ export class IssueService {
     }
 
     public getIssueComments(issueId: number) {
-      return this._http.get(this._URL+'showcomments/' + issueId)
+      return this._http.get(this._URL+'comments/' + issueId)
         .map(res => res.json());
     }
 
     public addComment(issueId: number, comment: IssueComment) {
-        return this._http.post(this._URL+'addcomment/' + issueId, comment)
+        return this._http.post(this._URL+'comment/' + issueId, comment)
           .map(res => res.json());
     }
 

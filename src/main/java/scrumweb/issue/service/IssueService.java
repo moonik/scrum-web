@@ -41,7 +41,6 @@ public class IssueService {
     private ProjectRepository projectRepository;
     private UserProfileAsm userProfileAsm;
     private FieldContentConverter fieldContentAsm;
-    //private SearchResultsDto searchResultsDto;
     private IssueCommentAsm issueCommentAsm;
     private IssueCommentRepository issueCommentRepository;
 
@@ -115,9 +114,7 @@ public class IssueService {
     public List<IssueCommentDto> getCommentsForIssue(Long id){
         Issue issue = issueRepository.findOne(id);
 
-        List<IssueComment> comments = issue.getComments();
-
-        return comments.stream()
+        return issue.getComments().stream()
                 .map(comment -> issueCommentAsm.fromIssueCommentToIssueCommentDto(comment, userProfileAsm.makeUserProfileDto(comment.getOwner(), comment.getOwner().getUserProfile())))
                 .collect(Collectors.toList());
 
