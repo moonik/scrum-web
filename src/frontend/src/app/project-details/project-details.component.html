@@ -164,6 +164,59 @@
       </div>
     </div>
 
+    <div class="modal fade" id="manageModal" tabindex="-1" role="dialog"
+         aria-labelledby="manageModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="manageModalLongTitle">Manage assignees</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div *ngIf="selectedIssue.assignees.length; else noAssignees">
+              <b>Current assignees:</b>
+              <div *ngFor="let assignee of selectedIssue.assignees">
+                <div class="col-1-details">
+                  {{assignee.username}}
+                </div>
+                <div class="col-2-details">
+                  <button class="btn btn-danger" (click)="onRemoveFromAssign(assignee.username)">X</button>
+                </div>
+              </div>
+            </div>
+            <ng-template #noAssignees>
+              <b>No one is assigned to this issue</b>
+            </ng-template>
+
+            <br/><br/>
+
+            <div class="assign-table">
+              <b>Assign member: &nbsp;&nbsp;</b><input #search (keyup)="0" placeholder="Search for member">
+              <div *ngFor="let member of (projectDetails.projectDto.members | filter : search.value)">
+                <div *ngIf=isAssigned(member.username)>
+                  <div class="col-1-details">
+                    {{member.username}}
+                  </div>
+                  <div class="col-2-details">
+                    <button class="btn btn-success" (click)="onAssignToIssue(member.username)">Assign</button>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="!(projectDetails.projectDto.members | filter : search.value).length && search.value.length">
+                No members found
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 
   <div class="no-issues-found" *ngIf="!showIssueList() && !loading">

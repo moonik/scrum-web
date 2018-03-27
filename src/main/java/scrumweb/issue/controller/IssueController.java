@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import scrumweb.dto.fieldcontent.FieldsContentCollector;
 import scrumweb.dto.issue.IssueCommentDto;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import scrumweb.dto.issue.IssueTypeDto;
 import scrumweb.issue.service.IssueService;
 
 import java.util.List;
+import java.util.Set;
 import java.util.Set;
 
 import static scrumweb.common.ApplicationConstants.API_URL;
@@ -66,25 +68,26 @@ public class IssueController {
         return issueService.editComment(commentId, issueCommentDto.getContent());
     }
 
-    @PostMapping("/types/{projectKey}")
-    public Set<IssueTypeDto> createIssueType(@PathVariable String projectKey, @RequestBody Set<IssueTypeDto> issueTypes) {
-        return issueService.createIssueType(projectKey, issueTypes);
-    }
-
     @PutMapping("/edit/types")
     public void editIssueType(@RequestBody IssueTypeDto issueTypeDto) {
         issueService.editIssueType(issueTypeDto);
-    }
-
-    @DeleteMapping("/types/{id}")
-    public void deleteIssueType(@PathVariable Long id) {
-        issueService.deleteIssueType(id);
     }
 
     @PostMapping("/{id}/assign/{username}")
     @ResponseStatus(HttpStatus.OK)
     public void assignToIssue(@PathVariable Long id, @PathVariable String username) {
         issueService.assignToIssue(id, username);
+    }
+
+    @PostMapping("/types/{projectKey}")
+    public Set<IssueTypeDto> createIssueType(@PathVariable String projectKey, @RequestBody Set<IssueTypeDto> issueTypes) {
+        return issueService.createIssueType(projectKey, issueTypes);
+    }
+
+
+    @DeleteMapping("/types/{id}")
+    public void deleteIssueType(@PathVariable Long id) {
+        issueService.deleteIssueType(id);
     }
 
     @DeleteMapping("/{id}/assign/{username}")

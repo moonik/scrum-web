@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from "../shared/http.client.service";
-import { IssueDetailsDto } from '../model/IssueDetailsDto';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '../shared/http.client.service';
+import {IssueDetailsDto} from '../model/IssueDetailsDto';
 import {IssueComment} from "../model/IssueComment";
 
 @Injectable()
@@ -38,6 +38,7 @@ export class IssueService {
     public editComment(commentId: number, comment: IssueComment){
       return this._http.post(this._URL + 'comments/edit/'+commentId, comment);
     }
+
   getIssueDetails(id: number) {
     return this._http.get(this._URL + 'details/' + id)
       .map(res => res.json());
@@ -50,4 +51,5 @@ export class IssueService {
   unAssignFromIssue(username: string, id: number) {
     return this._http.delete(this._URL + id + '/assign/' + username);
   }
+
 }

@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import {ProjectDetailsService} from './project-details.service';
 import {ProjectDetailsDto} from '../model/ProjectDetailsDto';
 import {IssueDto} from '../model/IssueDto';
