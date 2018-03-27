@@ -2,18 +2,20 @@ import {Injectable} from '@angular/core';
 import {Headers, Http, RequestOptionsArgs, Response} from "@angular/http";
 import 'rxjs/Rx';
 import {Observable} from "rxjs/Observable";
-import {ApplicationConstants} from '../shared/applicatins-contants';
+import * as constants from '../constants/applicatins-contants';
 
 @Injectable()
 export class HttpClient {
 
-  constructor(private _http: Http, private _constants: ApplicationConstants) {}
+  private _constants = constants.default;
+
+  constructor(private _http: Http) {}
 
   private createRequestOptionsArgs(): RequestOptionsArgs {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Authorization', localStorage.getItem('token'));
     headers.append('Content-Type', 'application/json');
-    return { 
+    return {
       headers: headers
     };
   }

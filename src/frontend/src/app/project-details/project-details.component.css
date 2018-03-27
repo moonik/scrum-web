@@ -135,3 +135,38 @@
 .editcomment {
   width: 98%;
 }
+
+.assign-text:hover {
+  background-color: rgb(222, 226, 226);
+}
+
+.assign-text {
+  border-bottom: 2px black solid !important;
+  color: darkblue;
+  cursor: pointer;
+}
+
+.assign-table .col-1-details {
+  width: 40%;
+}
+
+.modal-body .col-1-details {
+  width: 40%;
+}
+
+.assign-table .col-2-details {
+  width: 10%;
+}
+
+.modal-body .col-2-details {
+  width: 10%;
+}
+
+.issue-header .col-1-details {
+  width: 70%;
+}
+
+.issue-header .col-2-details {
+  margin-right: 1%;
+  vertical-align: bottom;
+}

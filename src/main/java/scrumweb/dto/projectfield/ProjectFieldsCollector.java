@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Component
 @Getter @Setter
-public class ProjectFieldsCollector implements FieldsExtractor<ProjectFieldDto, ProjectFieldsCollector> {
+public class ProjectFieldsCollector implements FieldsExtractor<ProjectFieldDto> {
 
     private Set<CheckBoxContainerDto> checkBoxContainerDtos;
     private Set<InputFieldDto> inputFieldDtos;
@@ -23,13 +23,13 @@ public class ProjectFieldsCollector implements FieldsExtractor<ProjectFieldDto, 
     private Set<TextAreaDto> textAreaDtos;
 
     @Override
-    public Set<ProjectFieldDto> extractFields(ProjectFieldsCollector fieldsCollector) {
+    public Set<ProjectFieldDto> extractFields() {
         Set<ProjectFieldDto> projectFieldDtos = new HashSet<>();
-        projectFieldDtos.addAll(fieldsCollector.getCheckBoxContainerDtos());
-        projectFieldDtos.addAll(fieldsCollector.getInputFieldDtos());
-        projectFieldDtos.addAll(fieldsCollector.getListElementsContainerDtos());
-        projectFieldDtos.addAll(fieldsCollector.getRadioButtonContainerDtos());
-        projectFieldDtos.addAll(fieldsCollector.getTextAreaDtos());
+        projectFieldDtos.addAll(checkBoxContainerDtos);
+        projectFieldDtos.addAll(inputFieldDtos);
+        projectFieldDtos.addAll(listElementsContainerDtos);
+        projectFieldDtos.addAll(radioButtonContainerDtos);
+        projectFieldDtos.addAll(textAreaDtos);
         return projectFieldDtos;
     }
 }

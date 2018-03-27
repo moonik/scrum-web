@@ -22,4 +22,12 @@ public class InputField extends ProjectField{
         this.minCharacters = minCharacters;
         this.maxCharacters = maxCharacters;
     }
+
+    @Override
+    public void edit(ProjectField projectField) {
+        this.maxCharacters = ((InputField) projectField).getMaxCharacters();
+        this.minCharacters = ((InputField) projectField).getMinCharacters();
+        this.setName(projectField.getName());
+        this.setIsRequired(projectField.getIsRequired());
+    }
 }

@@ -4,21 +4,37 @@ Search results for phrase: <b>{{ results }}</b>
 <form class="table-form">
   <table class="table table-hover projects-table">
     <thead>
-      <tr>
-        <td colspan="3"><b>Projects</b></td>
-      </tr>
-      <tr>
-        <td class="project-key"><b>Key</b></td>
-        <td><b>Name</b></td>
-        <td><b>Description</b></td>
-      </tr>
+    <tr>
+      <td colspan="3"><b>Projects</b></td>
+    </tr>
+    <tr>
+      <td class="project-key"><b>Key</b></td>
+      <td><b>Name</b></td>
+      <td><b>Description</b></td>
+      <td></td>
+    </tr>
     </thead>
     <tbody *ngFor="let results of searchresults.projects">
-      <tr (click)="goToProjectDetails(results.projectKey)">
-          <td class="project-key">{{results.name}}</td>
-          <td class="project-type">{{results.projectKey}}</td>
-          <td class="project-description">{{results.description}}</td>
-      </tr>
+    <tr >
+      <td class="project-key" (click)="goToProjectDetails(results.projectKey)">{{results.projectKey}}</td>
+      <td class="project-type" (click)="goToProjectDetails(results.projectKey)">{{results.name}}</td>
+      <td class="project-description" (click)="goToProjectDetails(results.projectKey)">{{results.description}}</td>
+      <td class="project-request">
+        <div class="dropdown" *ngIf=!checkMembers(results)>
+          <button class="btn btn-success dropdown-toggle" type="button" id="requestDropdown" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+            Request for access
+          </button>
+          <div class="dropdown-menu" aria-labelledby="requestDropdown">
+            <a class="dropdown-item" *ngFor="let role of rolesTypes"
+               (click)="requestAccess(role, results.id)"
+            >
+              {{role.toLocaleUpperCase()}}
+            </a>
+          </div>
+        </div>
+      </td>
+    </tr>
     </tbody>
   </table>
 </form>
@@ -26,21 +42,21 @@ Search results for phrase: <b>{{ results }}</b>
 <form class="table-form">
   <table class="table table-hover">
     <thead>
-      <tr>
-        <td colspan="3"><b>Issues</b></td>
-      </tr>
-      <tr>
-        <td class="project-key"><b>Key</b></td>
-        <td class="project-type"><b>Type</b></td>
-        <td><b>Summary</b></td>
-      </tr>
+    <tr>
+      <td colspan="3"><b>Issues</b></td>
+    </tr>
+    <tr>
+      <td class="project-key"><b>Key</b></td>
+      <td class="project-type"><b>Type</b></td>
+      <td><b>Summary</b></td>
+    </tr>
     </thead>
     <tbody *ngFor="let results of searchresults.issues">
-      <tr>
-        <td class="project-key">{{results.issueKey}}</td>
-        <td class="project-type">{{results.issueType}}</td>
-        <td class="project-description">{{results.summary}}</td>
-      </tr>
+    <tr>
+      <td class="project-key">{{results.issueKey}}</td>
+      <td class="project-type">{{results.issueType}}</td>
+      <td class="project-description">{{results.summary}}</td>
+    </tr>
     </tbody>
   </table>
 </form>

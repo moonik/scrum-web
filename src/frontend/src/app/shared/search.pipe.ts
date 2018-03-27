@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
   name: 'filter'
@@ -6,12 +6,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class SearchPipe implements PipeTransform {
   transform(items: any[], criteria: string): any {
 
-    if(!criteria) return [];
+    if (!criteria) {
+      return [];
+    }
 
     criteria = criteria.toLocaleLowerCase();
 
     return items.filter(item => {
-      for (const key in item ) {
+      for (const key in item) {
         if (('' + item[key]).includes(criteria)) {
           return true;
         }

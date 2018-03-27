@@ -8,8 +8,6 @@ import scrumweb.dto.projectfield.ListElementsContainerDto;
 import scrumweb.projectfield.domain.ListElement;
 import scrumweb.projectfield.domain.ListElementsContainer;
 import scrumweb.projectfield.domain.ProjectField.FieldType;
-import scrumweb.projectfield.repository.ListElementRepository;
-import scrumweb.projectfield.repository.RadioButtonRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,7 +20,7 @@ public class ListElementsContainerAsm implements ProjectFieldAsm<ListElementsCon
 
     @Override
     public ListElementsContainer createEntityObject(ListElementsContainerDto projectFieldDto) {
-        Set<ListElement> listElements = projectFieldDto.getListElements().stream().map(listElementDto -> fieldElementsAsm.convertToEntityObject(listElementDto)).collect(Collectors.toSet());
+        Set<ListElement> listElements = projectFieldDto.getElements().stream().map(listElementDto -> fieldElementsAsm.convertToEntityObject(listElementDto)).collect(Collectors.toSet());
         return new ListElementsContainer(FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), listElements);
     }
 
