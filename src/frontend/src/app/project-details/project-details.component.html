@@ -9,7 +9,7 @@
 
   <div class="list-panel" id="list-panel" *ngIf="showIssueList()">
     <ul class="issue-list">
-      <li *ngFor="let issue of projectDetails.issues" (click)="selectIssue(issue.id)">
+      <li *ngFor="let issue of projectDetails.issues" (click)="selectIssue(issue.issueKey)">
         <p class="key"><b>{{ issue.issueKey }}</b></p>
         <p>{{ issue.summary }}</p>
       </li>

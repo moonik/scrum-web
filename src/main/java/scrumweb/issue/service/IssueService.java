@@ -52,7 +52,7 @@ public class IssueService {
         Set<Issue> issues = project.getIssues();
         String issueKey = project.getKey().concat("-").concat(project.getIssues().size() + 1 + "");
         issues.add(createIssue(issueDetailsDto, fieldContentsDto, issueKey, project));
-        projectRepository.save(project);
+        projectRepository.saveAndFlush(project);
         return issueDetailsDto;
     }
 
@@ -69,8 +69,8 @@ public class IssueService {
         return issue;
     }
 
-    public IssueDetailsDto getDetails(Long id) {
-        Issue issue = issueRepository.findOne(id);
+    public IssueDetailsDto getDetails(String issueKey) {
+        Issue issue = issueRepository.findIssueByKey(issueKey);
         Set<UserProfileDto> assignees = issue.getAssignees().stream().map(userAccount -> userProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile())).collect(Collectors.toSet());
         UserProfileDto reporter = userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
         Set<FieldContentDto> fieldsContentsDto = issue.getFieldContents().stream().map(fieldContent -> fieldContentAsm.createDtoObject(fieldContent)).collect(Collectors.toSet());
@@ -136,8 +136,8 @@ public class IssueService {
             .orElse(false);
     }
 
-    public void assignToIssue(Long id, String username) {
-        Issue issue = issueRepository.findOne(id);
+    public void assignToIssue(String issueKey, String username) {
+        Issue issue = issueRepository.findIssueByKey(issueKey);
         UserAccount user = userAccountRepository.findByUsername(username);
 
         if (checkIfMember(username, issue)) {
@@ -148,8 +148,8 @@ public class IssueService {
         }
     }
 
-    public void unAssignFromIssue(Long id, String username) {
-        Issue issue = issueRepository.findOne(id);
+    public void unAssignFromIssue(String issueKey, String username) {
+        Issue issue = issueRepository.findIssueByKey(issueKey);
         UserAccount user = userAccountRepository.findByUsername(username);
 
         if (checkIfMember(username, issue)) {

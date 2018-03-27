@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface IssueRepository extends JpaRepository<Issue, Long>{
 
-    @Query(value = "SELECT i FROM Issue i WHERE i.key LIKE %:param%")
+    @Query(value = "SELECT i FROM Issue i WHERE i.key LIKE :param")
     List<Issue> findIssuesByKeyQuery(@Param("param") String param);
 
-
+    Issue findIssueByKey(String key);
 }
