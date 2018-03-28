@@ -1,12 +1,10 @@
 package scrumweb.common.asm;
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import scrumweb.dto.issue.IssueDto;
 import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
-import scrumweb.dto.user.UserProfileDto;
 import scrumweb.project.domain.Project;
 import scrumweb.project.domain.ProjectMember;
 import scrumweb.project.domain.ProjectMember.Role;
@@ -17,11 +15,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-@AllArgsConstructor
 public class ProjectAsm {
 
     public static Project makeProject(ProjectDto projectDto) {
-        return new Project(projectDto.getName(), projectDto.getDescription(), projectDto.getIcon(), projectDto.getProjectKey());
+        return Project.builder()
+                .name(projectDto.getName())
+                .description(projectDto.getDescription())
+                .icon(projectDto.getIcon())
+                .key(projectDto.getProjectKey())
+                .build();
     }
 
     public static ProjectDto makeProjectDto(Project project) {
@@ -40,11 +42,19 @@ public class ProjectAsm {
     }
 
     private static ProjectMemberDto makeProjectMemberDto(ProjectMember projectMember, Long projectId) {
-        return new ProjectMemberDto(projectId, projectMember.getUserAccount().getUsername(), projectMember.getRole().getRoleString());
+        return ProjectMemberDto.builder()
+                .projectId(projectId)
+                .username(projectMember.getUserAccount().getUsername())
+                .role(projectMember.getRole().getRoleString())
+                .photo(projectMember.getUserAccount().getUserProfile().getPhoto())
+                .build();
     }
 
     public static ProjectDetailsDto makeProjectDetailsDro(ProjectDto projectDto, List<IssueDto> issues) {
-        return new ProjectDetailsDto(projectDto, issues);
+        return ProjectDetailsDto.builder()
+                .projectDto(projectDto)
+                .issues(issues)
+                .build();
     }
 
     private static Set<ProjectMemberDto> convertProjectMembers(Project project, Set<ProjectMember> members) {

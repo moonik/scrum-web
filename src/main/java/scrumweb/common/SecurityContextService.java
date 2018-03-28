@@ -18,8 +18,4 @@ public class SecurityContextService {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userAccountRepository.findByUsername(authentication.getName());
     }
-
-    public UserProfile getCurrentUserProfile() {
-        return getCurrentUserAccount().getUserProfile();
-    }
 }

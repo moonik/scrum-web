@@ -1,5 +1,7 @@
 package scrumweb.user.profile.domain;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,8 +14,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter @Setter
+@Builder
 public class UserProfile {
 
     @Id
@@ -33,11 +36,4 @@ public class UserProfile {
     private String lastname;
 
     private String photo;
-
-    public UserProfile(String username, String firstname, String lastname, String photo) {
-        this.username = username;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.photo = photo;
-    }
 }

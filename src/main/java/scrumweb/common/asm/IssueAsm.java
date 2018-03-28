@@ -1,10 +1,9 @@
 package scrumweb.common.asm;
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import scrumweb.common.ApplicationConstants;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.issue.IssueDto;
-import scrumweb.dto.issue.IssueTypeDto;
 import scrumweb.dto.user.UserProfileDto;
 import scrumweb.issue.domain.Issue;
 import scrumweb.issue.domain.Issue.Priority;
@@ -13,14 +12,12 @@ import scrumweb.issue.fieldcontent.FieldContent;
 import scrumweb.user.account.domain.UserAccount;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-@AllArgsConstructor
 public class IssueAsm {
 
     public static Issue createIssueEntityObject(IssueDetailsDto issueDetailsDto, Set<UserAccount> assignees, UserAccount reporter, Set<FieldContent> fieldContents, IssueType issueType) {
@@ -39,7 +36,7 @@ public class IssueAsm {
     }
 
     public static IssueDetailsDto createIssueDetailsDto(Issue issue) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ApplicationConstants.DATE_FORMAT);
         return IssueDetailsDto.builder()
                 .id(issue.getId())
                 .key(issue.getKey())
@@ -52,7 +49,7 @@ public class IssueAsm {
                 .priority(issue.getPriority().name())
                 .issueType(issue.getIssueType().getName())
                 .createdDate(issue.getCreatedDate().format(formatter))
-                .lastUpdate(new SimpleDateFormat("yy-MM-dd HH:mm").format(issue.getLastUpdate()))
+                .lastUpdate(new SimpleDateFormat(ApplicationConstants.DATE_FORMAT).format(issue.getLastUpdate()))
                 .build();
     }
 
@@ -69,12 +66,12 @@ public class IssueAsm {
 
     private static Set<UserProfileDto> convertAssignees(Issue issue) {
         return issue.getAssignees().stream()
-                .map(userAccount -> UserProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile()))
+                .map(UserProfileAsm::makeUserProfileDto)
                 .collect(Collectors.toSet());
     }
 
     private static UserProfileDto convertReporter(Issue issue) {
-        return UserProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
+        return UserProfileAsm.makeUserProfileDto(issue.getReporter());
     }
 
     private static Set<String> extractUserNames(Set<UserAccount> assignees) {

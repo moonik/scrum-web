@@ -1,5 +1,7 @@
 package scrumweb.user.account.domain;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,8 +15,9 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter @Setter
+@Builder
 public class UserAccount {
 
     @Id
@@ -47,11 +50,4 @@ public class UserAccount {
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Project> projects;
-
-    public UserAccount(String username, String password, UserProfile userProfile, Boolean enabled) {
-        this.username = username;
-        this.password = password;
-        this.userProfile = userProfile;
-        this.enabled = enabled;
-    }
 }

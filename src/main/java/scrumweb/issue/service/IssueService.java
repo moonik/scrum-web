@@ -69,7 +69,7 @@ public class IssueService {
 
     public IssueDetailsDto getDetails(String issueKey) {
         Issue issue = issueRepository.findIssueByKey(issueKey);
-        Set<FieldContentDto> fieldsContentsDto = issue.getFieldContents().stream().map(fieldContent -> fieldContentAsm.createDtoObject(fieldContent)).collect(Collectors.toSet());
+        Set<FieldContentDto> fieldsContentsDto = extractConents(issue.getFieldContents());
         IssueDetailsDto issueDetailsDto = IssueAsm.createIssueDetailsDto(issue);
         issueDetailsDto.setFieldContents(fieldsContentsDto);
         return issueDetailsDto;
@@ -113,6 +113,12 @@ public class IssueService {
             .map(fieldContentDto -> fieldContentAsm.createObjectEntity(
                 projectFieldRepository.findOne(fieldContentDto.getProjectFieldId()), fieldContentDto))
             .collect(Collectors.toSet());
+    }
+
+    private Set<FieldContentDto> extractConents(Set<FieldContent> fieldContents) {
+        return fieldContents.stream()
+                .map(fieldContent -> fieldContentAsm.createDtoObject(fieldContent))
+                .collect(Collectors.toSet());
     }
 
     private IssueType getIssueType(Set<IssueType> issueTypes, String issueType) {

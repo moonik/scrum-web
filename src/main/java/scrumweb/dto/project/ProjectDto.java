@@ -1,6 +1,6 @@
 package scrumweb.dto.project;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,7 @@ import scrumweb.dto.user.UserProfileDto;
 
 import java.util.Set;
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Getter @Setter
 public class ProjectDto {

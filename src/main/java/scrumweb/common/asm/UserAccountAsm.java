@@ -11,11 +11,18 @@ import scrumweb.user.profile.domain.UserProfile;
 public class UserAccountAsm {
 
     public static UserAccount makeUserAccount(UserDto userDto, UserProfile userProfile) {
-        return new UserAccount(userDto.getUsername(), new BCryptPasswordEncoder().encode(userDto.getPassword()), userProfile, true);
+        return UserAccount.builder()
+                .username(userDto.getUsername())
+                .password(new BCryptPasswordEncoder().encode(userDto.getPassword()))
+                .userProfile(userProfile)
+                .enabled(true)
+                .build();
     }
 
     public static UserInformationDto makeUserInformation(UserAccount userAccount){
-        return new UserInformationDto(userAccount.getUsername(), userAccount.getUserProfile().getId());
+        return UserInformationDto.builder()
+                .username(userAccount.getUsername())
+                .profileId(userAccount.getUserProfile().getId())
+                .build();
     }
-
 }

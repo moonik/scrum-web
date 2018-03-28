@@ -64,5 +64,4 @@ public class IssueController {
     public void unAssignFromIssue(@PathVariable String issueKey, @PathVariable String username) {
         issueService.unAssignFromIssue(issueKey, username);
     }
-
 }

@@ -15,7 +15,8 @@ public class InputFieldAsm implements ProjectFieldAsm<InputField, InputFieldDto>
                 projectFieldDto.getFieldName(),
                 projectFieldDto.getIsRequired(),
                 projectFieldDto.getMinCharacters(),
-                projectFieldDto.getMaxCharacters()
+                projectFieldDto.getMaxCharacters(),
+                null //TODO ADD HTML
         );
     }
 
@@ -29,5 +30,10 @@ public class InputFieldAsm implements ProjectFieldAsm<InputField, InputFieldDto>
                 projectField.getMaxCharacters(),
                 projectField.getMinCharacters()
         );
+    }
+
+    @Override
+    public String createHtml(InputFieldDto projectFieldDto) {
+        return null;
     }
 }

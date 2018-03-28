@@ -15,13 +15,19 @@ import java.util.stream.Collectors;
 @Component
 @AllArgsConstructor
 public class ListElementsContainerAsm implements ProjectFieldAsm<ListElementsContainer, ListElementsContainerDto> {
-
+    //TODO ADD HTML
     private FieldElementsAsm<ListElement, ListElementDto> fieldElementsAsm;
 
     @Override
     public ListElementsContainer createEntityObject(ListElementsContainerDto projectFieldDto) {
         Set<ListElement> listElements = projectFieldDto.getElements().stream().map(listElementDto -> fieldElementsAsm.convertToEntityObject(listElementDto)).collect(Collectors.toSet());
-        return new ListElementsContainer(FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), listElements);
+        return new ListElementsContainer(
+                FieldType.getFieldType(projectFieldDto.getFieldType()),
+                projectFieldDto.getFieldName(),
+                projectFieldDto.getIsRequired(),
+                listElements,
+                createHtml(projectFieldDto)
+        );
     }
 
     @Override
@@ -34,5 +40,10 @@ public class ListElementsContainerAsm implements ProjectFieldAsm<ListElementsCon
                 projectField.getIsRequired(),
                 listElements
         );
+    }
+
+    @Override
+    public String createHtml(ListElementsContainerDto projectFieldDto) {
+        return null;
     }
 }
