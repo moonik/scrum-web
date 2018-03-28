@@ -28,6 +28,7 @@ import { IssueConfigurationComponent } from './issue-configuration/issue-configu
 import { SearchComponent } from './search/search.component';
 import { LoaderComponent} from './loader/loader.component';
 import { LoaderService} from './loader/loader.service';
+import {WarningModalComponent} from './warning-modal/warning-modal.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { LoaderService} from './loader/loader.service';
     FooterComponent,
     SearchComponent,
     LoaderComponent,
+    WarningModalComponent,
     IssueFieldsConfigurationComponent,
     IssueTypeConfigurationComponent,
     IssueConfigurationComponent,
