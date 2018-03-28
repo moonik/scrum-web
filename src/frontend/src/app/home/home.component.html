@@ -14,7 +14,7 @@
     </thead>
     <tbody *ngFor="let project of projects">
       <tr (click)="goToProjectDetails(project.projectKey)">
-        <!-- <td class="placeForImage"><img *ngIf="project.icon" [src]="" height="50p" width="50p" alt=""></td> -->
+        <td class="placeForImage"><img *ngIf="project.icon" [src]="" height="50p" width="50p" alt=""></td>
         <td>{{project.name}}</td>
         <td>{{project.projectKey}}</td>
         <td>{{project.description}}</td>
