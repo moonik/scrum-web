@@ -39,7 +39,7 @@ public class UserAccountService {
             userAccount.setEnabled(true);
 
             userAccountRepository.save(userAccount);
-        }else
+        } else
             throw new UserAlreadyExistsException(userDto.getUsername());
     }
 

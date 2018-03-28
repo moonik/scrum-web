@@ -29,7 +29,9 @@ public class ProjectAsm {
     public static ProjectDto makeProjectDto(Project project) {
         return ProjectDto.builder()
                 .id(project.getId())
+                .projectKey(project.getKey())
                 .name(project.getName())
+                .owner(UserProfileAsm.makeUserProfileDto(project.getOwner()))
                 .description(project.getDescription())
                 .icon(project.getIcon())
                 .members(convertProjectMembers(project, project.getMembers()))

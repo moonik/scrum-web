@@ -11,6 +11,7 @@ import lombok.Setter;
 import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter @Setter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
