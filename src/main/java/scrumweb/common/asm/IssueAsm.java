@@ -1,5 +1,6 @@
 package scrumweb.common.asm;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.issue.IssueDto;
@@ -18,7 +19,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@AllArgsConstructor
 public class IssueAsm {
+
+    private UserProfileAsm userProfileAsm;
 
     public Issue createIssueEntityObject(IssueDetailsDto issueDetailsDto, Set<UserAccount> assignees, UserAccount reporter, Set<FieldContent> fieldContents, IssueType issueType) {
         return new Issue(issueDetailsDto.getSummary(), issueDetailsDto.getDescription(), assignees, reporter,
@@ -27,32 +31,48 @@ public class IssueAsm {
                 issueType, fieldContents, LocalDateTime.now());
     }
 
-    public IssueDetailsDto createIssueDetailsDto(Issue issue, Set<UserProfileDto> assignees, UserProfileDto reporter) {
+    public IssueDetailsDto createIssueDetailsDto(Issue issue) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
-        return new IssueDetailsDto(
-                issue.getId(),
-                issue.getKey(),
-                issue.getSummary(),
-                issue.getDescription(),
-                assignees,
-                reporter,
-                issue.getEstimateTime(),
-                issue.getRemainingTime(),
-                issue.getPriority().toString(),
-                issue.getIssueType().getName(),
-                issue.getCreatedDate().format(formatter),
-                new SimpleDateFormat("yy-MM-dd HH:mm").format(issue.getLastUpdate())
-        );
+        return IssueDetailsDto.builder()
+                .id(issue.getId())
+                .key(issue.getKey())
+                .summary(issue.getSummary())
+                .description(issue.getDescription())
+                .assignees(convertAssignees(issue))
+                .reporter(convertReporter(issue))
+                .estimateTime(issue.getEstimateTime())
+                .remainingTime(issue.getRemainingTime())
+                .priority(issue.getPriority().name())
+                .issueType(issue.getIssueType().getName())
+                .createdDate(issue.getCreatedDate().format(formatter))
+                .lastUpdate(new SimpleDateFormat("yy-MM-dd HH:mm").format(issue.getLastUpdate()))
+                .build();
     }
 
     public IssueDto createIssueDto(Issue issue) {
-        return new IssueDto(
-                issue.getId(),
-                issue.getKey(),
-                issue.getSummary(),
-                issue.getIssueType().getName(),
-                issue.getPriority().toString(),
-                issue.getAssignees().stream().map(UserAccount::getUsername).collect(Collectors.toSet())
-        );
+        return IssueDto.builder()
+                .id(issue.getId())
+                .issueKey(issue.getKey())
+                .summary(issue.getSummary())
+                .issueType(issue.getIssueType().getName())
+                .priority(issue.getPriority().name())
+                .assignees(extractUserNames(issue.getAssignees()))
+                .build();
+    }
+
+    private Set<UserProfileDto> convertAssignees(Issue issue) {
+        return issue.getAssignees().stream()
+                .map(userAccount -> userProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile()))
+                .collect(Collectors.toSet());
+    }
+
+    private UserProfileDto convertReporter(Issue issue) {
+        return userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
+    }
+
+    private Set<String> extractUserNames(Set<UserAccount> assignees) {
+        return assignees.stream()
+                .map(UserAccount::getUsername)
+                .collect(Collectors.toSet());
     }
 }

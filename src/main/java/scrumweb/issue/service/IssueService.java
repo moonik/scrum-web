@@ -43,7 +43,6 @@ public class IssueService {
     private SecurityContextService securityContextService;
     private ProjectFieldRepository projectFieldRepository;
     private ProjectRepository projectRepository;
-    private UserProfileAsm userProfileAsm;
     private FieldContentConverter fieldContentAsm;
     private IssueTypeRepository issueTypeRepository;
 
@@ -71,10 +70,8 @@ public class IssueService {
 
     public IssueDetailsDto getDetails(String issueKey) {
         Issue issue = issueRepository.findIssueByKey(issueKey);
-        Set<UserProfileDto> assignees = issue.getAssignees().stream().map(userAccount -> userProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile())).collect(Collectors.toSet());
-        UserProfileDto reporter = userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
         Set<FieldContentDto> fieldsContentsDto = issue.getFieldContents().stream().map(fieldContent -> fieldContentAsm.createDtoObject(fieldContent)).collect(Collectors.toSet());
-        IssueDetailsDto issueDetailsDto = issueAsm.createIssueDetailsDto(issue, assignees, reporter);
+        IssueDetailsDto issueDetailsDto = issueAsm.createIssueDetailsDto(issue);
         issueDetailsDto.setFieldContents(fieldsContentsDto);
         return issueDetailsDto;
     }
