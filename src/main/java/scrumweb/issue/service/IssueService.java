@@ -37,7 +37,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class IssueService {
 
-    private IssueAsm issueAsm;
     private IssueRepository issueRepository;
     private UserAccountRepository userAccountRepository;
     private SecurityContextService securityContextService;
@@ -63,7 +62,7 @@ public class IssueService {
         }
         Set<FieldContent> fieldContents = extractContents(fieldContentsDto);
         IssueType issueType = getIssueType(project.getIssueTypes(), issueDetailsDto.getIssueType());
-        Issue issue = issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
+        Issue issue = IssueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
         issue.setKey(issueKey);
         return issue;
     }
@@ -71,7 +70,7 @@ public class IssueService {
     public IssueDetailsDto getDetails(String issueKey) {
         Issue issue = issueRepository.findIssueByKey(issueKey);
         Set<FieldContentDto> fieldsContentsDto = issue.getFieldContents().stream().map(fieldContent -> fieldContentAsm.createDtoObject(fieldContent)).collect(Collectors.toSet());
-        IssueDetailsDto issueDetailsDto = issueAsm.createIssueDetailsDto(issue);
+        IssueDetailsDto issueDetailsDto = IssueAsm.createIssueDetailsDto(issue);
         issueDetailsDto.setFieldContents(fieldsContentsDto);
         return issueDetailsDto;
     }
@@ -127,7 +126,7 @@ public class IssueService {
         return projectRepository.findAll().stream()
             .filter(p -> p.getIssues().contains(issue))
             .reduce((a, b) -> null)
-            .map(project2 -> project2.getMembers().stream()
+            .map(project -> project.getMembers().stream()
                 .map(m -> m.getUserAccount().getUsername())
                 .collect(Collectors.toList()).contains(username))
             .orElse(false);
@@ -148,7 +147,6 @@ public class IssueService {
     public void unAssignFromIssue(String issueKey, String username) {
         Issue issue = issueRepository.findIssueByKey(issueKey);
         UserAccount user = userAccountRepository.findByUsername(username);
-
         if (checkIfMember(username, issue)) {
             issue.getAssignees().remove(user);
             issueRepository.save(issue);

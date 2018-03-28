@@ -13,7 +13,6 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter @Setter
 public class ProjectDetailsDto {
-
     private ProjectDto projectDto;
     private List<IssueDto> issues;
     //TODO add boards

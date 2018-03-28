@@ -13,6 +13,7 @@ import scrumweb.issue.fieldcontent.FieldContent;
 import scrumweb.user.account.domain.UserAccount;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
@@ -22,16 +23,22 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class IssueAsm {
 
-    private UserProfileAsm userProfileAsm;
-
-    public Issue createIssueEntityObject(IssueDetailsDto issueDetailsDto, Set<UserAccount> assignees, UserAccount reporter, Set<FieldContent> fieldContents, IssueType issueType) {
-        return new Issue(issueDetailsDto.getSummary(), issueDetailsDto.getDescription(), assignees, reporter,
-                issueDetailsDto.getEstimateTime(), issueDetailsDto.getRemainingTime(),
-                issueDetailsDto.getPriority().equalsIgnoreCase("high") ? Priority.HIGH : Priority.LOW,
-                issueType, fieldContents, LocalDateTime.now());
+    public static Issue createIssueEntityObject(IssueDetailsDto issueDetailsDto, Set<UserAccount> assignees, UserAccount reporter, Set<FieldContent> fieldContents, IssueType issueType) {
+        return Issue.builder()
+                .summary(issueDetailsDto.getSummary())
+                .description(issueDetailsDto.getDescription())
+                .assignees(assignees)
+                .reporter(reporter)
+                .estimateTime(issueDetailsDto.getEstimateTime())
+                .remainingTime(issueDetailsDto.getRemainingTime())
+                .priority(issueDetailsDto.getPriority().equalsIgnoreCase("high") ? Priority.HIGH : Priority.LOW)
+                .issueType(issueType)
+                .fieldContents(fieldContents)
+                .createdDate(LocalDateTime.now())
+                .build();
     }
 
-    public IssueDetailsDto createIssueDetailsDto(Issue issue) {
+    public static IssueDetailsDto createIssueDetailsDto(Issue issue) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
         return IssueDetailsDto.builder()
                 .id(issue.getId())
@@ -49,7 +56,7 @@ public class IssueAsm {
                 .build();
     }
 
-    public IssueDto createIssueDto(Issue issue) {
+    public static IssueDto createIssueDto(Issue issue) {
         return IssueDto.builder()
                 .id(issue.getId())
                 .issueKey(issue.getKey())
@@ -60,17 +67,17 @@ public class IssueAsm {
                 .build();
     }
 
-    private Set<UserProfileDto> convertAssignees(Issue issue) {
+    private static Set<UserProfileDto> convertAssignees(Issue issue) {
         return issue.getAssignees().stream()
-                .map(userAccount -> userProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile()))
+                .map(userAccount -> UserProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile()))
                 .collect(Collectors.toSet());
     }
 
-    private UserProfileDto convertReporter(Issue issue) {
-        return userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
+    private static UserProfileDto convertReporter(Issue issue) {
+        return UserProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
     }
 
-    private Set<String> extractUserNames(Set<UserAccount> assignees) {
+    private static Set<String> extractUserNames(Set<UserAccount> assignees) {
         return assignees.stream()
                 .map(UserAccount::getUsername)
                 .collect(Collectors.toSet());

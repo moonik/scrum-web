@@ -9,15 +9,15 @@ import scrumweb.user.profile.domain.UserProfile;
 @Component
 public class UserProfileAsm {
 
-    public UserProfile makeUserProfile(UserDto userDto) {
+    public static UserProfile makeUserProfile(UserDto userDto) {
         return new UserProfile(userDto.getUsername(), userDto.getFirstname(), userDto.getLastname(), null);
     }
 
-    public UserProfileDto makeUserProfileDto(UserAccount userAccount, UserProfile userProfile) {
+    public static UserProfileDto makeUserProfileDto(UserAccount userAccount, UserProfile userProfile) {
         return new UserProfileDto(userAccount.getId(), userProfile.getFirstname(), userProfile.getLastname(), userProfile.getPhoto(), userAccount.getUsername());
     }
 
-    public UserProfileDto convertFromUserProfileToUserProfileDto(UserProfile userProfile){
+    public static UserProfileDto convertFromUserProfileToUserProfileDto(UserProfile userProfile){
         return new UserProfileDto(userProfile.getId(), userProfile.getFirstname(), userProfile.getLastname(), userProfile.getPhoto(), userProfile.getUsername());
     }
 }

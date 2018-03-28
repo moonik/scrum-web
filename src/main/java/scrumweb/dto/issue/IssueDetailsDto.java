@@ -17,7 +17,6 @@ import java.util.Set;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class IssueDetailsDto {
-
     private Long id;
     private String key;
     private String summary;

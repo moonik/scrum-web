@@ -1,5 +1,6 @@
 package scrumweb.common.asm;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import scrumweb.dto.issue.IssueDto;
 import scrumweb.dto.project.ProjectDetailsDto;
@@ -16,44 +17,39 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@AllArgsConstructor
 public class ProjectAsm {
 
-    public Project makeProject(ProjectDto projectDto) {
+    public static Project makeProject(ProjectDto projectDto) {
         return new Project(projectDto.getName(), projectDto.getDescription(), projectDto.getIcon(), projectDto.getProjectKey());
     }
 
-    public ProjectDto makeProjectDto(Project project, UserProfileDto owner) {
-        return new ProjectDto(project.getId(), project.getName(), project.getDescription(), project.getIcon(),
-            project.getMembers().stream()
-                .map(member -> makeProjectMemberDto(member, project.getId()))
-                .collect(Collectors.toSet()), project.getKey(), owner,
-            project.getRequests().stream()
-                .map(request -> makeProjectMemberDto(request, project.getId()))
-                .collect(Collectors.toSet())
-        );
+    public static ProjectDto makeProjectDto(Project project) {
+        return ProjectDto.builder()
+                .id(project.getId())
+                .name(project.getName())
+                .description(project.getDescription())
+                .icon(project.getIcon())
+                .members(convertProjectMembers(project, project.getMembers()))
+                .requests(convertProjectMembers(project, project.getRequests()))
+                .build();
     }
 
-    public ProjectMember makeProjectMember(UserAccount userAccount, Role role) {
+    public static ProjectMember makeProjectMember(UserAccount userAccount, Role role) {
         return new ProjectMember(userAccount, role);
     }
 
-    public ProjectMemberDto makeProjectMemberDto(ProjectMember projectMember, Long projectId) {
+    private static ProjectMemberDto makeProjectMemberDto(ProjectMember projectMember, Long projectId) {
         return new ProjectMemberDto(projectId, projectMember.getUserAccount().getUsername(), projectMember.getRole().getRoleString());
     }
 
-    public ProjectDetailsDto makeProjectDetailsDro(ProjectDto projectDto, List<IssueDto> issues) {
+    public static ProjectDetailsDto makeProjectDetailsDro(ProjectDto projectDto, List<IssueDto> issues) {
         return new ProjectDetailsDto(projectDto, issues);
     }
 
-    public ProjectDto convertFromProjectToProjectDto(Project project, UserProfileDto owner) {
-        Set<ProjectMemberDto> memberDtoSet =
-            project.getMembers().stream()
+    private static Set<ProjectMemberDto> convertProjectMembers(Project project, Set<ProjectMember> members) {
+        return members.stream()
                 .map(member -> makeProjectMemberDto(member, project.getId()))
                 .collect(Collectors.toSet());
-        return new ProjectDto(project.getId(), project.getName(), project.getDescription(),
-            project.getIcon(), memberDtoSet, project.getKey(), owner,
-            project.getRequests().stream()
-                .map(request -> makeProjectMemberDto(request, project.getId()))
-                .collect(Collectors.toSet()));
     }
 }
