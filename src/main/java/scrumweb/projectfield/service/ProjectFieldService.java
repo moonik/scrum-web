@@ -49,7 +49,7 @@ public class ProjectFieldService {
 
     public Set<ProjectFieldDto> removeField(Long id, String projectKey, String issueType) {
         IssueType issuetype = findIssueType(projectRepository.findByKey(projectKey).getIssueTypes(), issueType);
-        issuetype.setFields(issuetype.getFields().stream().filter(f -> !f.getId().equals(id)).collect(Collectors.toSet()));
+        issuetype.setFields(filterOutFields(issuetype.getFields(), id));
         issueTypeRepository.saveAndFlush(issuetype);
         projectFieldRepository.delete(id);
         return issuetype.getFields().stream()
@@ -75,5 +75,11 @@ public class ProjectFieldService {
                 fieldsToBeSaved.add(projectFieldAsm.createEntityObject(f));
         });
         return fieldsToBeSaved;
+    }
+
+    public Set<ProjectField> filterOutFields(Set<ProjectField> fields, Long fieldId) {
+        return  fields.stream()
+                .filter(f -> !f.getId().equals(fieldId))
+                .collect(Collectors.toSet());
     }
 }

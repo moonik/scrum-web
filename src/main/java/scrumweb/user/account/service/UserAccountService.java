@@ -22,17 +22,15 @@ import java.util.List;
 @AllArgsConstructor
 public class UserAccountService {
 
-    protected UserAccountAsm userAccountAsm;
-    protected UserProfileAsm userProfileAsm;
     protected UserAccountRepository userAccountRepository;
     protected UserProfileRepository userProfileRepository;
     protected AuthorityRepository  authorityRepository;
 
     public void save(UserDto userDto) {
         if (userAccountRepository.findByUsername(userDto.getUsername()) == null) {
-            UserProfile userProfile = userProfileAsm.makeUserProfile(userDto);
+            UserProfile userProfile = UserProfileAsm.makeUserProfile(userDto);
 
-            UserAccount userAccount = userAccountAsm.makeUserAccount(userDto, userProfile);
+            UserAccount userAccount = UserAccountAsm.makeUserAccount(userDto, userProfile);
             Authority authority = authorityRepository.findByName(AuthorityName.ROLE_USER);
 
             List<Authority> authorities = new ArrayList<>();
@@ -46,6 +44,6 @@ public class UserAccountService {
     }
 
     public UserInformationDto getUserInformation(UserAccount userAccount){
-        return userAccountAsm.makeUserInformation(userAccount);
+        return UserAccountAsm.makeUserInformation(userAccount);
     }
 }
