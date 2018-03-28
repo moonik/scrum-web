@@ -17,8 +17,8 @@ public class ListElementsContainer extends ProjectField {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<ListElement> elements;
 
-    public ListElementsContainer(FieldType fieldType, String name, Boolean isRequired, Set<ListElement> elements) {
-        super(fieldType, name, isRequired);
+    public ListElementsContainer(FieldType fieldType, String name, Boolean isRequired, Set<ListElement> elements, String html) {
+        super(fieldType, name, isRequired, html);
         this.elements = elements;
     }
 

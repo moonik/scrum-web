@@ -35,4 +35,11 @@ public class CheckBoxContainerAsm implements ProjectFieldAsm<CheckBoxContainer, 
             checkBoxes
         );
     }
+
+    @Override
+    public String createHtml(CheckBoxContainerDto projectFieldDto) {
+        return projectFieldDto.getElements().stream()
+                .map(element -> "<input type=\"checkbox\" name=\""+ projectFieldDto.getFieldName() +"\" class=\""+projectFieldDto.getFieldName()+"\" [(ngModel)]=\"\">")
+                .collect(Collectors.joining("\n<br>\n"));
+    }
 }
