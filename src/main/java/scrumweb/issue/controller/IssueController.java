@@ -2,10 +2,7 @@ package scrumweb.issue.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-import scrumweb.dto.fieldcontent.FieldsContentCollector;
 import scrumweb.dto.issue.IssueCommentDto;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +17,6 @@ import scrumweb.dto.issue.IssueTypeDto;
 import scrumweb.issue.service.IssueService;
 
 import java.util.List;
-import java.util.Set;
 import java.util.Set;
 
 import static scrumweb.common.ApplicationConstants.API_URL;
@@ -38,10 +34,37 @@ public class IssueController {
         return issueService.create(issueDetailsDto, issueDetailsDto.getFieldsContentCollector().extractFields(), projectKey);
     }
 
-    @GetMapping("/details/{id}")
+    @GetMapping("/details/{issueKey}")
     @ResponseStatus(HttpStatus.OK)
-    public IssueDetailsDto getDetails(@PathVariable Long id) {
-        return issueService.getDetails(id);
+    public IssueDetailsDto getDetails(@PathVariable String issueKey) {
+        return issueService.getDetails(issueKey);
+    }
+
+    @PostMapping("/types/{projectKey}")
+    public Set<IssueTypeDto> createIssueType(@PathVariable String projectKey, @RequestBody Set<IssueTypeDto> issueTypes) {
+        return issueService.createIssueType(projectKey, issueTypes);
+    }
+
+    @PutMapping("/edit/types")
+    public void editIssueType(@RequestBody IssueTypeDto issueTypeDto) {
+        issueService.editIssueType(issueTypeDto);
+    }
+
+    @DeleteMapping("/types/{id}")
+    public void deleteIssueType(@PathVariable Long id) {
+        issueService.deleteIssueType(id);
+    }
+
+    @PostMapping("/{issueKey}/assign/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public void assignToIssue(@PathVariable String issueKey, @PathVariable String username) {
+        issueService.assignToIssue(issueKey, username);
+    }
+
+    @DeleteMapping("/{issueKey}/assign/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public void unAssignFromIssue(@PathVariable String issueKey, @PathVariable String username) {
+        issueService.unAssignFromIssue(issueKey, username);
     }
 
     @PostMapping("/comment/{id}")
@@ -68,32 +91,5 @@ public class IssueController {
         return issueService.editComment(commentId, issueCommentDto.getContent());
     }
 
-    @PutMapping("/edit/types")
-    public void editIssueType(@RequestBody IssueTypeDto issueTypeDto) {
-        issueService.editIssueType(issueTypeDto);
-    }
-
-    @PostMapping("/{id}/assign/{username}")
-    @ResponseStatus(HttpStatus.OK)
-    public void assignToIssue(@PathVariable Long id, @PathVariable String username) {
-        issueService.assignToIssue(id, username);
-    }
-
-    @PostMapping("/types/{projectKey}")
-    public Set<IssueTypeDto> createIssueType(@PathVariable String projectKey, @RequestBody Set<IssueTypeDto> issueTypes) {
-        return issueService.createIssueType(projectKey, issueTypes);
-    }
-
-
-    @DeleteMapping("/types/{id}")
-    public void deleteIssueType(@PathVariable Long id) {
-        issueService.deleteIssueType(id);
-    }
-
-    @DeleteMapping("/{id}/assign/{username}")
-    @ResponseStatus(HttpStatus.OK)
-    public void unAssignFromIssue(@PathVariable Long id, @PathVariable String username) {
-        issueService.unAssignFromIssue(id, username);
-    }
 
 }

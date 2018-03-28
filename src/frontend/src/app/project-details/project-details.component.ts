@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Params} from '@angular/router';
 import {ProjectDetailsService} from './project-details.service';
 import {ProjectDetailsDto} from '../model/ProjectDetailsDto';
 import {IssueDto} from '../model/IssueDto';
@@ -26,11 +26,11 @@ export class ProjectDetailsComponent implements OnInit {
   public selectedComment: number;
   projectMembers: Array<any> = [];
 
-  constructor(private _activatedRoute: ActivatedRoute, private _projectDetailsService: ProjectDetailsService,
-    private _issueService: IssueService, fb: FormBuilder) {
-
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _projectDetailsService: ProjectDetailsService,
+              private _issueService: IssueService, fb: FormBuilder) {
     this._activatedRoute.params.subscribe((params: Params) => {
-      this.projectKey = params['projectKey'];
+        this.projectKey = params['projectKey'];
     });
     this.getProjectDetails();
 
@@ -44,9 +44,9 @@ export class ProjectDetailsComponent implements OnInit {
     this.getAssignees();
   }
 
-  public selectIssue(issueId: number) {
+  public selectIssue(issueKey: string) {
     this.loading = true;
-    this._issueService.getIssueDetails(issueId)
+    this._issueService.getIssueDetails(issueKey)
       .subscribe(
         data => {
           this.selectedIssue = data;
@@ -61,7 +61,7 @@ export class ProjectDetailsComponent implements OnInit {
       .subscribe(data => {
         this.projectDetails = data;
         if (data.issues.length > 0) {
-          this.selectIssue(data.issues[0].id);
+          this.selectIssue(data.issues[0].issueKey);
         }
         this.loading = false;
       });
@@ -73,10 +73,42 @@ export class ProjectDetailsComponent implements OnInit {
 
   public onIssueCreate(issueDto: IssueDto) {
     const length = this.projectDetails.issues.length + 1;
-    issueDto.id = length;
-    issueDto.issueKey = this.projectDetails.projectDto.name + '-' + length;
+    issueDto.issueKey = this.projectDetails.projectDto.projectKey + '-' + length;
     this.projectDetails.issues.unshift(issueDto);
-    this.selectIssue(issueDto.id);
+    this.selectIssue(issueDto.issueKey);
+  }
+
+  onAssignToIssue(username: string) {
+    if (!username) {
+      username = localStorage.getItem('currentUser');
+    }
+    this._issueService.assignToIssue(this.selectedIssue.key, username)
+      .subscribe(() => {
+        this.ngOnInit();
+      });
+  }
+
+  checkAssignees(): boolean {
+    return !this.selectedIssue.assignees.map(a => a.username).includes(localStorage.getItem('currentUser'))
+      && this.projectDetails.projectDto.members.map(m => m.username).includes(localStorage.getItem('currentUser'));
+  }
+
+  isOwner(): boolean {
+    return this.selectedIssue.reporter.username === localStorage.getItem('currentUser');
+  }
+
+  getAssignees() {
+    return this._issueService.getAssignees(this.projectKey)
+      .subscribe(data => this.projectMembers = data);
+  }
+
+  onRemoveFromAssign(username: string) {
+    this._issueService.unAssignFromIssue(username, this.selectedIssue.key)
+      .subscribe(() => this.ngOnInit());
+  }
+
+  isAssigned(username: string) {
+    return !this.selectedIssue.assignees.map(a => a.username).includes(username);
   }
 
   public getIssueComments() {
@@ -145,36 +177,4 @@ export class ProjectDetailsComponent implements OnInit {
     comment.editting = false;
   }
 
-  onAssignToIssue(username: string) {
-    if (!username) {
-      username = localStorage.getItem('currentUser');
-    }
-    this._issueService.assignToIssue(this.selectedIssue.id, username)
-      .subscribe(() => {
-        this.ngOnInit();
-      });
-  }
-
-  checkAssignees(): boolean {
-    return !this.selectedIssue.assignees.map(a => a.username).includes(localStorage.getItem('currentUser'))
-      && this.projectDetails.projectDto.members.map(m => m.username).includes(localStorage.getItem('currentUser'));
-  }
-
-  isOwner(): boolean {
-    return this.selectedIssue.reporter.username === localStorage.getItem('currentUser');
-  }
-
-  getAssignees() {
-    return this._issueService.getAssignees(this.projectKey)
-      .subscribe(data => this.projectMembers = data);
-  }
-
-  onRemoveFromAssign(username: string) {
-    this._issueService.unAssignFromIssue(username, this.selectedIssue.id)
-      .subscribe(() => this.ngOnInit());
-  }
-
-  isAssigned(username: string) {
-    return !this.selectedIssue.assignees.map(a => a.username).includes(username);
-  }
 }

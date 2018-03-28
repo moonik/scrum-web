@@ -8,8 +8,7 @@ export class IssueService {
 
   private _URL = 'project/issue/';
 
-  constructor(private _http: HttpClient) {
-  }
+  constructor(private _http: HttpClient) {}
 
   createIssue(projectkey: string, issueDetails: IssueDetailsDto) {
     return this._http.post('project/issue/' + projectkey, issueDetails)
@@ -39,17 +38,16 @@ export class IssueService {
       return this._http.post(this._URL + 'comments/edit/'+commentId, comment);
     }
 
-  getIssueDetails(id: number) {
-    return this._http.get(this._URL + 'details/' + id)
+  getIssueDetails(issueKey: string) {
+    return this._http.get(this._URL + 'details/' + issueKey)
       .map(res => res.json());
   }
 
-  assignToIssue(id: number, username: string) {
-    return this._http.post(this._URL + id + '/assign/' + username, null);
+  assignToIssue(issueKey: string, username: string) {
+    return this._http.post(this._URL + issueKey + '/assign/' + username, null);
   }
 
-  unAssignFromIssue(username: string, id: number) {
-    return this._http.delete(this._URL + id + '/assign/' + username);
+  unAssignFromIssue(username: string, issueKey: string) {
+    return this._http.delete(this._URL + issueKey + '/assign/' + username);
   }
-
 }
