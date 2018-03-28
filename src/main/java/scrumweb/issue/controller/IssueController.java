@@ -32,10 +32,10 @@ public class IssueController {
         return issueService.create(issueDetailsDto, issueDetailsDto.getFieldsContentCollector().extractFields(), projectKey);
     }
 
-    @GetMapping("/details/{id}")
+    @GetMapping("/details/{issueKey}")
     @ResponseStatus(HttpStatus.OK)
-    public IssueDetailsDto getDetails(@PathVariable Long id) {
-        return issueService.getDetails(id);
+    public IssueDetailsDto getDetails(@PathVariable String issueKey) {
+        return issueService.getDetails(issueKey);
     }
 
     @PostMapping("/types/{projectKey}")
@@ -53,16 +53,16 @@ public class IssueController {
         issueService.deleteIssueType(id);
     }
 
-    @PostMapping("/{id}/assign/{username}")
+    @PostMapping("/{issueKey}/assign/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public void assignToIssue(@PathVariable Long id, @PathVariable String username) {
-        issueService.assignToIssue(id, username);
+    public void assignToIssue(@PathVariable String issueKey, @PathVariable String username) {
+        issueService.assignToIssue(issueKey, username);
     }
 
-    @DeleteMapping("/{id}/assign/{username}")
+    @DeleteMapping("/{issueKey}/assign/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public void unAssignFromIssue(@PathVariable Long id, @PathVariable String username) {
-        issueService.unAssignFromIssue(id, username);
+    public void unAssignFromIssue(@PathVariable String issueKey, @PathVariable String username) {
+        issueService.unAssignFromIssue(issueKey, username);
     }
 
 }
