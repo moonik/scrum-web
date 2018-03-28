@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -54,6 +55,9 @@ public class Issue {
 
     @UpdateTimestamp
     private Timestamp lastUpdate;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "issue")
+    private List<IssueComment> comments;
 
     public Issue(String summary, String description, Set<UserAccount> assignees, UserAccount reporter, String estimateTime, String remainingTime,
                  Priority priority, IssueType issueType, Set<FieldContent> fieldContents, LocalDateTime createdDate) {

@@ -59,6 +59,57 @@
     <div class="more-details">
       <b>Description</b>
       <div class="issue-description">{{ selectedIssue.description }}</div>
+
+      <form [formGroup]="commentForm" (ngSubmit)="addComment()">
+
+      <input formControlName="content" name="commentContent" type="text" class="form-control w-100" id="inputContent"
+             placeholder="Add comment" [(ngModel)]="newComment.content">
+        <div *ngIf="checkControl('content')">
+          <small id="commentLengthError" class="form-text text-danger" *ngIf="checkCommentLength()">Comment length must be between 2 to 255 characters.</small>
+        </div>
+        <p align="right"><button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">Add</button></p>
+      </form>
+
+      <p align="center"><b>{{ comments.length }} comment(s)</b></p>
+
+      <div class="comments-found" *ngIf="comments.length > 0">
+        <table width="100%">
+          <tr>
+            <th width="60%">Content</th>
+            <th width="15%">Author</th>
+            <th width="15%">Posted</th>
+            <th width="5%"></th>
+            <th width="5%"></th>
+          </tr>
+          <tbody *ngFor="let comment of comments" (mouseenter)="mouseEnter(comment)" (mouseleave)="mouseLeave(comment)">
+            <tr class="single-comment">
+              <td>
+                <div *ngIf="!comment.editting">{{comment.content}}</div>
+                <input *ngIf="comment.editting === true" class="editcomment" id="commentContent" name="content" [(ngModel)]="comment.content" [attr.disabled]="comment.editting? null : ''">&nbsp;
+                <button class="btn btn-primary" *ngIf="comment.editting" (click)="editComment(comment, comment.id)">Edit</button>
+              </td>
+              <td>{{comment.owner.username}}</td>
+              <td>{{comment.createdDate}}</td>
+              <td>
+                <button [hidden]="!comment.hover || !(comment.owner.username === getCurrentUser())" class="fa fa-pencil-square-o" (click)="editCommentYes(comment)"></button>
+              </td>
+              <td>
+                <form (ngSubmit)="deleteComment(comment)">
+                <button type="submit" [hidden]="!comment.hover || !(comment.owner.username === getCurrentUser())" class="fa fa-times" data-toggle="modal" data-target="#exampleModal"></button>
+                <!--<app-warning-modal [obj]="comment" (onClickYes)="deleteComment($event)"></app-warning-modal>-->
+                </form>
+              </td>
+              <br>
+              <br>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="no-comments-found" *ngIf="comments.length === 0">
+        No comments found! Type for first comments in this issue.
+      </div>
+
     </div>
 
     <div class="modal fade" id="manageModal" tabindex="-1" role="dialog"
@@ -112,7 +163,6 @@
         </div>
       </div>
     </div>
-
   </div>
 
   <div class="no-issues-found" *ngIf="!showIssueList() && !loading">

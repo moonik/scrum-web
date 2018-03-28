@@ -26,6 +26,7 @@ import { IssueFieldsConfigurationComponent } from './issue-configuration/issue-f
 import { IssueTypeConfigurationComponent } from './issue-configuration/issue-type-configuration.component';
 import { IssueConfigurationComponent } from './issue-configuration/issue-configuration.component';
 import { SearchComponent } from './search/search.component';
+import {WarningModalComponent} from "./warning-modal/warning-modal.component";
 
 @NgModule({
   declarations: [
@@ -41,6 +42,13 @@ import { SearchComponent } from './search/search.component';
     ProjectDetailsComponent,
     IssueComponent,
     FooterComponent,
+    WarningModalComponent,
+    IssueFieldsConfigurationComponent,
+    IssueTypeConfigurationComponent,
+    IssueConfigurationComponent,
+    IssueFieldsConfigurationComponent,
+    IssueTypeConfigurationComponent,
+    IssueConfigurationComponent,
     IssueFieldsConfigurationComponent,
     IssueTypeConfigurationComponent,
     IssueConfigurationComponent,

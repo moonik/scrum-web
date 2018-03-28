@@ -3,30 +3,30 @@ package scrumweb.issue.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import scrumweb.common.SecurityContextService;
-import scrumweb.common.asm.fieldcontent.FieldContentAsm;
 import scrumweb.common.asm.IssueAsm;
+import scrumweb.common.asm.IssueCommentAsm;
 import scrumweb.common.asm.UserProfileAsm;
 import scrumweb.common.asm.fieldcontent.FieldContentConverter;
 import scrumweb.dto.fieldcontent.FieldContentDto;
+import scrumweb.dto.issue.IssueCommentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.issue.IssueTypeDto;
 import scrumweb.dto.user.UserProfileDto;
 import scrumweb.exception.CantAssignToIssueException;
 import scrumweb.issue.domain.Issue;
+import scrumweb.issue.domain.IssueComment;
 import scrumweb.issue.domain.IssueType;
 import scrumweb.issue.fieldcontent.FieldContent;
+import scrumweb.issue.repository.IssueCommentRepository;
 import scrumweb.issue.repository.IssueRepository;
 import scrumweb.issue.repository.IssueTypeRepository;
 import scrumweb.project.domain.Project;
-import scrumweb.projectfield.domain.ProjectField;
 import scrumweb.projectfield.repository.ProjectFieldRepository;
 import scrumweb.project.repository.ProjectRepository;
-import scrumweb.projectfield.repository.ProjectFieldRepository;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -45,6 +45,8 @@ public class IssueService {
     private ProjectRepository projectRepository;
     private UserProfileAsm userProfileAsm;
     private FieldContentConverter fieldContentAsm;
+    private IssueCommentAsm issueCommentAsm;
+    private IssueCommentRepository issueCommentRepository;
     private IssueTypeRepository issueTypeRepository;
 
     public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String projectKey) {
@@ -174,4 +176,70 @@ public class IssueService {
             issueTypeRepository.delete(issueType);
         }
     }
+    public IssueCommentDto addComment(IssueCommentDto issueCommentDto, Long id){
+        Issue issue = issueRepository.findOne(id);
+        UserAccount commentOwner = securityContextService.getCurrentUserAccount();
+
+        List<IssueComment> comments = issue.getComments();
+
+        IssueComment issueComment = new IssueComment(commentOwner, issueCommentDto.getContent(), LocalDateTime.now(), issue);
+
+        comments.add(issueComment);
+        issue.setComments(comments);
+        issueCommentRepository.save(comments);
+
+        return issueCommentAsm.fromIssueCommentToIssueCommentDto(issueComment, userProfileAsm.makeUserProfileDto(commentOwner, commentOwner.getUserProfile()));
+    }
+
+    public List<IssueCommentDto> getCommentsForIssue(Long id){
+        Issue issue = issueRepository.findOne(id);
+
+        return issue.getComments().stream()
+                .map(comment -> issueCommentAsm.fromIssueCommentToIssueCommentDto(comment, userProfileAsm.makeUserProfileDto(comment.getOwner(), comment.getOwner().getUserProfile())))
+                .collect(Collectors.toList());
+
+    }
+
+    public void deleteComment(Long commentId, Long issueId) {
+        Issue issue = issueRepository.findOne(issueId);
+        List<IssueComment> comments = issue.getComments().stream().filter(c -> !c.getId().equals(commentId)).collect(Collectors.toList());
+        issue.setComments(comments);
+        issueRepository.saveAndFlush(issue);
+        issueCommentRepository.delete(commentId);
+
+    }
+
+    public String editComment(Long commentId, String content) {
+        IssueComment comment = issueCommentRepository.findOne(commentId);
+        comment.setContent(content);
+        issueCommentRepository.save(comment);
+
+        return content;
+    }
+
+    public void assignToIssue(Long id, String username) {
+        Issue issue = issueRepository.findOne(id);
+        UserAccount user = userAccountRepository.findByUsername(username);
+
+        if (checkIfMember(username, issue)) {
+            issue.getAssignees().add(user);
+            issueRepository.save(issue);
+        } else {
+            throw new CantAssignToIssueException();
+        }
+    }
+
+    public void unAssignFromIssue(Long id, String username) {
+        Issue issue = issueRepository.findOne(id);
+        UserAccount user = userAccountRepository.findByUsername(username);
+
+        if (checkIfMember(username, issue)) {
+            issue.getAssignees().remove(user);
+            issueRepository.save(issue);
+        } else {
+            throw new CantAssignToIssueException(username);
+        }
+    }
+
+
 }
