@@ -11,12 +11,12 @@ import {ProjectService} from './project.service';
 })
 export class ProjectComponent implements OnInit {
 
-  public projectDto: ProjectDto = new ProjectDto();
-  public projectForm: FormGroup;
-  public error = '';
-  public icon: File = null;
-  public loading = false;
-  public validIcon = true;
+  projectDto: ProjectDto = new ProjectDto();
+  projectForm: FormGroup;
+  error = '';
+  icon: File = null;
+  loading = false;
+  validIcon = true;
 
   constructor(fb: FormBuilder,
               private router: Router,
@@ -31,10 +31,10 @@ export class ProjectComponent implements OnInit {
 
   }
 
-  public ngOnInit() {
+  ngOnInit() {
   }
 
-  public createProject() {
+  createProject() {
     this.projectService.createProject(this.projectDto)
       .subscribe(
         () => {
@@ -47,7 +47,7 @@ export class ProjectComponent implements OnInit {
         });
   }
 
-  public chooseIcon(files: FileList) {
+  chooseIcon(files: FileList) {
     this.icon = files.item(0);
     this.loading = true;
     this.validIcon = true;
@@ -55,19 +55,19 @@ export class ProjectComponent implements OnInit {
     this.loading = false;
   }
 
-  public checkProjectNameLength(): boolean {
+  checkProjectNameLength(): boolean {
     return this.projectForm.controls.name.errors.minlength || this.projectForm.controls.name.errors.maxlength;
   }
 
-  public checkProjectKeyLength(): boolean {
+  checkProjectKeyLength(): boolean {
     return this.projectForm.controls.projectKey.errors.minlength || this.projectForm.controls.projectKey.errors.maxlength;
   }
 
-  public checkDescriptionLength(): boolean {
+  checkDescriptionLength(): boolean {
     return this.projectForm.controls.description.errors.minlength || this.projectForm.controls.description.errors.maxlength;
   }
 
-  public checkControl(name: string): boolean {
+  checkControl(name: string): boolean {
     return this.projectForm.controls[name].invalid && (this.projectForm.controls[name].touched || this.projectForm.controls[name].dirty);
   }
 }

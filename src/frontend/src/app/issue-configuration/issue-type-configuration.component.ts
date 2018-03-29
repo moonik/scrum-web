@@ -17,7 +17,7 @@ export class IssueTypeConfigurationComponent {
   @Input()
   private projectKey: string;
 
-  constructor(private _service: IssueConfigurationService) {}
+  constructor(private service: IssueConfigurationService) {}
 
   addNewType() {
     this.types.push({id: null});
@@ -26,7 +26,7 @@ export class IssueTypeConfigurationComponent {
   removeType(type: any) {
     if (!type.isDefault) {
       if (type.id) {
-        this._service.deleteType(type.id).subscribe();
+        this.service.deleteType(type.id).subscribe();
       }
       const index = this.types.indexOf(type);
       this.types.splice(index, 1);
@@ -34,7 +34,7 @@ export class IssueTypeConfigurationComponent {
   }
 
   createType() {
-    this._service.createType(this.filterOut(), this.projectKey)
+    this.service.createType(this.filterOut(), this.projectKey)
       .subscribe(
         data => {
           this.types = data;

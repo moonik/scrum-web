@@ -6,11 +6,11 @@ import {ProjectMemberDto} from '../model/projectMemberDto';
 @Injectable()
 export class ProjectConfigurationService {
 
-  constructor(private _http: HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
-  public getUsers(members: string[]) {
-    return this._http.get('profile/all')
+  getUsers(members: string[]) {
+    return this.http.get('profile/all')
       .map(res => {
         const data = res.json();
         const users: UserDto[] = [];
@@ -27,19 +27,19 @@ export class ProjectConfigurationService {
       });
   }
 
-  public addMemberToProject(member: ProjectMemberDto) {
-    return this._http.post('project/members/', member);
+  addMemberToProject(member: ProjectMemberDto) {
+    return this.http.post('project/members/', member);
   }
 
-  public removeMemberFromProject(member: string, projectKey: string) {
-    return this._http.delete('project/' + projectKey + '/members/' + member);
+  removeMemberFromProject(member: string, projectKey: string) {
+    return this.http.delete('project/' + projectKey + '/members/' + member);
   }
 
-  public acceptRequestForAccess(member: ProjectMemberDto) {
-    return this._http.post('project/requests', member);
+  acceptRequestForAccess(member: ProjectMemberDto) {
+    return this.http.post('project/requests', member);
   }
 
-  public declineRequestForAccess(projectKey: string, member: string) {
-    return this._http.delete('project/' + projectKey + '/requests/' + member);
+  declineRequestForAccess(projectKey: string, member: string) {
+    return this.http.delete('project/' + projectKey + '/requests/' + member);
   }
 }

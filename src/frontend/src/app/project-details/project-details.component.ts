@@ -62,7 +62,7 @@ export class ProjectDetailsComponent implements OnInit {
     return this.projectDetails.issues.length > 0;
   }
 
-  public onIssueCreate(issueDto: IssueDto) {
+  onIssueCreate(issueDto: IssueDto) {
     const length = this.projectDetails.issues.length + 1;
     issueDto.issueKey = this.projectDetails.projectDto.projectKey + '-' + length;
     this.projectDetails.issues.unshift(issueDto);

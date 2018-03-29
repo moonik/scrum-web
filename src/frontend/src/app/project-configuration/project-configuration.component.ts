@@ -16,14 +16,14 @@ import * as roles from '../constants/roles';
 
 export class ProjectConfigurationComponent implements OnInit {
 
-  public users: UserDto[] = [];
-  public project: ProjectDto = new ProjectDto();
-  public roles = roles.default;
-  public rolesTypes = Object.values(this.roles);
-  public error: string;
-  public icon: File = null;
-  public loading = false;
-  public validIcon = true;
+  users: UserDto[] = [];
+  project: ProjectDto = new ProjectDto();
+  roles = roles.default;
+  rolesTypes = Object.values(this.roles);
+  error: string;
+  icon: File = null;
+  loading = false;
+  validIcon = true;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -31,7 +31,7 @@ export class ProjectConfigurationComponent implements OnInit {
               private storageService: StorageService) {
   }
 
-  public ngOnInit() {
+  ngOnInit() {
     if (!this.storageService.getScope()) {
       this.router.navigate(['/home']);
     }
@@ -44,7 +44,7 @@ export class ProjectConfigurationComponent implements OnInit {
     this.error = '';
   }
 
-  public getAllUsers() {
+  getAllUsers() {
     const members = [...this.project.members.map(m => m.username),
       ...this.project.requests.map(r => r.username)];
     this.confService.getUsers(members).subscribe(
@@ -53,7 +53,7 @@ export class ProjectConfigurationComponent implements OnInit {
       }    );
   }
 
-  public addUserToProject(user: string, role: string) {
+  addUserToProject(user: string, role: string) {
     const member: ProjectMemberDto = new ProjectMemberDto(this.project.projectKey, user, role);
     this.confService.addMemberToProject(member)
       .subscribe(() => {
@@ -63,7 +63,7 @@ export class ProjectConfigurationComponent implements OnInit {
       );
   }
 
-  public removeMemberFromProject(member: ProjectMemberDto) {
+  removeMemberFromProject(member: ProjectMemberDto) {
     this.confService.removeMemberFromProject(member.username, member.projectKey)
       .subscribe(() => {
         this.project.members.splice(this.project.members.indexOf(member), 1);
@@ -75,7 +75,7 @@ export class ProjectConfigurationComponent implements OnInit {
       });
   }
 
-  public chooseIcon(files: FileList) {
+  chooseIcon(files: FileList) {
     this.icon = files.item(0);
     this.loading = true;
     this.validIcon = true;
@@ -83,7 +83,7 @@ export class ProjectConfigurationComponent implements OnInit {
 
   }
 
-  public acceptRequest(user: string, role: string) {
+  acceptRequest(user: string, role: string) {
     const member: ProjectMemberDto = new ProjectMemberDto(this.project.projectKey, user, role);
     this.confService.acceptRequestForAccess(member)
       .subscribe(data => {
@@ -94,7 +94,7 @@ export class ProjectConfigurationComponent implements OnInit {
       );
   }
 
-  public declineRequest(request: ProjectMemberDto) {
+  declineRequest(request: ProjectMemberDto) {
     this.confService.declineRequestForAccess(this.project.projectKey, request.username).subscribe(
       () => {
         this.project.requests.splice(this.project.requests.indexOf(request), 1);
@@ -103,7 +103,7 @@ export class ProjectConfigurationComponent implements OnInit {
     );
   }
 
-  public goToIssueConfiguration() {
+  goToIssueConfiguration() {
     this.router.navigate(['/project/' + this.project.projectKey + '/configuration/issues']);
   }
 }

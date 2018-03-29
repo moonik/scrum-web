@@ -6,9 +6,9 @@ const URL = 'project/';
 @Injectable()
 export class HomeService {
 
-  constructor(private _http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   getAllProjects() {
-    return this._http.get(URL + 'all').map(res => res.json());
+    return this.http.get(URL + 'all').map(res => res.json());
   }
 }

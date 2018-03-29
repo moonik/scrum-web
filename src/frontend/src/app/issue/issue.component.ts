@@ -29,7 +29,7 @@ export class IssueComponent implements OnInit {
   selectedItems = [];
   settings = {};
 
-  constructor(private _modalService: BsModalService, private _issueService: IssueService) {}
+  constructor(private modalService: BsModalService, private issueService: IssueService) {}
 
   ngOnInit() {
     this.settings = {
@@ -44,11 +44,11 @@ export class IssueComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this._modalService.show(template, this.config);
+    this.modalRef = this.modalService.show(template, this.config);
   }
 
   openModalWithClass(template: TemplateRef<any>) {
-    this.modalRef = this._modalService.show(
+    this.modalRef = this.modalService.show(
       template,
       Object.assign({}, this.config, { class: 'gray modal-lg' })
     );
@@ -56,14 +56,14 @@ export class IssueComponent implements OnInit {
 
   getAssignees() {
     if (this.projectMembers.length === 0) {
-      this._issueService.getAssignees(this.projectKey)
+      this.issueService.getAssignees(this.projectKey)
         .subscribe(data => this.projectMembers = data);
     }
   }
 
   createIssue() {
     this.issueDetails.assignees = this.selectedItems.map(item => new UserProfileDto(item.itemName));
-    return this._issueService.createIssue(this.projectKey, this.issueDetails)
+    return this.issueService.createIssue(this.projectKey, this.issueDetails)
       .subscribe( data => {
         this.issueCreate.emit(data);
         this.issueDetails = new IssueDetailsDto();

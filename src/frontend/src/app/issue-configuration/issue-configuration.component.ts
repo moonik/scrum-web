@@ -13,11 +13,11 @@ export class IssueConfigurationComponent {
   issueTypes = [];
   oldTypes = '';
 
-  constructor(private _activatedRoute: ActivatedRoute, private _issueConfService: IssueConfigurationService) {
-    this._activatedRoute.params.subscribe((params: Params) => {
+  constructor(private activatedRoute: ActivatedRoute, private issueConfService: IssueConfigurationService) {
+    this.activatedRoute.params.subscribe((params: Params) => {
       this.projectKey = params['projectKey'];
     });
-    this._issueConfService.getIssueTypes(this.projectKey)
+    this.issueConfService.getIssueTypes(this.projectKey)
       .subscribe( data => {
         this.issueTypes = data;
         this.oldTypes = JSON.stringify(data);

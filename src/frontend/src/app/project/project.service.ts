@@ -6,9 +6,9 @@ const URL = 'project/';
 @Injectable()
 export class ProjectService {
 
-  constructor(private _http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-  public createProject(object) {
-    return this._http.post(URL + 'create', object).map(res => res.json());
+  createProject(object) {
+    return this.http.post(URL + 'create', object).map(res => res.json());
   }
 }

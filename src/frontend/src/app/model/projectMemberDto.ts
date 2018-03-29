@@ -1,7 +1,7 @@
 export class ProjectMemberDto {
-  public projectKey: string;
-  public username: string;
-  public role: string;
+  projectKey: string;
+  username: string;
+  role: string;
 
   constructor(private _projectKey: string, private _username: string, private _role: string) {
     this.projectKey = _projectKey;
