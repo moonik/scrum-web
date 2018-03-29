@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { IssueConfigurationService } from './issue-configuration.service';
+import { IssueConfService } from './issue-configuration.service';
 
 @Component({
   templateUrl: './issue-configuration.component.html',
   styleUrls: ['./issue-configuration.component.css'],
-  providers: [IssueConfigurationService]
+  providers: [IssueConfService]
 })
 export class IssueConfigurationComponent {
 
-  projectKey: string = '';
+  projectKey = '';
   issueTypes = [];
   oldTypes = '';
 
-  constructor(private _activatedRoute: ActivatedRoute, private _issueConfService: IssueConfigurationService) {
+  constructor(private _activatedRoute: ActivatedRoute, private _issueConfService: IssueConfService) {
     this._activatedRoute.params.subscribe((params: Params) => {
       this.projectKey = params['projectKey'];
     });

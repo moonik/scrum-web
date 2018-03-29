@@ -1,4 +1,4 @@
-1;import { Component, TemplateRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, TemplateRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { IssueService } from './issue.service';
@@ -23,7 +23,7 @@ export class IssueComponent implements OnInit {
   };
 
   @Input() projectKey: string;
-  @Output() onIssueCreate = new EventEmitter<IssueDto>();
+  @Output() issueCreate = new EventEmitter<IssueDto>();
   issueDetails: IssueDetailsDto = new IssueDetailsDto();
   projectMembers: Array<any> = [];
   selectedItems = [];
@@ -65,7 +65,7 @@ export class IssueComponent implements OnInit {
     this.issueDetails.assignees = this.selectedItems.map(item => new UserProfileDto(item.itemName));
     return this._issueService.createIssue(this.projectKey, this.issueDetails)
       .subscribe( data => {
-        this.onIssueCreate.emit(data);
+        this.issueCreate.emit(data);
         this.issueDetails = new IssueDetailsDto();
       });
   }

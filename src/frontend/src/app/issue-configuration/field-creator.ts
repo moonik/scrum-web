@@ -15,7 +15,7 @@ export class FieldCreator {
     private fieldTypes = fieldTypes.default;
     projectFieldsCollector: ProjectFieldsCollector = new ProjectFieldsCollector();
 
-    constructor(){}
+    constructor() {}
 
     createField(field: any): void {
         if (field.fieldType === this.fieldTypes.inputField) {
@@ -32,54 +32,22 @@ export class FieldCreator {
     }
 
     private createInputField(field: any): InputFieldDto {
-        return new InputFieldDto(
-            field.id, 
-            field.fieldType, 
-            field.fieldName, 
-            field.isRequired, 
-            field.maxCharacters, 
-            field.minCharacters
-        );
+        return new InputFieldDto(field.id, field.fieldType, field.fieldName, field.isRequired, field.maxCharacters, field.minCharacters);
     }
 
     private createTextArea(field: any): TextAreaDto {
-        return new TextAreaDto(
-            field.id, 
-            field.fieldType, 
-            field.fieldName, 
-            field.isRequired, 
-            field.maxCharacters, 
-            field.minCharacters
-        );
+        return new TextAreaDto(field.id, field.fieldType, field.fieldName, field.isRequired, field.maxCharacters, field.minCharacters);
     }
 
     private createCheckBoxContainer(field: any): CheckBoxContainerDto {
-        return new CheckBoxContainerDto(
-            field.id, 
-            field.fieldType, 
-            field.fieldName, 
-            field.isRequired,
-            field.elements
-        );
+        return new CheckBoxContainerDto(field.id, field.fieldType, field.fieldName, field.isRequired, field.elements);
     }
 
     private createRadioButtonContainer(field: any): RadioButtonContainerDto {
-        return new RadioButtonContainerDto(
-            field.id, 
-            field.fieldType, 
-            field.fieldName, 
-            field.isRequired,
-            field.elements
-        );
+        return new RadioButtonContainerDto(field.id, field.fieldType, field.fieldName, field.isRequired, field.elements);
     }
 
     private createListElementsContainer(field: any): ListElementsContainerDto {
-        return new ListElementsContainerDto(
-            field.id, 
-            field.fieldType, 
-            field.fieldName, 
-            field.isRequired,
-            field.elements
-        );
+        return new ListElementsContainerDto(field.id, field.fieldType, field.fieldName, field.isRequired, field.elements);
     }
 }

@@ -4,4 +4,4 @@ export default {
     inputField: 'INPUT_FIELD',
     textArea: 'TEXT_AREA',
     list: 'LIST',
-}
+};

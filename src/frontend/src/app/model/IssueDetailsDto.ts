@@ -18,3 +18,4 @@ export class IssueDetailsDto {
     public fieldsContentCollector: FieldsContentCollector = new FieldsContentCollector();
     public fieldContents: Array<FieldContentDto> = [];
 }
+

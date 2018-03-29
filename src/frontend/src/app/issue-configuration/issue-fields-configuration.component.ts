@@ -10,7 +10,7 @@ import { RadioButtonDto } from '../model/project-fields/RadioButtonDto';
 import { TextAreaDto } from '../model/project-fields/TextAreaDto';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FieldCreator } from './field-creator';
-import { IssueConfigurationService } from './issue-configuration.service';
+import { IssueConfService } from './issue-configuration.service';
 
 import * as fieldTypes from '../constants/field-type';
 import { ProjectFieldsCollector } from '../model/project-fields/ProjectFieldsCollector';
@@ -19,11 +19,11 @@ import { ProjectFieldsCollector } from '../model/project-fields/ProjectFieldsCol
   selector: 'app-issue-fields-configuration',
   templateUrl: './issue-fields-configuration.component.html',
   styleUrls: ['./issue-configuration.component.css'],
-  providers: [FieldCreator, IssueConfigurationService]
+  providers: [FieldCreator, IssueConfService]
 })
-export class IssueFieldsConfigurationComponent implements OnInit {
+export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
   fields = [];
-  oldFields: string = '';
+  oldFields = '';
   fieldTypes = fieldTypes.default;
   fieldTypesArray = Object.values(this.fieldTypes);
   chooseIssueType = 'Choose issue type...';
@@ -33,7 +33,7 @@ export class IssueFieldsConfigurationComponent implements OnInit {
   @Input()
   private projectKey;
 
-  constructor(private activatedRoute: ActivatedRoute, private fieldCreator: FieldCreator, private issueConfService: IssueConfigurationService) {}
+  constructor(private activatedRoute: ActivatedRoute, private fieldCreator: FieldCreator, private service: IssueConfService) {}
 
   ngOnInit() {}
 
@@ -43,8 +43,8 @@ export class IssueFieldsConfigurationComponent implements OnInit {
 
   fetchFields() {
     if (this.chosenIssueType && this.chosenIssueType !== this.chooseIssueType) {
-      this.issueConfService.getProjectFields(this.projectKey, this.chosenIssueType)
-      .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data) });
+      this.service.getProjectFields(this.projectKey, this.chosenIssueType)
+      .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data); });
     }
   }
 
@@ -53,7 +53,7 @@ export class IssueFieldsConfigurationComponent implements OnInit {
   }
 
   showAddFieldButton() {
-    return this.chosenIssueType !== this.chooseIssueType && this.chosenIssueType !== '';  
+    return this.chosenIssueType !== this.chooseIssueType && this.chosenIssueType !== '';
   }
 
   addFieldElement(field: any, id: number) {
@@ -64,8 +64,8 @@ export class IssueFieldsConfigurationComponent implements OnInit {
     const index = this.fields.indexOf(field);
     this.fields.splice(index, 1);
     if (field.id != null) {
-      this.issueConfService.removeField(field.id, this.projectKey, this.chosenIssueType)
-        .subscribe(data => { this.fields = this.fields.concat(data); this.oldFields = JSON.stringify(data) });
+      this.service.removeField(field.id, this.projectKey, this.chosenIssueType)
+        .subscribe(data => { this.fields = this.fields.concat(data); this.oldFields = JSON.stringify(data); });
     }
   }
 
@@ -83,7 +83,7 @@ export class IssueFieldsConfigurationComponent implements OnInit {
   }
 
   isValidGeneralData(formData: any) {
-    return (formData.fieldType && formData.fieldName) && (formData.fieldType != '' && formData.fieldName != '');
+    return (formData.fieldType && formData.fieldName) && (formData.fieldType !== '' && formData.fieldName !== '');
   }
 
   isParamsElements(fieldType: string) {
@@ -110,8 +110,8 @@ export class IssueFieldsConfigurationComponent implements OnInit {
 
   createFields() {
     if (this.filterOut().length > 0) {
-      this.issueConfService.createFields(this.collectFields(), this.projectKey, this.chosenIssueType)
-        .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data) });
+      this.service.createFields(this.collectFields(), this.projectKey, this.chosenIssueType)
+        .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data); });
       this.fieldCreator.projectFieldsCollector = new ProjectFieldsCollector();
     }
   }

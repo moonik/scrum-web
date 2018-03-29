@@ -5,3 +5,4 @@ export class IssueDto {
     public issueType: string;
     public priority: string;
 }
+
