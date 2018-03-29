@@ -80,7 +80,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   checkAssignees(): boolean {
-    return !this.searchService.findUserInAssignees(this.selectedIssue.assignees) && 
+    return !this.searchService.findUserInAssignees(this.selectedIssue.assignees) &&
       this.searchService.findUserInMembers(this.projectDetails.projectDto.members);
   }
 

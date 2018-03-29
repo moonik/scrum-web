@@ -13,10 +13,10 @@ function passwordConfirming(c: AbstractControl): any {
 
   if (!pwd || !cpwd) { return ; }
   if (pwd.value !== cpwd.value) {
-    if (c == pwd) {
+    if (c === pwd) {
       c.parent.get('repassword').setErrors({passwordConfirming: true});
     }
-    if (c == cpwd) {
+    if (c === cpwd) {
       return {passwordConfirming: true};
     }
   } else {
@@ -42,7 +42,8 @@ export class RegistrationComponent implements OnInit {
       firstname : [null, Validators.required],
       lastname : [null, Validators.required],
       // email : [null,  Validators.email],
-      password : [null, [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$'), passwordConfirming]],
+      password : [null, [Validators.required, Validators.minLength(8),
+        Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$'), passwordConfirming]],
       repassword : [null, [Validators.required, passwordConfirming]]
     });
 
@@ -63,7 +64,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   checkControl(name: string): boolean {
-    return this.registrationForm.controls[name].invalid && (this.registrationForm.controls[name].touched || this.registrationForm.controls[name].dirty);
+    return this.registrationForm.controls[name].invalid && (this.registrationForm.controls[name].touched ||
+      this.registrationForm.controls[name].dirty);
   }
 
   checkUsernameLength(): boolean {
@@ -71,6 +73,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   checkPasswordMatch(): boolean {
-    return this.registrationForm.controls.repassword.errors.passwordConfirming && this.registrationForm.controls.repassword.value != null;
+    return this.registrationForm.controls.repassword.errors.passwordConfirming && this.registrationForm.controls.repassword.value !== null;
   }
 }

@@ -45,7 +45,7 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   public getAllUsers() {
-    let members = [...this.project.members.map(m => m.username),
+    const members = [...this.project.members.map(m => m.username),
       ...this.project.requests.map(r => r.username)];
     this.confService.getUsers(members).subscribe(
       users => {
@@ -84,7 +84,7 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   public acceptRequest(user: string, role: string) {
-    let member: ProjectMemberDto = new ProjectMemberDto(this.project.projectKey, user, role);
+    const member: ProjectMemberDto = new ProjectMemberDto(this.project.projectKey, user, role);
     this.confService.acceptRequestForAccess(member)
       .subscribe(data => {
           this.project.members.push(member);
@@ -104,6 +104,7 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   public goToIssueConfiguration() {
-    this.router.navigate(['/project/'+this.project.projectKey+'/configuration/issues']);
+    this.router.navigate(['/project/' + this.project.projectKey + '/configuration/issues']);
   }
 }
+

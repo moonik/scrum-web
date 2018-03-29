@@ -13,7 +13,7 @@ export class ProjectConfigurationService {
     return this._http.get('profile/all')
       .map(res => {
         const data = res.json();
-        let users: UserDto[] = [];
+        const users: UserDto[] = [];
         for (const i in data) {
           if (!(members.includes(data[i].username))) {
             const user: UserDto = new UserDto();

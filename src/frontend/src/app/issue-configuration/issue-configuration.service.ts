@@ -2,27 +2,31 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '../shared/http.client.service';
 
 @Injectable()
-export class IssueConfService {
+export class IssueConfigurationService {
     constructor(private http: HttpClient) {}
 
     createFields(data: any, projectKey: string, issuetype: string) {
-        return this.http.post(this.createRequestParams({projectKey: projectKey, issuetype: issuetype}), data).map(res => res.json());
+        return this.http.post(this.createRequestParams({projectKey: projectKey, issuetype: issuetype}), data)
+            .map(res => res.json());
     }
 
     getIssueTypes(projectKey: string) {
-        return this.http.get('project/' + projectKey + '/issue-types').map(res => res.json());
+        return this.http.get('project/' + projectKey + '/issue-types')
+            .map(res => res.json());
     }
 
     getProjectFields(projectKey: string, issuetype: string) {
-        return this.http.get(this.createRequestParams({projectKey: projectKey, issuetype: issuetype})).map(res => res.json());
+        return this.http.get(this.createRequestParams({projectKey: projectKey, issuetype: issuetype}))
+            .map(res => res.json());
     }
 
     removeField(id: number, projectKey: string, issuetype: string) {
-        return this.http.delete(this.createRequestParams({id: id, projectKey: projectKey, issuetype: issuetype})).map(res => res.json());
+        return this.http.delete(this.createRequestParams({id: id, projectKey: projectKey, issuetype: issuetype}))
+            .map(res => res.json());
     }
 
     createType(data: any, projectKey: string) {
-        return this.http.post('project/issue/types/' + projectKey, data) .map(res => res.json());
+        return this.http.post('project/issue/types/' + projectKey, data).map(res => res.json());
     }
 
     editType(data: any) {

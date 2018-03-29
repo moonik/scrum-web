@@ -20,7 +20,7 @@ export class AuthenticationService {
   login(userDto: UserDto): Observable<any> {
         return this.httpClientService.post('auth', userDto)
       .map(response => {
-        let token = response.json() && response.json().token;
+        const token = response.json() && response.json().token;
         if (token) {
           this.token = token;
           localStorage.setItem('token', token);
@@ -36,7 +36,7 @@ export class AuthenticationService {
     localStorage.removeItem('token');
   }
 
-  save(userDto: UserDto): Observable<number>{
+  save(userDto: UserDto): Observable<number> {
       return this.httpClientService.post('user-account/save', userDto)
       .map(
         response =>  {
@@ -46,12 +46,12 @@ export class AuthenticationService {
       });
   }
 
-  refresh(token: string, username: string): Observable<any>{
-    const tokenObj = {"token": token, "username": username};
+  refresh(token: string, username: string): Observable<any> {
+    const tokenObj = {'token': token, 'username': username};
     return this.httpClientService.post('refresh', tokenObj)
       .map(
         response =>  {
-          let token = response.json() && response.json().token;
+          const token = response.json() && response.json().token;
           if (token) {
             this.token = token;
             localStorage.setItem('token', token);

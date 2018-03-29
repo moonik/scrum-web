@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptionsArgs, Response} from "@angular/http";
+import {Headers, Http, RequestOptionsArgs, Response} from '@angular/http';
 import 'rxjs/Rx';
-import {Observable} from "rxjs/Observable";
+import {Observable} from 'rxjs/Observable';
 import * as constants from '../constants/applicatins-contants';
 
 @Injectable()

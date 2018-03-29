@@ -1,12 +1,12 @@
 import { Component, TemplateRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IssueConfService } from './issue-configuration.service';
+import { IssueConfigurationService } from './issue-configuration.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-issue-type-configuration',
   templateUrl: './issue-type-configuration.component.html',
   styleUrls: ['./issue-configuration.component.css'],
-  providers: [IssueConfService]
+  providers: [IssueConfigurationService]
 })
 export class IssueTypeConfigurationComponent {
 
@@ -17,7 +17,7 @@ export class IssueTypeConfigurationComponent {
   @Input()
   private projectKey: string;
 
-  constructor(private _service: IssueConfService) {}
+  constructor(private _service: IssueConfigurationService) {}
 
   addNewType() {
     this.types.push({id: null});

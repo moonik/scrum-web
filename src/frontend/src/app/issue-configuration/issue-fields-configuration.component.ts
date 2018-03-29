@@ -10,7 +10,7 @@ import { RadioButtonDto } from '../model/project-fields/RadioButtonDto';
 import { TextAreaDto } from '../model/project-fields/TextAreaDto';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FieldCreator } from './field-creator';
-import { IssueConfService } from './issue-configuration.service';
+import { IssueConfigurationService } from './issue-configuration.service';
 
 import * as fieldTypes from '../constants/field-type';
 import { ProjectFieldsCollector } from '../model/project-fields/ProjectFieldsCollector';
@@ -19,7 +19,7 @@ import { ProjectFieldsCollector } from '../model/project-fields/ProjectFieldsCol
   selector: 'app-issue-fields-configuration',
   templateUrl: './issue-fields-configuration.component.html',
   styleUrls: ['./issue-configuration.component.css'],
-  providers: [FieldCreator, IssueConfService]
+  providers: [FieldCreator, IssueConfigurationService]
 })
 export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
   fields = [];
@@ -33,7 +33,10 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
   @Input()
   private projectKey;
 
-  constructor(private activatedRoute: ActivatedRoute, private fieldCreator: FieldCreator, private service: IssueConfService) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private fieldCreator: FieldCreator,
+    private service: IssueConfigurationService) {}
 
   ngOnInit() {}
 

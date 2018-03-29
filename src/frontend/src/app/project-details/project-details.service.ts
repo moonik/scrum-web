@@ -7,7 +7,6 @@ export class ProjectDetailsService {
     constructor(private httpClient: HttpClient) {}
 
     getProjectDetails(projectKey: string) {
-        return this.httpClient.get('project/details/' + projectKey)
-                    .map(res => res.json());
+        return this.httpClient.get('project/details/' + projectKey).map(res => res.json());
     }
 }
