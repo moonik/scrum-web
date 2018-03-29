@@ -5,6 +5,7 @@ import {ProjectDetailsDto} from '../model/ProjectDetailsDto';
 import {IssueDto} from '../model/IssueDto';
 import {IssueService} from '../issue/issue.service';
 import {IssueDetailsDto} from '../model/IssueDetailsDto';
+import { SearchService } from '../search/search.service';
 
 @Component({
   selector: 'app-project-details',
@@ -14,16 +15,17 @@ import {IssueDetailsDto} from '../model/IssueDetailsDto';
 })
 export class ProjectDetailsComponent implements OnInit {
 
-  public projectKey: string;
-  public projectDetails: ProjectDetailsDto = new ProjectDetailsDto();
-  public selectedIssue: IssueDetailsDto;
-  public loading = false;
-  public projectMembers: Array<any> = [];
+  projectKey: string;
+  projectDetails: ProjectDetailsDto = new ProjectDetailsDto();
+  selectedIssue: IssueDetailsDto;
+  loading = false;
+  projectMembers: Array<any> = [];
 
-  constructor(private _activatedRoute: ActivatedRoute,
-              private _projectDetailsService: ProjectDetailsService,
-              private _issueService: IssueService) {
-    this._activatedRoute.params.subscribe((params: Params) => {
+  constructor(private activatedRoute: ActivatedRoute,
+              private projectDetailsService: ProjectDetailsService,
+              private issueService: IssueService,
+              private searchService: SearchService) {
+    this.activatedRoute.params.subscribe((params: Params) => {
       this.projectKey = params['projectKey'];
     });
     this.getProjectDetails();
@@ -34,9 +36,9 @@ export class ProjectDetailsComponent implements OnInit {
     this.getAssignees();
   }
 
-  public selectIssue(issueKey: string) {
+  selectIssue(issueKey: string) {
     this.loading = true;
-    this._issueService.getIssueDetails(issueKey)
+    this.issueService.getIssueDetails(issueKey)
       .subscribe(
         data => {
           this.selectedIssue = data;
@@ -44,9 +46,9 @@ export class ProjectDetailsComponent implements OnInit {
         });
   }
 
-  public getProjectDetails() {
+  getProjectDetails() {
     this.loading = true;
-    return this._projectDetailsService.getProjectDetails(this.projectKey)
+    return this.projectDetailsService.getProjectDetails(this.projectKey)
       .subscribe(data => {
         this.projectDetails = data;
         if (data.issues.length > 0) {
@@ -56,7 +58,7 @@ export class ProjectDetailsComponent implements OnInit {
       });
   }
 
-  public showIssueList() {
+  showIssueList() {
     return this.projectDetails.issues.length > 0;
   }
 
@@ -71,15 +73,15 @@ export class ProjectDetailsComponent implements OnInit {
     if (!username) {
       username = localStorage.getItem('currentUser');
     }
-    this._issueService.assignToIssue(this.selectedIssue.key, username)
+    this.issueService.assignToIssue(this.selectedIssue.key, username)
       .subscribe(() => {
         this.ngOnInit();
       });
   }
 
   checkAssignees(): boolean {
-    return !this.selectedIssue.assignees.map(a => a.username).includes(localStorage.getItem('currentUser'))
-      && this.projectDetails.projectDto.members.map(m => m.username).includes(localStorage.getItem('currentUser'));
+    return !this.searchService.findUserInAssignees(this.selectedIssue.assignees) && 
+      this.searchService.findUserInMembers(this.projectDetails.projectDto.members);
   }
 
   isOwner(): boolean {
@@ -87,12 +89,12 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   getAssignees() {
-    return this._issueService.getAssignees(this.projectKey)
+    return this.issueService.getAssignees(this.projectKey)
       .subscribe(data => this.projectMembers = data);
   }
 
   onRemoveFromAssign(username: string) {
-    this._issueService.unAssignFromIssue(username, this.selectedIssue.key)
+    this.issueService.unAssignFromIssue(username, this.selectedIssue.key)
       .subscribe(() => this.ngOnInit());
   }
 

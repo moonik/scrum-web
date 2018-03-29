@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter @Setter
 @Builder
 public class UserProfile {

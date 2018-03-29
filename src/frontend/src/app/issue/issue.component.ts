@@ -24,10 +24,10 @@ export class IssueComponent implements OnInit {
 
   @Input() projectKey: string;
   @Output() onIssueCreate = new EventEmitter<IssueDto>();
-  public issueDetails: IssueDetailsDto = new IssueDetailsDto();
-  public projectMembers: Array<any> = [];
-  public selectedItems = [];
-  public settings = {};
+  issueDetails: IssueDetailsDto = new IssueDetailsDto();
+  projectMembers: Array<any> = [];
+  selectedItems = [];
+  settings = {};
 
   constructor(private _modalService: BsModalService, private _issueService: IssueService) {}
 

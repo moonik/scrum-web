@@ -23,12 +23,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
   public login() {
     if (this.loginForm.valid) {
-      console.info('logged');
       this.loading = true;
       this.authenticationService.login (this.userDto)
         .subscribe(
@@ -36,14 +35,14 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/home']);
           },
           error => {
-            if(error.status === 401){
+            if (error.status === 401) {
               this.error = 'Username or password is incorrect';
               this.loading = false;
             }
           });
-    }else{
+    } else {
       this.error = 'Username or password incorrect';
     }
   }
-
 }
+

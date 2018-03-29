@@ -31,9 +31,9 @@ function passwordConfirming(c: AbstractControl): any {
 })
 export class RegistrationComponent implements OnInit {
 
-  public userDto: UserDto = new UserDto();
-  public registrationForm: FormGroup;
-  public usernameExistError: string;
+  userDto: UserDto = new UserDto();
+  registrationForm: FormGroup;
+  usernameExistError: string;
 
   constructor(private authenticationService: AuthenticationService, fb: FormBuilder, private router: Router) {
 

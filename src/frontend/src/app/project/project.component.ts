@@ -31,10 +31,10 @@ export class ProjectComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
-  createProject() {
+  public createProject() {
     this.projectService.createProject(this.projectDto)
       .subscribe(
         () => {
@@ -47,7 +47,7 @@ export class ProjectComponent implements OnInit {
         });
   }
 
-  chooseIcon(files: FileList) {
+  public chooseIcon(files: FileList) {
     this.icon = files.item(0);
     this.loading = true;
     this.validIcon = true;
@@ -55,19 +55,19 @@ export class ProjectComponent implements OnInit {
     this.loading = false;
   }
 
-  checkProjectNameLength(): boolean {
+  public checkProjectNameLength(): boolean {
     return this.projectForm.controls.name.errors.minlength || this.projectForm.controls.name.errors.maxlength;
   }
 
-  checkProjectKeyLength(): boolean {
+  public checkProjectKeyLength(): boolean {
     return this.projectForm.controls.projectKey.errors.minlength || this.projectForm.controls.projectKey.errors.maxlength;
   }
 
-  checkDescriptionLength(): boolean {
+  public checkDescriptionLength(): boolean {
     return this.projectForm.controls.description.errors.minlength || this.projectForm.controls.description.errors.maxlength;
   }
 
-  checkControl(name: string): boolean {
+  public checkControl(name: string): boolean {
     return this.projectForm.controls[name].invalid && (this.projectForm.controls[name].touched || this.projectForm.controls[name].dirty);
   }
 }

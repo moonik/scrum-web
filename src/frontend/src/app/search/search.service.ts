@@ -5,15 +5,22 @@ import {ProjectMemberDto} from "../model/projectMemberDto";
 @Injectable()
 export class SearchService {
 
-  constructor(private _http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  public searchResults(query) {
-    return this._http.get('project/search/' + query)
+  searchResults(query) {
+    return this.http.get('project/search/' + query)
       .map(res => res.json());
   }
 
   askForAccess(member: ProjectMemberDto) {
-    console.log(member);
-    return this._http.post('project/access', member);
+    return this.http.post('project/access', member);
+  }
+
+  findUserInAssignees(assignees: Array<ProjectMemberDto>): boolean {
+    return assignees.map(a => a.username).includes(localStorage.getItem('currentUser'));
+  }
+
+  findUserInMembers(members: Array<ProjectMemberDto>): boolean {
+    return members.map(m => m.username).includes(localStorage.getItem('currentUser'));
   }
 }

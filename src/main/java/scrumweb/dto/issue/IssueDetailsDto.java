@@ -14,7 +14,7 @@ import scrumweb.dto.user.UserProfileDto;
 import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter @Setter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)

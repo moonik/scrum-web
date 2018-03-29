@@ -7,19 +7,18 @@ import {HttpClient} from '../shared/http.client.service';
 @Injectable()
 export class AuthenticationService {
 
-  public token: string;
-  public headers: Headers = new Headers();
+  token: string;
+  headers: Headers = new Headers();
 
   constructor(private httpClientService: HttpClient) {
-
-    let currentUser = JSON.parse(localStorage.getItem('username'));
+    const currentUser = JSON.parse(localStorage.getItem('username'));
     this.token = currentUser && currentUser.token;
     this.headers.append('Authorization', '');
     this.headers.append('Content-Type', 'application/json');
   }
 
   login(userDto: UserDto): Observable<any> {
-        return this.httpClientService.post(`auth`, userDto)
+        return this.httpClientService.post('auth', userDto)
       .map(response => {
         let token = response.json() && response.json().token;
         if (token) {

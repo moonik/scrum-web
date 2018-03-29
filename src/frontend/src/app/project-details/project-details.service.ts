@@ -4,10 +4,10 @@ import {HttpClient} from '../shared/http.client.service';
 @Injectable()
 export class ProjectDetailsService {
 
-    constructor(private _httpClient: HttpClient) {}
+    constructor(private httpClient: HttpClient) {}
 
-    public getProjectDetails(projectKey: string) {
-        return this._httpClient.get('project/details/' + projectKey)
+    getProjectDetails(projectKey: string) {
+        return this.httpClient.get('project/details/' + projectKey)
                     .map(res => res.json());
     }
 }

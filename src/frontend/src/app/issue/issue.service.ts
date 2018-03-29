@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '../shared/http.client.service';
 import {IssueDetailsDto} from '../model/IssueDetailsDto';
 
+const URL = 'project/issue/';
+
 @Injectable()
 export class IssueService {
-
-  private _URL = 'project/issue/';
 
   constructor(private _http: HttpClient) {
   }
@@ -21,15 +21,15 @@ export class IssueService {
   }
 
   getIssueDetails(issueKey: string) {
-    return this._http.get(this._URL + 'details/' + issueKey)
+    return this._http.get(URL + 'details/' + issueKey)
       .map(res => res.json());
   }
 
   assignToIssue(issueKey: string, username: string) {
-    return this._http.post(this._URL + issueKey + '/assign/' + username, null);
+    return this._http.post(URL + issueKey + '/assign/' + username, null);
   }
 
   unAssignFromIssue(username: string, issueKey: string) {
-    return this._http.delete(this._URL + issueKey + '/assign/' + username);
+    return this._http.delete(URL + issueKey + '/assign/' + username);
   }
 }

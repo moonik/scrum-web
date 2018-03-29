@@ -9,7 +9,7 @@ export class ProjectConfigurationService {
   constructor(private _http: HttpClient) {
   }
 
-  getUsers(members: string[]) {
+  public getUsers(members: string[]) {
     return this._http.get('profile/all')
       .map(res => {
         const data = res.json();
@@ -27,19 +27,19 @@ export class ProjectConfigurationService {
       });
   }
 
-  addMemberToProject(member: ProjectMemberDto) {
+  public addMemberToProject(member: ProjectMemberDto) {
     return this._http.post('project/members/', member);
   }
 
-  removeMemberFromProject(member: string, projectKey: string) {
+  public removeMemberFromProject(member: string, projectKey: string) {
     return this._http.delete('project/' + projectKey + '/members/' + member);
   }
 
-  acceptRequestForAccess(member: ProjectMemberDto) {
+  public acceptRequestForAccess(member: ProjectMemberDto) {
     return this._http.post('project/requests', member);
   }
 
-  declineRequestForAccess(projectKey: string, member: string) {
+  public declineRequestForAccess(projectKey: string, member: string) {
     return this._http.delete('project/' + projectKey + '/requests/' + member);
   }
 }

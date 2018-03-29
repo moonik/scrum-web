@@ -19,7 +19,7 @@ import java.util.Set;
 @Entity
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Builder
 public class Issue {
 

@@ -2,12 +2,12 @@ import {ProjectMemberDto} from './projectMemberDto';
 import {UserProfileDto} from './UserProfileDto';
 
 export class ProjectDto {
-  id: number;
-  name: string;
-  projectKey: string;
-  description: string;
-  icon: any;
-  owner: UserProfileDto;
-  members: ProjectMemberDto[];
-  requests: ProjectMemberDto[];
+  public id: number;
+  public name: string;
+  public projectKey: string;
+  public description: string;
+  public icon: any;
+  public owner: UserProfileDto;
+  public members: ProjectMemberDto[];
+  public requests: ProjectMemberDto[];
 }

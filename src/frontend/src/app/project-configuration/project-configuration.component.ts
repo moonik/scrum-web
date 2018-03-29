@@ -31,7 +31,7 @@ export class ProjectConfigurationComponent implements OnInit {
               private storageService: StorageService) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     if (!this.storageService.getScope()) {
       this.router.navigate(['/home']);
     }
@@ -44,7 +44,7 @@ export class ProjectConfigurationComponent implements OnInit {
     this.error = '';
   }
 
-  getAllUsers() {
+  public getAllUsers() {
     let members = [...this.project.members.map(m => m.username),
       ...this.project.requests.map(r => r.username)];
     this.confService.getUsers(members).subscribe(
@@ -53,12 +53,8 @@ export class ProjectConfigurationComponent implements OnInit {
       }    );
   }
 
-  addUserToProject(user: string, role: string) {
-    let member: ProjectMemberDto = new ProjectMemberDto();
-    member.projectKey = this.project.projectKey;
-    member.username = user;
-    member.role = role;
-
+  public addUserToProject(user: string, role: string) {
+    const member: ProjectMemberDto = new ProjectMemberDto(this.project.projectKey, user, role);
     this.confService.addMemberToProject(member)
       .subscribe(() => {
           this.project.members.push(member);
@@ -67,7 +63,7 @@ export class ProjectConfigurationComponent implements OnInit {
       );
   }
 
-  removeMemberFromProject(member: ProjectMemberDto) {
+  public removeMemberFromProject(member: ProjectMemberDto) {
     this.confService.removeMemberFromProject(member.username, member.projectKey)
       .subscribe(() => {
         this.project.members.splice(this.project.members.indexOf(member), 1);
@@ -79,7 +75,7 @@ export class ProjectConfigurationComponent implements OnInit {
       });
   }
 
-  chooseIcon(files: FileList) {
+  public chooseIcon(files: FileList) {
     this.icon = files.item(0);
     this.loading = true;
     this.validIcon = true;
@@ -87,12 +83,8 @@ export class ProjectConfigurationComponent implements OnInit {
 
   }
 
-  acceptRequest(user: string, role: string) {
-    let member: ProjectMemberDto = new ProjectMemberDto();
-    member.projectKey = this.project.projectKey;
-    member.username = user;
-    member.role = role;
-
+  public acceptRequest(user: string, role: string) {
+    let member: ProjectMemberDto = new ProjectMemberDto(this.project.projectKey, user, role);
     this.confService.acceptRequestForAccess(member)
       .subscribe(data => {
           this.project.members.push(member);
@@ -102,7 +94,7 @@ export class ProjectConfigurationComponent implements OnInit {
       );
   }
 
-  declineRequest(request: ProjectMemberDto) {
+  public declineRequest(request: ProjectMemberDto) {
     this.confService.declineRequestForAccess(this.project.projectKey, request.username).subscribe(
       () => {
         this.project.requests.splice(this.project.requests.indexOf(request), 1);

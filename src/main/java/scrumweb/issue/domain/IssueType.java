@@ -13,8 +13,7 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@Getter
-@Setter
+@Getter @Setter
 public class IssueType {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
