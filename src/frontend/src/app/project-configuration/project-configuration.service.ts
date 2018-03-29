@@ -13,7 +13,7 @@ export class ProjectConfigurationService {
     return this._http.get('profile/all')
       .map(res => {
         const data = res.json();
-        const users: UserDto[] = [];
+        let users: UserDto[] = [];
         for (const i in data) {
           if (!(members.includes(data[i].username))) {
             const user: UserDto = new UserDto();
@@ -31,15 +31,15 @@ export class ProjectConfigurationService {
     return this._http.post('project/members/', member);
   }
 
-  removeMemberFromProject(member: string, id: number) {
-    return this._http.delete('project/' + id + '/members/' + member);
+  removeMemberFromProject(member: string, projectKey: string) {
+    return this._http.delete('project/' + projectKey + '/members/' + member);
   }
 
   acceptRequestForAccess(member: ProjectMemberDto) {
     return this._http.post('project/requests', member);
   }
 
-  declineRequestForAccess(id: number, member: string) {
-    return this._http.delete('project/' + id + '/requests/' + member);
+  declineRequestForAccess(projectKey: string, member: string) {
+    return this._http.delete('project/' + projectKey + '/requests/' + member);
   }
 }

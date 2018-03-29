@@ -13,7 +13,7 @@ export class SearchService {
   }
 
   askForAccess(member: ProjectMemberDto) {
+    console.log(member);
     return this._http.post('project/access', member);
   }
-
 }

@@ -46,16 +46,16 @@ public class ProjectController {
         projectService.addMember(projectMemberDto);
     }
 
-    @DeleteMapping("{id}/members/{username}")
+    @DeleteMapping("{projectKey}/members/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public void removeMember(@PathVariable Long id, @PathVariable String username) {
-        projectService.removeMember(username, id);
+    public void removeMember(@PathVariable String projectKey, @PathVariable String username) {
+        projectService.removeMember(username, projectKey);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{projectKey}")
     @ResponseStatus(HttpStatus.OK)
-    public void editProject(@PathVariable Long id, @RequestBody ProjectDto projectDto) {
-        projectService.editName(projectDto.getName(), id);
+    public void editProject(@PathVariable String projectKey, @RequestBody ProjectDto projectDto) {
+        projectService.editName(projectDto.getName(), projectKey);
     }
 
     @GetMapping("/details/{projectKey}")
@@ -88,10 +88,10 @@ public class ProjectController {
         projectService.askForAccess(projectMemberDto);
     }
 
-    @DeleteMapping("{id}/requests/{member}")
+    @DeleteMapping("{projectKey}/requests/{member}")
     @ResponseStatus(HttpStatus.OK)
-    public void declineRequestForAccess(@PathVariable Long id, @PathVariable String member) {
-        projectService.declineRequestForAccess(id, member);
+    public void declineRequestForAccess(@PathVariable String projectKey, @PathVariable String member) {
+        projectService.declineRequestForAccess(projectKey, member);
     }
 
     @PostMapping("/requests")

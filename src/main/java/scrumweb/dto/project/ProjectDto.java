@@ -15,7 +15,6 @@ import java.util.Set;
 @Builder
 @Getter @Setter
 public class ProjectDto {
-    private Long id;
     private String name;
     private String projectKey;
     private String description;

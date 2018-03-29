@@ -28,14 +28,13 @@ public class ProjectAsm {
 
     public static ProjectDto makeProjectDto(Project project) {
         return ProjectDto.builder()
-                .id(project.getId())
                 .projectKey(project.getKey())
                 .name(project.getName())
                 .owner(UserProfileAsm.makeUserProfileDto(project.getOwner()))
                 .description(project.getDescription())
                 .icon(project.getIcon())
-                .members(convertProjectMembers(project, project.getMembers()))
-                .requests(convertProjectMembers(project, project.getRequests()))
+                .members(convertProjectMembers(project.getMembers()))
+                .requests(convertProjectMembers(project.getRequests()))
                 .build();
     }
 
@@ -43,9 +42,8 @@ public class ProjectAsm {
         return new ProjectMember(userAccount, role);
     }
 
-    private static ProjectMemberDto makeProjectMemberDto(ProjectMember projectMember, Long projectId) {
+    private static ProjectMemberDto makeProjectMemberDto(ProjectMember projectMember) {
         return ProjectMemberDto.builder()
-                .projectId(projectId)
                 .username(projectMember.getUserAccount().getUsername())
                 .role(projectMember.getRole().getRoleString())
                 .photo(projectMember.getUserAccount().getUserProfile().getPhoto())
@@ -59,9 +57,9 @@ public class ProjectAsm {
                 .build();
     }
 
-    private static Set<ProjectMemberDto> convertProjectMembers(Project project, Set<ProjectMember> members) {
+    private static Set<ProjectMemberDto> convertProjectMembers(Set<ProjectMember> members) {
         return members.stream()
-                .map(member -> makeProjectMemberDto(member, project.getId()))
+                .map(ProjectAsm::makeProjectMemberDto)
                 .collect(Collectors.toSet());
     }
 }

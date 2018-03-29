@@ -18,7 +18,7 @@ export class ProjectDetailsComponent implements OnInit {
   public projectDetails: ProjectDetailsDto = new ProjectDetailsDto();
   public selectedIssue: IssueDetailsDto;
   public loading = false;
-  projectMembers: Array<any> = [];
+  public projectMembers: Array<any> = [];
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _projectDetailsService: ProjectDetailsService,

@@ -14,11 +14,10 @@ import * as roles from '../constants/roles';
 })
 export class SearchComponent implements OnInit {
 
-  public searchresults: SearchResultsDto[] = [];
-
-  public results: string;
-  roles = roles.default;
-  rolesTypes = Object.values(this.roles);
+  public searchResults: SearchResultsDto[] = [];
+  public searchQuery: string;
+  public roles = roles.default;
+  public rolesTypes = Object.values(this.roles);
 
   constructor(private searchService: SearchService,
               private _activeRoute: ActivatedRoute,
@@ -27,16 +26,16 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this._activeRoute.params.subscribe((params: Params) => {
-      this.searchResults(params['query']);
+      this.search(params['query']);
     });
   }
 
-  public searchResults(query: any) {
-    this.results = query;
+  public search(query: any) {
+    this.searchQuery = query;
     this.searchService.searchResults(query)
       .subscribe(
         data => {
-          this.searchresults = data;
+          this.searchResults = data;
         }
       );
   }
@@ -45,9 +44,9 @@ export class SearchComponent implements OnInit {
     this._router.navigate(['project/details/' + projectKey]);
   }
 
-  requestAccess(role: string, id: number) {
+  requestAccess(role: string, projectKey: string) {
     const member: ProjectMemberDto = new ProjectMemberDto();
-    member.projectId = id;
+    member.projectKey = projectKey;
     member.username = localStorage.getItem('currentUser');
     member.role = role;
     this.searchService.askForAccess(member).subscribe(

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Builder
 @Getter @Setter
 public class ProjectMemberDto {
-    private Long projectId;
+    private String projectKey;
     private String username;
     private String role;
     private String photo;

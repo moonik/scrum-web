@@ -6,12 +6,9 @@ export class ProjectService {
 
   private _URL = 'project/';
 
-  constructor(private _http: HttpClient) {
-
-  }
+  constructor(private _http: HttpClient) {}
 
   createProject(object) {
     return this._http.post(this._URL + 'create', object).map(res => res.json());
   }
-
 }

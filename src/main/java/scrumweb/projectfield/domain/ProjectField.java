@@ -28,7 +28,6 @@ public abstract class ProjectField {
     @NotNull
     private String name;
 
-    @NotNull
     private Boolean isRequired;
 
     private String html;
