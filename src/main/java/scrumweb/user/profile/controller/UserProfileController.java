@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import scrumweb.common.asm.UserProfileAsm;
 import scrumweb.dto.user.UserProfileDto;
-import scrumweb.user.profile.domain.UserProfile;
 import scrumweb.user.profile.repository.UserProfileRepository;
 
 import java.util.List;
@@ -22,7 +21,6 @@ import static scrumweb.common.ApplicationConstants.API_URL;
 public class UserProfileController {
 
     private UserProfileRepository repository;
-    private UserProfileAsm userProfileAsm;
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
