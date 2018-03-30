@@ -1,5 +1,7 @@
 package scrumweb.common.asm;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import scrumweb.dto.issue.IssueDto;
 import scrumweb.dto.project.ProjectDetailsDto;
@@ -15,6 +17,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProjectAsm {
 
     public static Project makeProject(ProjectDto projectDto) {

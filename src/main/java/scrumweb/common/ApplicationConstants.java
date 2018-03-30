@@ -1,5 +1,9 @@
 package scrumweb.common;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ApplicationConstants {
     public static final String API_URL = "/api/scrum-web/";
     public static final Long ACCESS_TOKEN_VALIDITY_SECONDS = 6048000L;

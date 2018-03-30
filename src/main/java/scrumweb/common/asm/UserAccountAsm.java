@@ -1,5 +1,7 @@
 package scrumweb.common.asm;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import scrumweb.dto.user.UserDto;
@@ -8,6 +10,7 @@ import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.profile.domain.UserProfile;
 
 @Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserAccountAsm {
 
     public static UserAccount makeUserAccount(UserDto userDto, UserProfile userProfile) {

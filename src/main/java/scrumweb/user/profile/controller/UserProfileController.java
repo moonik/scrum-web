@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import scrumweb.common.asm.UserProfileAsm;
 import scrumweb.dto.user.UserProfileDto;
+import scrumweb.user.profile.domain.UserProfile;
 import scrumweb.user.profile.repository.UserProfileRepository;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class UserProfileController {
     @ResponseStatus(HttpStatus.OK)
     public List<UserProfileDto> allUsers() {
         return repository.findAll().stream()
-            .map(userProfile -> userProfileAsm.convertFromUserProfileToUserProfileDto(userProfile))
+            .map(UserProfileAsm::convertFromUserProfileToUserProfileDto)
             .collect(Collectors.toList());
     }
 }

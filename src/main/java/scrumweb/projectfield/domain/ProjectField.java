@@ -3,9 +3,6 @@ package scrumweb.projectfield.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import scrumweb.dto.projectfield.ProjectFieldDto;
-
-import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

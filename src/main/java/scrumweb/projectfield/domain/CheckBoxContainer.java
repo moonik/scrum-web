@@ -3,9 +3,6 @@ package scrumweb.projectfield.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import scrumweb.dto.projectfield.CheckBoxContainerDto;
-import scrumweb.dto.projectfield.ListElementsContainerDto;
-import scrumweb.dto.projectfield.ProjectFieldDto;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
