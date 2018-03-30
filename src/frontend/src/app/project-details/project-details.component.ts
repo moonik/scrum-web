@@ -11,7 +11,7 @@ import { SearchService } from '../search/search.service';
   selector: 'app-project-details',
   templateUrl: './project-details.component.html',
   styleUrls: ['./project-details.component.css'],
-  providers: [ProjectDetailsService, IssueService]
+  providers: [ProjectDetailsService, IssueService, SearchService]
 })
 export class ProjectDetailsComponent implements OnInit {
 

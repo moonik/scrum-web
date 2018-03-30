@@ -12,8 +12,8 @@ export class SearchService {
       .map(res => res.json());
   }
 
-  askForAccess(member: ProjectMemberDto) {
-    return this.http.post('project/access', member);
+  askForAccess(projectKey: string, member: ProjectMemberDto) {
+    return this.http.post('project/'+ projectKey + '/access', member);
   }
 
   findUserInAssignees(assignees: Array<ProjectMemberDto>): boolean {

@@ -49,7 +49,7 @@ public class ProjectService {
             Project project = ProjectAsm.makeProject(projectDto);
             UserAccount projectOwner = securityContextService.getCurrentUserAccount();
             List<Project> projects = projectOwner.getProjects();
-            projects.add(createProject(project, projectOwner)); // test this or else projectowner.setProjects
+            projects.add(createProject(project, projectOwner));
             userAccountRepository.save(projectOwner);
             return projectDto;
         } else {
@@ -134,8 +134,8 @@ public class ProjectService {
             .collect(Collectors.toList());
     }
 
-    public void addMember(ProjectMemberDto projectMemberDto) {
-        Project project = projectRepository.findByKey(projectMemberDto.getProjectKey());
+    public void addMember(ProjectMemberDto projectMemberDto, String projectKey) {
+        Project project = projectRepository.findByKey(projectKey);
         UserAccount memberToBeAdded = userAccountRepository.findByUsername(projectMemberDto.getUsername());
         if (findMember(project.getMembers(), memberToBeAdded.getUsername()) == null) {
             project.getMembers().add(new ProjectMember(memberToBeAdded, Role.getRole(projectMemberDto.getRole())));
@@ -157,8 +157,8 @@ public class ProjectService {
         }
     }
 
-    public void askForAccess(ProjectMemberDto projectMemberDto) {
-        Project project = projectRepository.findByKey(projectMemberDto.getProjectKey());
+    public void askForAccess(ProjectMemberDto projectMemberDto, String projectKey) {
+        Project project = projectRepository.findByKey(projectKey);
         UserAccount memberToBeAdded = userAccountRepository.findByUsername(projectMemberDto.getUsername());
         if (findMember(project.getRequests(), memberToBeAdded.getUsername()) == null) {
             project.getRequests().add(new ProjectMember(memberToBeAdded, Role.getRole(projectMemberDto.getRole())));
@@ -173,11 +173,6 @@ public class ProjectService {
         ProjectMember projectMember = findMember(project.getRequests(), member);
         project.getRequests().remove(projectMember);
         projectRepository.save(project);
-    }
-
-    public void acceptRequestForAccess(ProjectMemberDto projectMemberDto) {
-        addMember(projectMemberDto);
-        declineRequestForAccess(projectMemberDto.getProjectKey(), projectMemberDto.getUsername());
     }
 
     private ProjectMember findMember(Set<ProjectMember> members, String memberToBeAdded) {

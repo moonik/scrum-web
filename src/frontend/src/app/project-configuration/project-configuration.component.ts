@@ -54,8 +54,8 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   addUserToProject(user: string, role: string) {
-    const member: ProjectMemberDto = new ProjectMemberDto(this.project.projectKey, user, role);
-    this.confService.addMemberToProject(member)
+    const member: ProjectMemberDto = new ProjectMemberDto(user, role);
+    this.confService.addMemberToProject(this.project.projectKey, member)
       .subscribe(() => {
           this.project.members.push(member);
           this.ngOnInit();
@@ -64,7 +64,7 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   removeMemberFromProject(member: ProjectMemberDto) {
-    this.confService.removeMemberFromProject(member.username, member.projectKey)
+    this.confService.removeMemberFromProject(member.username, this.project.projectKey)
       .subscribe(() => {
         this.project.members.splice(this.project.members.indexOf(member), 1);
         this.ngOnInit();
@@ -84,8 +84,8 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   acceptRequest(user: string, role: string) {
-    const member: ProjectMemberDto = new ProjectMemberDto(this.project.projectKey, user, role);
-    this.confService.acceptRequestForAccess(member)
+    const member: ProjectMemberDto = new ProjectMemberDto(user, role);
+    this.confService.acceptRequestForAccess(this.project.projectKey, member)
       .subscribe(data => {
           this.project.members.push(member);
           this.project.requests.splice(this.project.requests.indexOf(member), 1);

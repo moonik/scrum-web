@@ -27,19 +27,24 @@ export class ProjectConfigurationService {
       });
   }
 
-  addMemberToProject(member: ProjectMemberDto) {
-    return this.http.post('project/members/', member);
+  addMemberToProject(projectKey: string, member: ProjectMemberDto) {
+    return this.http.post(this.getApiUrl(projectKey) + '/members', member);
   }
 
   removeMemberFromProject(member: string, projectKey: string) {
-    return this.http.delete('project/' + projectKey + '/members/' + member);
+    return this.http.delete(this.getApiUrl(projectKey) + '/members/' + member);
   }
 
-  acceptRequestForAccess(member: ProjectMemberDto) {
-    return this.http.post('project/requests', member);
+  acceptRequestForAccess(projectKey: string, member: ProjectMemberDto) {
+    return this.http.post(this.getApiUrl(projectKey) + '/requests/accept', member);
   }
 
   declineRequestForAccess(projectKey: string, member: string) {
-    return this.http.delete('project/' + projectKey + '/requests/' + member);
+    console.log('decline');
+    return this.http.delete(this.getApiUrl(projectKey) + '/requests/decline/' + member);
+  }
+
+  private getApiUrl(projectKey: string): string {
+    return 'project/' + projectKey;
   }
 }

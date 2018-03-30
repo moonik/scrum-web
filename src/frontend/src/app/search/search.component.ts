@@ -45,8 +45,8 @@ export class SearchComponent implements OnInit {
   }
 
   requestAccess(role: string, projectKey: string) {
-    const member: ProjectMemberDto = new ProjectMemberDto(projectKey, localStorage.getItem('currentUser'), role);
-    this.searchService.askForAccess(member).subscribe(
+    const member: ProjectMemberDto = new ProjectMemberDto(localStorage.getItem('currentUser'), role);
+    this.searchService.askForAccess(projectKey, member).subscribe(
       () => {
         this.ngOnInit();
       });
