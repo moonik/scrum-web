@@ -10,7 +10,7 @@ export class WarningModalComponent implements OnInit {
   @Input()
   public obj;
   @Output()
-  public onClickYes = new EventEmitter<Object>();
+  public clickYes = new EventEmitter<Object>();
 
   constructor() { }
 
@@ -20,6 +20,6 @@ export class WarningModalComponent implements OnInit {
 
   onYesClicked() {
     console.log(this.obj);
-    this.onClickYes.emit(this.obj);
+    this.clickYes.emit(this.obj);
   }
 }

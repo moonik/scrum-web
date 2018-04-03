@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '../shared/http.client.service';
 import {IssueDetailsDto} from '../model/IssueDetailsDto';
-import {IssueComment} from "../model/IssueComment";
+import {IssueComment} from '../model/IssueComment';
 
 @Injectable()
 export class IssueService {
@@ -10,8 +10,8 @@ export class IssueService {
 
   constructor(private _http: HttpClient) {}
 
-  createIssue(projectkey: string, issueDetails: IssueDetailsDto) {
-    return this._http.post('project/issue/' + projectkey, issueDetails)
+  createIssue(projectKey: string, issueDetails: IssueDetailsDto) {
+    return this._http.post('project/issue/' + projectKey, issueDetails)
       .map(res => res.json());
   }
 
@@ -21,21 +21,21 @@ export class IssueService {
   }
 
     public getIssueComments(issueId: number) {
-      return this._http.get(this._URL+'comments/' + issueId)
+      return this._http.get(this._URL + 'comments/' + issueId)
         .map(res => res.json());
     }
 
     public addComment(issueId: number, comment: IssueComment) {
-        return this._http.post(this._URL+'comment/' + issueId, comment)
+        return this._http.post(this._URL + 'comment/' + issueId, comment)
           .map(res => res.json());
     }
 
     public deleteComment(commentId: number, issueId: number) {
-      return this._http.delete(this._URL+'comments/delete/'+commentId+'/'+issueId);
+      return this._http.delete(this._URL + 'comments/delete/' + commentId + '/' + issueId);
     }
 
-    public editComment(commentId: number, comment: IssueComment){
-      return this._http.post(this._URL + 'comments/edit/'+commentId, comment);
+    public editComment(commentId: number, comment: IssueComment) {
+      return this._http.post(this._URL + 'comments/edit/' + commentId, comment);
     }
 
   getIssueDetails(issueKey: string) {

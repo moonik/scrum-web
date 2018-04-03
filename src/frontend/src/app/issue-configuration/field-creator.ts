@@ -1,11 +1,10 @@
-import { ProjectFieldDto } from '../model/project-fields/ProjectFieldDto';
-import { CheckBoxContainerDto } from '../model/project-fields/CheckBoxContainerDto';
-import { InputFieldDto } from '../model/project-fields/InputFieldDto';
-import { ListElementsContainerDto } from '../model/project-fields/ListElementsContainerDto';
-import { RadioButtonContainerDto } from '../model/project-fields/RadioButtonContainerDto';
-import { TextAreaDto } from '../model/project-fields/TextAreaDto';
-import { ProjectFieldsCollector } from '../model/project-fields/ProjectFieldsCollector';
-import { Injectable } from '@angular/core';
+import {CheckBoxContainerDto} from '../model/project-fields/CheckBoxContainerDto';
+import {InputFieldDto} from '../model/project-fields/InputFieldDto';
+import {ListElementsContainerDto} from '../model/project-fields/ListElementsContainerDto';
+import {RadioButtonContainerDto} from '../model/project-fields/RadioButtonContainerDto';
+import {TextAreaDto} from '../model/project-fields/TextAreaDto';
+import {ProjectFieldsCollector} from '../model/project-fields/ProjectFieldsCollector';
+import {Injectable} from '@angular/core';
 
 import * as fieldTypes from '../constants/field-type';
 
@@ -15,7 +14,7 @@ export class FieldCreator {
     private fieldTypes = fieldTypes.default;
     public projectFieldsCollector: ProjectFieldsCollector = new ProjectFieldsCollector();
 
-    constructor(){}
+    constructor() {}
 
     public createField(field: any): void {
         if (field.fieldType === this.fieldTypes.inputField) {
@@ -33,31 +32,31 @@ export class FieldCreator {
 
     private createInputField(field: any): InputFieldDto {
         return new InputFieldDto(
-            field.id, 
-            field.fieldType, 
-            field.fieldName, 
-            field.isRequired, 
-            field.maxCharacters, 
+            field.id,
+            field.fieldType,
+            field.fieldName,
+            field.isRequired,
+            field.maxCharacters,
             field.minCharacters
         );
     }
 
     private createTextArea(field: any): TextAreaDto {
         return new TextAreaDto(
-            field.id, 
-            field.fieldType, 
-            field.fieldName, 
-            field.isRequired, 
-            field.maxCharacters, 
+            field.id,
+            field.fieldType,
+            field.fieldName,
+            field.isRequired,
+            field.maxCharacters,
             field.minCharacters
         );
     }
 
     private createCheckBoxContainer(field: any): CheckBoxContainerDto {
         return new CheckBoxContainerDto(
-            field.id, 
-            field.fieldType, 
-            field.fieldName, 
+            field.id,
+            field.fieldType,
+            field.fieldName,
             field.isRequired,
             field.elements
         );
@@ -65,9 +64,9 @@ export class FieldCreator {
 
     private createRadioButtonContainer(field: any): RadioButtonContainerDto {
         return new RadioButtonContainerDto(
-            field.id, 
-            field.fieldType, 
-            field.fieldName, 
+            field.id,
+            field.fieldType,
+            field.fieldName,
             field.isRequired,
             field.elements
         );
@@ -75,9 +74,9 @@ export class FieldCreator {
 
     private createListElementsContainer(field: any): ListElementsContainerDto {
         return new ListElementsContainerDto(
-            field.id, 
-            field.fieldType, 
-            field.fieldName, 
+            field.id,
+            field.fieldType,
+            field.fieldName,
             field.isRequired,
             field.elements
         );

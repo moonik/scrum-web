@@ -14,14 +14,11 @@
         {{project.name}}
       </td>
       <td align="center" rowspan="2" class="icon"><h6>Icon: </h6>
-        <input *ngIf="validIcon && !loading" type="image" [src]=""
+        <input *ngIf="validIcon" type="image" [src]=""
                (click)="changeIcon.click()" alt=""/>
-        <input *ngIf="!validIcon && !loading" type="image" src="../../assets/images/error.gif"
+        <input *ngIf="!validIcon" type="image" src="../../assets/images/error.gif"
                (click)="changeIcon.click()" alt=""/>
-        <input *ngIf="loading" type="image" src="../../assets/images/loading_boobs.gif"
-               (click)="changeIcon.click()" alt=""/>
-        <input type="file" #changeIcon
-               style="display: none;"
+        <input class="input-hidden" type="file" #changeIcon
                (change)="chooseIcon($event.target.files)"
                accept="image/jpeg, image/png"/>
         <div *ngIf="!validIcon">
@@ -37,7 +34,9 @@
     </tr>
     <tr class="buttons">
       <td>
-          <button style="width: 150px;" class="btn btn-primary btn-block " (click)="goToIssueConfiguration()">Configure issues</button>
+        <button style="width: 150px;" class="btn btn-primary btn-block " (click)="goToIssueConfiguration()">Configure
+          issues
+        </button>
       </td>
     </tr>
     </tbody>
@@ -67,7 +66,8 @@
       <div class="col-2-details">Suggested role: <b>{{request.role}}</b></div>
       <div class="col-3-details">
         <div class="dropdown">
-          <button class="btn btn-success dropdown-toggle btn-block" type="button" id="requestDropdown" data-toggle="dropdown"
+          <button class="btn btn-success dropdown-toggle btn-block" type="button" id="requestDropdown"
+                  data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
             Accept as
           </button>

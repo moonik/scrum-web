@@ -21,9 +21,9 @@ import { ProjectFieldsCollector } from '../model/project-fields/ProjectFieldsCol
   styleUrls: ['./issue-configuration.component.css'],
   providers: [FieldCreator, IssueConfigurationService]
 })
-export class IssueFieldsConfigurationComponent implements OnInit {
+export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
   public fields = [];
-  public oldFields: string = '';
+  public oldFields = '';
   public fieldTypes = fieldTypes.default;
   public fieldTypesArray = Object.values(this.fieldTypes);
   public chooseIssueType = 'Choose issue type...';
@@ -33,7 +33,9 @@ export class IssueFieldsConfigurationComponent implements OnInit {
   @Input()
   private projectKey;
 
-  constructor(private _activatedRoute: ActivatedRoute, private _fieldCreator: FieldCreator, private _issueConfService: IssueConfigurationService) {}
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _fieldCreator: FieldCreator,
+              private _issueConfService: IssueConfigurationService) {}
 
   ngOnInit() {}
 
@@ -44,7 +46,7 @@ export class IssueFieldsConfigurationComponent implements OnInit {
   public fetchFields() {
     if (this.chosenIssueType && this.chosenIssueType !== this.chooseIssueType) {
       this._issueConfService.getProjectFields(this.projectKey, this.chosenIssueType)
-      .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data) });
+      .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data); });
     }
   }
 
@@ -53,7 +55,7 @@ export class IssueFieldsConfigurationComponent implements OnInit {
   }
 
   public showAddFieldButton() {
-    return this.chosenIssueType !== this.chooseIssueType && this.chosenIssueType !== '';  
+    return this.chosenIssueType !== this.chooseIssueType && this.chosenIssueType !== '';
   }
 
   public addFieldElement(field: any, id: number) {
@@ -61,16 +63,16 @@ export class IssueFieldsConfigurationComponent implements OnInit {
   }
 
   public removeField(field: any, fieldType: string) {
-    let index = this.fields.indexOf(field);
+    const index = this.fields.indexOf(field);
     this.fields.splice(index, 1);
     if (field.id != null) {
       this._issueConfService.removeField(field.id, this.projectKey, this.chosenIssueType)
-        .subscribe(data => { this.fields = this.fields.concat(data); this.oldFields = JSON.stringify(data) });
+        .subscribe(data => { this.fields = this.fields.concat(data); this.oldFields = JSON.stringify(data); });
     }
   }
 
   public removeFieldElement(field: any, element: any) {
-    let index = this.fields.indexOf(element);
+    const index = this.fields.indexOf(element);
     field.elements.splice(index, 1);
   }
 
@@ -83,7 +85,7 @@ export class IssueFieldsConfigurationComponent implements OnInit {
   }
 
   public isValidGeneralData(formData: any) {
-    return (formData.fieldType && formData.fieldName) && (formData.fieldType != '' && formData.fieldName != '');
+    return (formData.fieldType && formData.fieldName) && (formData.fieldType !== '' && formData.fieldName !== '');
   }
 
   public isParamsElements(fieldType: string) {
@@ -111,7 +113,7 @@ export class IssueFieldsConfigurationComponent implements OnInit {
   public createFields() {
     if (this.filterOut().length > 0) {
       this._issueConfService.createFields(this.collectFields(), this.projectKey, this.chosenIssueType)
-        .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data) });
+        .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data); });
       this._fieldCreator.projectFieldsCollector = new ProjectFieldsCollector();
     }
   }

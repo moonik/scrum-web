@@ -26,7 +26,9 @@ import { IssueFieldsConfigurationComponent } from './issue-configuration/issue-f
 import { IssueTypeConfigurationComponent } from './issue-configuration/issue-type-configuration.component';
 import { IssueConfigurationComponent } from './issue-configuration/issue-configuration.component';
 import { SearchComponent } from './search/search.component';
-import {WarningModalComponent} from "./warning-modal/warning-modal.component";
+import { LoaderComponent} from './loader/loader.component';
+import { LoaderService} from './loader/loader.service';
+import {WarningModalComponent} from './warning-modal/warning-modal.component';
 
 @NgModule({
   declarations: [
@@ -42,17 +44,12 @@ import {WarningModalComponent} from "./warning-modal/warning-modal.component";
     ProjectDetailsComponent,
     IssueComponent,
     FooterComponent,
+    SearchComponent,
+    LoaderComponent,
     WarningModalComponent,
     IssueFieldsConfigurationComponent,
     IssueTypeConfigurationComponent,
     IssueConfigurationComponent,
-    IssueFieldsConfigurationComponent,
-    IssueTypeConfigurationComponent,
-    IssueConfigurationComponent,
-    IssueFieldsConfigurationComponent,
-    IssueTypeConfigurationComponent,
-    IssueConfigurationComponent,
-    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +66,8 @@ import {WarningModalComponent} from "./warning-modal/warning-modal.component";
     HttpClient,
     ProjectService,
     ProjectConfigurationService,
-    StorageService
+    StorageService,
+    LoaderService
   ],
   bootstrap: [AppComponent]
 })

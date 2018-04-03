@@ -22,7 +22,6 @@ export class ProjectConfigurationComponent implements OnInit {
   public rolesTypes = Object.values(this.roles);
   public error: string;
   public icon: File = null;
-  public loading = false;
   public validIcon = true;
 
   constructor(private route: ActivatedRoute,
@@ -33,7 +32,7 @@ export class ProjectConfigurationComponent implements OnInit {
 
   ngOnInit() {
     if (!this.storageService.getScope()) {
-      this.router.navigate(['/home']);
+      return this.router.navigate(['/home']);
     }
     this.project = this.storageService.getScope();
 
@@ -45,7 +44,7 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   getAllUsers() {
-    let members = [...this.project.members.map(m => m.username),
+    const members = [...this.project.members.map(m => m.username),
       ...this.project.requests.map(r => r.username)];
     this.confService.getUsers(members).subscribe(
       users => {
@@ -54,7 +53,7 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   addUserToProject(user: string, role: string) {
-    let member: ProjectMemberDto = new ProjectMemberDto();
+    const member: ProjectMemberDto = new ProjectMemberDto();
     member.projectId = this.project.id;
     member.username = user;
     member.role = role;
@@ -81,14 +80,11 @@ export class ProjectConfigurationComponent implements OnInit {
 
   chooseIcon(files: FileList) {
     this.icon = files.item(0);
-    this.loading = true;
     this.validIcon = true;
-
-
   }
 
   acceptRequest(user: string, role: string) {
-    let member: ProjectMemberDto = new ProjectMemberDto();
+    const member: ProjectMemberDto = new ProjectMemberDto();
     member.projectId = this.project.id;
     member.username = user;
     member.role = role;
@@ -112,6 +108,6 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   public goToIssueConfiguration() {
-    this.router.navigate(['/project/'+this.project.projectKey+'/configuration/issues']);
+    return this.router.navigate(['/project/' + this.project.projectKey + '/configuration/issues']);
   }
 }

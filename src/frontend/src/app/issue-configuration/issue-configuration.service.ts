@@ -4,11 +4,11 @@ import {HttpClient} from '../shared/http.client.service';
 @Injectable()
 export class IssueConfigurationService {
 
-    constructor(private _http: HttpClient){}
+    constructor(private _http: HttpClient) {}
 
     public createFields(data: any, projectKey: string, issuetype: string) {
         console.log(data);
-        return this._http.post(this.createRequestParams({projectKey: projectKey, issuetype: issuetype}), data)
+        return this._http.post(this.createRequestParams({projectKey: projectKey, issueType: issuetype}), data)
             .map(res => res.json());
     }
 
@@ -17,18 +17,18 @@ export class IssueConfigurationService {
             .map(res => res.json());
     }
 
-    public getProjectFields(projectKey: string, issuetype: string) {
-        return this._http.get(this.createRequestParams({projectKey: projectKey, issuetype: issuetype}))
-            .map(res => res.json());  
+    public getProjectFields(projectKey: string, issueType: string) {
+        return this._http.get(this.createRequestParams({projectKey: projectKey, issueType: issueType}))
+            .map(res => res.json());
     }
 
-    public removeField(id: number, projectKey: string, issuetype: string) {
-        return this._http.delete(this.createRequestParams({id: id, projectKey: projectKey, issuetype: issuetype}))
+    public removeField(id: number, projectKey: string, issueType: string) {
+        return this._http.delete(this.createRequestParams({id: id, projectKey: projectKey, issueType: issueType}))
             .map(res => res.json());
     }
 
     public createType(data: any, projectKey: string) {
-        return this._http.post('project/issue/types/'+projectKey, data)
+        return this._http.post('project/issue/types/' + projectKey, data)
             .map(res => res.json());
     }
 
@@ -38,12 +38,12 @@ export class IssueConfigurationService {
     }
 
     public deleteType(id: number) {
-        return this._http.delete('project/issue/types/'+id)
+        return this._http.delete('project/issue/types/' + id)
             .map(res => res.status);
     }
 
     private createRequestParams(data: Object): string {
-        let params = Object.entries(data).map(([key, val]) => `${key}=${val}`).join('&');
+        const params = Object.entries(data).map(([key, val]) => `${key}=${val}`).join('&');
         return 'project-field?' + params;
     }
 }

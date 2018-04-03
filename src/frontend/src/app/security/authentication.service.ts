@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-  import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/map';
 import {UserDto} from '../model/userDto';
 import {HttpClient} from '../shared/http.client.service';
+
 @Injectable()
 export class AuthenticationService {
 
@@ -12,16 +13,16 @@ export class AuthenticationService {
 
   constructor(private httpClientService: HttpClient) {
 
-    let currentUser = JSON.parse(localStorage.getItem('username'));
+    const currentUser = JSON.parse(localStorage.getItem('username'));
     this.token = currentUser && currentUser.token;
     this.headers.append('Authorization', '');
     this.headers.append('Content-Type', 'application/json');
   }
 
   login(userDto: UserDto): Observable<any> {
-        return this.httpClientService.post(`auth`, userDto)
+    return this.httpClientService.post(`auth`, userDto)
       .map(response => {
-        let token = response.json() && response.json().token;
+        const token = response.json() && response.json().token;
         if (token) {
           this.token = token;
           localStorage.setItem('token', token);
@@ -37,22 +38,20 @@ export class AuthenticationService {
     localStorage.removeItem('token');
   }
 
-  save(userDto: UserDto): Observable<number>{
-      return this.httpClientService.post('user-account/save', userDto)
+  save(userDto: UserDto): Observable<number> {
+    return this.httpClientService.post('user-account/save', userDto)
       .map(
-        response =>  {
-          // console.info('test');
+        response => {
           return response.status;
-    // if(response.status ==)
-      });
+        });
   }
 
-  refresh(token: string, username: string): Observable<any>{
-    const tokenObj = {"token": token, "username": username};
+  refresh(token: string, username: string): Observable<any> {
+    const tokenObj = {'token': token, 'username': username};
     return this.httpClientService.post('refresh', tokenObj)
       .map(
-        response =>  {
-          let token = response.json() && response.json().token;
+        response => {
+          const token = response.json() && response.json().token;
           if (token) {
             this.token = token;
             localStorage.setItem('token', token);
@@ -61,5 +60,3 @@ export class AuthenticationService {
         });
   }
 }
-
-

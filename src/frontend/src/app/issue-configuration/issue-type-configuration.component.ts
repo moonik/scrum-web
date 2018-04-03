@@ -1,6 +1,5 @@
-import { Component, TemplateRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IssueConfigurationService } from './issue-configuration.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import {Component, Input} from '@angular/core';
+import {IssueConfigurationService} from './issue-configuration.service';
 
 @Component({
     selector: 'app-issue-type-configuration',
@@ -28,7 +27,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
         if (type.id) {
           this._service.deleteType(type.id).subscribe();
         }
-        let index = this.types.indexOf(type);
+        const index = this.types.indexOf(type);
         this.types.splice(index, 1);
       }
     }
@@ -53,7 +52,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
     }
 
     public isValid() {
-      let filteredNotEdited = this.filterOut();
+      const filteredNotEdited = this.filterOut();
       return filteredNotEdited.length > 0 && this.isEdited();
     }
 
@@ -62,7 +61,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
     }
 
     private filterOutNotChanged() {
-      return this.types.filter(t => this.findType(t))
+      return this.types.filter(t => this.findType(t));
     }
 
     private findType(type: any) {

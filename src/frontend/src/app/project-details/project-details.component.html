@@ -1,10 +1,9 @@
 <div>
-  <img id="loading" src="../../assets/images/loading_boobs.gif" alt="loading-boobs" *ngIf="loading">
   <div class="project-name">
     <h3>{{ projectDetails?.projectDto?.name }}</h3>
   </div>
 
-  <span><app-issue-creation [projectKey]="projectKey" (onIssueCreate)="onIssueCreate($event)"
+  <span><app-issue-creation [projectKey]="projectKey" (issueCreate)="onIssueCreate($event)"
                             *ngIf="!loading"></app-issue-creation></span>
 
   <div class="list-panel" id="list-panel" *ngIf="showIssueList()">
@@ -96,7 +95,7 @@
               <td>
                 <form (ngSubmit)="deleteComment(comment)">
                 <button type="submit" [hidden]="!comment.hover || !(comment.owner.username === getCurrentUser())" class="fa fa-times" data-toggle="modal" data-target="#exampleModal"></button>
-                <!--<app-warning-modal [obj]="comment" (onClickYes)="deleteComment($event)"></app-warning-modal>-->
+                <!--<app-warning-modal [obj]="comment" (clickYes)="deleteComment($event)"></app-warning-modal>-->
                 </form>
               </td>
               <br>
