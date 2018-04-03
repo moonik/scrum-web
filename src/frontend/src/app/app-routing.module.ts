@@ -9,8 +9,6 @@ import {ProjectComponent} from './project/project.component';
 import {ProjectDetailsComponent} from './project-details/project-details.component';
 import {SearchComponent} from './search/search.component';
 import {ProjectConfigurationComponent} from './project-configuration/project-configuration.component';
-
-import {IssueComponent} from './issue/issue.component';
 import {IssueConfigurationComponent} from './issue-configuration/issue-configuration.component';
 
 const routes: Routes = [
