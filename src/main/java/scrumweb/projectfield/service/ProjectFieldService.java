@@ -12,6 +12,7 @@ import scrumweb.project.repository.ProjectRepository;
 import scrumweb.projectfield.domain.ProjectField;
 import scrumweb.projectfield.repository.ProjectFieldRepository;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -44,6 +45,7 @@ public class ProjectFieldService {
         final IssueType issueTypeFromDb = findIssueType(project.getIssueTypes(), issueType);
         return issueTypeFromDb.getFields().stream()
                 .map(field -> projectFieldAsm.createDtoObject(field))
+                .sorted(Comparator.comparingLong(ProjectFieldDto::getId))
                 .collect(Collectors.toSet());
     }
 
