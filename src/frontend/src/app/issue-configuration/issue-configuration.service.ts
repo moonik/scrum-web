@@ -3,6 +3,7 @@ import {HttpClient} from '../shared/http.client.service';
 
 @Injectable()
 export class IssueConfigurationService {
+
     constructor(private http: HttpClient) {}
 
     createFields(data: any, projectKey: string, issuetype: string) {

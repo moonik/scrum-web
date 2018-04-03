@@ -33,7 +33,7 @@ export class ProjectConfigurationComponent implements OnInit {
 
   ngOnInit() {
     if (!this.storageService.getScope()) {
-      this.router.navigate(['/home']);
+      return this.router.navigate(['/home']);
     }
     this.project = this.storageService.getScope();
 

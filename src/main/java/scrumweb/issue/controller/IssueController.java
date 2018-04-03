@@ -2,6 +2,7 @@ package scrumweb.issue.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import scrumweb.dto.issue.IssueCommentDto;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.issue.IssueTypeDto;
 import scrumweb.issue.service.IssueService;
 
+import java.util.List;
 import java.util.Set;
 
 import static scrumweb.common.ApplicationConstants.API_URL;
@@ -64,4 +66,30 @@ public class IssueController {
     public void unAssignFromIssue(@PathVariable String issueKey, @PathVariable String username) {
         issueService.unAssignFromIssue(issueKey, username);
     }
+
+    @PostMapping("/comment/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public IssueCommentDto addComment(@PathVariable Long id, @RequestBody IssueCommentDto issueCommentDto) {
+        return issueService.addComment(issueCommentDto, id);
+    }
+
+    @GetMapping("/comments/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<IssueCommentDto> getComments(@PathVariable Long id){
+        return issueService.getCommentsForIssue(id);
+    }
+
+    @DeleteMapping("/comments/delete/{commentId}/{issueId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteComment(@PathVariable Long commentId, @PathVariable Long issueId){
+        issueService.deleteComment(commentId, issueId);
+    }
+
+    @PostMapping("/comments/edit/{commentId}")
+    @ResponseStatus(HttpStatus.OK)
+    public String editComment(@PathVariable Long commentId, @RequestBody IssueCommentDto issueCommentDto){
+        return issueService.editComment(commentId, issueCommentDto.getContent());
+    }
+
+
 }

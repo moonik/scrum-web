@@ -122,3 +122,6 @@
   width: 150px;
 }
 
+.input-hidden {
+  display: none;
+}

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '../shared/http.client.service';
 import {IssueDetailsDto} from '../model/IssueDetailsDto';
+import {IssueComment} from '../model/IssueComment';
 
 const URL = 'project/issue/';
 
@@ -19,6 +20,24 @@ export class IssueService {
     return this.http.get('project/' + projectKey + '/members')
       .map(res => res.json());
   }
+
+    public getIssueComments(issueId: number) {
+      return this.http.get(URL + 'comments/' + issueId)
+        .map(res => res.json());
+    }
+
+    public addComment(issueId: number, comment: IssueComment) {
+        return this.http.post(URL + 'comment/' + issueId, comment)
+          .map(res => res.json());
+    }
+
+    public deleteComment(commentId: number, issueId: number) {
+      return this.http.delete(URL + 'comments/delete/' + commentId + '/' + issueId);
+    }
+
+    public editComment(commentId: number, comment: IssueComment) {
+      return this.http.post(URL + 'comments/edit/' + commentId, comment);
+    }
 
   getIssueDetails(issueKey: string) {
     return this.http.get(URL + 'details/' + issueKey)

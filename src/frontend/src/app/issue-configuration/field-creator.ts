@@ -1,11 +1,10 @@
-import { ProjectFieldDto } from '../model/project-fields/ProjectFieldDto';
-import { CheckBoxContainerDto } from '../model/project-fields/CheckBoxContainerDto';
-import { InputFieldDto } from '../model/project-fields/InputFieldDto';
-import { ListElementsContainerDto } from '../model/project-fields/ListElementsContainerDto';
-import { RadioButtonContainerDto } from '../model/project-fields/RadioButtonContainerDto';
-import { TextAreaDto } from '../model/project-fields/TextAreaDto';
-import { ProjectFieldsCollector } from '../model/project-fields/ProjectFieldsCollector';
-import { Injectable } from '@angular/core';
+import {CheckBoxContainerDto} from '../model/project-fields/CheckBoxContainerDto';
+import {InputFieldDto} from '../model/project-fields/InputFieldDto';
+import {ListElementsContainerDto} from '../model/project-fields/ListElementsContainerDto';
+import {RadioButtonContainerDto} from '../model/project-fields/RadioButtonContainerDto';
+import {TextAreaDto} from '../model/project-fields/TextAreaDto';
+import {ProjectFieldsCollector} from '../model/project-fields/ProjectFieldsCollector';
+import {Injectable} from '@angular/core';
 
 import * as fieldTypes from '../constants/field-type';
 

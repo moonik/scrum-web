@@ -4,12 +4,12 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav mr-auto" data-toggle="collapse" data-target="#navbarNavAltMarkup">
       <a class="nav-item nav-link active" [routerLink]="['/home']">Home <span class="sr-only">(current)</span></a>
       <a class="nav-item nav-link" [routerLink]="['/project']" *ngIf="checkLogin()">New project</a>
       <a class="nav-item nav-link" [routerLink]="['/login']" *ngIf="!checkLogin()">Login</a>
       <a class="nav-item nav-link" [routerLink]="['/register']" *ngIf="!checkLogin()">Register</a>
-      <a class="nav-item nav-link" (click)="logout()" *ngIf="checkLogin()">Logout</a>
+      <a class="nav-item nav-link" data-toggle="collapse" data-target="#navbarNavAltMarkup" (click)="logout()" *ngIf="checkLogin()">Logout</a>
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item nav-link" *ngIf="checkLogin()">Hello {{ getCurrentUser() }}!</li> &nbsp; &nbsp;
@@ -19,7 +19,7 @@
               <input type="text" name="query" ngModel #query="ngModel" class="form-control" placeholder="Search..."/>
             </li>
             <li class="nav-item">
-              <input type="image" [src]="searchIcon" alt="Submit"/>
+              <input type="image" [src]="searchIcon" alt="Submit" data-toggle="collapse" data-target="#navbarNavAltMarkup"/>
             </li>
           </div>
         </form>
