@@ -51,10 +51,10 @@ export class AuthenticationService {
     return this.httpClientService.post('refresh', tokenObj)
       .map(
         response => {
-          const tokenRes = response.json() && response.json().token;
-          if (tokenRes) {
-            this.token = tokenRes;
-            localStorage.setItem('token', tokenRes);
+          const token = response.json() && response.json().token;
+          if (token) {
+            this.token = token;
+            localStorage.setItem('token', token);
           }
           return response.status;
         });
