@@ -9,7 +9,6 @@ import scrumweb.dto.user.UserInformationDto;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.profile.domain.UserProfile;
 
-@Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserAccountAsm {
 

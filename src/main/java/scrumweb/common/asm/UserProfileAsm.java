@@ -2,13 +2,11 @@ package scrumweb.common.asm;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 import scrumweb.dto.user.UserDto;
 import scrumweb.dto.user.UserProfileDto;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.profile.domain.UserProfile;
 
-@Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserProfileAsm {
 

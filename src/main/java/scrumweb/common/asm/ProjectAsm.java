@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProjectAsm {
 

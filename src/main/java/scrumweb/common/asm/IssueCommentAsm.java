@@ -1,6 +1,7 @@
 package scrumweb.common.asm;
 
-import org.springframework.stereotype.Component;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import scrumweb.dto.issue.IssueCommentDto;
 import scrumweb.dto.user.UserProfileDto;
 import scrumweb.issue.domain.Issue;
@@ -10,7 +11,7 @@ import scrumweb.user.account.domain.UserAccount;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class IssueCommentAsm {
 
     public static IssueCommentDto createDtoObject(IssueComment issueComment, UserProfileDto owner){

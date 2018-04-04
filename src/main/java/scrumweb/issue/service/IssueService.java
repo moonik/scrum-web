@@ -26,7 +26,6 @@ import scrumweb.project.repository.ProjectRepository;
 import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.account.repository.UserAccountRepository;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;

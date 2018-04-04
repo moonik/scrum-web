@@ -19,7 +19,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class IssueAsm {
 
