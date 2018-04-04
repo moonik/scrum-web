@@ -1,22 +1,21 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http, RequestOptionsArgs, Response} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
+import 'rxjs/Rx';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/observable/throw';
-import {LoaderService} from '../loader/loader.service';
-import * as constants from '../constants/application-constants';
+import {Observable} from 'rxjs/Observable';
+import {LoaderService} from "../loader/loader.service";
+import * as constants from '../constants/applicatins-contants';
 
 @Injectable()
 export class HttpClient {
 
-  private _constants = constants.default;
+  private constants = constants.default;
 
-  constructor(private _http: Http,
-              private _loaderService: LoaderService) {
-  }
+  constructor(private http: Http, private _loaderService: LoaderService) {}
 
   private createRequestOptionsArgs(): RequestOptionsArgs {
     const headers = new Headers();
@@ -29,7 +28,7 @@ export class HttpClient {
 
   get(url): Observable<any> {
     this.showLoader();
-    return this._http.get(this._constants.API_URL + url, this.createRequestOptionsArgs())
+    return this.http.get(this.constants.API_URL + url, this.createRequestOptionsArgs())
       .catch(this.onCatch)
       .do((res: Response) => {
         this.onSuccess(res);
@@ -43,7 +42,7 @@ export class HttpClient {
 
   post(url: string, body: any): Observable<any> {
     this.showLoader();
-    return this._http.post(this._constants.API_URL + url, JSON.stringify(body), this.createRequestOptionsArgs())
+    return this.http.post(this.constants.API_URL + url, JSON.stringify(body), this.createRequestOptionsArgs())
       .catch(this.onCatch)
       .do((res: Response) => {
         this.onSuccess(res);
@@ -57,7 +56,7 @@ export class HttpClient {
 
   put(url: string, body: any): Observable<Response> {
     this.showLoader();
-    return this._http.put(this._constants.API_URL + url, body, this.createRequestOptionsArgs())
+    return this.http.put(this.constants.API_URL + url, body, this.createRequestOptionsArgs())
       .catch(this.onCatch)
       .do((res: Response) => {
         this.onSuccess(res);
@@ -71,7 +70,7 @@ export class HttpClient {
 
   delete(url: string): Observable<Response> {
     this.showLoader();
-    return this._http.delete(this._constants.API_URL + url, this.createRequestOptionsArgs())
+    return this.http.delete(this.constants.API_URL + url, this.createRequestOptionsArgs())
       .catch(this.onCatch)
       .do((res: Response) => {
         this.onSuccess(res);

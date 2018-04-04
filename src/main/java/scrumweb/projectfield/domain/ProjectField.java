@@ -3,9 +3,6 @@ package scrumweb.projectfield.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import scrumweb.dto.projectfield.ProjectFieldDto;
-
-import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,13 +25,15 @@ public abstract class ProjectField {
     @NotNull
     private String name;
 
-    @NotNull
     private Boolean isRequired;
 
-    public ProjectField(FieldType fieldType, String name, Boolean isRequired) {
+    private String html;
+
+    public ProjectField(FieldType fieldType, String name, Boolean isRequired, String html) {
         this.fieldType = fieldType;
         this.name = name;
         this.isRequired = isRequired;
+        this.html = html;
     }
 
     public abstract void edit(ProjectField projectField);

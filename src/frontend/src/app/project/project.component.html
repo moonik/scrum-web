@@ -1,9 +1,6 @@
-<br>
 <div class="row justify-content-center">
   <form [formGroup]="projectForm" (ngSubmit)="createProject()">
-
     <div class="form-group">
-
       <div *ngIf="error != ''">
         <small class="form-text error">{{error}}</small>
         <br/>
@@ -11,7 +8,7 @@
 
       <label for="inputName">Name</label>
       <input type="text" class="form-control w-100" id="inputName"
-             placeholder="Enter project name" [(ngModel)]="projectDto.name" formControlName="name">
+            placeholder="Enter project name" [(ngModel)]="projectDto.name" formControlName="name">
       <div *ngIf="checkControl('name')">
         <small id="nameLengthError" class="form-text text-danger" *ngIf="checkProjectNameLength()">Project must be
           between 5 to 30 characters.
@@ -59,7 +56,4 @@
       <br/>
     </div>
   </form>
-
 </div>
-<br/>
-<br/>

@@ -1,93 +1,56 @@
-<div>
-  <br/>
-  <div class="row justify-content-center">
-    <form [formGroup]="registrationForm" (ngSubmit)="register()">
-      <div class="form-group">
-        <label for="inputFirstname">Firstname</label>
-        <input type="text" class="form-control w-50" id="inputFirstname"
-               placeholder="Enter firstname" [(ngModel)]="userDto.firstname" formControlName="firstname">
-        <div *ngIf="checkControl('firstname')">
-          <small id="firstnameError" class="form-text text-danger"
-                 *ngIf="registrationForm.controls.firstname.errors.required">firstname is required.
-          </small>
-        </div>
+<div class="row justify-content-center">
+  <form [formGroup] = "registrationForm" (ngSubmit)="register()">
+    <div class="form-group">
+      <label for="inputFirstname">Firstname</label>
+      <input type="text" class="form-control w-50" id="inputFirstname"
+             placeholder="Enter firstname" [(ngModel)]="userDto.firstname" formControlName="firstname">
+      <div *ngIf="checkControl('firstname')">
+      <small id="firstnameError" class="form-text text-danger" *ngIf="registrationForm.controls.firstname.errors.required">firstname is required.</small>
       </div>
-      <div class="form-group">
-        <label for="inputLastname">Lastname</label>
-        <input type="text" class="form-control w-50" id="inputLastname"
-               placeholder="Enter lastname" [(ngModel)]="userDto.lastname" formControlName="lastname">
-        <div *ngIf="checkControl('lastname')">
-          <small id="lastnameError" class="form-text text-danger"
-                 *ngIf="registrationForm.controls.lastname.errors.required">lastname is required.
-          </small>
-        </div>
       </div>
-      <div class="form-group">
-        <label for="inputUsername">Username</label>
-        <input type="text" class="form-control w-50" id="inputUsername" aria-describedby="usernameHelp"
-               placeholder="Enter username" [(ngModel)]="userDto.username" formControlName="username">
-        <small id="usernameHelp" class="form-text text-muted">provide username that will be used to login</small>
-        <div *ngIf="checkControl('username')">
-          <small id="usernameError" class="form-text text-danger"
-                 *ngIf="registrationForm.controls.username.errors.required">username is required.
-          </small>
-          <small id="usernameError" class="form-text text-danger" *ngIf="checkUsernameLength()">username must be between
-            5 to 9 characters.
-          </small>
-        </div>
-        <small id="usernameError" class="form-text text-danger">{{usernameExistError}}</small>
+    <div class="form-group">
+      <label for="inputLastname">Lastname</label>
+      <input type="text" class="form-control w-50" id="inputLastname"
+             placeholder="Enter lastname" [(ngModel)]="userDto.lastname" formControlName="lastname">
+      <div *ngIf="checkControl('lastname')">
+      <small id="lastnameError" class="form-text text-danger" *ngIf="registrationForm.controls.lastname.errors.required">lastname is required.</small>
       </div>
-
-      <!--<div class="form-group">-->
-      <!--<label for="inputEmail">Email</label>-->
-      <!--<input type="email" class="form-control w-50" id="inputEmail" aria-describedby="emailHelp"-->
-      <!--placeholder="Enter email" [(ngModel)]="userDto.email" name="email" required>-->
-      <!--<small id="emailHelp" class="form-text text-muted">provide email to sent you verification code.</small>-->
-      <!--</div>-->
-
+    </div>
       <div class="form-group">
-        <label for="inputPassword">Password</label>
-        <input type="password" class="form-control w-50" id="inputPassword" aria-describedby="passwordHelp"
-               [(ngModel)]="userDto.password" formControlName="password">
-        <small id="passwordHelp" class="form-text text-muted">Password must consist of at least one big character,
-          one number and has to be 8 character's long.
-        </small>
-        <div *ngIf="checkControl('password')">
-          <small id="passwordRequired" class="form-text text-danger"
-                 *ngIf="registrationForm.controls.password.errors.required">password is required.
-          </small>
-          <small id="passwordMinLength" class="form-text text-danger"
-                 *ngIf="registrationForm.controls.password.errors.minlength">password must be at least 8 characters
-            long.
-          </small>
-          <small id="passwordPattern" class="form-text text-danger"
-                 *ngIf="registrationForm.controls.password.errors.pattern">password must have at least one uppercase and
-            lowercase character and one digit.
-          </small>
-        </div>
+      <label for="inputUsername">Username</label>
+      <input type="text" class="form-control w-50" id="inputUsername" aria-describedby="usernameHelp"
+             placeholder="Enter username" [(ngModel)]="userDto.username" formControlName="username">
+      <small id="usernameHelp" class="form-text text-muted">provide username that will be used to login</small>
+      <div *ngIf="checkControl('username')">
+      <small id="usernameError" class="form-text text-danger" *ngIf="registrationForm.controls.username.errors.required">username is required.</small>
+      <small id="usernameError" class="form-text text-danger" *ngIf="checkUsernameLength()">username must be between 5 to 9 characters.</small>
       </div>
+      <small id="usernameError" class="form-text text-danger">{{usernameExistError}}</small>
+    </div>
 
-      <div class="form-group">
-        <label for="inputPasswordMatchup">Re-Password</label>
-        <input type="password" class="form-control w-50" id="inputPasswordMatchup"
-               aria-describedby="passwordMatchupHelp" required
-               minlength="8" formControlName="repassword">
-        <small id="passwordMatchupHelp" class="form-text text-muted">Password must match with the one above.</small>
-        <div *ngIf="checkControl('repassword')">
-          <small id="passwordError" class="form-text text-danger" *ngIf=" checkPasswordMatch()">password must match.
-          </small>
-          <small id="passwordRequired" class="form-text text-danger"
-                 *ngIf="registrationForm.controls.repassword.errors.required">this field is required.
-          </small>
-        </div>
+    <div class="form-group">
+      <label for="inputPassword">Password</label>
+      <input type="password" class="form-control w-50" id="inputPassword" aria-describedby="passwordHelp"
+             [(ngModel)]="userDto.password" formControlName="password">
+      <small id="passwordHelp" class="form-text text-muted">Password must consist of at least one big character,
+        one number and has to be 8 character's long.</small>
+      <div *ngIf="checkControl('password')">
+        <small id="passwordRequired" class="form-text text-danger" *ngIf="registrationForm.controls.password.errors.required">password is required.</small>
+        <small id="passwordMinLength" class="form-text text-danger" *ngIf="registrationForm.controls.password.errors.minlength">password must be at least 8 characters long.</small>
+        <small id="passwordPattern" class="form-text text-danger" *ngIf="registrationForm.controls.password.errors.pattern">password must have at least one uppercase and lowercase character and one digit.</small>
       </div>
+    </div>
 
-      <button type="submit" class="btn btn-primary" [disabled]="registrationForm.invalid">Register</button>
-
-    </form>
-
-  </div>
-  <br/>
-  <br/>
-  <br/>
+    <div class="form-group">
+      <label for="inputPasswordMatchup">Re-Password</label>
+      <input type="password" class="form-control w-50" id="inputPasswordMatchup" aria-describedby="passwordMatchupHelp" required
+             minlength="8" formControlName="repassword">
+      <small id="passwordMatchupHelp" class="form-text text-muted">Password must match with the one above.</small>
+      <div *ngIf="checkControl('repassword')">
+        <small id="passwordError" class="form-text text-danger" *ngIf=" checkPasswordMatch()">password must match.</small>
+      <small id="passwordRequired" class="form-text text-danger" *ngIf="registrationForm.controls.repassword.errors.required">this field is required.</small>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="registrationForm.invalid">Register</button>
+  </form>
 </div>

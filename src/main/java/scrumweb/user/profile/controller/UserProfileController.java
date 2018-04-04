@@ -21,13 +21,12 @@ import static scrumweb.common.ApplicationConstants.API_URL;
 public class UserProfileController {
 
     private UserProfileRepository repository;
-    private UserProfileAsm userProfileAsm;
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<UserProfileDto> allUsers() {
         return repository.findAll().stream()
-            .map(userProfile -> userProfileAsm.convertFromUserProfileToUserProfileDto(userProfile))
+            .map(UserProfileAsm::convertFromUserProfileToUserProfileDto)
             .collect(Collectors.toList());
     }
 }

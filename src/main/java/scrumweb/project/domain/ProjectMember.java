@@ -1,6 +1,8 @@
 package scrumweb.project.domain;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,17 +14,16 @@ import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @Getter @Setter
+@Builder
 public class ProjectMember {
 
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "projectMember_seq")
-//    @SequenceGenerator(name = "projectMember_seq", sequenceName = "projectMember_seq", allocationSize = 1)
-    private Long Id;
+    private Long id;
 
     @NotNull
     @OneToOne

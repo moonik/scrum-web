@@ -73,8 +73,7 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="requestDropdown">
             <a class="dropdown-item" *ngFor="let role of rolesTypes"
-               (click)="acceptRequest(request.username, role)"
-            >
+               (click)="acceptRequest(request.username, role)">
               {{role.toLocaleUpperCase()}}
             </a>
           </div>

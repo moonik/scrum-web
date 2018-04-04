@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ProjectDto} from '../model/projectDto';
+import {ProjectDto} from '../model/ProjectDto';
 import {HomeService} from './home.service';
 import {Router} from '@angular/router';
 import {StorageService} from '../shared/storage.service';
@@ -14,8 +14,8 @@ export class HomeComponent implements OnInit {
 
   projects: ProjectDto[] = [];
 
-  constructor(private _homeService: HomeService,
-              private _router: Router,
+  constructor(private homeService: HomeService,
+              private router: Router,
               private storage: StorageService) {
     this.getAllProjects();
   }
@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   }
 
   getAllProjects() {
-    this._homeService.getAllProjects()
+    this.homeService.getAllProjects()
       .subscribe(
         data => {
           this.projects = data;
@@ -35,11 +35,11 @@ export class HomeComponent implements OnInit {
 
   onConfigureProject(project: ProjectDto) {
     this.storage.setScope(project);
-    this._router.navigate(['project/configure', project.projectKey]);
+    this.router.navigate(['project/configure', project.projectKey]);
   }
 
   goToProjectDetails(projectKey: string) {
-    this._router.navigate(['project/details/' + projectKey]);
+    this.router.navigate(['project/details/' + projectKey]);
   }
 
   getCurrentUser(): string {

@@ -19,6 +19,7 @@ public class JwtTokenUtil {
 
     @Value("6048000")
     private Long expiration;
+    private static final String CREATED_AT = "created_at";
 
     public String getUsernameFromToken(String token) {
         try {
@@ -32,7 +33,7 @@ public class JwtTokenUtil {
     public Date getCreatedDateFromToken(String token) {
         try {
             final Claims claims = getClaimsFromToken(token);
-            return new Date((Long) claims.get("created_at"));
+            return new Date((Long) claims.get(CREATED_AT));
         } catch (IllegalArgumentException e) {
             return null;
         }
@@ -47,7 +48,7 @@ public class JwtTokenUtil {
         }
     }
 
-    private Claims getClaimsFromToken(String token) throws IllegalArgumentException {
+    private Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
             claims = Jwts.parser()
@@ -65,21 +66,17 @@ public class JwtTokenUtil {
         return expiration.before(new Date());
     }
 
-    private Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordRest) {
-        return lastPasswordRest != null && created.before(lastPasswordRest);
-    }
-
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
 
         claims.put("sub", userDetails.getUsername());
-        claims.put("created_at", new Date());
+        claims.put(CREATED_AT, new Date());
 
         return doGenerateToken(claims);
     }
 
     private String doGenerateToken(Map<String, Object> claims) {
-        final Date createdDate = (Date) claims.get("created_at");
+        final Date createdDate = (Date) claims.get(CREATED_AT);
         final Date expirationDate = new Date(createdDate.getTime() + ACCESS_TOKEN_VALIDITY_SECONDS);
 
         return Jwts.builder()
@@ -90,13 +87,12 @@ public class JwtTokenUtil {
     }
 
     public Boolean canTokenBeRefreshed(String token) {
-        final Date created = getCreatedDateFromToken(token);
         return !isTokenExpired(token);
     }
 
     public String refreshToken(String token) {
         final Claims claims = getClaimsFromToken(token);
-        claims.put("created_at", new Date());
+        claims.put(CREATED_AT, new Date());
         return doGenerateToken(claims);
     }
 
@@ -104,7 +100,6 @@ public class JwtTokenUtil {
         JwtUser user = (JwtUser) userDetails;
 
         final String username = getUsernameFromToken(token);
-        final Date created = getCreatedDateFromToken(token);
 
         return username.equals(user.getUsername())
                 && !isTokenExpired(token);

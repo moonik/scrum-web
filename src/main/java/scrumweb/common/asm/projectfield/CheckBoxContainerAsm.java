@@ -21,7 +21,13 @@ public class CheckBoxContainerAsm implements ProjectFieldAsm<CheckBoxContainer, 
     @Override
     public CheckBoxContainer createEntityObject(CheckBoxContainerDto projectFieldDto) {
         Set<CheckBox> checkBoxes = projectFieldDto.getElements().stream().map(checkBoxDto -> fieldElementsAsm.convertToEntityObject(checkBoxDto)).collect(Collectors.toSet());
-        return new CheckBoxContainer(FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), checkBoxes);
+        return new CheckBoxContainer(
+                FieldType.getFieldType(projectFieldDto.getFieldType()),
+                projectFieldDto.getFieldName(),
+                projectFieldDto.getIsRequired(),
+                checkBoxes,
+                createHtml(projectFieldDto)
+        );
     }
 
     @Override
@@ -34,5 +40,12 @@ public class CheckBoxContainerAsm implements ProjectFieldAsm<CheckBoxContainer, 
             projectField.getIsRequired(),
             checkBoxes
         );
+    }
+
+    @Override
+    public String createHtml(CheckBoxContainerDto projectFieldDto) {
+        return projectFieldDto.getElements().stream()
+                .map(element -> "<input type=\"checkbox\" name=\""+ projectFieldDto.getFieldName() +"\" class=\""+projectFieldDto.getFieldName()+"\" [(ngModel)]=\"\">")
+                .collect(Collectors.joining("\n<br>\n"));
     }
 }

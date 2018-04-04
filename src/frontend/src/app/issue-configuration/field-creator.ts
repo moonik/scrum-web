@@ -12,11 +12,11 @@ import * as fieldTypes from '../constants/field-type';
 export class FieldCreator {
 
     private fieldTypes = fieldTypes.default;
-    public projectFieldsCollector: ProjectFieldsCollector = new ProjectFieldsCollector();
+    projectFieldsCollector: ProjectFieldsCollector = new ProjectFieldsCollector();
 
     constructor() {}
 
-    public createField(field: any): void {
+    createField(field: any): void {
         if (field.fieldType === this.fieldTypes.inputField) {
             this.projectFieldsCollector.inputFieldDtos.push(this.createInputField(field));
         } else if (field.fieldType === this.fieldTypes.textArea) {

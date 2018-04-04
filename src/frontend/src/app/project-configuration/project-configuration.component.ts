@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserDto} from '../model/userDto';
+import {UserDto} from '../model/UserDto';
 import {ProjectConfigurationService} from './project-configuration.service';
-import {ProjectDto} from '../model/projectDto';
+import {ProjectDto} from '../model/ProjectDto';
 import {StorageService} from '../shared/storage.service';
-import {ProjectMemberDto} from '../model/projectMemberDto';
+import {ProjectMemberDto} from '../model/ProjectMemberDto';
 
 import * as roles from '../constants/roles';
 
@@ -16,13 +16,14 @@ import * as roles from '../constants/roles';
 
 export class ProjectConfigurationComponent implements OnInit {
 
-  public users: UserDto[] = [];
-  public project: ProjectDto = new ProjectDto();
-  public roles = roles.default;
-  public rolesTypes = Object.values(this.roles);
-  public error: string;
-  public icon: File = null;
-  public validIcon = true;
+  users: UserDto[] = [];
+  project: ProjectDto = new ProjectDto();
+  roles = roles.default;
+  rolesTypes = Object.values(this.roles);
+  error: string;
+  icon: File = null;
+  loading = false;
+  validIcon = true;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -53,12 +54,8 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   addUserToProject(user: string, role: string) {
-    const member: ProjectMemberDto = new ProjectMemberDto();
-    member.projectId = this.project.id;
-    member.username = user;
-    member.role = role;
-
-    this.confService.addMemberToProject(member)
+    const member: ProjectMemberDto = new ProjectMemberDto(user, role);
+    this.confService.addMemberToProject(this.project.projectKey, member)
       .subscribe(() => {
           this.project.members.push(member);
           this.ngOnInit();
@@ -67,7 +64,7 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   removeMemberFromProject(member: ProjectMemberDto) {
-    this.confService.removeMemberFromProject(member.username, member.projectId)
+    this.confService.removeMemberFromProject(member.username, this.project.projectKey)
       .subscribe(() => {
         this.project.members.splice(this.project.members.indexOf(member), 1);
         this.ngOnInit();
@@ -80,16 +77,15 @@ export class ProjectConfigurationComponent implements OnInit {
 
   chooseIcon(files: FileList) {
     this.icon = files.item(0);
+    this.loading = true;
     this.validIcon = true;
+
+
   }
 
   acceptRequest(user: string, role: string) {
-    const member: ProjectMemberDto = new ProjectMemberDto();
-    member.projectId = this.project.id;
-    member.username = user;
-    member.role = role;
-
-    this.confService.acceptRequestForAccess(member)
+    const member: ProjectMemberDto = new ProjectMemberDto(user, role);
+    this.confService.acceptRequestForAccess(this.project.projectKey, member)
       .subscribe(data => {
           this.project.members.push(member);
           this.project.requests.splice(this.project.requests.indexOf(member), 1);
@@ -99,7 +95,7 @@ export class ProjectConfigurationComponent implements OnInit {
   }
 
   declineRequest(request: ProjectMemberDto) {
-    this.confService.declineRequestForAccess(request.projectId, request.username).subscribe(
+    this.confService.declineRequestForAccess(this.project.projectKey, request.username).subscribe(
       () => {
         this.project.requests.splice(this.project.requests.indexOf(request), 1);
         this.ngOnInit();
@@ -107,7 +103,8 @@ export class ProjectConfigurationComponent implements OnInit {
     );
   }
 
-  public goToIssueConfiguration() {
-    return this.router.navigate(['/project/' + this.project.projectKey + '/configuration/issues']);
+  goToIssueConfiguration() {
+    this.router.navigate(['/project/' + this.project.projectKey + '/configuration/issues']);
   }
 }
+

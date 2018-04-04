@@ -1,11 +1,12 @@
 package scrumweb.common.asm;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import scrumweb.dto.issue.IssueDto;
 import scrumweb.dto.project.ProjectDetailsDto;
 import scrumweb.dto.project.ProjectDto;
 import scrumweb.dto.project.ProjectMemberDto;
-import scrumweb.dto.user.UserProfileDto;
 import scrumweb.project.domain.Project;
 import scrumweb.project.domain.ProjectMember;
 import scrumweb.project.domain.ProjectMember.Role;
@@ -16,44 +17,52 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProjectAsm {
 
-    public Project makeProject(ProjectDto projectDto) {
-        return new Project(projectDto.getName(), projectDto.getDescription(), projectDto.getIcon(), projectDto.getProjectKey());
+    public static Project makeProject(ProjectDto projectDto) {
+        return Project.builder()
+                .name(projectDto.getName())
+                .description(projectDto.getDescription())
+                .icon(projectDto.getIcon())
+                .key(projectDto.getProjectKey())
+                .build();
     }
 
-    public ProjectDto makeProjectDto(Project project, UserProfileDto owner) {
-        return new ProjectDto(project.getId(), project.getName(), project.getDescription(), project.getIcon(),
-            project.getMembers().stream()
-                .map(member -> makeProjectMemberDto(member, project.getId()))
-                .collect(Collectors.toSet()), project.getKey(), owner,
-            project.getRequests().stream()
-                .map(request -> makeProjectMemberDto(request, project.getId()))
-                .collect(Collectors.toSet())
-        );
+    public static ProjectDto makeProjectDto(Project project) {
+        return ProjectDto.builder()
+                .projectKey(project.getKey())
+                .name(project.getName())
+                .owner(UserProfileAsm.makeUserProfileDto(project.getOwner()))
+                .description(project.getDescription())
+                .icon(project.getIcon())
+                .members(convertProjectMembers(project.getMembers()))
+                .requests(convertProjectMembers(project.getRequests()))
+                .build();
     }
 
-    public ProjectMember makeProjectMember(UserAccount userAccount, Role role) {
+    public static ProjectMember makeProjectMember(UserAccount userAccount, Role role) {
         return new ProjectMember(userAccount, role);
     }
 
-    public ProjectMemberDto makeProjectMemberDto(ProjectMember projectMember, Long projectId) {
-        return new ProjectMemberDto(projectId, projectMember.getUserAccount().getUsername(), projectMember.getRole().getRoleString());
+    private static ProjectMemberDto makeProjectMemberDto(ProjectMember projectMember) {
+        return ProjectMemberDto.builder()
+                .username(projectMember.getUserAccount().getUsername())
+                .role(projectMember.getRole().getRoleString())
+                .photo(projectMember.getUserAccount().getUserProfile().getPhoto())
+                .build();
     }
 
-    public ProjectDetailsDto makeProjectDetailsDro(ProjectDto projectDto, List<IssueDto> issues) {
-        return new ProjectDetailsDto(projectDto, issues);
+    public static ProjectDetailsDto makeProjectDetailsDro(ProjectDto projectDto, List<IssueDto> issues) {
+        return ProjectDetailsDto.builder()
+                .projectDto(projectDto)
+                .issues(issues)
+                .build();
     }
 
-    public ProjectDto convertFromProjectToProjectDto(Project project, UserProfileDto owner) {
-        Set<ProjectMemberDto> memberDtoSet =
-            project.getMembers().stream()
-                .map(member -> makeProjectMemberDto(member, project.getId()))
+    private static Set<ProjectMemberDto> convertProjectMembers(Set<ProjectMember> members) {
+        return members.stream()
+                .map(ProjectAsm::makeProjectMemberDto)
                 .collect(Collectors.toSet());
-        return new ProjectDto(project.getId(), project.getName(), project.getDescription(),
-            project.getIcon(), memberDtoSet, project.getKey(), owner,
-            project.getRequests().stream()
-                .map(request -> makeProjectMemberDto(request, project.getId()))
-                .collect(Collectors.toSet()));
     }
 }

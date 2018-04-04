@@ -1,4 +1,4 @@
-import {ProjectMemberDto} from './projectMemberDto';
+import {ProjectMemberDto} from './ProjectMemberDto';
 import {UserProfileDto} from './UserProfileDto';
 
 export class ProjectDto {
@@ -11,3 +11,4 @@ export class ProjectDto {
   members: ProjectMemberDto[];
   requests: ProjectMemberDto[];
 }
+

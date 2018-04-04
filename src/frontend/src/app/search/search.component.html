@@ -1,4 +1,4 @@
-Search results for phrase: <b>{{ results }}</b>
+Search results for phrase: <b>{{ searchQuery }}</b>
 <br/>
 <br/>
 <form class="table-form">
@@ -14,7 +14,7 @@ Search results for phrase: <b>{{ results }}</b>
       <td></td>
     </tr>
     </thead>
-    <tbody *ngFor="let results of searchresults.projects">
+    <tbody *ngFor="let results of searchResults.projects">
     <tr >
       <td class="project-key" (click)="goToProjectDetails(results.projectKey)">{{results.projectKey}}</td>
       <td class="project-type" (click)="goToProjectDetails(results.projectKey)">{{results.name}}</td>
@@ -27,8 +27,7 @@ Search results for phrase: <b>{{ results }}</b>
           </button>
           <div class="dropdown-menu" aria-labelledby="requestDropdown">
             <a class="dropdown-item" *ngFor="let role of rolesTypes"
-               (click)="requestAccess(role, results.id)"
-            >
+               (click)="requestAccess(role, results.projectKey)">
               {{role.toLocaleUpperCase()}}
             </a>
           </div>
@@ -51,7 +50,7 @@ Search results for phrase: <b>{{ results }}</b>
       <td><b>Summary</b></td>
     </tr>
     </thead>
-    <tbody *ngFor="let results of searchresults.issues">
+    <tbody *ngFor="let results of searchResults.issues">
     <tr>
       <td class="project-key">{{results.issueKey}}</td>
       <td class="project-type">{{results.issueType}}</td>

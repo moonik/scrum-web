@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ProjectDto} from '../model/projectDto';
+import {ProjectDto} from '../model/ProjectDto';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ProjectService} from './project.service';
@@ -11,12 +11,12 @@ import {ProjectService} from './project.service';
 })
 export class ProjectComponent implements OnInit {
 
-  public projectDto: ProjectDto = new ProjectDto();
-  public projectForm: FormGroup;
-  public error = '';
-  public icon: File = null;
-  public loading = false;
-  public validIcon = true;
+  projectDto: ProjectDto = new ProjectDto();
+  projectForm: FormGroup;
+  error = '';
+  icon: File = null;
+  loading = false;
+  validIcon = true;
 
   constructor(fb: FormBuilder,
               private router: Router,

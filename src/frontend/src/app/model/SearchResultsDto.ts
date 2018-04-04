@@ -1,7 +1,7 @@
-import {ProjectDto} from './projectDto';
+import {ProjectDto} from './ProjectDto';
 import {IssueDto} from './IssueDto';
 
 export class SearchResultsDto {
-  public project: Array<ProjectDto> = [];
-  public issue: Array<IssueDto> = [];
+  projects: Array<ProjectDto> = [];
+  issues: Array<IssueDto> = [];
 }

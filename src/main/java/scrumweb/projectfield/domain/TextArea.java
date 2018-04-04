@@ -17,8 +17,8 @@ public class TextArea extends ProjectField {
     private int minCharacters;
     private int maxCharacters;
 
-    public TextArea(FieldType fieldType, String name, Boolean isRequired, int minCharacters, int maxCharacters) {
-        super(fieldType, name, isRequired);
+    public TextArea(FieldType fieldType, String name, Boolean isRequired, int minCharacters, int maxCharacters, String html) {
+        super(fieldType, name, isRequired, html);
         this.minCharacters = minCharacters;
         this.maxCharacters = maxCharacters;
     }

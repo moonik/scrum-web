@@ -2,7 +2,7 @@ package scrumweb.exception;
 
 public class ProjectNotFoundException extends RuntimeException {
 
-    public ProjectNotFoundException(Long id){
-        super("Project with id "+id+" not found!");
+    public ProjectNotFoundException(String projectKey){
+        super("Project with key "+projectKey+" not found!");
     }
 }

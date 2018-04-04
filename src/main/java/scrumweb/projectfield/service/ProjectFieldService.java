@@ -12,6 +12,7 @@ import scrumweb.project.repository.ProjectRepository;
 import scrumweb.projectfield.domain.ProjectField;
 import scrumweb.projectfield.repository.ProjectFieldRepository;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -44,12 +45,13 @@ public class ProjectFieldService {
         final IssueType issueTypeFromDb = findIssueType(project.getIssueTypes(), issueType);
         return issueTypeFromDb.getFields().stream()
                 .map(field -> projectFieldAsm.createDtoObject(field))
+                .sorted(Comparator.comparingLong(ProjectFieldDto::getId))
                 .collect(Collectors.toSet());
     }
 
     public Set<ProjectFieldDto> removeField(Long id, String projectKey, String issueType) {
         IssueType issuetype = findIssueType(projectRepository.findByKey(projectKey).getIssueTypes(), issueType);
-        issuetype.setFields(issuetype.getFields().stream().filter(f -> !f.getId().equals(id)).collect(Collectors.toSet()));
+        issuetype.setFields(filterOutFields(issuetype.getFields(), id));
         issueTypeRepository.saveAndFlush(issuetype);
         projectFieldRepository.delete(id);
         return issuetype.getFields().stream()
@@ -75,5 +77,11 @@ public class ProjectFieldService {
                 fieldsToBeSaved.add(projectFieldAsm.createEntityObject(f));
         });
         return fieldsToBeSaved;
+    }
+
+    public Set<ProjectField> filterOutFields(Set<ProjectField> fields, Long fieldId) {
+        return  fields.stream()
+                .filter(f -> !f.getId().equals(fieldId))
+                .collect(Collectors.toSet());
     }
 }

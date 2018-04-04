@@ -5,9 +5,9 @@ import { RadioButtonContainerDto } from './RadioButtonContainerDto';
 import { TextAreaDto } from './TextAreaDto';
 
 export class ProjectFieldsCollector {
-    public checkBoxContainerDtos: Array<CheckBoxContainerDto> = [];
-    public inputFieldDtos: Array<InputFieldDto> = [];
-    public listElementsContainerDtos: Array<ListElementsContainerDto> = [];
-    public radioButtonContainerDtos: Array<RadioButtonContainerDto> = [];
-    public textAreaDtos: Array<TextAreaDto> = [];
+    checkBoxContainerDtos: Array<CheckBoxContainerDto> = [];
+    inputFieldDtos: Array<InputFieldDto> = [];
+    listElementsContainerDtos: Array<ListElementsContainerDto> = [];
+    radioButtonContainerDtos: Array<RadioButtonContainerDto> = [];
+    textAreaDtos: Array<TextAreaDto> = [];
 }

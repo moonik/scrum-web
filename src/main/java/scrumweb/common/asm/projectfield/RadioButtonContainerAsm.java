@@ -15,13 +15,19 @@ import java.util.stream.Collectors;
 @Component
 @AllArgsConstructor
 public class RadioButtonContainerAsm implements ProjectFieldAsm<RadioButtonContainer, RadioButtonContainerDto> {
-
+    //TODO ADD HTML
     private FieldElementsAsm<RadioButton, RadioButtonDto> fieldElementsAsm;
 
     @Override
     public RadioButtonContainer createEntityObject(RadioButtonContainerDto projectFieldDto) {
         Set<RadioButton> radioButtons = projectFieldDto.getElements().stream().map(radioButtonDto -> fieldElementsAsm.convertToEntityObject(radioButtonDto)).collect(Collectors.toSet());
-        return new RadioButtonContainer(FieldType.getFieldType(projectFieldDto.getFieldType()), projectFieldDto.getFieldName(), projectFieldDto.getIsRequired(), radioButtons);
+        return new RadioButtonContainer(
+                FieldType.getFieldType(projectFieldDto.getFieldType()),
+                projectFieldDto.getFieldName(),
+                projectFieldDto.getIsRequired(),
+                radioButtons,
+                createHtml(projectFieldDto)
+        );
     }
 
     @Override
@@ -34,5 +40,10 @@ public class RadioButtonContainerAsm implements ProjectFieldAsm<RadioButtonConta
                 projectField.getIsRequired(),
                 radioButtons
         );
+    }
+
+    @Override
+    public String createHtml(RadioButtonContainerDto projectFieldDto) {
+        return null;
     }
 }

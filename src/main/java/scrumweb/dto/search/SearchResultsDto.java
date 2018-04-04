@@ -12,12 +12,9 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SearchResultsDto {
-
     private List<IssueDto> issues;
     private List<ProjectDto> projects;
-
 }

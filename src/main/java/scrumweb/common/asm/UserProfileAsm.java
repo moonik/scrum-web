@@ -1,5 +1,7 @@
 package scrumweb.common.asm;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import scrumweb.dto.user.UserDto;
 import scrumweb.dto.user.UserProfileDto;
@@ -7,17 +9,35 @@ import scrumweb.user.account.domain.UserAccount;
 import scrumweb.user.profile.domain.UserProfile;
 
 @Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserProfileAsm {
 
-    public UserProfile makeUserProfile(UserDto userDto) {
-        return new UserProfile(userDto.getUsername(), userDto.getFirstname(), userDto.getLastname(), null);
+    public static UserProfile makeUserProfile(UserDto userDto) {
+        return UserProfile.builder()
+                .username(userDto.getUsername())
+                .firstname(userDto.getFirstname())
+                .lastname(userDto.getLastname())
+                .photo(userDto.getPhoto())
+                .build();
     }
 
-    public UserProfileDto makeUserProfileDto(UserAccount userAccount, UserProfile userProfile) {
-        return new UserProfileDto(userAccount.getId(), userProfile.getFirstname(), userProfile.getLastname(), userProfile.getPhoto(), userAccount.getUsername());
+    public static UserProfileDto makeUserProfileDto(UserAccount userAccount) {
+        return UserProfileDto.builder()
+                .profileId(userAccount.getId())
+                .firstname(userAccount.getUserProfile().getFirstname())
+                .lastname(userAccount.getUserProfile().getLastname())
+                .username(userAccount.getUsername())
+                .photo(userAccount.getUserProfile().getPhoto())
+                .build();
     }
 
-    public UserProfileDto convertFromUserProfileToUserProfileDto(UserProfile userProfile){
-        return new UserProfileDto(userProfile.getId(), userProfile.getFirstname(), userProfile.getLastname(), userProfile.getPhoto(), userProfile.getUsername());
+    public static UserProfileDto convertFromUserProfileToUserProfileDto(UserProfile userProfile) {
+        return UserProfileDto.builder()
+                .profileId(userProfile.getId())
+                .firstname(userProfile.getFirstname())
+                .lastname(userProfile.getLastname())
+                .photo(userProfile.getPhoto())
+                .username(userProfile.getUsername())
+                .build();
     }
 }

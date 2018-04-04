@@ -40,22 +40,22 @@ public class ProjectController {
         return projectService.create(projectDto);
     }
 
-    @PostMapping("/members/")
+    @PostMapping("/{projectKey}/members")
     @ResponseStatus(HttpStatus.OK)
-    public void addMember(@RequestBody ProjectMemberDto projectMemberDto) {
-        projectService.addMember(projectMemberDto);
+    public void addMember(@PathVariable String projectKey, @RequestBody ProjectMemberDto projectMemberDto) {
+        projectService.addMember(projectMemberDto, projectKey);
     }
 
-    @DeleteMapping("{id}/members/{username}")
+    @DeleteMapping("/{projectKey}/members/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public void removeMember(@PathVariable Long id, @PathVariable String username) {
-        projectService.removeMember(username, id);
+    public void removeMember(@PathVariable String projectKey, @PathVariable String username) {
+        projectService.removeMember(username, projectKey);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{projectKey}")
     @ResponseStatus(HttpStatus.OK)
-    public void editProject(@PathVariable Long id, @RequestBody ProjectDto projectDto) {
-        projectService.editName(projectDto.getName(), id);
+    public void editProject(@PathVariable String projectKey, @RequestBody ProjectDto projectDto) {
+        projectService.editName(projectDto.getName(), projectKey);
     }
 
     @GetMapping("/details/{projectKey}")
@@ -70,7 +70,7 @@ public class ProjectController {
         return projectService.findProjectsAndIssuesByKeyQuery(paramkey);
     }
 
-    @GetMapping("/members/{projectKey}")
+    @GetMapping("/{projectKey}/members")
     @ResponseStatus(HttpStatus.OK)
     public Set<ItemAssignee> getProjectMembers(@PathVariable String projectKey) {
         return projectService.getProjectMembers(projectKey);
@@ -82,22 +82,22 @@ public class ProjectController {
         return projectService.findAllProjects();
     }
 
-    @PostMapping("/access")
+    @PostMapping("/{projectKey}/access")
     @ResponseStatus(HttpStatus.OK)
-    public void askForAccess(@RequestBody ProjectMemberDto projectMemberDto) {
-        projectService.askForAccess(projectMemberDto);
+    public void askForAccess(@PathVariable String projectKey, @RequestBody ProjectMemberDto projectMemberDto) {
+        projectService.askForAccess(projectMemberDto, projectKey);
     }
 
-    @DeleteMapping("{id}/requests/{member}")
+    @DeleteMapping("{projectKey}/requests/decline/{member}")
     @ResponseStatus(HttpStatus.OK)
-    public void declineRequestForAccess(@PathVariable Long id, @PathVariable String member) {
-        projectService.declineRequestForAccess(id, member);
+    public void declineRequestForAccess(@PathVariable String projectKey, @PathVariable String member) {
+        projectService.declineRequestForAccess(projectKey, member);
     }
 
-    @PostMapping("/requests")
+    @PostMapping("/{projectKey}/requests/accept")
     @ResponseStatus(HttpStatus.OK)
-    public void acceptRequestForAccess(@RequestBody ProjectMemberDto projectMemberDto) {
-        projectService.acceptRequestForAccess(projectMemberDto);
+    public void acceptRequestForAccess(@PathVariable String projectKey, @RequestBody ProjectMemberDto projectMemberDto) {
+        projectService.addMember(projectMemberDto, projectKey);
     }
 
     @GetMapping("/{key}/issue-types")

@@ -3,51 +3,51 @@ import {HttpClient} from '../shared/http.client.service';
 import {IssueDetailsDto} from '../model/IssueDetailsDto';
 import {IssueComment} from '../model/IssueComment';
 
+const URL = 'project/issue/';
+
 @Injectable()
 export class IssueService {
 
-  private _URL = 'project/issue/';
+  constructor(private http: HttpClient) {}
 
-  constructor(private _http: HttpClient) {}
-
-  createIssue(projectKey: string, issueDetails: IssueDetailsDto) {
-    return this._http.post('project/issue/' + projectKey, issueDetails)
+  createIssue(projectkey: string, issueDetails: IssueDetailsDto) {
+    return this.http.post('project/issue/' + projectkey, issueDetails)
       .map(res => res.json());
   }
 
   getAssignees(projectKey: string) {
-    return this._http.get('project/members/' + projectKey)
+    return this.http.get('project/' + projectKey + '/members')
       .map(res => res.json());
   }
 
-    public getIssueComments(issueId: number) {
-      return this._http.get(this._URL + 'comments/' + issueId)
-        .map(res => res.json());
-    }
+  getIssueComments(issueKey: string) {
+    return this.http.get(URL + 'comments/' + issueKey)
+      .map(res => res.json());
+  }
 
-    public addComment(issueId: number, comment: IssueComment) {
-        return this._http.post(this._URL + 'comment/' + issueId, comment)
-          .map(res => res.json());
-    }
+  addComment(issueKey: string, comment: IssueComment) {
+    return this.http.post(URL + 'comment/' + issueKey, comment)
+      .map(res => res.json());
+  }
 
-    public deleteComment(commentId: number, issueId: number) {
-      return this._http.delete(this._URL + 'comments/delete/' + commentId + '/' + issueId);
-    }
+  deleteComment(commentId: number, issueKey: string) {
+    return this.http.delete(URL + 'comments/delete/' + commentId + '/' + issueKey);
+  }
 
-    public editComment(commentId: number, comment: IssueComment) {
-      return this._http.post(this._URL + 'comments/edit/' + commentId, comment);
-    }
+  editComment(commentId: number, comment: IssueComment) {
+    return this.http.post(URL + 'comments/edit/' + commentId, comment);
+  }
 
   getIssueDetails(issueKey: string) {
-    return this._http.get(this._URL + 'details/' + issueKey)
+    return this.http.get(URL + 'details/' + issueKey)
       .map(res => res.json());
   }
 
   assignToIssue(issueKey: string, username: string) {
-    return this._http.post(this._URL + issueKey + '/assign/' + username, null);
+    return this.http.post(URL + issueKey + '/assign/' + username, null);
   }
 
   unAssignFromIssue(username: string, issueKey: string) {
-    return this._http.delete(this._URL + issueKey + '/assign/' + username);
+    return this.http.delete(URL + issueKey + '/assign/' + username);
   }
 }

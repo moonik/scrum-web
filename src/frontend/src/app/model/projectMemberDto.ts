@@ -1,5 +1,9 @@
 export class ProjectMemberDto {
-  public projectId: number;
-  public username: string;
-  public role: string;
+  username: string;
+  role: string;
+
+  constructor(username: string, role: string) {
+    this.username = username;
+    this.role = role;
+  }
 }

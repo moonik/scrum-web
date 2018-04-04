@@ -16,26 +16,25 @@ export class NavbarComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService, private router: Router) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
-  search(query) {
+  public search(query: string) {
     if (query !== '') {
       this.router.navigate(['/search/' + query]);
     }
   }
 
-  checkLogin(): boolean {
+  public checkLogin(): boolean {
     return localStorage.getItem('currentUser') ? true : false;
   }
 
-  logout() {
+  public logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }
 
-  getCurrentUser(): string {
+  public getCurrentUser(): string {
     return localStorage.getItem('currentUser');
   }
-
 }

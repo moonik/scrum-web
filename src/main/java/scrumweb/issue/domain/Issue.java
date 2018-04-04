@@ -1,5 +1,8 @@
 package scrumweb.issue.domain;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +19,9 @@ import java.util.Set;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@Builder
 public class Issue {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,20 +63,6 @@ public class Issue {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "issue")
     private List<IssueComment> comments;
-
-    public Issue(String summary, String description, Set<UserAccount> assignees, UserAccount reporter, String estimateTime, String remainingTime,
-                 Priority priority, IssueType issueType, Set<FieldContent> fieldContents, LocalDateTime createdDate) {
-        this.summary = summary;
-        this.description = description;
-        this.assignees = assignees;
-        this.reporter = reporter;
-        this.estimateTime = estimateTime;
-        this.remainingTime = remainingTime;
-        this.priority = priority;
-        this.issueType = issueType;
-        this.fieldContents = fieldContents;
-        this.createdDate = createdDate;
-    }
 
     public enum Priority {
         HIGH, LOW

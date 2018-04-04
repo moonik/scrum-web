@@ -37,17 +37,14 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class IssueService {
 
-    private IssueAsm issueAsm;
     private IssueRepository issueRepository;
     private UserAccountRepository userAccountRepository;
     private SecurityContextService securityContextService;
     private ProjectFieldRepository projectFieldRepository;
     private ProjectRepository projectRepository;
-    private UserProfileAsm userProfileAsm;
     private FieldContentConverter fieldContentAsm;
-    private IssueCommentAsm issueCommentAsm;
-    private IssueCommentRepository issueCommentRepository;
     private IssueTypeRepository issueTypeRepository;
+    private IssueCommentRepository issueCommentRepository;
 
     public IssueDetailsDto create(IssueDetailsDto issueDetailsDto, Set<FieldContentDto> fieldContentsDto, String projectKey) {
         final Project project = projectRepository.findByKey(projectKey);
@@ -66,17 +63,15 @@ public class IssueService {
         }
         Set<FieldContent> fieldContents = extractContents(fieldContentsDto);
         IssueType issueType = getIssueType(project.getIssueTypes(), issueDetailsDto.getIssueType());
-        Issue issue = issueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
+        Issue issue = IssueAsm.createIssueEntityObject(issueDetailsDto, assignees, reporter, fieldContents, issueType);
         issue.setKey(issueKey);
         return issue;
     }
 
     public IssueDetailsDto getDetails(String issueKey) {
         Issue issue = issueRepository.findIssueByKey(issueKey);
-        Set<UserProfileDto> assignees = issue.getAssignees().stream().map(userAccount -> userProfileAsm.makeUserProfileDto(userAccount, userAccount.getUserProfile())).collect(Collectors.toSet());
-        UserProfileDto reporter = userProfileAsm.makeUserProfileDto(issue.getReporter(), issue.getReporter().getUserProfile());
-        Set<FieldContentDto> fieldsContentsDto = issue.getFieldContents().stream().map(fieldContent -> fieldContentAsm.createDtoObject(fieldContent)).collect(Collectors.toSet());
-        IssueDetailsDto issueDetailsDto = issueAsm.createIssueDetailsDto(issue, assignees, reporter);
+        Set<FieldContentDto> fieldsContentsDto = extractConents(issue.getFieldContents());
+        IssueDetailsDto issueDetailsDto = IssueAsm.createIssueDetailsDto(issue);
         issueDetailsDto.setFieldContents(fieldsContentsDto);
         return issueDetailsDto;
     }
@@ -121,6 +116,12 @@ public class IssueService {
             .collect(Collectors.toSet());
     }
 
+    private Set<FieldContentDto> extractConents(Set<FieldContent> fieldContents) {
+        return fieldContents.stream()
+                .map(fieldContent -> fieldContentAsm.createDtoObject(fieldContent))
+                .collect(Collectors.toSet());
+    }
+
     private IssueType getIssueType(Set<IssueType> issueTypes, String issueType) {
         return issueTypes.stream()
             .filter(i -> i.getName().equalsIgnoreCase(issueType))
@@ -132,7 +133,7 @@ public class IssueService {
         return projectRepository.findAll().stream()
             .filter(p -> p.getIssues().contains(issue))
             .reduce((a, b) -> null)
-            .map(project2 -> project2.getMembers().stream()
+            .map(project -> project.getMembers().stream()
                 .map(m -> m.getUserAccount().getUsername())
                 .collect(Collectors.toList()).contains(username))
             .orElse(false);
@@ -153,7 +154,6 @@ public class IssueService {
     public void unAssignFromIssue(String issueKey, String username) {
         Issue issue = issueRepository.findIssueByKey(issueKey);
         UserAccount user = userAccountRepository.findByUsername(username);
-
         if (checkIfMember(username, issue)) {
             issue.getAssignees().remove(user);
             issueRepository.save(issue);
@@ -176,70 +176,38 @@ public class IssueService {
             issueTypeRepository.delete(issueType);
         }
     }
-    public IssueCommentDto addComment(IssueCommentDto issueCommentDto, Long id){
-        Issue issue = issueRepository.findOne(id);
+
+    public IssueCommentDto addComment(IssueCommentDto issueCommentDto, String issueKey){
+        Issue issue = issueRepository.findIssueByKey(issueKey);
         UserAccount commentOwner = securityContextService.getCurrentUserAccount();
-
         List<IssueComment> comments = issue.getComments();
-
-        IssueComment issueComment = new IssueComment(commentOwner, issueCommentDto.getContent(), LocalDateTime.now(), issue);
-
+        IssueComment issueComment = IssueCommentAsm.createEntityObject(issueCommentDto, commentOwner, issue);
         comments.add(issueComment);
         issue.setComments(comments);
         issueCommentRepository.save(comments);
-
-        return issueCommentAsm.fromIssueCommentToIssueCommentDto(issueComment, userProfileAsm.makeUserProfileDto(commentOwner, commentOwner.getUserProfile()));
+        return IssueCommentAsm.createDtoObject(issueComment, UserProfileAsm.makeUserProfileDto(commentOwner));
     }
 
-    public List<IssueCommentDto> getCommentsForIssue(Long id){
-        Issue issue = issueRepository.findOne(id);
-
+    public List<IssueCommentDto> getCommentsForIssue(String issueKey){
+        Issue issue = issueRepository.findIssueByKey(issueKey);
         return issue.getComments().stream()
-                .map(comment -> issueCommentAsm.fromIssueCommentToIssueCommentDto(comment, userProfileAsm.makeUserProfileDto(comment.getOwner(), comment.getOwner().getUserProfile())))
+                .map(comment -> IssueCommentAsm.createDtoObject(comment, UserProfileAsm.makeUserProfileDto(comment.getOwner())))
                 .collect(Collectors.toList());
 
     }
 
-    public void deleteComment(Long commentId, Long issueId) {
-        Issue issue = issueRepository.findOne(issueId);
+    public void deleteComment(Long commentId, String issueKey) {
+        Issue issue = issueRepository.findIssueByKey(issueKey);
         List<IssueComment> comments = issue.getComments().stream().filter(c -> !c.getId().equals(commentId)).collect(Collectors.toList());
         issue.setComments(comments);
         issueRepository.saveAndFlush(issue);
         issueCommentRepository.delete(commentId);
-
     }
 
     public String editComment(Long commentId, String content) {
         IssueComment comment = issueCommentRepository.findOne(commentId);
         comment.setContent(content);
         issueCommentRepository.save(comment);
-
         return content;
     }
-
-    public void assignToIssue(Long id, String username) {
-        Issue issue = issueRepository.findOne(id);
-        UserAccount user = userAccountRepository.findByUsername(username);
-
-        if (checkIfMember(username, issue)) {
-            issue.getAssignees().add(user);
-            issueRepository.save(issue);
-        } else {
-            throw new CantAssignToIssueException();
-        }
-    }
-
-    public void unAssignFromIssue(Long id, String username) {
-        Issue issue = issueRepository.findOne(id);
-        UserAccount user = userAccountRepository.findByUsername(username);
-
-        if (checkIfMember(username, issue)) {
-            issue.getAssignees().remove(user);
-            issueRepository.save(issue);
-        } else {
-            throw new CantAssignToIssueException(username);
-        }
-    }
-
-
 }
