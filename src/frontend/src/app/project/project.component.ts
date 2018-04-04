@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ProjectDto} from '../model/projectDto';
+import {ProjectDto} from '../model/ProjectDto';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ProjectService} from './project.service';

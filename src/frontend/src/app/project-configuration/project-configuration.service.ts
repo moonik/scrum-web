@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '../shared/http.client.service';
-import {UserDto} from '../model/userDto';
-import {ProjectMemberDto} from '../model/projectMemberDto';
+import {UserDto} from '../model/UserDto';
+import {ProjectMemberDto} from '../model/ProjectMemberDto';
 
 @Injectable()
 export class ProjectConfigurationService {

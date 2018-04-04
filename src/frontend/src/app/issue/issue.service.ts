@@ -8,8 +8,7 @@ const URL = 'project/issue/';
 @Injectable()
 export class IssueService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   createIssue(projectkey: string, issueDetails: IssueDetailsDto) {
     return this.http.post('project/issue/' + projectkey, issueDetails)
@@ -21,23 +20,23 @@ export class IssueService {
       .map(res => res.json());
   }
 
-    public getIssueComments(issueId: number) {
-      return this.http.get(URL + 'comments/' + issueId)
-        .map(res => res.json());
-    }
+  getIssueComments(issueKey: string) {
+    return this.http.get(URL + 'comments/' + issueKey)
+      .map(res => res.json());
+  }
 
-    public addComment(issueId: number, comment: IssueComment) {
-        return this.http.post(URL + 'comment/' + issueId, comment)
-          .map(res => res.json());
-    }
+  addComment(issueKey: string, comment: IssueComment) {
+    return this.http.post(URL + 'comment/' + issueKey, comment)
+      .map(res => res.json());
+  }
 
-    public deleteComment(commentId: number, issueId: number) {
-      return this.http.delete(URL + 'comments/delete/' + commentId + '/' + issueId);
-    }
+  deleteComment(commentId: number, issueKey: string) {
+    return this.http.delete(URL + 'comments/delete/' + commentId + '/' + issueKey);
+  }
 
-    public editComment(commentId: number, comment: IssueComment) {
-      return this.http.post(URL + 'comments/edit/' + commentId, comment);
-    }
+  editComment(commentId: number, comment: IssueComment) {
+    return this.http.post(URL + 'comments/edit/' + commentId, comment);
+  }
 
   getIssueDetails(issueKey: string) {
     return this.http.get(URL + 'details/' + issueKey)

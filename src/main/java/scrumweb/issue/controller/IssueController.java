@@ -67,22 +67,22 @@ public class IssueController {
         issueService.unAssignFromIssue(issueKey, username);
     }
 
-    @PostMapping("/comment/{id}")
+    @PostMapping("/comment/{issueKey}")
     @ResponseStatus(HttpStatus.OK)
-    public IssueCommentDto addComment(@PathVariable Long id, @RequestBody IssueCommentDto issueCommentDto) {
-        return issueService.addComment(issueCommentDto, id);
+    public IssueCommentDto addComment(@PathVariable String issueKey, @RequestBody IssueCommentDto issueCommentDto) {
+        return issueService.addComment(issueCommentDto, issueKey);
     }
 
-    @GetMapping("/comments/{id}")
+    @GetMapping("/comments/{issueKey}")
     @ResponseStatus(HttpStatus.OK)
-    public List<IssueCommentDto> getComments(@PathVariable Long id){
-        return issueService.getCommentsForIssue(id);
+    public List<IssueCommentDto> getComments(@PathVariable String issueKey){
+        return issueService.getCommentsForIssue(issueKey);
     }
 
-    @DeleteMapping("/comments/delete/{commentId}/{issueId}")
+    @DeleteMapping("/comments/delete/{commentId}/{issueKey}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteComment(@PathVariable Long commentId, @PathVariable Long issueId){
-        issueService.deleteComment(commentId, issueId);
+    public void deleteComment(@PathVariable Long commentId, @PathVariable String issueKey){
+        issueService.deleteComment(commentId, issueKey);
     }
 
     @PostMapping("/comments/edit/{commentId}")

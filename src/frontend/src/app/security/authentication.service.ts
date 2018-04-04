@@ -1,20 +1,16 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-  import 'rxjs/add/operator/map';
-import {UserDto} from '../model/userDto';
+import 'rxjs/add/operator/map';
+import {UserDto} from '../model/UserDto';
 import {HttpClient} from '../shared/http.client.service';
 @Injectable()
 export class AuthenticationService {
 
   token: string;
-  headers: Headers = new Headers();
 
   constructor(private httpClientService: HttpClient) {
     const currentUser = JSON.parse(localStorage.getItem('username'));
     this.token = currentUser && currentUser.token;
-    this.headers.append('Authorization', '');
-    this.headers.append('Content-Type', 'application/json');
   }
 
   login(userDto: UserDto): Observable<any> {

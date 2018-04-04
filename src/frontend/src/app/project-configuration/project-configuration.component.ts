@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserDto} from '../model/userDto';
+import {UserDto} from '../model/UserDto';
 import {ProjectConfigurationService} from './project-configuration.service';
-import {ProjectDto} from '../model/projectDto';
+import {ProjectDto} from '../model/ProjectDto';
 import {StorageService} from '../shared/storage.service';
-import {ProjectMemberDto} from '../model/projectMemberDto';
+import {ProjectMemberDto} from '../model/ProjectMemberDto';
 
 import * as roles from '../constants/roles';
 

@@ -114,8 +114,8 @@ export class ProjectDetailsComponent implements OnInit {
     return !this.selectedIssue.assignees.map(a => a.username).includes(username);
   }
 
-  public getIssueComments() {
-    return this.issueService.getIssueComments(this.selectedIssue.id)
+  getIssueComments() {
+    return this.issueService.getIssueComments(this.selectedIssue.key)
       .subscribe(
         data => {
           this.comments = data;
@@ -123,8 +123,8 @@ export class ProjectDetailsComponent implements OnInit {
       );
   }
 
-  public addComment() {
-    return this.issueService.addComment(this.selectedIssue.id, this.newComment)
+  addComment() {
+    return this.issueService.addComment(this.selectedIssue.key, this.newComment)
       .subscribe(
         data => {
           this.comments.push(data);
@@ -133,17 +133,17 @@ export class ProjectDetailsComponent implements OnInit {
       );
   }
 
-  public deleteComment(comment: IssueComment) {
-    return this.issueService.deleteComment(comment.id, this.selectedIssue.id)
+  deleteComment(comment: IssueComment) {
+    return this.issueService.deleteComment(comment.id, this.selectedIssue.key)
       .subscribe(
         () => {
-          this.comments.splice(this.comments.indexOf(comment), 1);
-          console.log(this.comments);
+          const index = this.comments.indexOf(comment);
+          this.comments.splice(index, 1);
         }
       );
   }
 
-  public editComment(comment: IssueComment, commentId: number) {
+  editComment(comment: IssueComment, commentId: number) {
     return this.issueService.editComment(commentId, comment)
       .subscribe(
         () => {
@@ -156,28 +156,27 @@ export class ProjectDetailsComponent implements OnInit {
     return localStorage.getItem('currentUser');
   }
 
-  public mouseEnter(comment: any) {
+  mouseEnter(comment: any) {
     this.selectedComment = comment.id;
     comment.hover = true;
   }
 
-  public mouseLeave(comment: any) {
+  mouseLeave(comment: any) {
     comment.hover = false;
   }
 
-  public checkCommentLength(): boolean {
+  checkCommentLength(): boolean {
     return this.commentForm.controls.content.errors.minlength || this.commentForm.controls.content.errors.maxlength;
   }
 
-  public checkControl(name: string): boolean {
+  checkControl(name: string): boolean {
     return this.commentForm.controls[name].invalid && (this.commentForm.controls[name].touched || this.commentForm.controls[name].dirty);
   }
 
-  public editCommentYes(comment: any) {
+  editCommentYes(comment: any) {
     comment.editting = true;
   }
-  public editCommentNo(comment: any) {
+  editCommentNo(comment: any) {
     comment.editting = false;
   }
-
 }

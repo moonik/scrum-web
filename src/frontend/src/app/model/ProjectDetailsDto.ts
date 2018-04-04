@@ -1,4 +1,4 @@
-import {ProjectDto} from './projectDto';
+import {ProjectDto} from './ProjectDto';
 import {IssueDto} from './IssueDto';
 
 export class ProjectDetailsDto {

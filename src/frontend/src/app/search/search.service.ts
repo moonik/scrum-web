@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '../shared/http.client.service';
-import {ProjectMemberDto} from '../model/projectMemberDto';
+import {ProjectMemberDto} from '../model/ProjectMemberDto';
 
 @Injectable()
 export class SearchService {

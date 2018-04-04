@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from '../security/authentication.service';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {UserDto} from '../model/userDto';
-import {passwordMatch} from '../shared/password-match.directive';
-import {Router, RouteReuseStrategy} from '@angular/router';
+import {UserDto} from '../model/UserDto';
+import {Router} from '@angular/router';
 
 
 function passwordConfirming(c: AbstractControl): any {

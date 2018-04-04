@@ -176,44 +176,38 @@ public class IssueService {
             issueTypeRepository.delete(issueType);
         }
     }
-    public IssueCommentDto addComment(IssueCommentDto issueCommentDto, Long id){
-        Issue issue = issueRepository.findOne(id);
+
+    public IssueCommentDto addComment(IssueCommentDto issueCommentDto, String issueKey){
+        Issue issue = issueRepository.findIssueByKey(issueKey);
         UserAccount commentOwner = securityContextService.getCurrentUserAccount();
-
         List<IssueComment> comments = issue.getComments();
-
-        IssueComment issueComment = new IssueComment(commentOwner, issueCommentDto.getContent(), LocalDateTime.now(), issue);
-
+        IssueComment issueComment = IssueCommentAsm.createEntityObject(issueCommentDto, commentOwner, issue);
         comments.add(issueComment);
         issue.setComments(comments);
         issueCommentRepository.save(comments);
-
         return IssueCommentAsm.createDtoObject(issueComment, UserProfileAsm.makeUserProfileDto(commentOwner));
     }
 
-    public List<IssueCommentDto> getCommentsForIssue(Long id){
-        Issue issue = issueRepository.findOne(id);
-
+    public List<IssueCommentDto> getCommentsForIssue(String issueKey){
+        Issue issue = issueRepository.findIssueByKey(issueKey);
         return issue.getComments().stream()
                 .map(comment -> IssueCommentAsm.createDtoObject(comment, UserProfileAsm.makeUserProfileDto(comment.getOwner())))
                 .collect(Collectors.toList());
 
     }
 
-    public void deleteComment(Long commentId, Long issueId) {
-        Issue issue = issueRepository.findOne(issueId);
+    public void deleteComment(Long commentId, String issueKey) {
+        Issue issue = issueRepository.findIssueByKey(issueKey);
         List<IssueComment> comments = issue.getComments().stream().filter(c -> !c.getId().equals(commentId)).collect(Collectors.toList());
         issue.setComments(comments);
         issueRepository.saveAndFlush(issue);
         issueCommentRepository.delete(commentId);
-
     }
 
     public String editComment(Long commentId, String content) {
         IssueComment comment = issueCommentRepository.findOne(commentId);
         comment.setContent(content);
         issueCommentRepository.save(comment);
-
         return content;
     }
 }

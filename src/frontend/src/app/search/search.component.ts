@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ProjectDto} from '../model/projectDto';
+import {ProjectDto} from '../model/ProjectDto';
 import {SearchService} from './search.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {SearchResultsDto} from '../model/SearchResultsDto';
-import {ProjectMemberDto} from '../model/projectMemberDto';
+import {ProjectMemberDto} from '../model/ProjectMemberDto';
 import * as roles from '../constants/roles';
 
 @Component({
