@@ -64,7 +64,7 @@
       <input formControlName="content" name="commentContent" type="text" class="form-control w-100" id="inputContent"
              placeholder="Add comment" [(ngModel)]="newComment.content">
         <div *ngIf="checkControl('content')">
-          <small id="commentLengthError" class="form-text text-danger" *ngIf="checkCommentLength()">Comment length must be between 2 to 255 characters.</small>
+          <small id="commentLengthError" class="form-text text-danger" *ngIf="checkCommentLength()">Comment length must be between 1 to 255 characters.</small>
         </div>
         <p align="right"><button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">Add</button></p>
       </form>
