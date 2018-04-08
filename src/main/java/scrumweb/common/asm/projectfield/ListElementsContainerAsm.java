@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Component
 @AllArgsConstructor
 public class ListElementsContainerAsm implements ProjectFieldAsm<ListElementsContainer, ListElementsContainerDto> {
-    //TODO ADD HTML
+
     private FieldElementsAsm<ListElement, ListElementDto> fieldElementsAsm;
 
     @Override
@@ -25,8 +25,7 @@ public class ListElementsContainerAsm implements ProjectFieldAsm<ListElementsCon
                 FieldType.getFieldType(projectFieldDto.getFieldType()),
                 projectFieldDto.getFieldName(),
                 projectFieldDto.getIsRequired(),
-                listElements,
-                createHtml(projectFieldDto)
+                listElements
         );
     }
 
@@ -40,10 +39,5 @@ public class ListElementsContainerAsm implements ProjectFieldAsm<ListElementsCon
                 projectField.getIsRequired(),
                 listElements
         );
-    }
-
-    @Override
-    public String createHtml(ListElementsContainerDto projectFieldDto) {
-        return null;
     }
 }

@@ -3,7 +3,6 @@ package scrumweb.common.asm;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
 import scrumweb.dto.user.UserDto;
 import scrumweb.dto.user.UserInformationDto;
 import scrumweb.user.account.domain.UserAccount;

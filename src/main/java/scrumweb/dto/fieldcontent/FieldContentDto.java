@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class FieldContentDto {
+public abstract class FieldContentDto {
     private Long projectFieldId;
     private String projectFieldName;
 }

@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-public class FieldContent {
+public abstract class FieldContent {
 
     @Id @GeneratedValue
     private Long id;

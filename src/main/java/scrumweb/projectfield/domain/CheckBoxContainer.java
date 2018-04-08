@@ -20,8 +20,8 @@ public class CheckBoxContainer extends ProjectField{
     @OneToMany(cascade = CascadeType.ALL)
     private Set<CheckBox> checkBoxes;
 
-    public CheckBoxContainer(FieldType fieldType, String name, Boolean isRequired, Set<CheckBox> checkBoxes, String html) {
-        super(fieldType, name, isRequired, html);
+    public CheckBoxContainer(FieldType fieldType, String name, Boolean isRequired, Set<CheckBox> checkBoxes) {
+        super(fieldType, name, isRequired   );
         this.checkBoxes = checkBoxes;
     }
 

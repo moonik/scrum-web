@@ -20,8 +20,8 @@ public class RadioButtonContainer extends ProjectField {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<RadioButton> radioButtons;
 
-    public RadioButtonContainer(FieldType fieldType, String name, Boolean isRequired, Set<RadioButton> radioButtons, String html) {
-        super(fieldType, name, isRequired, html);
+    public RadioButtonContainer(FieldType fieldType, String name, Boolean isRequired, Set<RadioButton> radioButtons) {
+        super(fieldType, name, isRequired);
         this.radioButtons = radioButtons;
     }
 

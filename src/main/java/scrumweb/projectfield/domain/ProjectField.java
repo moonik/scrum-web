@@ -27,13 +27,10 @@ public abstract class ProjectField {
 
     private Boolean isRequired;
 
-    private String html;
-
-    public ProjectField(FieldType fieldType, String name, Boolean isRequired, String html) {
+    public ProjectField(FieldType fieldType, String name, Boolean isRequired) {
         this.fieldType = fieldType;
         this.name = name;
         this.isRequired = isRequired;
-        this.html = html;
     }
 
     public abstract void edit(ProjectField projectField);

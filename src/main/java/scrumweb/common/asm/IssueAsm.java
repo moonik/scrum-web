@@ -2,7 +2,6 @@ package scrumweb.common.asm;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 import scrumweb.common.ApplicationConstants;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.issue.IssueDto;

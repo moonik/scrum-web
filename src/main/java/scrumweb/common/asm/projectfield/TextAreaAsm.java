@@ -7,7 +7,7 @@ import scrumweb.projectfield.domain.TextArea;
 
 @Component
 public class TextAreaAsm implements ProjectFieldAsm<TextArea, TextAreaDto> {
-    //TODO ADD HTML
+
     @Override
     public TextArea createEntityObject(TextAreaDto projectFieldDto) {
         return new TextArea(
@@ -15,8 +15,7 @@ public class TextAreaAsm implements ProjectFieldAsm<TextArea, TextAreaDto> {
                 projectFieldDto.getFieldName(),
                 projectFieldDto.getIsRequired(),
                 projectFieldDto.getMinCharacters(),
-                projectFieldDto.getMaxCharacters(),
-                createHtml(projectFieldDto)
+                projectFieldDto.getMaxCharacters()
         );
     }
 
@@ -29,10 +28,5 @@ public class TextAreaAsm implements ProjectFieldAsm<TextArea, TextAreaDto> {
                 projectField.getIsRequired(),
                 projectField.getMaxCharacters(),
                 projectField.getMinCharacters());
-    }
-
-    @Override
-    public String createHtml(TextAreaDto projectFieldDto) {
-        return null;
     }
 }
