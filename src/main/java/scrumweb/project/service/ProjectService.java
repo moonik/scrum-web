@@ -129,7 +129,7 @@ public class ProjectService {
     }
 
     public List<ProjectDto> findAllProjects() {
-        return projectRepository.findAll().stream()
+        return projectRepository.findProjects(securityContextService.getCurrentUserAccount()).stream()
             .map(ProjectAsm::makeProjectDto)
             .collect(Collectors.toList());
     }
