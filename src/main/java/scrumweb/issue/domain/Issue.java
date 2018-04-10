@@ -49,7 +49,7 @@ public class Issue {
     @NotNull
     private Priority priority;
 
-    @OneToOne
+    @ManyToOne
     @NotNull
     private IssueType issueType;
 
@@ -61,7 +61,7 @@ public class Issue {
     @UpdateTimestamp
     private Timestamp lastUpdate;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "issue")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "issue", orphanRemoval = true)
     private List<IssueComment> comments;
 
     public enum Priority {

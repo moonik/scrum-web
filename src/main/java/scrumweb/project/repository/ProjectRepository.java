@@ -20,4 +20,3 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("SELECT p FROM Project p JOIN p.members members WHERE :user IN (members)")
     List<Project> findProjects(@Param("user") UserAccount user);
 }
-

@@ -187,7 +187,7 @@ public class IssueService {
         return IssueCommentAsm.createDtoObject(issueComment, UserProfileAsm.makeUserProfileDto(commentOwner));
     }
 
-    public List<IssueCommentDto> getCommentsForIssue(String issueKey){
+    public List<IssueCommentDto> getComments(String issueKey){
         Issue issue = issueRepository.findIssueByKey(issueKey);
         return issue.getComments().stream()
                 .map(comment -> IssueCommentAsm.createDtoObject(comment, UserProfileAsm.makeUserProfileDto(comment.getOwner())))
@@ -195,12 +195,11 @@ public class IssueService {
 
     }
 
-    public void deleteComment(Long commentId, String issueKey) {
-        Issue issue = issueRepository.findIssueByKey(issueKey);
-        List<IssueComment> comments = issue.getComments().stream().filter(c -> !c.getId().equals(commentId)).collect(Collectors.toList());
-        issue.setComments(comments);
-        issueRepository.saveAndFlush(issue);
-        issueCommentRepository.delete(commentId);
+    public void deleteComment(Long commentId) {
+        IssueComment comment = issueCommentRepository.getOne(commentId);
+        if (comment.getOwner().equals(securityContextService.getCurrentUserAccount())) {
+            issueCommentRepository.delete(comment);
+        }
     }
 
     public String editComment(Long commentId, String content) {
