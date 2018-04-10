@@ -111,7 +111,8 @@
 }
 
 .single-comment:hover {
-  background-color: #eaeae1;
+	background-color: #eaeae1;
+	cursor: pointer;
 }
 
 #commentContent:disabled {

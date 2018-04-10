@@ -26,7 +26,7 @@ export class ProjectDetailsComponent implements OnInit {
   newComment: IssueComment = new IssueComment();
   projectMembers: Array<any> = [];
   hoveredCommentId: number;
-  selectedComment: IssueComment;
+  selectedComment: IssueComment = new IssueComment();
   oldContent: string;
 
   constructor(private activatedRoute: ActivatedRoute,
