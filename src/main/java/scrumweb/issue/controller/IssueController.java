@@ -79,7 +79,7 @@ public class IssueController {
         return issueService.getComments(issueKey);
     }
 
-    @DeleteMapping("/comments/delete/{commentId}/{issueKey}")
+    @DeleteMapping("/comments/delete/{commentId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteComment(@PathVariable Long commentId){
         issueService.deleteComment(commentId);
