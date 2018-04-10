@@ -136,7 +136,6 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   deleteComment(comment: IssueComment) {
-    console.log(comment);
     return this.issueService.deleteComment(comment.id)
       .subscribe(
         () => {
