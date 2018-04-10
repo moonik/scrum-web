@@ -76,13 +76,13 @@ public class IssueController {
     @GetMapping("/comments/{issueKey}")
     @ResponseStatus(HttpStatus.OK)
     public List<IssueCommentDto> getComments(@PathVariable String issueKey){
-        return issueService.getCommentsForIssue(issueKey);
+        return issueService.getComments(issueKey);
     }
 
     @DeleteMapping("/comments/delete/{commentId}/{issueKey}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteComment(@PathVariable Long commentId, @PathVariable String issueKey){
-        issueService.deleteComment(commentId, issueKey);
+    public void deleteComment(@PathVariable Long commentId){
+        issueService.deleteComment(commentId);
     }
 
     @PostMapping("/comments/edit/{commentId}")

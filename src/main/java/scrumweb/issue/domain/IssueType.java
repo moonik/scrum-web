@@ -22,10 +22,10 @@ public class IssueType {
     @NotNull
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProjectField> fields;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Project project;
 
     private Boolean isDefault;

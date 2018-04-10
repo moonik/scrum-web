@@ -18,14 +18,14 @@ public class IssueComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private UserAccount owner;
 
     private String content;
 
     private LocalDateTime createdDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Issue issue;
 
     public IssueComment(UserAccount owner, String content, LocalDateTime createdDate, Issue issue) {
