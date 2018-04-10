@@ -13,9 +13,10 @@ import { FieldContentCreatorImpl } from '../model/fields-content/FieldContentCre
 
     @Input() 
     fields: Array<ProjectFieldDto>;
-    @Output() issueCreate = new EventEmitter<FieldsContentCollector>();
+    @Output() issueCreate = new EventEmitter<string>();
     fieldContentCollector: FieldsContentCollector = new FieldsContentCollector();
     fieldTypes = fieldTypes.default;
+    message = '';
 
     constructor(fieldCreator: FieldContentCreatorImpl) {}
 

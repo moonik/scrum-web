@@ -1,4 +1,4 @@
 <div class="user-defined-fields" *ngFor="let field of fields">
     <label for="{{ field.fieldName }}"> {{ field.fieldName }} </label>
-    <input name="{{ field.fieldName }}">
+    <input name="{{ field.fieldName }}" [(ngModel)]="message">
 </div>

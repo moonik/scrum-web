@@ -1,4 +1,4 @@
-import { Component, TemplateRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, TemplateRef, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { IssueService } from './issue.service';
@@ -7,6 +7,7 @@ import { UserProfileDto } from '../model/UserProfileDto';
 import { IssueDto } from '../model/IssueDto';
 import { IssueConfigurationService } from '../issue-configuration/issue-configuration.service';
 import { ProjectFieldDto } from '../model/project-fields/ProjectFieldDto';
+import { IssueFieldsDisplay } from './issue-fields-display.component';
 
 @Component({
   selector: 'app-issue-creation',
@@ -32,6 +33,7 @@ export class IssueComponent implements OnInit {
   settings = {};
   types: Array<string>;
   issueFields: Array<ProjectFieldDto>;
+  @ViewChild(IssueFieldsDisplay) child;
 
   constructor(
     private modalService: BsModalService,
@@ -74,6 +76,7 @@ export class IssueComponent implements OnInit {
   }
 
   createIssue() {
+    console.log(this.child.message);
     this.issueDetails.assignees = this.selectedItems.map(item => new UserProfileDto(item.itemName));
     return this.issueService.createIssue(this.projectKey, this.issueDetails)
       .subscribe( data => {
