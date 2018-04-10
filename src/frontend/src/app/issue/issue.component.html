@@ -13,44 +13,46 @@
         </div>
         <div class="modal-body">
           <form>
-            <label for="summary">Summary<span class="required-star">*</span></label><br>
-            <input name="summary" [(ngModel)]="issueDetails.summary"><br>
-
-            <label for="description">Description</label><br>
-            <textarea name="description" cols="50" [(ngModel)]="issueDetails.description"></textarea><br>
-
-            <label for="assignees">Assignees</label><br>
-            <div class="assignees-multi-select" (click)="getAssignees()">
-              <angular2-multiselect [data]="projectMembers"
-                                    [(ngModel)]="selectedItems"
-                                    [settings]="settings"
-                                    name="assignees">
-              </angular2-multiselect>
-            </div>
-            <br>
-
-            <label for="estimateTime">Estimate time</label><br>
-            <input name="estimateTime" [(ngModel)]="issueDetails.estimateTime"><br><br>
-
-            <label for="priority">Priority<span class="required-star">*</span></label>
-            <select name="priority" [(ngModel)]="issueDetails.priority">
-              <option value="HIGH">HIGH</option>
-              <option value="LOW">LOW</option>
-            </select><br>
-
             <label for="type">Issue type<span class="required-star">*</span></label>
-            <select name="type" [(ngModel)]="issueDetails.issueType">
-              <option value="TASK">TASK</option>
-              <option value="BUG">BUG</option>
-              <option value="FEATURE">FEATURE</option>
+            <select name="type" [(ngModel)]="issueDetails.issueType" (change)="onTypeChange()">
+              <option [ngValue]="type.issueType" *ngFor="let type of types"> {{type.issueType}} </option>
             </select><br>
+
+            <div *ngIf="showFields()">
+              <label for="summary">Summary<span class="required-star">*</span></label><br>
+              <input name="summary" [(ngModel)]="issueDetails.summary"><br>
+
+              <label for="description">Description</label><br>
+              <textarea name="description" cols="50" [(ngModel)]="issueDetails.description"></textarea><br>
+
+              <label for="assignees">Assignees</label><br>
+              <div class="assignees-multi-select" (click)="getAssignees()">
+                <angular2-multiselect [data]="projectMembers"
+                                      [(ngModel)]="selectedItems"
+                                      [settings]="settings"
+                                      name="assignees">
+                </angular2-multiselect>
+              </div>
+              <br>
+
+              <label for="estimateTime">Estimate time</label><br>
+              <input name="estimateTime" [(ngModel)]="issueDetails.estimateTime"><br><br>
+
+              <label for="priority">Priority<span class="required-star">*</span></label>
+              <select name="priority" [(ngModel)]="issueDetails.priority">
+                <option value="HIGH">HIGH</option>
+                <option value="LOW">LOW</option>
+              </select><br>
+
+              <app-issue-fields [fields]="issueFields"></app-issue-fields>
+            </div>
           </form>
         </div>
         <span class="modal-footer">
-                    <button class="btn btn-primary" id="btn-create" (click)="createIssue(); issueModal.hide()"
+            <button class="btn btn-primary" id="btn-create" (click)="createIssue(); issueModal.hide()"
                             [disabled]="!isValid()">Create</button>
-                    <button class="btn btn-primary" id="btn-cancel" (click)="issueModal.hide()">Cancel</button>
-                </span>
+            <button class="btn btn-primary" id="btn-cancel" (click)="issueModal.hide()">Cancel</button>
+        </span>
       </div>
     </div>
   </div>

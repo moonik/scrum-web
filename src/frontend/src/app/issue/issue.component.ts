@@ -5,12 +5,14 @@ import { IssueService } from './issue.service';
 import { IssueDetailsDto } from '../model/IssueDetailsDto';
 import { UserProfileDto } from '../model/UserProfileDto';
 import { IssueDto } from '../model/IssueDto';
+import { IssueConfigurationService } from '../issue-configuration/issue-configuration.service';
+import { ProjectFieldDto } from '../model/project-fields/ProjectFieldDto';
 
 @Component({
   selector: 'app-issue-creation',
   templateUrl: './issue.component.html',
   styleUrls: ['./issue.component.css'],
-  providers: [IssueService]
+  providers: [IssueService, IssueConfigurationService]
 })
 export class IssueComponent implements OnInit {
 
@@ -28,8 +30,13 @@ export class IssueComponent implements OnInit {
   projectMembers: Array<any> = [];
   selectedItems = [];
   settings = {};
+  types: Array<string>;
+  issueFields: Array<ProjectFieldDto>;
 
-  constructor(private modalService: BsModalService, private issueService: IssueService) {}
+  constructor(
+    private modalService: BsModalService,
+    private issueService: IssueService,
+    private issueConfService: IssueConfigurationService) {}
 
   ngOnInit() {
     this.settings = {
@@ -41,6 +48,11 @@ export class IssueComponent implements OnInit {
       badgeShowLimit: 3,
       classes: 'custom-class-example'
     };
+    this.issueConfService.getIssueTypes(this.projectKey).subscribe(
+      data => {
+        this.types = data;
+      }
+    );
   }
 
   openModal(template: TemplateRef<any>) {
@@ -72,5 +84,17 @@ export class IssueComponent implements OnInit {
 
   isValid() {
     return this.issueDetails.summary && this.issueDetails.priority && this.issueDetails.issueType;
+  }
+
+  onTypeChange() {
+    this.issueService.getIssueFields(this.issueDetails.issueType, this.projectKey).subscribe(
+      data => {
+        this.issueFields = data;
+      }
+    );
+  }
+
+  showFields() {
+    return this.issueDetails.issueType && this.issueFields;
   }
 }

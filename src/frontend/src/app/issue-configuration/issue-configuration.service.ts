@@ -1,14 +1,16 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '../shared/http.client.service';
 
+const URL = 'project-field';
+
 @Injectable()
 export class IssueConfigurationService {
 
     constructor(private http: HttpClient) {}
 
     createFields(data: any, projectKey: string, issuetype: string) {
-        return this.http.post(this.createRequestParams({projectKey: projectKey, issuetype: issuetype}), data)
-            .map(res => res.json());
+        const params = this.http.createRequestParams({projectKey: projectKey, issuetype: issuetype}, URL);
+        return this.http.post(params, data).map(res => res.json());
     }
 
     getIssueTypes(projectKey: string) {
@@ -17,13 +19,13 @@ export class IssueConfigurationService {
     }
 
     getProjectFields(projectKey: string, issuetype: string) {
-        return this.http.get(this.createRequestParams({projectKey: projectKey, issuetype: issuetype}))
-            .map(res => res.json());
+        const params = this.http.createRequestParams({projectKey: projectKey, issuetype: issuetype}, URL);
+        return this.http.get(params).map(res => res.json());
     }
 
     removeField(id: number, projectKey: string, issuetype: string) {
-        return this.http.delete(this.createRequestParams({id: id, projectKey: projectKey, issuetype: issuetype}))
-            .map(res => res.json());
+        const params = this.http.createRequestParams({id: id, projectKey: projectKey, issuetype: issuetype}, URL);
+        return this.http.delete(params).map(res => res.json());
     }
 
     createType(data: any, projectKey: string) {
@@ -34,12 +36,7 @@ export class IssueConfigurationService {
         return this.http.put('project/issue/edit/types', data).map(res => res.status);
     }
 
-    deleteType(id: number) {
-        return this.http.delete('project/issue/types/' + id).map(res => res.status);
-    }
-
-    private createRequestParams(data: Object): string {
-        const params = Object.entries(data).map(([key, val]) => `${key}=${val}`).join('&');
-        return 'project-field?' + params;
+    deleteType(id: number, projectKey: string) {
+        return this.http.delete('project/issue/types/' + id + '?projectKey=' + projectKey).map(res => res.status);
     }
 }

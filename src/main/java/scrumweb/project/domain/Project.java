@@ -41,7 +41,6 @@ public class Project {
     @OneToOne(cascade = CascadeType.ALL)
     private UserAccount owner;
 
-
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Issue> issues;
 

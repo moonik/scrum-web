@@ -5,4 +5,6 @@ export class IssueComment {
   owner: UserProfileDto[];
   content: string;
   createdDate: string;
-}
+  editing: boolean = false
+};
+

@@ -82,6 +82,11 @@ export class HttpClient {
       });
   }
 
+  createRequestParams(data: Object, url: string): string {
+    const params = '?' + Object.entries(data).map(([key, val]) => `${key}=${val}`).join('&');
+    return url + params;
+  }
+
   private onCatch(error: any): Observable<any> {
     return Observable.throw(error);
   }

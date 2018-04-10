@@ -16,6 +16,6 @@ export class IssueDetailsDto {
     createdDate: string;
     lastUpdate: string;
     fieldsContentCollector: FieldsContentCollector = new FieldsContentCollector();
-    fieldContents: Array<FieldContentDto> = [];
+    fieldContents: Array<FieldContentDto>;
 }
 

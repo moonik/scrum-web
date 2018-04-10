@@ -26,7 +26,7 @@ export class IssueTypeConfigurationComponent {
   removeType(type: any) {
     if (!type.isDefault) {
       if (type.id) {
-        this.service.deleteType(type.id).subscribe();
+        this.service.deleteType(type.id, this.projectKey).subscribe();
       }
       const index = this.types.indexOf(type);
       this.types.splice(index, 1);
