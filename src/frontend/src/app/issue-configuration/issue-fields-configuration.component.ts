@@ -68,7 +68,7 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
     this.fields.splice(index, 1);
     if (field.id != null) {
       this.service.removeField(field.id, this.projectKey, this.chosenIssueType)
-        .subscribe(data => { this.fields = this.fields.concat(data); this.oldFields = JSON.stringify(data); });
+        .subscribe(data => { this.oldFields = JSON.stringify(data); });
     }
   }
 

@@ -22,7 +22,7 @@ public class IssueType {
     @NotNull
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<ProjectField> fields;
 
     @ManyToOne

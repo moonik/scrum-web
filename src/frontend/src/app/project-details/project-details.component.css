@@ -111,7 +111,8 @@
 }
 
 .single-comment:hover {
-  background-color: #eaeae1;
+	background-color: #eaeae1;
+	cursor: pointer;
 }
 
 #commentContent:disabled {
@@ -120,10 +121,10 @@
 
 }
 
-#commentContent:hover {
+/* #commentContent:hover {
   border: none;
   background-color: #eaeae1;
-}
+} */
 
 .editcomment {
   width: 98%;

@@ -204,8 +204,10 @@ public class IssueService {
 
     public String editComment(Long commentId, String content) {
         IssueComment comment = issueCommentRepository.findOne(commentId);
-        comment.setContent(content);
-        issueCommentRepository.save(comment);
+        if (comment.getOwner().equals(securityContextService.getCurrentUserAccount())) {
+            comment.setContent(content);
+            issueCommentRepository.save(comment);
+        }
         return content;
     }
 }

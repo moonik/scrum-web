@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, HostListener} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {ProjectDetailsService} from './project-details.service';
 import {ProjectDetailsDto} from '../model/ProjectDetailsDto';
@@ -25,7 +25,9 @@ export class ProjectDetailsComponent implements OnInit {
   comments: IssueComment[] = [];
   newComment: IssueComment = new IssueComment();
   projectMembers: Array<any> = [];
-  selectedComment: number;
+  hoveredCommentId: number;
+  selectedComment: IssueComment = new IssueComment();
+  oldContent: string;
 
   constructor(private activatedRoute: ActivatedRoute,
               private projectDetailsService: ProjectDetailsService,
@@ -134,7 +136,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   deleteComment(comment: IssueComment) {
-    return this.issueService.deleteComment(comment.id, this.selectedIssue.key)
+    return this.issueService.deleteComment(comment.id)
       .subscribe(
         () => {
           const index = this.comments.indexOf(comment);
@@ -145,11 +147,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   editComment(comment: IssueComment, commentId: number) {
     return this.issueService.editComment(commentId, comment)
-      .subscribe(
-        () => {
-          this.editCommentNo(comment);
-        }
-      );
+      .subscribe();
   }
 
   getCurrentUser(): string {
@@ -157,7 +155,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   mouseEnter(comment: any) {
-    this.selectedComment = comment.id;
+    this.hoveredCommentId = comment.id;
     comment.hover = true;
   }
 
@@ -173,10 +171,22 @@ export class ProjectDetailsComponent implements OnInit {
     return this.commentForm.controls[name].invalid && (this.commentForm.controls[name].touched || this.commentForm.controls[name].dirty);
   }
 
-  editCommentYes(comment: any) {
-    comment.editting = true;
+  checkIfEdited(comment: any) {
+    return this.oldContent !== comment.content;
   }
-  editCommentNo(comment: any) {
-    comment.editting = false;
+
+  clickInside($event: Event, comment: any){
+    $event.preventDefault();
+    $event.stopPropagation();  // <- that will stop propagation on lower layers
+    this.oldContent = comment.content;
+    this.selectedComment = comment;
+    this.selectedComment.editing = true;
+  }
+
+  @HostListener('document:click', ['$event']) clickedOutside($event){
+    this.selectedComment.editing = false;
+    if (this.checkIfEdited(this.selectedComment)) {
+      this.editComment(this.selectedComment, this.selectedComment.id);
+    }
   }
 }

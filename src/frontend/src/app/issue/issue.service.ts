@@ -30,8 +30,8 @@ export class IssueService {
       .map(res => res.json());
   }
 
-  deleteComment(commentId: number, issueKey: string) {
-    return this.http.delete(URL + 'comments/delete/' + commentId + '/' + issueKey);
+  deleteComment(commentId: number) {
+    return this.http.delete(URL + 'comments/delete/' + commentId);
   }
 
   editComment(commentId: number, comment: IssueComment) {
