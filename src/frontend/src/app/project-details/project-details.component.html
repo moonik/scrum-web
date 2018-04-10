@@ -83,8 +83,8 @@
           <tbody *ngFor="let comment of comments" (mouseenter)="mouseEnter(comment)" (mouseleave)="mouseLeave(comment)">
             <tr class="single-comment">
               <td>
-                <div *ngIf="!comment.editting" (click)="clickInside($event, comment)">{{comment.content}}</div>
-                <input *ngIf="comment.editting === true" class="editcomment" id="commentContent" name="content" [(ngModel)]="comment.content" [attr.disabled]="comment.editting? null : ''" (click)="clickInside($event, comment)">&nbsp;
+                <div *ngIf="!comment.editing" (click)="clickInside($event, comment)">{{comment.content}}</div>
+                <input *ngIf="comment.editing === true" class="editcomment" id="commentContent" name="content" [(ngModel)]="comment.content" [attr.disabled]="comment.editing? null : ''" (click)="clickInside($event, comment)">&nbsp;
               </td>
               <td>{{comment.owner.username}}</td>
               <td>{{comment.createdDate}}</td>

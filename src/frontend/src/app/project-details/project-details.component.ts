@@ -180,11 +180,11 @@ export class ProjectDetailsComponent implements OnInit {
     $event.stopPropagation();  // <- that will stop propagation on lower layers
     this.oldContent = comment.content;
     this.selectedComment = comment;
-    this.selectedComment.editting = true;
+    this.selectedComment.editing = true;
   }
 
   @HostListener('document:click', ['$event']) clickedOutside($event){
-    this.selectedComment.editting = false;
+    this.selectedComment.editing = false;
     if (this.checkIfEdited(this.selectedComment)) {
       this.editComment(this.selectedComment, this.selectedComment.id);
     }
