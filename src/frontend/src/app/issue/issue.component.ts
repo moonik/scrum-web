@@ -76,7 +76,6 @@ export class IssueComponent implements OnInit {
   }
 
   createIssue() {
-    console.log(this.child.message);
     this.issueDetails.assignees = this.selectedItems.map(item => new UserProfileDto(item.itemName));
     return this.issueService.createIssue(this.projectKey, this.issueDetails)
       .subscribe( data => {

@@ -22,8 +22,8 @@ import { FieldContentCreatorImpl } from '../model/fields-content/FieldContentCre
 
     ngOnInit() {}
 
-    ifInputField(field: ProjectFieldDto) {
-      return field.fieldType === this.fieldTypes.inputField;
+    ifInputField(fieldType: string) {
+      return fieldType === this.fieldTypes.inputField;
     }
 
     ifCheckBox(field: ProjectFieldDto) {

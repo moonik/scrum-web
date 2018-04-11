@@ -15,7 +15,7 @@
           <form>
             <label for="type">Issue type<span class="required-star">*</span></label>
             <select name="type" [(ngModel)]="issueDetails.issueType" (change)="onTypeChange()">
-              <option [ngValue]="type.issueType" *ngFor="let type of types"> {{type.issueType}} </option>
+              <option [ngValue]="type.issueType" *ngFor="let type of types"> {{ type.issueType }} </option>
             </select><br>
 
             <div *ngIf="showFields()">
