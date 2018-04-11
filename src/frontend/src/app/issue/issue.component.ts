@@ -7,7 +7,9 @@ import { UserProfileDto } from '../model/UserProfileDto';
 import { IssueDto } from '../model/IssueDto';
 import { IssueConfigurationService } from '../issue-configuration/issue-configuration.service';
 import { ProjectFieldDto } from '../model/project-fields/ProjectFieldDto';
-import { IssueFieldsDisplay } from './issue-fields-display.component';
+import { FieldContentCreatorImpl } from '../model/fields-content/FieldContentCreatorImpl';
+
+import fieldType, * as fieldTypes from '../constants/field-type';
 
 @Component({
   selector: 'app-issue-creation',
@@ -33,12 +35,14 @@ export class IssueComponent implements OnInit {
   settings = {};
   types: Array<string>;
   issueFields: Array<ProjectFieldDto>;
-  @ViewChild(IssueFieldsDisplay) child;
+  fieldTypes = fieldTypes.default;
 
   constructor(
     private modalService: BsModalService,
     private issueService: IssueService,
-    private issueConfService: IssueConfigurationService) {}
+    private issueConfService: IssueConfigurationService,
+    private fieldCreator: FieldContentCreatorImpl) {
+    }
 
   ngOnInit() {
     this.settings = {
@@ -77,6 +81,7 @@ export class IssueComponent implements OnInit {
 
   createIssue() {
     this.issueDetails.assignees = this.selectedItems.map(item => new UserProfileDto(item.itemName));
+    this.issueDetails.fieldsContentCollector = this.getFieldsContent();
     return this.issueService.createIssue(this.projectKey, this.issueDetails)
       .subscribe( data => {
         this.issueCreate.emit(data);
@@ -88,15 +93,40 @@ export class IssueComponent implements OnInit {
     return this.issueDetails.summary && this.issueDetails.priority && this.issueDetails.issueType;
   }
 
-  onTypeChange() {
-    this.issueService.getIssueFields(this.issueDetails.issueType, this.projectKey).subscribe(
+  onTypeChange(issueType: string) {
+    this.issueService.getIssueFields(issueType, this.projectKey).subscribe(
       data => {
         this.issueFields = data;
       }
     );
   }
 
-  showFields() {
-    return this.issueDetails.issueType && this.issueFields;
+  showFields(issueType: string) {
+    return issueType && this.issueFields;
+  }
+
+  getFieldsContent() {
+    this.issueFields.map(f => this.fieldCreator.createField(f));
+    return this.fieldCreator.fieldContentCollector;
+  }
+
+  ifInputField(fieldType: string) {
+    return fieldType === this.fieldTypes.inputField;
+  }
+
+  ifCheckBox(field: ProjectFieldDto) {
+    return field.fieldType === this.fieldTypes.checkBox;
+  }
+
+  ifTextArea(field: ProjectFieldDto) {
+    return field.fieldType === this.fieldTypes.textArea;
+  }
+
+  ifList(field: ProjectFieldDto) {
+    return field.fieldType === this.fieldTypes.list;
+  }
+
+  ifRadioButton(field: ProjectFieldDto) {
+    return field.fieldType === this.fieldTypes.radioButton;
   }
 }

@@ -11,16 +11,16 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        <form (ngSubmit)="createIssue(); issueModal.hide()" #f="ngForm">
         <div class="modal-body">
-          <form>
             <label for="type">Issue type<span class="required-star">*</span></label>
-            <select name="type" [(ngModel)]="issueDetails.issueType" (change)="onTypeChange()">
+            <select [(ngModel)]="issueDetails.issueType" (change)="onTypeChange(f.value.issueType)" name="issueType" required>
               <option [ngValue]="type.issueType" *ngFor="let type of types"> {{ type.issueType }} </option>
             </select><br>
 
-            <div *ngIf="showFields()">
+            <div [hidden]="!showFields(f.value.issueType)">
               <label for="summary">Summary<span class="required-star">*</span></label><br>
-              <input name="summary" [(ngModel)]="issueDetails.summary"><br>
+              <input name="summary" [(ngModel)]="issueDetails.summary" name="summary" required><br>
 
               <label for="description">Description</label><br>
               <textarea name="description" cols="50" [(ngModel)]="issueDetails.description"></textarea><br>
@@ -39,20 +39,24 @@
               <input name="estimateTime" [(ngModel)]="issueDetails.estimateTime"><br><br>
 
               <label for="priority">Priority<span class="required-star">*</span></label>
-              <select name="priority" [(ngModel)]="issueDetails.priority">
+              <select name="priority" [(ngModel)]="issueDetails.priority" name="priority" required>
                 <option value="HIGH">HIGH</option>
                 <option value="LOW">LOW</option>
               </select><br>
 
-              <app-issue-fields [fields]="issueFields"></app-issue-fields>
+              <div class="user-defined-fields" *ngFor="let field of issueFields">
+                <label for="{{ field.fieldName }}"> {{ field.fieldName }}<span class="required-star" *ngIf="field.isRequired">*</span></label>
+                <input name="{{ field.fieldName }}" [(ngModel)]="field.content" [required]="field.isRequired" [maxLength]="field.maxCharacters">
+                <br>
+              </div>
+
             </div>
-          </form>
         </div>
         <span class="modal-footer">
-            <button class="btn btn-primary" id="btn-create" (click)="createIssue(); issueModal.hide()"
-                            [disabled]="!isValid()">Create</button>
-            <button class="btn btn-primary" id="btn-cancel" (click)="issueModal.hide()">Cancel</button>
+            <button class="btn btn-primary" id="btn-create" [disabled]="!f.valid">Create</button>
+            <a class="btn btn-primary" id="btn-cancel" (click)="issueModal.hide()">Cancel</a>
         </span>
+      </form>
       </div>
     </div>
   </div>

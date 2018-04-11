@@ -1,4 +1,0 @@
-<div class="user-defined-fields" *ngFor="let field of fields">
-    <label for="{{ field.fieldName }}"> {{ field.fieldName }} </label>
-    <input name="{{ field.fieldName }}" [(ngModel)]="message" *ngIf="ifInputField(field.fieldType)" [maxLength]="field.maxCharacters" [minLength]="field.minCharacters">
-</div>
