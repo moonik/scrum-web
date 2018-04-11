@@ -15,7 +15,7 @@ import fieldType, * as fieldTypes from '../constants/field-type';
   selector: 'app-issue-creation',
   templateUrl: './issue.component.html',
   styleUrls: ['./issue.component.css'],
-  providers: [IssueService, IssueConfigurationService]
+  providers: [IssueService, IssueConfigurationService, FieldContentCreatorImpl]
 })
 export class IssueComponent implements OnInit {
 
