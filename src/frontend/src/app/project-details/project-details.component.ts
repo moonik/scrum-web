@@ -175,7 +175,7 @@ export class ProjectDetailsComponent implements OnInit {
     return this.oldContent !== comment.content;
   }
 
-  clickInside($event: Event, comment: any){
+  clickInside($event: Event, comment: any) {
     $event.preventDefault();
     $event.stopPropagation();  // <- that will stop propagation on lower layers
     this.oldContent = comment.content;
@@ -183,7 +183,7 @@ export class ProjectDetailsComponent implements OnInit {
     this.selectedComment.editing = true;
   }
 
-  @HostListener('document:click', ['$event']) clickedOutside($event){
+  @HostListener('document:click', ['$event']) clickedOutside($event) {
     this.selectedComment.editing = false;
     if (this.checkIfEdited(this.selectedComment)) {
       this.editComment(this.selectedComment, this.selectedComment.id);
