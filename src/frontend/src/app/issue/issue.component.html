@@ -48,11 +48,11 @@
                 <label for="{{ field.fieldName }}"><b> {{ field.fieldName }} </b><span class="required-star" *ngIf="field.isRequired">*</span></label>
                 <input id="{{ field.id }}" name="{{ field.fieldName }}" *ngIf="ifInputField(field.fieldType)" [(ngModel)]="field.content" [required]="field.isRequired" [maxLength]="field.maxCharacters">
 
-                <div class="field-element" *ngFor="let element of field.elements">
+                <span class="field-element" *ngFor="let element of field.elements">
                   {{ element.value }}
                   <input type="checkbox" id="{{ element.id }}" name="{{ field.fieldName }}" *ngIf="ifCheckBox(field.fieldType)" [(ngModel)]="element.selected" [required]="field.isRequired">
                   <input type="radio" [value]="element.id" id="{{ element.id }}" name="{{  field.fieldName }}" *ngIf="ifRadioButton(field.fieldType)" [(ngModel)]="field.selected" [required]="field.isRequired">
-                </div>
+                </span>
                 <br>
               </div>
             </div>
