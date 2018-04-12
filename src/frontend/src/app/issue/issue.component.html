@@ -11,7 +11,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form (ngSubmit)="createIssue(); issueModal.hide()" #f="ngForm">
+        <form (ngSubmit)="createIssue(); issueModal.hide()" #f="ngForm" class="issue-form">
         <div class="modal-body">
             <label for="type"><b> Issue type </b><span class="required-star">*</span></label>
             <select [(ngModel)]="issueDetails.issueType" (change)="onTypeChange(f.value.issueType)" name="issueType" required>

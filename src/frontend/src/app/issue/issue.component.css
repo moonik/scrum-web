@@ -14,10 +14,15 @@
 #btn-create, #btn-cancel {
     background-color: #212529;
     border-color: #212529;
+    color: white;
 }
 
 .modal-body input, textarea, select{
     border-radius: 3px;
+}
+
+.modal-body {
+    width: 100%;
 }
 
 .assignees-multi-select {
