@@ -1,6 +1,7 @@
 package scrumweb.common.asm.projectfield;
 
 import org.springframework.stereotype.Component;
+import scrumweb.dto.projectfield.InputFieldDto;
 import scrumweb.dto.projectfield.TextAreaDto;
 import scrumweb.projectfield.domain.ProjectField.FieldType;
 import scrumweb.projectfield.domain.TextArea;
@@ -15,7 +16,7 @@ public class TextAreaAsm implements ProjectFieldAsm<TextArea, TextAreaDto> {
                 projectFieldDto.getFieldName(),
                 projectFieldDto.getIsRequired(),
                 projectFieldDto.getMinCharacters(),
-                projectFieldDto.getMaxCharacters()
+                getMaxChars(projectFieldDto)
         );
     }
 
@@ -28,5 +29,10 @@ public class TextAreaAsm implements ProjectFieldAsm<TextArea, TextAreaDto> {
                 projectField.getIsRequired(),
                 projectField.getMaxCharacters(),
                 projectField.getMinCharacters());
+    }
+
+    private int getMaxChars(TextAreaDto projectFieldDto) {
+        return projectFieldDto.getMaxCharacters() == 0 ?
+                255 : projectFieldDto.getMaxCharacters();
     }
 }

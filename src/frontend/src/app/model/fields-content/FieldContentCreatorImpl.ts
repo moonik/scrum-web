@@ -23,11 +23,11 @@ export class FieldContentCreatorImpl implements FieldCreator<FieldContentDto> {
             this.fieldContentCollector.inputFieldContentDtos.push(this.createInputField(field));
         } else if (field.fieldType === this.fieldTypes.textArea) {
             this.fieldContentCollector.textAreaContentDtos.push(this.createTextArea(field));
-        } else if (field.fieldType === this.fieldTypes.checkBox) {
+        } else if (field.fieldType === this.fieldTypes.checkBox && this.filterOutNotSelected(field).length > 0) {
             this.fieldContentCollector.checkBoxContainerContentDtos.push(this.createCheckBoxContainer(field));
-        } else if (field.fieldType === this.fieldTypes.list) {
+        } else if (field.fieldType === this.fieldTypes.list && this.findSelected(field, field.selected).length > 0) {
             this.fieldContentCollector.listElementsContainerContentDtos.push(this.createListElementsContainer(field));
-        } else if (field.fieldType === this.fieldTypes.radioButton) {
+        } else if (field.fieldType === this.fieldTypes.radioButton && this.findSelected(field, field.selected).length > 0) {
             this.fieldContentCollector.radioButtonContainerContentDtos.push(this.createRadioButtonContainer(field));
         }
       }
@@ -49,6 +49,7 @@ export class FieldContentCreatorImpl implements FieldCreator<FieldContentDto> {
     }
 
     public createCheckBoxContainer(field: any): CheckBoxContainerContentDto {
+        const selectedItems = this.filterOutNotSelected(field);
         return new CheckBoxContainerContentDto(
             field.id,
             field.fieldName,

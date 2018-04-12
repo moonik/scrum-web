@@ -13,19 +13,19 @@
         </div>
         <form (ngSubmit)="createIssue(); issueModal.hide()" #f="ngForm">
         <div class="modal-body">
-            <label for="type">Issue type<span class="required-star">*</span></label>
+            <label for="type"><b> Issue type </b><span class="required-star">*</span></label>
             <select [(ngModel)]="issueDetails.issueType" (change)="onTypeChange(f.value.issueType)" name="issueType" required>
               <option [ngValue]="type.issueType" *ngFor="let type of types"> {{ type.issueType }} </option>
             </select><br>
 
             <div [hidden]="!showFields(f.value.issueType)">
-              <label for="summary">Summary<span class="required-star">*</span></label><br>
+              <label for="summary"><b> Summary </b><span class="required-star">*</span></label><br>
               <input name="summary" [(ngModel)]="issueDetails.summary" name="summary" required><br>
 
-              <label for="description">Description</label><br>
+              <label for="description"><b> Description </b></label><br>
               <textarea name="description" cols="50" [(ngModel)]="issueDetails.description"></textarea><br>
 
-              <label for="assignees">Assignees</label><br>
+              <label for="assignees"><b> Assignees </b></label><br>
               <div class="assignees-multi-select" (click)="getAssignees()">
                 <angular2-multiselect [data]="projectMembers"
                                       [(ngModel)]="selectedItems"
@@ -35,23 +35,23 @@
               </div>
               <br>
 
-              <label for="estimateTime">Estimate time</label><br>
+              <label for="estimateTime"><b> Estimate time </b></label><br>
               <input name="estimateTime" [(ngModel)]="issueDetails.estimateTime"><br><br>
 
-              <label for="priority">Priority<span class="required-star">*</span></label>
+              <label for="priority"><b> Priority </b><span class="required-star">*</span></label>
               <select name="priority" [(ngModel)]="issueDetails.priority" name="priority" required>
                 <option value="HIGH">HIGH</option>
                 <option value="LOW">LOW</option>
               </select><br>
 
               <div class="user-defined-fields" *ngFor="let field of issueFields">
-                <label for="{{ field.fieldName }}"> {{ field.fieldName }}<span class="required-star" *ngIf="field.isRequired">*</span></label>
-                <input name="{{ field.fieldName }}" *ngIf="ifInputField(field.fieldType)" [(ngModel)]="field.content" [required]="field.isRequired" [maxLength]="field.maxCharacters">
+                <label for="{{ field.fieldName }}"><b> {{ field.fieldName }} </b><span class="required-star" *ngIf="field.isRequired">*</span></label>
+                <input id="{{ field.id }}" name="{{ field.fieldName }}" *ngIf="ifInputField(field.fieldType)" [(ngModel)]="field.content" [required]="field.isRequired" [maxLength]="field.maxCharacters">
 
                 <div class="field-element" *ngFor="let element of field.elements">
                   {{ element.value }}
-                  <input type="checkbox" id="{{ element.id }}" name="{{ field.fieldName }}" *ngIf="ifCheckBox(field.fieldType)" [(ngModel)]="element.selected">
-                  <input type="radio" [value]="element.id" id="{{ element.id }}" name="{{  field.fieldName }}" *ngIf="ifRadioButton(field.fieldType)" [(ngModel)]="field.selected">
+                  <input type="checkbox" id="{{ element.id }}" name="{{ field.fieldName }}" *ngIf="ifCheckBox(field.fieldType)" [(ngModel)]="element.selected" [required]="field.isRequired">
+                  <input type="radio" [value]="element.id" id="{{ element.id }}" name="{{  field.fieldName }}" *ngIf="ifRadioButton(field.fieldType)" [(ngModel)]="field.selected" [required]="field.isRequired">
                 </div>
                 <br>
               </div>
