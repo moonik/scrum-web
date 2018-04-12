@@ -47,9 +47,11 @@
               <div class="user-defined-fields" *ngFor="let field of issueFields">
                 <label for="{{ field.fieldName }}"> {{ field.fieldName }}<span class="required-star" *ngIf="field.isRequired">*</span></label>
                 <input name="{{ field.fieldName }}" *ngIf="ifInputField(field.fieldType)" [(ngModel)]="field.content" [required]="field.isRequired" [maxLength]="field.maxCharacters">
-                <div class="field-elements" *ngFor="let element of field.elements">
-                  <input type="checkbox" *ngIf="ifCheckBox(field.fieldType)" [(ngModel)]="element.selected">
-                  <input type="radio" *ngIf="ifRadioButton(field.fieldType)" [(ngModel)]="element.selected">
+
+                <div class="field-element" *ngFor="let element of field.elements">
+                  {{ element.value }}
+                  <input type="checkbox" id="{{ element.id }}" name="{{ field.fieldName }}" *ngIf="ifCheckBox(field.fieldType)" [(ngModel)]="element.selected">
+                  <input type="radio" [value]="element.id" id="{{ element.id }}" name="{{  field.fieldName }}" *ngIf="ifRadioButton(field.fieldType)" [(ngModel)]="field.selected">
                 </div>
                 <br>
               </div>

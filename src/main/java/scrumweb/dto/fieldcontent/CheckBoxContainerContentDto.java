@@ -11,10 +11,10 @@ import java.util.Set;
 @Getter @Setter
 public class CheckBoxContainerContentDto extends FieldContentDto {
 
-    private Set<CheckBoxDto> checkBoxes;
+    private Set<CheckBoxDto> elements;
 
-    public CheckBoxContainerContentDto(Long projectFieldId, String projectFieldName, Set<CheckBoxDto> checkBoxes) {
+    public CheckBoxContainerContentDto(Long projectFieldId, String projectFieldName, Set<CheckBoxDto> elements) {
         super(projectFieldId, projectFieldName);
-        this.checkBoxes = checkBoxes;
+        this.elements = elements;
     }
 }

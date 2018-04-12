@@ -22,7 +22,7 @@ public class CheckBoxContentAsm implements FieldContentAsm<CheckBoxContent, Chec
 
     @Override
     public CheckBoxContent createEntityObject(CheckBoxContainer projectField, CheckBoxContainerContentDto fieldContentDto) {
-        return new CheckBoxContent(projectField, checkBoxRepository.getCheckBoxes(extractIds(fieldContentDto.getCheckBoxes())));
+        return new CheckBoxContent(projectField, checkBoxRepository.getCheckBoxes(extractIds(fieldContentDto.getElements())));
     }
 
     @Override

@@ -52,7 +52,7 @@ export class FieldContentCreatorImpl implements FieldCreator<FieldContentDto> {
         return new CheckBoxContainerContentDto(
             field.id,
             field.fieldName,
-            field.checkBoxes
+            this.filterOutNotSelected(field)
         );
     }
 
@@ -60,7 +60,7 @@ export class FieldContentCreatorImpl implements FieldCreator<FieldContentDto> {
         return new RadioButtonContainerContentDto(
             field.id,
             field.fieldName,
-            field.radioButton
+            this.findSelected(field, field.selected)
         );
     }
 
@@ -68,7 +68,15 @@ export class FieldContentCreatorImpl implements FieldCreator<FieldContentDto> {
         return new ListElementsContainerContentDto(
             field.id,
             field.fieldName,
-            field.elements
+            this.findSelected(field, field.selected)
         );
+    }
+
+    private filterOutNotSelected(field: any) {
+        return field.elements.filter(e => e.selected);
+    }
+
+    private findSelected(field: any, selected: number) {
+        return field.elements.find(e => e.id === selected);
     }
 }

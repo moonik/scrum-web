@@ -107,6 +107,7 @@ export class IssueComponent implements OnInit {
 
   getFieldsContent() {
     this.issueFields.map(f => this.fieldCreator.createField(f));
+    console.log(this.fieldCreator.fieldContentCollector);
     return this.fieldCreator.fieldContentCollector;
   }
 
@@ -114,19 +115,19 @@ export class IssueComponent implements OnInit {
     return fieldType === this.fieldTypes.inputField;
   }
 
-  ifCheckBox(field: ProjectFieldDto) {
-    return field.fieldType === this.fieldTypes.checkBox;
+  ifCheckBox(fieldType: string) {
+    return fieldType === this.fieldTypes.checkBox;
   }
 
-  ifTextArea(field: ProjectFieldDto) {
-    return field.fieldType === this.fieldTypes.textArea;
+  ifTextArea(fieldType: string) {
+    return fieldType === this.fieldTypes.textArea;
   }
 
-  ifList(field: ProjectFieldDto) {
-    return field.fieldType === this.fieldTypes.list;
+  ifList(fieldType: string) {
+    return fieldType === this.fieldTypes.list;
   }
 
-  ifRadioButton(field: ProjectFieldDto) {
-    return field.fieldType === this.fieldTypes.radioButton;
+  ifRadioButton(fieldType: string) {
+    return fieldType === this.fieldTypes.radioButton;
   }
 }

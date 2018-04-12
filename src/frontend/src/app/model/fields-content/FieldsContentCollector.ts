@@ -11,4 +11,3 @@ export class FieldsContentCollector {
     radioButtonContainerContentDtos: Array<RadioButtonContainerContentDto> = [];
     textAreaContentDtos: Array<TextAreaContentDto> = [];
 }
-

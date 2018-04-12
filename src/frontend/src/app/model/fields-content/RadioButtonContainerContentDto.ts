@@ -2,10 +2,10 @@ import { RadioButtonDto } from './RadioButtonDto';
 import { FieldContentDto } from './FieldContentDto';
 
 export class RadioButtonContainerContentDto extends FieldContentDto {
-    radioButton: RadioButtonDto;
+    element: RadioButtonDto;
 
-    constructor(projectFieldId: number, projectFieldName: string, radioButton: RadioButtonDto) {
+    constructor(projectFieldId: number, projectFieldName: string, element: RadioButtonDto) {
         super(projectFieldId, projectFieldName);
-        this.radioButton = radioButton;
+        this.element = element;
     }
 }
