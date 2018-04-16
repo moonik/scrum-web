@@ -27,10 +27,10 @@ export class FieldContentCreatorImpl implements FieldCreator<FieldContentDto> {
             this.fieldContentCollector.checkBoxContainerContentDtos.push(this.createCheckBoxContainer(field));
         } else if (field.fieldType === this.fieldTypes.list && this.findSelected(field, field.selected).length > 0) {
             this.fieldContentCollector.listElementsContainerContentDtos.push(this.createListElementsContainer(field));
-        } else if (field.fieldType === this.fieldTypes.radioButton && this.findSelected(field, field.selected).length > 0) {
+        } else if (field.fieldType === this.fieldTypes.radioButton && this.findSelected(field, field.selected) !== null) {
             this.fieldContentCollector.radioButtonContainerContentDtos.push(this.createRadioButtonContainer(field));
         }
-      }
+    }
 
     public createInputField(field: any): InputFieldContentDto {
         return new InputFieldContentDto(

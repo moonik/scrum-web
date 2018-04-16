@@ -107,7 +107,6 @@ export class IssueComponent implements OnInit {
 
   getFieldsContent() {
     this.issueFields.map(f => this.fieldCreator.createField(f));
-    console.log(this.fieldCreator.fieldContentCollector);
     return this.fieldCreator.fieldContentCollector;
   }
 

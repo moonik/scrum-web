@@ -7,4 +7,3 @@ export class IssueComment {
   createdDate: string;
   editing: boolean = false;
 }
-

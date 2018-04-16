@@ -23,9 +23,6 @@
       <div class="params-input-field" *ngIf="isParamsTextField(field.fieldType)">
         <label for="maxChars">Maximum characters</label>
         <input type="number" name="maxChars" [(ngModel)]="field.maxCharacters" class="chars-length">
-
-        <label for="minChars">Minimum characters</label>
-        <input type="number" name="minChars" [(ngModel)]="field.minCharacters" class="chars-length">
       </div>
       <a (click)="addFieldElement(field, field.elements.length)" *ngIf="isParamsElements(field.fieldType)"><b>Add {{ getFieldElement(field.fieldType) }}</b></a>
       <div class="params-elements" *ngFor="let element of field.elements; let i = index" [attr.data-index]="i">

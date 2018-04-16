@@ -59,8 +59,20 @@
       <b>Description</b>
       <div class="issue-description">{{ selectedIssue.description }}</div>
 
-      <form [formGroup]="commentForm" (ngSubmit)="addComment()">
+      <div class="other-info" *ngFor="let field of selectedIssue.fieldContents">
+        <b> {{ field.projectFieldName }} </b>
+        <div *ngIf="field.elements">
+          <div *ngFor="let element of field.elements">
+              {{ element.value }}
+          </div>
+        </div>
+        <div *ngIf="field.element?.value"> {{ field.element.value }} </div>
+        <div> {{ field.content }} </div>
+      </div>
 
+      <br>
+
+      <form [formGroup]="commentForm" (ngSubmit)="addComment()">
       <input formControlName="content" name="commentContent" type="text" class="form-control w-100" id="inputContent"
              placeholder="Add comment" [(ngModel)]="newComment.content">
         <div *ngIf="checkControl('content')">
