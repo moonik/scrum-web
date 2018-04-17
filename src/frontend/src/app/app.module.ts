@@ -28,7 +28,8 @@ import { IssueConfigurationComponent } from './issue-configuration/issue-configu
 import { SearchComponent } from './search/search.component';
 import { LoaderComponent} from './loader/loader.component';
 import { LoaderService} from './loader/loader.service';
-import {WarningModalComponent} from './warning-modal/warning-modal.component';
+import { CommentsComponent } from './project-details/comments.component';
+import { WarningModalComponent } from './warning-modal/warning-modal.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import {WarningModalComponent} from './warning-modal/warning-modal.component';
     IssueFieldsConfigurationComponent,
     IssueTypeConfigurationComponent,
     IssueConfigurationComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,

@@ -93,18 +93,27 @@
 	margin-top: 5px;
 }
 
-.list-panel::-webkit-scrollbar-track, .more-details .issue-description::-webkit-scrollbar-track {
+.other-info {
+	margin: 5px;
+}
+
+.comments-found {
+	overflow-y: auto;
+  height: 17em;
+}
+
+.list-panel::-webkit-scrollbar-track, .more-details .issue-description::-webkit-scrollbar-track, .comments-found::-webkit-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	border-radius: 3px;
 	background-color: #F5F5F5;
 }
 
-.list-panel::-webkit-scrollbar, .more-details .issue-description::-webkit-scrollbar {
+.list-panel::-webkit-scrollbar, .more-details .issue-description::-webkit-scrollbar, .comments-found::-webkit-scrollbar {
 	width: 12px;
 	background-color: #F5F5F5;
 }
 
-.list-panel::-webkit-scrollbar-thumb, .more-details .issue-description::-webkit-scrollbar-thumb {
+.list-panel::-webkit-scrollbar-thumb, .more-details .issue-description::-webkit-scrollbar-thumb, .comments-found::-webkit-scrollbar-thumb {
 	border-radius: 3px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: #555;
@@ -120,11 +129,6 @@
    background-color: white;
 
 }
-
-/* #commentContent:hover {
-  border: none;
-  background-color: #eaeae1;
-} */
 
 .editcomment {
   width: 98%;

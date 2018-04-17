@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, HostListener } from '@angular/core';
 import { ProjectFieldDto } from '../model/project-fields/ProjectFieldDto';
 import { CheckBoxContainerDto } from '../model/project-fields/CheckBoxContainerDto';
 import { CheckBoxDto } from '../model/project-fields/CheckBoxDto';
@@ -9,7 +9,7 @@ import { RadioButtonContainerDto } from '../model/project-fields/RadioButtonCont
 import { RadioButtonDto } from '../model/project-fields/RadioButtonDto';
 import { TextAreaDto } from '../model/project-fields/TextAreaDto';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { FieldCreator } from './field-creator';
+import { ProjectFieldCreatorImpl } from '../model/project-fields/ProjectFieldCreatorImpl';
 import { IssueConfigurationService } from './issue-configuration.service';
 
 import * as fieldTypes from '../constants/field-type';
@@ -19,7 +19,7 @@ import { ProjectFieldsCollector } from '../model/project-fields/ProjectFieldsCol
   selector: 'app-issue-fields-configuration',
   templateUrl: './issue-fields-configuration.component.html',
   styleUrls: ['./issue-configuration.component.css'],
-  providers: [FieldCreator, IssueConfigurationService]
+  providers: [ProjectFieldCreatorImpl, IssueConfigurationService]
 })
 export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
   fields = [];
@@ -28,6 +28,7 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
   fieldTypesArray = Object.values(this.fieldTypes);
   chooseIssueType = 'Choose issue type...';
   chosenIssueType = '';
+  selectedField: any;
   @Input()
   issueTypes;
   @Input()
@@ -35,7 +36,7 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private fieldCreator: FieldCreator,
+    private fieldCreator: ProjectFieldCreatorImpl,
     private service: IssueConfigurationService) {}
 
   ngOnInit() {}
@@ -51,8 +52,12 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
     }
   }
 
-  addField() {
-    this.fields.push({id: null, submitted: false, elements: []});
+  addField($event) {
+    this.setSubmit();
+    let field = {id: null, submitted: false, elements: []};
+    this.selectedField = field;
+    this.clickInside($event, this.selectedField);
+    this.fields.push(field);
   }
 
   showAddFieldButton() {
@@ -77,12 +82,10 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
     field.elements.splice(index, 1);
   }
 
-  submitField(field: any) {
-    field.submitted = true;
-  }
-
-  editField(field: any) {
-    field.submitted = false;
+  setSubmit() {
+    if (this.selectedField) {
+      this.selectedField.submitted = true;
+    }
   }
 
   isValidGeneralData(formData: any) {
@@ -117,6 +120,27 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
         .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data); });
       this.fieldCreator.projectFieldsCollector = new ProjectFieldsCollector();
     }
+  }
+
+  clickInside($event: Event, field: any) {
+    $event.preventDefault();
+    $event.stopPropagation();  // <- that will stop propagation on lower layers
+    this.setSubmit();
+    field.submitted = false;
+    this.selectedField = field;
+  }
+
+  @HostListener('document:click', ['$event']) clickedOutside($event) {
+    if (this.selectedField && this.isValidGeneralData(this.selectedField)) {
+      this.selectedField.submitted = true;
+    } else if (this.selectedField && !this.isValidGeneralData(this.selectedField)) {
+      this.removeField(this.selectedField, this.selectedField.fieldType);
+      this.selectedField = null;
+    }
+  }
+
+  getFieldInfo(field: any) {
+    let name = field.fieldName.length > 5
   }
 
   private checkSumbitted() {

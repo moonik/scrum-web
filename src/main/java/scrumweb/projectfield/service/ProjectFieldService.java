@@ -51,9 +51,10 @@ public class ProjectFieldService {
 
     public Set<ProjectFieldDto> removeField(Long id, String projectKey, String issueType) {
         IssueType issuetype = findIssueType(projectRepository.findByKey(projectKey).getIssueTypes(), issueType);
-        issuetype.setFields(filterOutFields(issuetype.getFields(), id));
+        ProjectField projectField = projectFieldRepository.getOne(id);
+        Set<ProjectField> projectFields = issuetype.getFields();
+        projectFields.remove(projectField);
         issueTypeRepository.saveAndFlush(issuetype);
-        projectFieldRepository.delete(id);
         return issuetype.getFields().stream()
                 .map(f -> projectFieldAsm.createDtoObject(f))
                 .collect(Collectors.toSet());
@@ -77,11 +78,5 @@ public class ProjectFieldService {
                 fieldsToBeSaved.add(projectFieldAsm.createEntityObject(f));
         });
         return fieldsToBeSaved;
-    }
-
-    public Set<ProjectField> filterOutFields(Set<ProjectField> fields, Long fieldId) {
-        return  fields.stream()
-                .filter(f -> !f.getId().equals(fieldId))
-                .collect(Collectors.toSet());
     }
 }

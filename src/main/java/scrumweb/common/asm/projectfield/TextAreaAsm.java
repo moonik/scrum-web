@@ -15,7 +15,7 @@ public class TextAreaAsm implements ProjectFieldAsm<TextArea, TextAreaDto> {
                 projectFieldDto.getFieldName(),
                 projectFieldDto.getIsRequired(),
                 projectFieldDto.getMinCharacters(),
-                projectFieldDto.getMaxCharacters()
+                getMaxChars(projectFieldDto)
         );
     }
 
@@ -28,5 +28,10 @@ public class TextAreaAsm implements ProjectFieldAsm<TextArea, TextAreaDto> {
                 projectField.getIsRequired(),
                 projectField.getMaxCharacters(),
                 projectField.getMinCharacters());
+    }
+
+    private int getMaxChars(TextAreaDto projectFieldDto) {
+        return projectFieldDto.getMaxCharacters() == 0 ?
+                255 : projectFieldDto.getMaxCharacters();
     }
 }

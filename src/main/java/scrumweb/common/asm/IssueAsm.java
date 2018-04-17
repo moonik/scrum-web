@@ -3,6 +3,7 @@ package scrumweb.common.asm;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import scrumweb.common.ApplicationConstants;
+import scrumweb.dto.issue.IssueCommentDto;
 import scrumweb.dto.issue.IssueDetailsDto;
 import scrumweb.dto.issue.IssueDto;
 import scrumweb.dto.user.UserProfileDto;
@@ -15,6 +16,7 @@ import scrumweb.user.account.domain.UserAccount;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -51,6 +53,7 @@ public class IssueAsm {
                 .issueType(issue.getIssueType().getName())
                 .createdDate(issue.getCreatedDate().format(formatter))
                 .lastUpdate(new SimpleDateFormat(ApplicationConstants.DATE_FORMAT).format(issue.getLastUpdate()))
+                .comments(getComments(issue))
                 .build();
     }
 
@@ -79,5 +82,11 @@ public class IssueAsm {
         return assignees.stream()
                 .map(UserAccount::getUsername)
                 .collect(Collectors.toSet());
+    }
+
+    private static List<IssueCommentDto> getComments(Issue issue) {
+        return issue.getComments().stream()
+                .map(c -> IssueCommentAsm.createDtoObject(c, UserProfileAsm.makeUserProfileDto(c.getOwner())))
+                .collect(Collectors.toList());
     }
 }

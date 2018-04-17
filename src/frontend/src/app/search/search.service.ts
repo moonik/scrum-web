@@ -13,7 +13,7 @@ export class SearchService {
   }
 
   askForAccess(projectKey: string, member: ProjectMemberDto) {
-    return this.http.post('project/'+ projectKey + '/access', member);
+    return this.http.post('project/' + projectKey + '/access', member);
   }
 
   findUserInAssignees(assignees: Array<ProjectMemberDto>): boolean {

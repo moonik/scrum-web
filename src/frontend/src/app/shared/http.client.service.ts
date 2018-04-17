@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/observable/throw';
 import {Observable} from 'rxjs/Observable';
-import {LoaderService} from "../loader/loader.service";
+import {LoaderService} from '../loader/loader.service';
 import * as constants from '../constants/applicatins-contants';
 
 @Injectable()
@@ -80,6 +80,11 @@ export class HttpClient {
       .finally(() => {
         this.onEnd();
       });
+  }
+
+  createRequestParams(data: Object, url: string): string {
+    const params = '?' + Object.entries(data).map(([key, val]) => `${key}=${val}`).join('&');
+    return url + params;
   }
 
   private onCatch(error: any): Observable<any> {
