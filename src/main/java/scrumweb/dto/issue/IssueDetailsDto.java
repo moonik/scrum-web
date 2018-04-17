@@ -11,6 +11,7 @@ import scrumweb.dto.fieldcontent.FieldContentDto;
 import scrumweb.dto.fieldcontent.FieldsContentCollector;
 import scrumweb.dto.user.UserProfileDto;
 
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -33,4 +34,5 @@ public class IssueDetailsDto {
     private Set<FieldContentDto> fieldContents;
     private String createdDate;
     private String lastUpdate;
+    private List<IssueCommentDto> comments;
 }

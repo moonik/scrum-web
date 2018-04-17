@@ -21,13 +21,7 @@ export class ProjectDetailsComponent implements OnInit {
   projectDetails: ProjectDetailsDto = new ProjectDetailsDto();
   selectedIssue: IssueDetailsDto;
   loading = false;
-  commentForm: FormGroup;
-  comments: IssueComment[] = [];
-  newComment: IssueComment = new IssueComment();
   projectMembers: Array<any> = [];
-  hoveredCommentId: number;
-  selectedComment: IssueComment = new IssueComment();
-  oldContent: string;
 
   constructor(private activatedRoute: ActivatedRoute,
               private projectDetailsService: ProjectDetailsService,
@@ -38,10 +32,6 @@ export class ProjectDetailsComponent implements OnInit {
       this.projectKey = params['projectKey'];
     });
     this.getProjectDetails();
-
-    this.commentForm = fb.group({
-      content: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(255)]]
-    });
   }
 
   ngOnInit() {
@@ -56,8 +46,7 @@ export class ProjectDetailsComponent implements OnInit {
         data => {
           this.selectedIssue = data;
           this.loading = false;
-          this.getIssueComments();
-        });
+      });
   }
 
   getProjectDetails() {
@@ -114,79 +103,5 @@ export class ProjectDetailsComponent implements OnInit {
 
   isAssigned(username: string) {
     return !this.selectedIssue.assignees.map(a => a.username).includes(username);
-  }
-
-  getIssueComments() {
-    return this.issueService.getIssueComments(this.selectedIssue.key)
-      .subscribe(
-        data => {
-          this.comments = data;
-        }
-      );
-  }
-
-  addComment() {
-    return this.issueService.addComment(this.selectedIssue.key, this.newComment)
-      .subscribe(
-        data => {
-          this.comments.push(data);
-          this.newComment.content = '';
-        }
-      );
-  }
-
-  deleteComment(comment: IssueComment) {
-    return this.issueService.deleteComment(comment.id)
-      .subscribe(
-        () => {
-          const index = this.comments.indexOf(comment);
-          this.comments.splice(index, 1);
-        }
-      );
-  }
-
-  editComment(comment: IssueComment, commentId: number) {
-    return this.issueService.editComment(commentId, comment)
-      .subscribe();
-  }
-
-  getCurrentUser(): string {
-    return localStorage.getItem('currentUser');
-  }
-
-  mouseEnter(comment: any) {
-    this.hoveredCommentId = comment.id;
-    comment.hover = true;
-  }
-
-  mouseLeave(comment: any) {
-    comment.hover = false;
-  }
-
-  checkCommentLength(): boolean {
-    return this.commentForm.controls.content.errors.minlength || this.commentForm.controls.content.errors.maxlength;
-  }
-
-  checkControl(name: string): boolean {
-    return this.commentForm.controls[name].invalid && (this.commentForm.controls[name].touched || this.commentForm.controls[name].dirty);
-  }
-
-  checkIfEdited(comment: any) {
-    return this.oldContent !== comment.content;
-  }
-
-  clickInside($event: Event, comment: any) {
-    $event.preventDefault();
-    $event.stopPropagation();  // <- that will stop propagation on lower layers
-    this.oldContent = comment.content;
-    this.selectedComment = comment;
-    this.selectedComment.editing = true;
-  }
-
-  @HostListener('document:click', ['$event']) clickedOutside($event) {
-    this.selectedComment.editing = false;
-    if (this.checkIfEdited(this.selectedComment)) {
-      this.editComment(this.selectedComment, this.selectedComment.id);
-    }
   }
 }
