@@ -139,10 +139,6 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
     }
   }
 
-  getFieldInfo(field: any) {
-    let name = field.fieldName.length > 5
-  }
-
   private checkSumbitted() {
     return this.fields.filter(field => field.submitted).length === this.fields.length;
   }
