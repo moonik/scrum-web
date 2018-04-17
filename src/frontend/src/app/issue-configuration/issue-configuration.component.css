@@ -80,3 +80,8 @@
 .chars-length {
     width: 75px !important;
 }
+
+#field-name {
+    width:34em; 
+    display: inline-block;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, HostListener } from '@angular/core';
 import { ProjectFieldDto } from '../model/project-fields/ProjectFieldDto';
 import { CheckBoxContainerDto } from '../model/project-fields/CheckBoxContainerDto';
 import { CheckBoxDto } from '../model/project-fields/CheckBoxDto';
@@ -28,6 +28,7 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
   fieldTypesArray = Object.values(this.fieldTypes);
   chooseIssueType = 'Choose issue type...';
   chosenIssueType = '';
+  selectedField: any;
   @Input()
   issueTypes;
   @Input()
@@ -51,8 +52,14 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
     }
   }
 
-  addField() {
-    this.fields.push({id: null, submitted: false, elements: []});
+  addField($event) {
+    if (this.selectedField) {
+      this.selectedField.submitted = true;
+    }
+    let field = {id: null, submitted: false, elements: []};
+    this.selectedField = field;
+    this.clickInside($event, this.selectedField);
+    this.fields.push(field);
   }
 
   showAddFieldButton() {
@@ -117,6 +124,29 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
         .subscribe(data => { this.fields = data; this.oldFields = JSON.stringify(data); });
       this.fieldCreator.projectFieldsCollector = new ProjectFieldsCollector();
     }
+  }
+
+  clickInside($event: Event, field: any) {
+    $event.preventDefault();
+    $event.stopPropagation();  // <- that will stop propagation on lower layers
+    if (this.selectedField) {
+      this.selectedField.submitted = true;
+    }
+    field.submitted = false;
+    this.selectedField = field;
+  }
+
+  @HostListener('document:click', ['$event']) clickedOutside($event) {
+    if (this.selectedField && this.isValidGeneralData(this.selectedField)) {
+      this.selectedField.submitted = true;
+    } else if (this.selectedField && !this.isValidGeneralData(this.selectedField)) {
+      this.removeField(this.selectedField, this.selectedField.fieldType);
+      this.selectedField = null;
+    }
+  }
+
+  getFieldInfo(field: any) {
+    let name = field.fieldName.length > 5
   }
 
   private checkSumbitted() {
