@@ -72,15 +72,6 @@
 
       <br>
 
-      <form [formGroup]="commentForm" (ngSubmit)="addComment()">
-      <input formControlName="content" name="commentContent" type="text" class="form-control w-100" id="inputContent"
-             placeholder="Add comment" [(ngModel)]="newComment.content">
-        <div *ngIf="checkControl('content')">
-          <small id="commentLengthError" class="form-text text-danger" *ngIf="checkCommentLength()">Comment length must be between 1 to 255 characters.</small>
-        </div>
-        <p align="right"><button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">Add</button></p>
-      </form>
-
       <p align="center"><b>{{ comments.length }} comment(s)</b></p>
 
       <div class="comments-found" *ngIf="comments.length > 0">
@@ -111,6 +102,18 @@
           </tbody>
         </table>
       </div>
+
+      <br>
+      
+      <form [formGroup]="commentForm" (ngSubmit)="addComment()" class="comment-form">
+        <input formControlName="content" name="commentContent" type="text" class="form-control w-100" id="inputContent"
+                 placeholder="Add comment" [(ngModel)]="newComment.content">
+        <div *ngIf="checkControl('content')">
+          <small id="commentLengthError" class="form-text text-danger" *ngIf="checkCommentLength()">Comment length must be between 1 to 255 characters.</small>
+        </div>
+        <p align="right"><button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">Add</button></p>
+      </form>
+    
 
       <div class="no-comments-found" *ngIf="comments.length === 0">
         No comments found! Type for first comments in this issue.
