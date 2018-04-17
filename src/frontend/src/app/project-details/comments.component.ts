@@ -33,7 +33,7 @@ export class CommentsComponent {
               this.newComment.content = '';
             });
     }
-    
+
     deleteComment(comment: IssueComment) {
         return this.issueService.deleteComment(comment.id)
           .subscribe(
@@ -43,37 +43,38 @@ export class CommentsComponent {
             }
           );
     }
-    
+
     editComment(comment: IssueComment, commentId: number) {
         return this.issueService.editComment(commentId, comment)
           .subscribe();
     }
-    
+
     getCurrentUser(): string {
         return localStorage.getItem('currentUser');
     }
-    
+
     mouseEnter(comment: any) {
         this.hoveredCommentId = comment.id;
         comment.hover = true;
     }
-    
+
     mouseLeave(comment: any) {
         comment.hover = false;
     }
-    
+
     checkCommentLength(): boolean {
         return this.commentForm.controls.content.errors.minlength || this.commentForm.controls.content.errors.maxlength;
     }
-    
+
     checkControl(name: string): boolean {
-        return this.commentForm.controls[name].invalid && (this.commentForm.controls[name].touched || this.commentForm.controls[name].dirty);
+        return this.commentForm.controls[name].invalid && 
+            (this.commentForm.controls[name].touched || this.commentForm.controls[name].dirty);
     }
-    
+
     checkIfEdited(comment: any) {
         return this.oldContent !== comment.content;
     }
-    
+
     clickInside($event: Event, comment: any) {
         $event.preventDefault();
         $event.stopPropagation();  // <- that will stop propagation on lower layers
@@ -81,7 +82,7 @@ export class CommentsComponent {
         this.selectedComment = comment;
         this.selectedComment.editing = true;
     }
-    
+
     @HostListener('document:click', ['$event']) clickedOutside($event) {
         this.selectedComment.editing = false;
         if (this.checkIfEdited(this.selectedComment)) {

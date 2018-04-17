@@ -2,7 +2,6 @@ package scrumweb.common.asm.projectfield;
 
 import org.springframework.stereotype.Component;
 import scrumweb.dto.projectfield.InputFieldDto;
-import scrumweb.dto.projectfield.ProjectFieldDto;
 import scrumweb.projectfield.domain.InputField;
 import scrumweb.projectfield.domain.ProjectField.FieldType;
 
