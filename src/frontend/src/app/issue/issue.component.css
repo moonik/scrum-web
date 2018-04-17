@@ -2,6 +2,10 @@
     cursor: pointer;
 }
 
+.issue-form label, input, textarea, select {
+    margin: 5px;
+}
+
 .text-create {
     border-bottom: 2px black solid !important;
     margin: 15px;
