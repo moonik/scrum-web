@@ -53,9 +53,7 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
   }
 
   addField($event) {
-    if (this.selectedField) {
-      this.selectedField.submitted = true;
-    }
+    this.setSubmit();
     let field = {id: null, submitted: false, elements: []};
     this.selectedField = field;
     this.clickInside($event, this.selectedField);
@@ -84,12 +82,10 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
     field.elements.splice(index, 1);
   }
 
-  submitField(field: any) {
-    field.submitted = true;
-  }
-
-  editField(field: any) {
-    field.submitted = false;
+  setSubmit() {
+    if (this.selectedField) {
+      this.selectedField.submitted = true;
+    }
   }
 
   isValidGeneralData(formData: any) {
@@ -129,9 +125,7 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
   clickInside($event: Event, field: any) {
     $event.preventDefault();
     $event.stopPropagation();  // <- that will stop propagation on lower layers
-    if (this.selectedField) {
-      this.selectedField.submitted = true;
-    }
+    this.setSubmit();
     field.submitted = false;
     this.selectedField = field;
   }
