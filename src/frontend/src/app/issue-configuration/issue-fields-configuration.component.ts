@@ -1,14 +1,5 @@
 import { Component, OnInit, Input, OnChanges, HostListener } from '@angular/core';
-import { ProjectFieldDto } from '../model/project-fields/ProjectFieldDto';
-import { CheckBoxContainerDto } from '../model/project-fields/CheckBoxContainerDto';
-import { CheckBoxDto } from '../model/project-fields/CheckBoxDto';
-import { InputFieldDto } from '../model/project-fields/InputFieldDto';
-import { ListElementsContainerDto } from '../model/project-fields/ListElementsContainerDto';
-import { ListElementDto } from '../model/project-fields/ListElementDto';
-import { RadioButtonContainerDto } from '../model/project-fields/RadioButtonContainerDto';
-import { RadioButtonDto } from '../model/project-fields/RadioButtonDto';
-import { TextAreaDto } from '../model/project-fields/TextAreaDto';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProjectFieldCreatorImpl } from '../model/project-fields/ProjectFieldCreatorImpl';
 import { IssueConfigurationService } from './issue-configuration.service';
 
@@ -82,6 +73,10 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
     field.elements.splice(index, 1);
   }
 
+  submitField(field: any) {
+    field.submitted = true;
+  }
+
   setSubmit() {
     if (this.selectedField) {
       this.selectedField.submitted = true;
@@ -137,10 +132,6 @@ export class IssueFieldsConfigurationComponent implements OnInit, OnChanges {
       this.removeField(this.selectedField, this.selectedField.fieldType);
       this.selectedField = null;
     }
-  }
-
-  getFieldInfo(field: any) {
-    let name = field.fieldName.length > 5
   }
 
   private checkSumbitted() {

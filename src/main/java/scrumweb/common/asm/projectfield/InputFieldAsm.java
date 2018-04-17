@@ -14,7 +14,6 @@ public class InputFieldAsm implements ProjectFieldAsm<InputField, InputFieldDto>
                 FieldType.getFieldType(projectFieldDto.getFieldType()),
                 projectFieldDto.getFieldName(),
                 projectFieldDto.getIsRequired(),
-                projectFieldDto.getMinCharacters(),
                 getMaxChars(projectFieldDto)
         );
     }
@@ -26,8 +25,7 @@ public class InputFieldAsm implements ProjectFieldAsm<InputField, InputFieldDto>
                 projectField.getFieldType().name(),
                 projectField.getName(),
                 projectField.getIsRequired(),
-                projectField.getMaxCharacters(),
-                projectField.getMinCharacters()
+                projectField.getMaxCharacters()
         );
     }
 

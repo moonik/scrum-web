@@ -38,8 +38,7 @@ export class ProjectFieldCreatorImpl implements FieldCreator<ProjectFieldDto> {
             field.fieldType,
             field.fieldName,
             field.isRequired,
-            field.maxCharacters,
-            field.minCharacters
+            field.maxCharacters
         );
     }
 
@@ -49,8 +48,7 @@ export class ProjectFieldCreatorImpl implements FieldCreator<ProjectFieldDto> {
             field.fieldType,
             field.fieldName,
             field.isRequired,
-            field.maxCharacters,
-            field.minCharacters
+            field.maxCharacters
         );
     }
 
