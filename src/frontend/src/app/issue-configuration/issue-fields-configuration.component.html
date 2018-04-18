@@ -1,5 +1,5 @@
 <span>
-    <a class="create-new-field" id="create-new-field" (click)="addField($event)" *ngIf="showAddFieldButton()"><b>Create new field</b></a>
+    <a class="create-new-field" id="create-new-field" (click)="addField()" *ngIf="showAddFieldButton()"><b>Create new field</b></a>
     <select name="issue-type" [(ngModel)]="chosenIssueType" (change)="fetchFields()">
       <option>{{ chooseIssueType }}</option>
       <option *ngFor="let type of issueTypes">{{ type.issueType }}</option>
@@ -8,7 +8,7 @@
 
 <form class="field-creation-form"  *ngFor="let field of fields" (ngSubmit)="submitField(field)">
   <div [hidden]="field.submitted">
-    <div (click)="clickInside($event, field)">
+    <div>
       <label for="fieldName">Field name</label>
       <input name="fieldName" [(ngModel)]="field.fieldName">
       <select name="fieldType" id="field-type" [(ngModel)]="field.fieldType">
@@ -37,7 +37,7 @@
   </div>
 
   <div class="submitted-field" [hidden]="!field.submitted">
-    <span (click)="clickInside($event, field)" id="field-name">
+    <span (click)="editField(field)" id="field-name">
       <b>
         {{ field.fieldName }} ->
         {{ field.fieldType?.toLowerCase().replace('_', ' ') }}
