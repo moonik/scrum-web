@@ -3,6 +3,7 @@ import {ProjectDto} from '../model/ProjectDto';
 import {HomeService} from './home.service';
 import {Router} from '@angular/router';
 import {StorageService} from '../shared/storage.service';
+import {NotificationService} from '../shared/notification.service';
 
 @Component({
   selector: 'app-home',
@@ -13,17 +14,19 @@ import {StorageService} from '../shared/storage.service';
 export class HomeComponent implements OnInit {
 
   projects: ProjectDto[] = [];
+  stompClient;
 
   constructor(private homeService: HomeService,
               private router: Router,
-              private storage: StorageService) {
+              private storage: StorageService,
+              private nt: NotificationService) {
     this.getAllProjects();
   }
 
   ngOnInit() {
     this.getAllProjects();
   }
-
+  
   getAllProjects() {
     this.homeService.getAllProjects()
       .subscribe(

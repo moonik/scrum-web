@@ -8,6 +8,7 @@ import {IssueDetailsDto} from '../model/IssueDetailsDto';
 import {IssueComment} from '../model/IssueComment';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { SearchService } from '../search/search.service';
+import {NotificationService} from '../shared/notification.service';
 
 @Component({
   selector: 'app-project-details',
@@ -31,7 +32,8 @@ export class ProjectDetailsComponent implements OnInit {
               private projectDetailsService: ProjectDetailsService,
               private issueService: IssueService,
               private searchService: SearchService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private notificationService: NotificationService) {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.projectKey = params['projectKey'];
     });
@@ -82,11 +84,14 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   onAssignToIssue(username: string) {
+    let content = localStorage.getItem('currentUser') + ' ' + 'assigned you to issue ' + this.selectedIssue.key;
+    let message = {toUseruser: username, content: content};
     if (!username) {
       username = localStorage.getItem('currentUser');
     }
     this.issueService.assignToIssue(this.selectedIssue.key, username)
       .subscribe(() => {
+        this.notificationService.sendNotification(message);
         this.ngOnInit();
       });
   }
@@ -129,6 +134,8 @@ export class ProjectDetailsComponent implements OnInit {
         data => {
           this.comments.push(data);
           this.newComment.content = '';
+          let message = {toUser: this.selectedIssue.reporter.username, content: 'Someone just left a comment in task ' + this.selectedIssue.key};
+          this.notificationService.sendNotification(message);
         }
       );
   }

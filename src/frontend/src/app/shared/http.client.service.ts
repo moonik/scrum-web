@@ -8,12 +8,15 @@ import 'rxjs/add/operator/finally';
 import 'rxjs/add/observable/throw';
 import {Observable} from 'rxjs/Observable';
 import {LoaderService} from "../loader/loader.service";
-import * as constants from '../constants/applicatins-contants';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
+import * as constants from '../constants/application-constants';
 
 @Injectable()
 export class HttpClient {
 
   private constants = constants.default;
+  private stompClient;
 
   constructor(private http: Http, private _loaderService: LoaderService) {}
 
