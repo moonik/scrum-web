@@ -26,6 +26,7 @@ public class NotificationService {
         Notification notification = new Notification(null, userAccount, message.getContent(), false);
         List<Notification> notifications = userAccount.getNotifications();
         notifications.add(notification);
+        userAccount.setNotifications(notifications);
         userAccountRepository.save(userAccount);
     }
 

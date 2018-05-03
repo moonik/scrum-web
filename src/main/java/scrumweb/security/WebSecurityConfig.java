@@ -57,8 +57,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 // jwt is invulnerable to CSRF
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
-                // don't create session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 // allow authentication requests
                 .antMatchers("/api/scrum-web/auth/**", "/api/scrum-web/user-account/save").permitAll()

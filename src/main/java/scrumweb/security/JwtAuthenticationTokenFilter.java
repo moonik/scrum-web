@@ -29,15 +29,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Value("Authorization")
     private String tokenHeader;
 
-    private static final String COOKIE_HEADER = "cookie";
-
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        httpServletRequest.getHeaderNames();
         String authToken = httpServletRequest.getHeader(HEADER_STRING);
-        if (authToken == null) {
-            authToken = getToken(httpServletRequest.getHeader(COOKIE_HEADER));
-        }
         String username = jwtTokenUtil.getUsernameFromToken(authToken);
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
@@ -49,13 +43,5 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
-    }
-
-    private static String getToken(String headers) {
-        return Arrays.stream(headers.split(";"))
-                .filter(h -> h.contains(HEADER_STRING))
-                .map(h -> h.substring(h.indexOf('=')+1))
-                .findFirst()
-                .orElse(null);
     }
 }
