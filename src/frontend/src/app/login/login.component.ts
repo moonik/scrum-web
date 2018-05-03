@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../security/authentication.service';
 import {Router} from '@angular/router';
 import {UserDto} from '../model/UserDto';
+import {NotificationService} from '../shared/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   userDto: UserDto = new UserDto();
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authenticationService: AuthenticationService, private router: Router) {
+  constructor(private fb: FormBuilder, private authenticationService: AuthenticationService, private router: Router, private ws: NotificationService) {
     this.loginForm = fb.group({
       login : [null,  Validators.required],
       password : [null, [Validators.minLength(8), Validators.required]]
@@ -26,10 +27,14 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  init() {
+    this.ws.initWebSocketConnection();
+  }
+
   login() {
     if (this.loginForm.valid) {
       this.loading = true;
-      this.authenticationService.login (this.userDto)
+      this.authenticationService.login(this.userDto)
         .subscribe(
           success => {
             this.router.navigate(['/home']);

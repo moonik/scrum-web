@@ -59,7 +59,7 @@ public class ProjectFieldService {
                 .collect(Collectors.toSet());
     }
 
-    private IssueType findIssueType(Set<IssueType> issueTypes, String issuetype) {
+    private static IssueType findIssueType(Set<IssueType> issueTypes, String issuetype) {
         return issueTypes.stream()
                 .filter(type -> type.getName().equalsIgnoreCase(issuetype))
                 .findFirst()
@@ -79,7 +79,7 @@ public class ProjectFieldService {
         return fieldsToBeSaved;
     }
 
-    public Set<ProjectField> filterOutFields(Set<ProjectField> fields, Long fieldId) {
+    private static Set<ProjectField> filterOutFields(Set<ProjectField> fields, Long fieldId) {
         return  fields.stream()
                 .filter(f -> !f.getId().equals(fieldId))
                 .collect(Collectors.toSet());

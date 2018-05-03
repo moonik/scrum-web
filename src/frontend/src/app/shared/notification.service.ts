@@ -27,8 +27,9 @@ export class NotificationService {
         });
     }
 
-    sendNotification(message: any) {
+    sendNotification(receiver: string, content: string) {
+        let notification = {receiver: receiver, content: content};
         this.stompClient.send('/app/notification/send', {
-        }, JSON.stringify(message));
+        }, JSON.stringify(notification));
     }
 }

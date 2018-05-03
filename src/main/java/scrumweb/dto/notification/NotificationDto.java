@@ -1,4 +1,4 @@
-package scrumweb.dto;
+package scrumweb.dto.notification;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class NotificationDto {
-
-    private String toUser;
+    private String receiver;
     private String content;
 }

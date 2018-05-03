@@ -85,13 +85,12 @@ export class ProjectDetailsComponent implements OnInit {
 
   onAssignToIssue(username: string) {
     let content = localStorage.getItem('currentUser') + ' ' + 'assigned you to issue ' + this.selectedIssue.key;
-    let message = {toUseruser: username, content: content};
     if (!username) {
       username = localStorage.getItem('currentUser');
     }
     this.issueService.assignToIssue(this.selectedIssue.key, username)
       .subscribe(() => {
-        this.notificationService.sendNotification(message);
+        this.notificationService.sendNotification(username, content);
         this.ngOnInit();
       });
   }
@@ -133,9 +132,9 @@ export class ProjectDetailsComponent implements OnInit {
       .subscribe(
         data => {
           this.comments.push(data);
+          let content = 'New comment in task ' + this.selectedIssue.key + ': \n' + this.newComment.content;
           this.newComment.content = '';
-          let message = {toUser: this.selectedIssue.reporter.username, content: 'Someone just left a comment in task ' + this.selectedIssue.key};
-          this.notificationService.sendNotification(message);
+          this.notificationService.sendNotification(this.selectedIssue.reporter.username, content);
         }
       );
   }

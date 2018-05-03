@@ -3,12 +3,16 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {UserDto} from '../model/UserDto';
 import {HttpClient} from '../shared/http.client.service';
+import {NotificationService} from '../shared/notification.service';
+
 @Injectable()
 export class AuthenticationService {
 
   token: string;
 
-  constructor(private httpClientService: HttpClient) {
+  constructor(
+    private httpClientService: HttpClient, 
+    private notificationService: NotificationService) {
     const currentUser = JSON.parse(localStorage.getItem('username'));
     this.token = currentUser && currentUser.token;
   }
@@ -21,6 +25,8 @@ export class AuthenticationService {
           this.token = token;
           localStorage.setItem('token', token);
           localStorage.setItem('currentUser', userDto.username);
+          document.cookie = 'Authorization=' + token;
+          this.notificationService.initWebSocketConnection();
         }
         return response.status;
       });
@@ -51,6 +57,8 @@ export class AuthenticationService {
           if (token) {
             this.token = token;
             localStorage.setItem('token', token);
+            document.cookie = 'Authorization=' + token;
+            
           }
           return response.status;
         });
