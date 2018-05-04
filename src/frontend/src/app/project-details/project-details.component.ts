@@ -84,13 +84,15 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   onAssignToIssue(username: string) {
-    let content = localStorage.getItem('currentUser') + ' ' + 'assigned you to issue ' + this.selectedIssue.key;
     if (!username) {
       username = localStorage.getItem('currentUser');
     }
     this.issueService.assignToIssue(this.selectedIssue.key, username)
       .subscribe(() => {
-        this.notificationService.sendNotification(username, content);
+        if (username !== localStorage.getItem('currentUser')) {
+          let content = localStorage.getItem('currentUser') + ' ' + 'assigned you to issue ' + this.selectedIssue.key;
+          this.notificationService.sendNotification(username, content);
+        }
         this.ngOnInit();
       });
   }
@@ -111,7 +113,13 @@ export class ProjectDetailsComponent implements OnInit {
 
   onRemoveFromAssign(username: string) {
     this.issueService.unAssignFromIssue(username, this.selectedIssue.key)
-      .subscribe(() => this.ngOnInit());
+      .subscribe(() => {
+        if (username !== localStorage.getItem('currentUser')) {
+          let content = localStorage.getItem('currentUser') + ' ' + 'unassigned you from issue ' + this.selectedIssue.key;
+          this.notificationService.sendNotification(username, content);
+        }
+        this.ngOnInit()
+      });
   }
 
   isAssigned(username: string) {

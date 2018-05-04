@@ -56,7 +56,6 @@ export class NavbarComponent implements OnInit {
   }
 
   updateNotifications() {
-    this.amountOfNewNotifications = 0;
     this.notifications.map(n => n.seen = true);
     this.ws.updateNotifications().subscribe(
       success => this.amountOfNewNotifications = 0
