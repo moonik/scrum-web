@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class NotificationDto {
     private String receiver;
     private String content;
+    private Boolean seen;
 }

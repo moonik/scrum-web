@@ -11,6 +11,14 @@
       <a class="nav-item nav-link" [routerLink]="['/register']" *ngIf="!checkLogin()">Register</a>
       <a class="nav-item nav-link" data-toggle="collapse" data-target="#navbarNavAltMarkup" (click)="logout()" *ngIf="checkLogin()">Logout</a>
       </ul>
+      <div class="dropdown notifications-dropdown">
+          <span class="fa fa-bell" aria-hidden="true" aria-hidden="true" type="button" data-toggle="dropdown" (click)="updateNotifications()"> 
+            {{ amountOfNewNotifications }} 
+          </span>
+          <ul class="dropdown-menu">
+            <li class="single-notification" *ngFor="let notification of notifications"> {{ notification.content }} </li>
+          </ul>
+      </div>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item nav-link" *ngIf="checkLogin()">Hello {{ getCurrentUser() }}!</li> &nbsp; &nbsp;
         <form #formSearch="ngForm" (ngSubmit)="search(formSearch.value.query)">

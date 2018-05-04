@@ -30,9 +30,9 @@
 }
 
 .list-panel, .issue-details {
-    width:100px;
-    height:100px;
-    margin-right:10px;
+  width:100px;
+  height:100px;
+  margin-right:10px;
 	float:left;
 	margin-left: 15px;
 }
@@ -40,8 +40,8 @@
 .list-panel {
 	width: 15% !important;
 	overflow-y: auto;
-    height: 31.5em;
-    font-size: 16px;
+  height: 31.5em;
+  font-size: 16px;
 	display: inline-block;
 	margin-top: 1px;
 }
@@ -52,8 +52,8 @@
 	width: 65% !important;
 	overflow-y: auto;
   height: 100%;
-    font-size: 16px;
-    display: inline-block;
+  font-size: 16px;
+  display: inline-block;
 }
 
 .issue-details span {

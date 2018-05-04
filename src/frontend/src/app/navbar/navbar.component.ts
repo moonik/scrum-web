@@ -12,33 +12,54 @@ import {NotificationService} from '../shared/notification.service';
 })
 export class NavbarComponent implements OnInit {
 
-  public searchIcon = '../assets/images/searchicon.png';
+  searchIcon = '../assets/images/searchicon.png';
+  notifications = [];
+  amountOfNewNotifications = 0;
 
   constructor(private authenticationService: AuthenticationService, private router: Router, private ws: NotificationService) {
   }
 
-  public ngOnInit() {
+  ngOnInit() {
     if (localStorage.getItem('currentUser')) {
       this.ws.initWebSocketConnection();
+      this.ws.getNotifications().subscribe(
+        data => {
+          this.notifications = this.notifications.concat(data);
+          this.amountOfNewNotifications = this.notifications.filter(n => !n.seen).length;
+      });
+      this.ws.subscribeOnNotifications().subscribe(
+        data => {
+          this.notifications.unshift(data);
+          this.amountOfNewNotifications++;
+        }
+      );
     }
   }
 
-  public search(query: string) {
+  search(query: string) {
     if (query !== '') {
       this.router.navigate(['/search/' + query]);
     }
   }
 
-  public checkLogin(): boolean {
+  checkLogin(): boolean {
     return localStorage.getItem('currentUser') ? true : false;
   }
 
-  public logout() {
+  logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }
 
-  public getCurrentUser(): string {
+  getCurrentUser(): string {
     return localStorage.getItem('currentUser');
+  }
+
+  updateNotifications() {
+    this.amountOfNewNotifications = 0;
+    this.notifications.map(n => n.seen = true);
+    this.ws.updateNotifications().subscribe(
+      success => this.amountOfNewNotifications = 0
+    );
   }
 }

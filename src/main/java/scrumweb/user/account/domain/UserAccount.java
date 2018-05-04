@@ -54,6 +54,6 @@ public class UserAccount {
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Project> projects;
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     private List<Notification> notifications;
 }

@@ -22,14 +22,4 @@ public class NotificationController {
     public void onMessageReceive(NotificationDto message) {
         notificationService.onMessageReceive(message);
     }
-
-    @GetMapping("")
-    public List<NotificationDto> getNotifications() {
-        return notificationService.getNotifications();
-    }
-
-    @PutMapping("")
-    public void setSeen() {
-        notificationService.setSeen();
-    }
 }

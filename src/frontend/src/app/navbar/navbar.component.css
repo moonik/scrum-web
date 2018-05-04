@@ -17,3 +17,19 @@ body{
 .form-control:focus{
   width: 220px;
 }
+
+.notifications-dropdown {
+  float: right;
+  margin-left: 63%;
+}
+
+.fa-bell:hover {
+  cursor: pointer;
+}
+
+.single-notification {
+  border-bottom: 2px slategray solid;
+  width: 300px;
+  word-wrap: break-word;
+  margin-bottom: 5px;
+}
