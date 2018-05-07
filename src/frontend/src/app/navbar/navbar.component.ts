@@ -3,6 +3,7 @@ import {AuthenticationService} from '../security/authentication.service';
 import {Router} from '@angular/router';
 import {SearchService} from '../search/search.service';
 import {NotificationService} from '../shared/notification.service';
+import { StorageService } from '../shared/storage.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,17 +17,19 @@ export class NavbarComponent implements OnInit {
   notifications = [];
   amountOfNewNotifications = 0;
 
-  constructor(private authenticationService: AuthenticationService, private router: Router, private ws: NotificationService) {
+  constructor(
+    private authenticationService: AuthenticationService, 
+    private router: Router, 
+    private ws: NotificationService,
+    private sotarge: StorageService) {
   }
 
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
-      this.ws.initWebSocketConnection();
-      this.ws.getNotifications().subscribe(
-        data => {
-          this.notifications = this.notifications.concat(data);
-          this.amountOfNewNotifications = this.notifications.filter(n => !n.seen).length;
-      });
+      if (!this.ws.status) {
+        this.ws.initWebSocketConnection();
+      }
+      this.getNotifications();
       this.ws.subscribeOnNotifications().subscribe(
         data => {
           this.notifications.unshift(data);
@@ -34,6 +37,14 @@ export class NavbarComponent implements OnInit {
         }
       );
     }
+  }
+
+  getNotifications() {
+    this.ws.getNotifications().subscribe(data => {
+      console.log(data);
+      this.notifications = this.notifications.concat(data);
+      this.amountOfNewNotifications = this.notifications.filter(n => !n.seen).length;
+    })
   }
 
   search(query: string) {

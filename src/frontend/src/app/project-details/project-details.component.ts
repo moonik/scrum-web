@@ -140,9 +140,11 @@ export class ProjectDetailsComponent implements OnInit {
       .subscribe(
         data => {
           this.comments.push(data);
-          let content = 'New comment in task ' + this.selectedIssue.key + ': ' + this.newComment.content;
           this.newComment.content = '';
-          this.notificationService.sendNotification(this.selectedIssue.reporter.username, content);
+          if (this.selectedIssue.reporter.username !== localStorage.getItem('currentUser')) {
+            let content = 'New comment in task ' + this.selectedIssue.key + ': ' + this.newComment.content;
+            this.notificationService.sendNotification(this.selectedIssue.reporter.username, content);
+          }
         }
       );
   }

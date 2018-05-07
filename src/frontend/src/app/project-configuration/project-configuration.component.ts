@@ -85,8 +85,6 @@ export class ProjectConfigurationComponent implements OnInit {
     this.icon = files.item(0);
     this.loading = true;
     this.validIcon = true;
-
-
   }
 
   acceptRequest(user: string, role: string) {

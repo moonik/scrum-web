@@ -11,7 +11,7 @@
       <a class="nav-item nav-link" [routerLink]="['/register']" *ngIf="!checkLogin()">Register</a>
       <a class="nav-item nav-link" data-toggle="collapse" data-target="#navbarNavAltMarkup" (click)="logout()" *ngIf="checkLogin()">Logout</a>
       </ul>
-      <div class="dropdown notifications-dropdown">
+      <div class="dropdown notifications-dropdown" *ngIf="checkLogin()">
           <span class="fa fa-bell" aria-hidden="true" aria-hidden="true" type="button" data-toggle="dropdown" (click)="updateNotifications()"> 
             {{ amountOfNewNotifications }} 
           </span>

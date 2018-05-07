@@ -50,6 +50,7 @@ public class ProjectService {
             UserAccount projectOwner = securityContextService.getCurrentUserAccount();
             List<Project> projects = projectOwner.getProjects();
             projects.add(createProject(project, projectOwner));
+            projectOwner.setProjects(projects);
             userAccountRepository.save(projectOwner);
             return projectDto;
         } else {

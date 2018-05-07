@@ -19,7 +19,6 @@ public class NotificationService {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final UserAccountRepository userAccountRepository;
-    private final SecurityContextService securityContextService;
     private final NotificationRepository notificationRepository;
 
     public void onMessageReceive(NotificationDto message) {

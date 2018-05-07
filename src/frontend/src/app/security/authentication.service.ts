@@ -1,9 +1,10 @@
-import {Injectable} from '@angular/core';
+import {Injectable, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {UserDto} from '../model/UserDto';
 import {HttpClient} from '../shared/http.client.service';
 import {NotificationService} from '../shared/notification.service';
+import {NavbarComponent} from '../navbar/navbar.component';
 
 @Injectable()
 export class AuthenticationService {
@@ -26,7 +27,7 @@ export class AuthenticationService {
           localStorage.setItem('token', token);
           localStorage.setItem('currentUser', userDto.username);
           document.cookie = 'Authorization=' + token;
-          this.notificationService.initWebSocketConnection();
+          location.reload();
         }
         return response.status;
       });
@@ -36,6 +37,8 @@ export class AuthenticationService {
     this.token = null;
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
+    this.notificationService.unsubscribe();
+    this.notificationService.disconnect();
   }
 
   save(userDto: UserDto): Observable<number> {
