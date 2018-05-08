@@ -14,19 +14,16 @@ import javax.persistence.InheritanceType;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class TextArea extends ProjectField {
 
-    private int minCharacters;
     private int maxCharacters;
 
-    public TextArea(FieldType fieldType, String name, Boolean isRequired, int minCharacters, int maxCharacters) {
+    public TextArea(FieldType fieldType, String name, Boolean isRequired, int maxCharacters) {
         super(fieldType, name, isRequired);
-        this.minCharacters = minCharacters;
         this.maxCharacters = maxCharacters;
     }
 
     @Override
     public void edit(ProjectField projectField) {
         this.maxCharacters = ((TextArea) projectField).getMaxCharacters();
-        this.minCharacters = ((TextArea) projectField).getMinCharacters();
         this.setName(projectField.getName());
         this.setIsRequired(projectField.getIsRequired());
     }

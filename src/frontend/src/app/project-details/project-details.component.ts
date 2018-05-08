@@ -5,8 +5,6 @@ import {ProjectDetailsDto} from '../model/ProjectDetailsDto';
 import {IssueDto} from '../model/IssueDto';
 import {IssueService} from '../issue/issue.service';
 import {IssueDetailsDto} from '../model/IssueDetailsDto';
-import {IssueComment} from '../model/IssueComment';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { SearchService } from '../search/search.service';
 import {NotificationService} from '../shared/notification.service';
 
@@ -22,26 +20,17 @@ export class ProjectDetailsComponent implements OnInit {
   projectDetails: ProjectDetailsDto = new ProjectDetailsDto();
   selectedIssue: IssueDetailsDto;
   loading = false;
-  commentForm: FormGroup;
-  comments: IssueComment[] = [];
-  newComment: IssueComment = new IssueComment();
   projectMembers: Array<any> = [];
-  selectedComment: number;
 
   constructor(private activatedRoute: ActivatedRoute,
               private projectDetailsService: ProjectDetailsService,
               private issueService: IssueService,
               private searchService: SearchService,
-              private fb: FormBuilder,
               private notificationService: NotificationService) {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.projectKey = params['projectKey'];
     });
     this.getProjectDetails();
-
-    this.commentForm = fb.group({
-      content: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(255)]]
-    });
   }
 
   ngOnInit() {
@@ -56,8 +45,7 @@ export class ProjectDetailsComponent implements OnInit {
         data => {
           this.selectedIssue = data;
           this.loading = false;
-          this.getIssueComments();
-        });
+      });
   }
 
   getProjectDetails() {
@@ -124,75 +112,5 @@ export class ProjectDetailsComponent implements OnInit {
 
   isAssigned(username: string) {
     return !this.selectedIssue.assignees.map(a => a.username).includes(username);
-  }
-
-  getIssueComments() {
-    return this.issueService.getIssueComments(this.selectedIssue.key)
-      .subscribe(
-        data => {
-          this.comments = data;
-        }
-      );
-  }
-
-  addComment() {
-    return this.issueService.addComment(this.selectedIssue.key, this.newComment)
-      .subscribe(
-        data => {
-          this.comments.push(data);
-          this.newComment.content = '';
-          if (this.selectedIssue.reporter.username !== localStorage.getItem('currentUser')) {
-            let content = 'New comment in task ' + this.selectedIssue.key + ': ' + this.newComment.content;
-            this.notificationService.sendNotification(this.selectedIssue.reporter.username, content);
-          }
-        }
-      );
-  }
-
-  deleteComment(comment: IssueComment) {
-    return this.issueService.deleteComment(comment.id, this.selectedIssue.key)
-      .subscribe(
-        () => {
-          const index = this.comments.indexOf(comment);
-          this.comments.splice(index, 1);
-        }
-      );
-  }
-
-  editComment(comment: IssueComment, commentId: number) {
-    return this.issueService.editComment(commentId, comment)
-      .subscribe(
-        () => {
-          this.editCommentNo(comment);
-        }
-      );
-  }
-
-  getCurrentUser(): string {
-    return localStorage.getItem('currentUser');
-  }
-
-  mouseEnter(comment: any) {
-    this.selectedComment = comment.id;
-    comment.hover = true;
-  }
-
-  mouseLeave(comment: any) {
-    comment.hover = false;
-  }
-
-  checkCommentLength(): boolean {
-    return this.commentForm.controls.content.errors.minlength || this.commentForm.controls.content.errors.maxlength;
-  }
-
-  checkControl(name: string): boolean {
-    return this.commentForm.controls[name].invalid && (this.commentForm.controls[name].touched || this.commentForm.controls[name].dirty);
-  }
-
-  editCommentYes(comment: any) {
-    comment.editting = true;
-  }
-  editCommentNo(comment: any) {
-    comment.editting = false;
   }
 }

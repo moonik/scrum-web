@@ -150,6 +150,12 @@
             <artifactId>guava</artifactId>
             <version>23.5-jre</version>
         </dependency>
+
+        <dependency>
+            <groupId>net.bull.javamelody</groupId>
+            <artifactId>javamelody-core</artifactId>
+            <version>1.72.0</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -1,16 +1,21 @@
-import { Component, TemplateRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, TemplateRef, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { IssueService } from './issue.service';
 import { IssueDetailsDto } from '../model/IssueDetailsDto';
 import { UserProfileDto } from '../model/UserProfileDto';
 import { IssueDto } from '../model/IssueDto';
+import { IssueConfigurationService } from '../issue-configuration/issue-configuration.service';
+import { ProjectFieldDto } from '../model/project-fields/ProjectFieldDto';
+import { FieldContentCreatorImpl } from '../model/fields-content/FieldContentCreatorImpl';
+
+import fieldType, * as fieldTypes from '../constants/field-type';
 
 @Component({
   selector: 'app-issue-creation',
   templateUrl: './issue.component.html',
   styleUrls: ['./issue.component.css'],
-  providers: [IssueService]
+  providers: [IssueService, IssueConfigurationService, FieldContentCreatorImpl]
 })
 export class IssueComponent implements OnInit {
 
@@ -28,8 +33,16 @@ export class IssueComponent implements OnInit {
   projectMembers: Array<any> = [];
   selectedItems = [];
   settings = {};
+  types: Array<string>;
+  issueFields: Array<ProjectFieldDto>;
+  fieldTypes = fieldTypes.default;
 
-  constructor(private modalService: BsModalService, private issueService: IssueService) {}
+  constructor(
+    private modalService: BsModalService,
+    private issueService: IssueService,
+    private issueConfService: IssueConfigurationService,
+    private fieldCreator: FieldContentCreatorImpl) {
+    }
 
   ngOnInit() {
     this.settings = {
@@ -41,6 +54,11 @@ export class IssueComponent implements OnInit {
       badgeShowLimit: 3,
       classes: 'custom-class-example'
     };
+    this.issueConfService.getIssueTypes(this.projectKey).subscribe(
+      data => {
+        this.types = data;
+      }
+    );
   }
 
   openModal(template: TemplateRef<any>) {
@@ -63,6 +81,7 @@ export class IssueComponent implements OnInit {
 
   createIssue() {
     this.issueDetails.assignees = this.selectedItems.map(item => new UserProfileDto(item.itemName));
+    this.issueDetails.fieldsContentCollector = this.getFieldsContent();
     return this.issueService.createIssue(this.projectKey, this.issueDetails)
       .subscribe( data => {
         this.issueCreate.emit(data);
@@ -72,5 +91,42 @@ export class IssueComponent implements OnInit {
 
   isValid() {
     return this.issueDetails.summary && this.issueDetails.priority && this.issueDetails.issueType;
+  }
+
+  onTypeChange(issueType: string) {
+    this.issueService.getIssueFields(issueType, this.projectKey).subscribe(
+      data => {
+        this.issueFields = data;
+      }
+    );
+  }
+
+  showFields(issueType: string) {
+    return issueType && this.issueFields;
+  }
+
+  getFieldsContent() {
+    this.issueFields.map(f => this.fieldCreator.createField(f));
+    return this.fieldCreator.fieldContentCollector;
+  }
+
+  ifInputField(fieldType: string) {
+    return fieldType === this.fieldTypes.inputField;
+  }
+
+  ifCheckBox(fieldType: string) {
+    return fieldType === this.fieldTypes.checkBox;
+  }
+
+  ifTextArea(fieldType: string) {
+    return fieldType === this.fieldTypes.textArea;
+  }
+
+  ifList(fieldType: string) {
+    return fieldType === this.fieldTypes.list;
+  }
+
+  ifRadioButton(fieldType: string) {
+    return fieldType === this.fieldTypes.radioButton;
   }
 }

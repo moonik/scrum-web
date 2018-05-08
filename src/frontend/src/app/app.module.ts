@@ -30,8 +30,10 @@ import { LoaderComponent} from './loader/loader.component';
 import { LoaderService} from './loader/loader.service';
 import { WarningModalComponent } from './warning-modal/warning-modal.component';
 import { NotificationService } from './shared/notification.service';
-import {AlertComponent} from './alert/alert.component';
-import {AlertService} from './alert/alert.service';
+import { AlertComponent} from './alert/alert.component';
+import { AlertService} from './alert/alert.service';
+import { CommentsComponent } from './project-details/comments.component';
+import { WarningModalComponent } from './warning-modal/warning-modal.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,7 @@ import {AlertService} from './alert/alert.service';
     IssueTypeConfigurationComponent,
     IssueConfigurationComponent,
     AlertComponent
+    CommentsComponent
   ],
   imports: [
     BrowserModule,

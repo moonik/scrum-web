@@ -8,15 +8,12 @@ import 'rxjs/add/operator/finally';
 import 'rxjs/add/observable/throw';
 import {Observable} from 'rxjs/Observable';
 import {LoaderService} from "../loader/loader.service";
-import * as Stomp from 'stompjs';
-import * as SockJS from 'sockjs-client';
 import * as constants from '../constants/application-constants';
 
 @Injectable()
 export class HttpClient {
 
   private constants = constants.default;
-  private stompClient;
 
   constructor(private http: Http, private _loaderService: LoaderService) {}
 
@@ -83,6 +80,11 @@ export class HttpClient {
       .finally(() => {
         this.onEnd();
       });
+  }
+
+  createRequestParams(data: Object, url: string): string {
+    const params = '?' + Object.entries(data).map(([key, val]) => `${key}=${val}`).join('&');
+    return url + params;
   }
 
   private onCatch(error: any): Observable<any> {

@@ -2,6 +2,7 @@ package scrumweb.issue.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestParam;
 import scrumweb.dto.issue.IssueCommentDto;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,8 +52,8 @@ public class IssueController {
     }
 
     @DeleteMapping("/types/{id}")
-    public void deleteIssueType(@PathVariable Long id) {
-        issueService.deleteIssueType(id);
+    public void deleteIssueType(@PathVariable Long id, @RequestParam String projectKey) {
+        issueService.deleteIssueType(id, projectKey);
     }
 
     @PostMapping("/{issueKey}/assign/{username}")
@@ -79,7 +80,7 @@ public class IssueController {
         return issueService.getComments(issueKey);
     }
 
-    @DeleteMapping("/comments/delete/{commentId}/{issueKey}")
+    @DeleteMapping("/comments/delete/{commentId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteComment(@PathVariable Long commentId){
         issueService.deleteComment(commentId);

@@ -169,9 +169,13 @@ public class IssueService {
         }
     }
 
-    public void deleteIssueType(Long id) {
+    public void deleteIssueType(Long id, String projectKey) {
         IssueType issueType = issueTypeRepository.findOne(id);
         if (!issueType.getIsDefault()) {
+            Project project = projectRepository.findByKey(projectKey);
+            Set<IssueType> issueTypes = project.getIssueTypes();
+            issueTypes.remove(issueType);
+            projectRepository.saveAndFlush(project);
             issueTypeRepository.delete(issueType);
         }
     }
@@ -204,8 +208,10 @@ public class IssueService {
 
     public String editComment(Long commentId, String content) {
         IssueComment comment = issueCommentRepository.findOne(commentId);
-        comment.setContent(content);
-        issueCommentRepository.save(comment);
+        if (comment.getOwner().equals(securityContextService.getCurrentUserAccount())) {
+            comment.setContent(content);
+            issueCommentRepository.save(comment);
+        }
         return content;
     }
 }

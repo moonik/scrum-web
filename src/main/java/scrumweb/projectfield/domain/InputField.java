@@ -14,19 +14,16 @@ import javax.persistence.InheritanceType;
 @Getter @Setter
 public class InputField extends ProjectField{
 
-    private int minCharacters;
     private int maxCharacters;
 
-    public InputField(FieldType fieldType, String name, Boolean isRequired, int minCharacters, int maxCharacters) {
+    public InputField(FieldType fieldType, String name, Boolean isRequired, int maxCharacters) {
         super(fieldType, name, isRequired);
-        this.minCharacters = minCharacters;
         this.maxCharacters = maxCharacters;
     }
 
     @Override
     public void edit(ProjectField projectField) {
         this.maxCharacters = ((InputField) projectField).getMaxCharacters();
-        this.minCharacters = ((InputField) projectField).getMinCharacters();
         this.setName(projectField.getName());
         this.setIsRequired(projectField.getIsRequired());
     }

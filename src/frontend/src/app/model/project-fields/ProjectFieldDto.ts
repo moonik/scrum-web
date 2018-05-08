@@ -3,6 +3,7 @@ export class ProjectFieldDto {
     fieldType: string;
     fieldName: string;
     isRequired: boolean;
+    content: string;
 
     constructor(id: number, fieldType: string, fieldName: string, isRequired: boolean) {
         this.id = id;

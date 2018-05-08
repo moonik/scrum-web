@@ -22,7 +22,7 @@ public class ListContentAsm implements FieldContentAsm<ListContent, ListElements
 
     @Override
     public ListContent createEntityObject(ListElementsContainer projectField, ListElementsContainerContentDto fieldContentDto) {
-        return new ListContent(projectField, listElementRepository.getListElements(extractIds(fieldContentDto.getListElements())));
+        return new ListContent(projectField, listElementRepository.getListElements(extractIds(fieldContentDto.getElements())));
     }
 
     @Override

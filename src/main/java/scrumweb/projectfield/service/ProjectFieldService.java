@@ -51,9 +51,10 @@ public class ProjectFieldService {
 
     public Set<ProjectFieldDto> removeField(Long id, String projectKey, String issueType) {
         IssueType issuetype = findIssueType(projectRepository.findByKey(projectKey).getIssueTypes(), issueType);
-        issuetype.setFields(filterOutFields(issuetype.getFields(), id));
+        ProjectField projectField = projectFieldRepository.getOne(id);
+        Set<ProjectField> projectFields = issuetype.getFields();
+        projectFields.remove(projectField);
         issueTypeRepository.saveAndFlush(issuetype);
-        projectFieldRepository.delete(id);
         return issuetype.getFields().stream()
                 .map(f -> projectFieldAsm.createDtoObject(f))
                 .collect(Collectors.toSet());

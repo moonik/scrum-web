@@ -8,10 +8,10 @@ import scrumweb.dto.projectfield.RadioButtonDto;
 @NoArgsConstructor
 @Getter @Setter
 public class RadioButtonContainerContentDto extends FieldContentDto {
-    private RadioButtonDto radioButton;
+    private RadioButtonDto element;
 
-    public RadioButtonContainerContentDto(Long projectFieldId, String projectFieldName, RadioButtonDto radioButton) {
+    public RadioButtonContainerContentDto(Long projectFieldId, String projectFieldName, RadioButtonDto element) {
         super(projectFieldId, projectFieldName);
-        this.radioButton = radioButton;
+        this.element = element;
     }
 }

@@ -10,10 +10,10 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter @Setter
 public class ListElementsContainerContentDto extends FieldContentDto {
-    private Set<ListElementDto> listElements;
+    private Set<ListElementDto> elements;
 
-    public ListElementsContainerContentDto(Long projectFieldId, String projectFieldName, Set<ListElementDto> listElements) {
+    public ListElementsContainerContentDto(Long projectFieldId, String projectFieldName, Set<ListElementDto> elements) {
         super(projectFieldId, projectFieldName);
-        this.listElements = listElements;
+        this.elements = elements;
     }
 }

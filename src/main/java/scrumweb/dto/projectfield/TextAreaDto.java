@@ -9,11 +9,9 @@ import lombok.Setter;
 @Setter
 public class TextAreaDto extends ProjectFieldDto {
     private int maxCharacters;
-    private int minCharacters;
 
-    public TextAreaDto(Long id, String fieldType, String fieldName, Boolean isRequired, int maxCharacters, int minCharacters) {
+    public TextAreaDto(Long id, String fieldType, String fieldName, Boolean isRequired, int maxCharacters) {
         super(id, fieldType, fieldName, isRequired);
         this.maxCharacters = maxCharacters;
-        this.minCharacters = minCharacters;
     }
 }
