@@ -33,7 +33,6 @@ import { NotificationService } from './shared/notification.service';
 import { AlertComponent} from './alert/alert.component';
 import { AlertService} from './alert/alert.service';
 import { CommentsComponent } from './project-details/comments.component';
-import { WarningModalComponent } from './warning-modal/warning-modal.component';
 
 @NgModule({
   declarations: [
