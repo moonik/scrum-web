@@ -5,6 +5,7 @@ import {UserDto} from '../model/UserDto';
 import {HttpClient} from '../shared/http.client.service';
 import {NotificationService} from '../shared/notification.service';
 import {NavbarComponent} from '../navbar/navbar.component';
+import { StorageService } from '../shared/storage.service';
 
 @Injectable()
 export class AuthenticationService {
@@ -13,7 +14,8 @@ export class AuthenticationService {
 
   constructor(
     private httpClientService: HttpClient, 
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private storage: StorageService) {
     const currentUser = JSON.parse(localStorage.getItem('username'));
     this.token = currentUser && currentUser.token;
   }
@@ -27,7 +29,9 @@ export class AuthenticationService {
           localStorage.setItem('token', token);
           localStorage.setItem('currentUser', userDto.username);
           document.cookie = 'Authorization=' + token;
-          location.reload();
+          this.notificationService.initWebSocketConnection();
+          this.storage.getAllNotifications();
+          this.storage.subscribeOnNotifications();
         }
         return response.status;
       });

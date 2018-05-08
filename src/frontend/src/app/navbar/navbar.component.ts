@@ -14,37 +14,20 @@ import { StorageService } from '../shared/storage.service';
 export class NavbarComponent implements OnInit {
 
   searchIcon = '../assets/images/searchicon.png';
-  notifications = [];
-  amountOfNewNotifications = 0;
 
   constructor(
     private authenticationService: AuthenticationService, 
     private router: Router, 
     private ws: NotificationService,
-    private sotarge: StorageService) {
+    public storage: StorageService) {
   }
 
   ngOnInit() {
-    if (localStorage.getItem('currentUser')) {
-      if (!this.ws.status) {
-        this.ws.initWebSocketConnection();
-      }
-      this.getNotifications();
-      this.ws.subscribeOnNotifications().subscribe(
-        data => {
-          this.notifications.unshift(data);
-          this.amountOfNewNotifications++;
-        }
-      );
+    if (localStorage.getItem('currentUser') && !this.ws.status) {
+      this.ws.initWebSocketConnection();
+      this.storage.getAllNotifications();
+      this.storage.subscribeOnNotifications();
     }
-  }
-
-  getNotifications() {
-    this.ws.getNotifications().subscribe(data => {
-      console.log(data);
-      this.notifications = this.notifications.concat(data);
-      this.amountOfNewNotifications = this.notifications.filter(n => !n.seen).length;
-    })
   }
 
   search(query: string) {
@@ -67,9 +50,9 @@ export class NavbarComponent implements OnInit {
   }
 
   updateNotifications() {
-    this.notifications.map(n => n.seen = true);
+    this.storage.notifications.map(n => n.seen = true);
     this.ws.updateNotifications().subscribe(
-      success => this.amountOfNewNotifications = 0
+      success => this.storage.amountOfNewNotifications = 0
     );
   }
 }

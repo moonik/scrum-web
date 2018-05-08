@@ -67,7 +67,7 @@ public class UserAccountService {
 
     private static List<NotificationDto> convertNotifications(List<Notification> notifications) {
         return notifications.stream()
-                .sorted((n1, n2) -> Boolean.compare(n1.getSeen(), n2.getSeen()))
+                .sorted((n1, n2) -> Long.compare(n2.getId(), n1.getId()))
                 .map(n -> new NotificationDto(n.getReceiver().getUsername(), n.getContent(), n.getSeen()))
                 .collect(Collectors.toList());
     }

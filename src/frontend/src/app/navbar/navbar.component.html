@@ -13,10 +13,10 @@
       </ul>
       <div class="dropdown notifications-dropdown" *ngIf="checkLogin()">
           <span class="fa fa-bell" aria-hidden="true" aria-hidden="true" type="button" data-toggle="dropdown" (click)="updateNotifications()"> 
-            {{ amountOfNewNotifications }} 
+            {{ storage.amountOfNewNotifications }} 
           </span>
           <ul class="dropdown-menu">
-            <li class="single-notification" *ngFor="let notification of notifications"> {{ notification.content }} </li>
+            <li class="single-notification" *ngFor="let notification of storage.notifications"> {{ notification.content }} </li>
           </ul>
       </div>
       <ul class="navbar-nav ml-auto">
