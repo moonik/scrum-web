@@ -18,5 +18,4 @@ public class IssueCommentDto {
     private UserProfileDto owner;
     private String content;
     private String createdDate;
-
 }

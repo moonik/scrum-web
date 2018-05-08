@@ -1,13 +1,12 @@
-import {Component, OnInit, HostListener} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {ProjectDetailsService} from './project-details.service';
 import {ProjectDetailsDto} from '../model/ProjectDetailsDto';
 import {IssueDto} from '../model/IssueDto';
 import {IssueService} from '../issue/issue.service';
 import {IssueDetailsDto} from '../model/IssueDetailsDto';
-import {IssueComment} from '../model/IssueComment';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { SearchService } from '../search/search.service';
+import {NotificationService} from '../shared/notification.service';
 
 @Component({
   selector: 'app-project-details',
@@ -27,7 +26,7 @@ export class ProjectDetailsComponent implements OnInit {
               private projectDetailsService: ProjectDetailsService,
               private issueService: IssueService,
               private searchService: SearchService,
-              private fb: FormBuilder) {
+              private notificationService: NotificationService) {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.projectKey = params['projectKey'];
     });
@@ -78,6 +77,8 @@ export class ProjectDetailsComponent implements OnInit {
     }
     this.issueService.assignToIssue(this.selectedIssue.key, username)
       .subscribe(() => {
+        const content = localStorage.getItem('currentUser') + ' ' + 'assigned you to issue ' + this.selectedIssue.key;
+        this.sendNotification(username, content);
         this.ngOnInit();
       });
   }
@@ -98,10 +99,20 @@ export class ProjectDetailsComponent implements OnInit {
 
   onRemoveFromAssign(username: string) {
     this.issueService.unAssignFromIssue(username, this.selectedIssue.key)
-      .subscribe(() => this.ngOnInit());
+      .subscribe(() => {
+        const content = localStorage.getItem('currentUser') + ' ' + 'unassigned you from issue ' + this.selectedIssue.key;
+        this.sendNotification(username, content);
+        this.ngOnInit();
+      });
   }
 
   isAssigned(username: string) {
     return !this.selectedIssue.assignees.map(a => a.username).includes(username);
+  }
+
+  private sendNotification(username: string, content: string) {
+    if (username !== localStorage.getItem('currentUser')) {
+      this.notificationService.sendNotification(username, content);
+    }
   }
 }

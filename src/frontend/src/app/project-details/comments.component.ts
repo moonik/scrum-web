@@ -2,6 +2,7 @@ import {Component, OnInit, HostListener, Input} from '@angular/core';
 import {IssueService} from '../issue/issue.service';
 import {IssueComment} from '../model/IssueComment';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NotificationService} from '../shared/notification.service';
 
 @Component({
   selector: 'app-issue-comments',
@@ -12,24 +13,26 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class CommentsComponent {
 
     @Input() comments = [];
-    @Input() issueKey;
+    @Input() issue;
     commentForm: FormGroup;
     newComment: IssueComment = new IssueComment();
     hoveredCommentId: number;
     selectedComment: IssueComment = new IssueComment();
     oldContent: string;
 
-    constructor(private issueService: IssueService, private fb: FormBuilder) {
+    constructor(private issueService: IssueService, private fb: FormBuilder, private notificationService: NotificationService) {
         this.commentForm = fb.group({
             content: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(255)]]
         });
     }
 
     addComment() {
-        return this.issueService.addComment(this.issueKey, this.newComment)
+        return this.issueService.addComment(this.issue.key, this.newComment)
           .subscribe(
             data => {
               this.comments.push(data);
+              let content = 'New comment in task ' + this.issue.key + ': ' + this.newComment.content;
+              this.sendNotification(content);
               this.newComment.content = '';
             });
     }
@@ -67,7 +70,7 @@ export class CommentsComponent {
     }
 
     checkControl(name: string): boolean {
-        return this.commentForm.controls[name].invalid && 
+        return this.commentForm.controls[name].invalid &&
             (this.commentForm.controls[name].touched || this.commentForm.controls[name].dirty);
     }
 
@@ -88,5 +91,18 @@ export class CommentsComponent {
         if (this.checkIfEdited(this.selectedComment)) {
           this.editComment(this.selectedComment, this.selectedComment.id);
         }
+    }
+
+    private sendNotification(content: string) {
+        let users = this.issue.assignees.filter(a => a.username !== localStorage.getItem('currentUser'));
+        if (this.checkReporter()) {
+            users = users.concat(this.issue.reporter.username);
+        }
+        users.forEach(i => this.notificationService.sendNotification(i.username, content));
+    }
+
+    private checkReporter() {
+        return !this.issue.assignees.includes(this.issue.reporter) &&
+            this.issue.reporter !== localStorage.getItem('currentUser');
     }
 }

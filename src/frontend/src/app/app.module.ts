@@ -28,8 +28,11 @@ import { IssueConfigurationComponent } from './issue-configuration/issue-configu
 import { SearchComponent } from './search/search.component';
 import { LoaderComponent} from './loader/loader.component';
 import { LoaderService} from './loader/loader.service';
-import { CommentsComponent } from './project-details/comments.component';
 import { WarningModalComponent } from './warning-modal/warning-modal.component';
+import { NotificationService } from './shared/notification.service';
+import { AlertComponent} from './alert/alert.component';
+import { AlertService} from './alert/alert.service';
+import { CommentsComponent } from './project-details/comments.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,7 @@ import { WarningModalComponent } from './warning-modal/warning-modal.component';
     IssueFieldsConfigurationComponent,
     IssueTypeConfigurationComponent,
     IssueConfigurationComponent,
+    AlertComponent,
     CommentsComponent
   ],
   imports: [
@@ -69,7 +73,9 @@ import { WarningModalComponent } from './warning-modal/warning-modal.component';
     ProjectService,
     ProjectConfigurationService,
     StorageService,
-    LoaderService
+    LoaderService,
+    NotificationService,
+    AlertService
   ],
   bootstrap: [AppComponent]
 })

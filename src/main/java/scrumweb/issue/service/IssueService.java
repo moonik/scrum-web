@@ -96,13 +96,13 @@ public class IssueService {
         return issueTypesEntities;
     }
 
-    private Set<IssueTypeDto> convertIssueTypes(Collection<IssueType> issueTypes) {
+    private static Set<IssueTypeDto> convertIssueTypes(Collection<IssueType> issueTypes) {
         return issueTypes.stream()
                 .map(type -> new IssueTypeDto(type.getId(), type.getName(), type.getIsDefault()))
                 .collect(Collectors.toSet());
     }
 
-    private Set<String> extractUserNames(Set<UserProfileDto> userProfileDtos) {
+    private static Set<String> extractUserNames(Set<UserProfileDto> userProfileDtos) {
         return userProfileDtos.stream()
             .map(UserProfileDto::getUsername)
             .collect(Collectors.toSet());
@@ -121,7 +121,7 @@ public class IssueService {
                 .collect(Collectors.toSet());
     }
 
-    private IssueType getIssueType(Set<IssueType> issueTypes, String issueType) {
+    private static IssueType getIssueType(Set<IssueType> issueTypes, String issueType) {
         return issueTypes.stream()
             .filter(i -> i.getName().equalsIgnoreCase(issueType))
             .findFirst()

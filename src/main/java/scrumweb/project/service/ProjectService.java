@@ -50,6 +50,7 @@ public class ProjectService {
             UserAccount projectOwner = securityContextService.getCurrentUserAccount();
             List<Project> projects = projectOwner.getProjects();
             projects.add(createProject(project, projectOwner));
+            projectOwner.setProjects(projects);
             userAccountRepository.save(projectOwner);
             return projectDto;
         } else {
@@ -90,7 +91,7 @@ public class ProjectService {
             .collect(Collectors.toSet());
     }
 
-    private Project createProject(Project project, UserAccount projectOwner) {
+    private static Project createProject(Project project, UserAccount projectOwner) {
         Set<ProjectMember> projectMembers = new LinkedHashSet<>();
         projectMembers.add(ProjectAsm.makeProjectMember(projectOwner, Role.PROJECT_MANAGER));
         project.setMembers(projectMembers);
@@ -99,13 +100,13 @@ public class ProjectService {
         return project;
     }
 
-    private Set<IssueType> createIssueTypes(Project project) {
+    private static Set<IssueType> createIssueTypes(Project project) {
         return Arrays.stream(DEFAULT_ISSUE_TYPES)
                 .map(type -> new IssueType(type, project, true))
                 .collect(Collectors.toSet());
     }
 
-    private List<IssueDto> convertIssues(Set<Issue> issues) {
+    private static List<IssueDto> convertIssues(Set<Issue> issues) {
         return issues.stream()
                 .map(IssueAsm::createIssueDto)
                 .sorted((i1, i2) -> Long.compare(i2.getId(), i1.getId()))
@@ -175,7 +176,7 @@ public class ProjectService {
         projectRepository.save(project);
     }
 
-    private ProjectMember findMember(Set<ProjectMember> members, String memberToBeAdded) {
+    private static ProjectMember findMember(Set<ProjectMember> members, String memberToBeAdded) {
         return members.stream()
                 .filter(member -> member.getUserAccount().getUsername().equals(memberToBeAdded))
                 .findFirst()

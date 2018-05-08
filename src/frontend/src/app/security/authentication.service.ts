@@ -1,14 +1,21 @@
-import {Injectable} from '@angular/core';
+import {Injectable, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {UserDto} from '../model/UserDto';
 import {HttpClient} from '../shared/http.client.service';
+import {NotificationService} from '../shared/notification.service';
+import {NavbarComponent} from '../navbar/navbar.component';
+import { StorageService } from '../shared/storage.service';
+
 @Injectable()
 export class AuthenticationService {
 
   token: string;
 
-  constructor(private httpClientService: HttpClient) {
+  constructor(
+    private httpClientService: HttpClient,
+    private notificationService: NotificationService,
+    private storage: StorageService) {
     const currentUser = JSON.parse(localStorage.getItem('username'));
     this.token = currentUser && currentUser.token;
   }
@@ -21,6 +28,10 @@ export class AuthenticationService {
           this.token = token;
           localStorage.setItem('token', token);
           localStorage.setItem('currentUser', userDto.username);
+          document.cookie = 'Authorization=' + token;
+          this.notificationService.initWebSocketConnection();
+          this.storage.getAllNotifications();
+          this.storage.subscribeOnNotifications();
         }
         return response.status;
       });
@@ -30,6 +41,8 @@ export class AuthenticationService {
     this.token = null;
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
+    this.notificationService.unsubscribe();
+    this.notificationService.disconnect();
   }
 
   save(userDto: UserDto): Observable<number> {
@@ -51,6 +64,7 @@ export class AuthenticationService {
           if (token) {
             this.token = token;
             localStorage.setItem('token', token);
+            document.cookie = 'Authorization=' + token;
           }
           return response.status;
         });

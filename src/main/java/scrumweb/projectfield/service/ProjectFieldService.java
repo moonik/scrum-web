@@ -60,7 +60,7 @@ public class ProjectFieldService {
                 .collect(Collectors.toSet());
     }
 
-    private IssueType findIssueType(Set<IssueType> issueTypes, String issuetype) {
+    private static IssueType findIssueType(Set<IssueType> issueTypes, String issuetype) {
         return issueTypes.stream()
                 .filter(type -> type.getName().equalsIgnoreCase(issuetype))
                 .findFirst()

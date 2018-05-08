@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import scrumweb.notification.domain.Notification;
 import scrumweb.project.domain.Project;
 import scrumweb.security.domain.Authority;
 import scrumweb.user.profile.domain.UserProfile;
@@ -52,4 +53,7 @@ public class UserAccount {
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Project> projects;
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    private List<Notification> notifications;
 }

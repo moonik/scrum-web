@@ -5,6 +5,7 @@ import {ProjectConfigurationService} from './project-configuration.service';
 import {ProjectDto} from '../model/ProjectDto';
 import {StorageService} from '../shared/storage.service';
 import {ProjectMemberDto} from '../model/ProjectMemberDto';
+import {NotificationService} from '../shared/notification.service';
 
 import * as roles from '../constants/roles';
 
@@ -28,7 +29,8 @@ export class ProjectConfigurationComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private confService: ProjectConfigurationService,
-              private storageService: StorageService) {
+              private storageService: StorageService,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit() {
@@ -58,6 +60,8 @@ export class ProjectConfigurationComponent implements OnInit {
     this.confService.addMemberToProject(this.project.projectKey, member)
       .subscribe(() => {
           this.project.members.push(member);
+          const content = localStorage.getItem('currentUser') + ' ' + 'added you to project: ' + this.project.projectKey;
+          this.notificationService.sendNotification(user, content);
           this.ngOnInit();
         }
       );
@@ -67,6 +71,8 @@ export class ProjectConfigurationComponent implements OnInit {
     this.confService.removeMemberFromProject(member.username, this.project.projectKey)
       .subscribe(() => {
         this.project.members.splice(this.project.members.indexOf(member), 1);
+        const content = localStorage.getItem('currentUser') + ' ' + 'removed you from project: ' + this.project.projectKey;
+        this.notificationService.sendNotification(member.username, content);
         this.ngOnInit();
       }, error => {
         if (error.status !== 200) {
@@ -79,8 +85,6 @@ export class ProjectConfigurationComponent implements OnInit {
     this.icon = files.item(0);
     this.loading = true;
     this.validIcon = true;
-
-
   }
 
   acceptRequest(user: string, role: string) {
@@ -89,6 +93,8 @@ export class ProjectConfigurationComponent implements OnInit {
       .subscribe(data => {
           this.project.members.push(member);
           this.project.requests.splice(this.project.requests.indexOf(member), 1);
+          const content = localStorage.getItem('currentUser') + ' ' + 'accepted your request for project: ' + this.project.projectKey;
+          this.notificationService.sendNotification(user, content);
           this.ngOnInit();
         }
       );
@@ -98,6 +104,8 @@ export class ProjectConfigurationComponent implements OnInit {
     this.confService.declineRequestForAccess(this.project.projectKey, request.username).subscribe(
       () => {
         this.project.requests.splice(this.project.requests.indexOf(request), 1);
+        const content = localStorage.getItem('currentUser') + ' ' + 'declined your request for project: ' + this.project.projectKey;
+        this.notificationService.sendNotification(request.username, content);
         this.ngOnInit();
       }
     );

@@ -1,0 +1,9 @@
+.my-alert{
+    z-index: 1; 
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 5px;
+    width: 300px;
+    word-wrap: break-word;
+}
