@@ -16,7 +16,6 @@ export class NotificationService {
     status = null;
     private subject = new Subject<Object>();
     private resolveDisConPromise: (...args: any[]) => void;
-    private resolveConPromise: (...args: any[]) => void;
     private disconnectPromise: any;
 
     constructor(private alertService: AlertService, private http: HttpClient) {
@@ -26,17 +25,16 @@ export class NotificationService {
     }
 
     initWebSocketConnection() {
-        let ws = new SockJS(constants.default.API_URL);
-        let user = {'user' : localStorage.getItem('currentUser')};
+        const ws = new SockJS(constants.default.API_URL);
+        const user = {'user' : localStorage.getItem('currentUser')};
         this.stompClient = Stomp.over(ws);
         this.stompClient.connect(user, this.onSuccess, this.onError);
     }
 
     onSuccess = (frame: any) => {
-        this.resolveConPromise;
         this.status = 'connected';
         this.stompClient.subscribe('/user/queue/reply', (message) => {
-            if(message.body) {
+            if (message.body) {
                 this.alertService.info(message.body);
                 this.subject.next(<Object>{ content: message.body, seen: false });
             }
@@ -52,9 +50,9 @@ export class NotificationService {
     }
 
     unsubscribe() {
-		this.stompClient.unsubscribe();
+	    this.stompClient.unsubscribe();
     }
-    
+
     disconnect(): Promise<{}> {
         this.status = null;
 		this.stompClient.disconnect(() => this.resolveDisConPromise());
@@ -62,9 +60,8 @@ export class NotificationService {
 	}
 
     sendNotification(receiver: string, content: string) {
-        let notification = {receiver: receiver, content: content};
-        this.stompClient.send('/app/notification/send', {
-        }, JSON.stringify(notification));
+        const notification = {receiver: receiver, content: content};
+        this.stompClient.send('/app/notification/send', {}, JSON.stringify(notification));
     }
 
     subscribeOnNotifications(): Observable<any> {
@@ -77,5 +74,5 @@ export class NotificationService {
 
     updateNotifications() {
         return this.http.put('user-account/update-notifications', null);
-    }    
+    }
 }

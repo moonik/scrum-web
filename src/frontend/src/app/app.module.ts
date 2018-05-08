@@ -54,7 +54,7 @@ import { CommentsComponent } from './project-details/comments.component';
     IssueFieldsConfigurationComponent,
     IssueTypeConfigurationComponent,
     IssueConfigurationComponent,
-    AlertComponent
+    AlertComponent,
     CommentsComponent
   ],
   imports: [

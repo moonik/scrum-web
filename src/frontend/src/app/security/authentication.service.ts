@@ -13,7 +13,7 @@ export class AuthenticationService {
   token: string;
 
   constructor(
-    private httpClientService: HttpClient, 
+    private httpClientService: HttpClient,
     private notificationService: NotificationService,
     private storage: StorageService) {
     const currentUser = JSON.parse(localStorage.getItem('username'));
@@ -65,7 +65,6 @@ export class AuthenticationService {
             this.token = token;
             localStorage.setItem('token', token);
             document.cookie = 'Authorization=' + token;
-            
           }
           return response.status;
         });

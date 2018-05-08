@@ -16,8 +16,8 @@ export class NavbarComponent implements OnInit {
   searchIcon = '../assets/images/searchicon.png';
 
   constructor(
-    private authenticationService: AuthenticationService, 
-    private router: Router, 
+    private authenticationService: AuthenticationService,
+    private router: Router,
     private ws: NotificationService,
     public storage: StorageService) {
   }

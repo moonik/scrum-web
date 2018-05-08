@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit {
   userDto: UserDto = new UserDto();
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authenticationService: AuthenticationService, private router: Router, private ws: NotificationService) {
+  constructor(private fb: FormBuilder, private authenticationService: AuthenticationService,
+    private router: Router, private ws: NotificationService) {
     this.loginForm = fb.group({
       login : [null,  Validators.required],
       password : [null, [Validators.minLength(8), Validators.required]]

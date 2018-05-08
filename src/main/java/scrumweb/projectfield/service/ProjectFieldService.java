@@ -79,10 +79,4 @@ public class ProjectFieldService {
         });
         return fieldsToBeSaved;
     }
-
-    private static Set<ProjectField> filterOutFields(Set<ProjectField> fields, Long fieldId) {
-        return  fields.stream()
-                .filter(f -> !f.getId().equals(fieldId))
-                .collect(Collectors.toSet());
-    }
 }

@@ -36,6 +36,6 @@ export class StorageService {
     this.ws.getNotifications().subscribe(data => {
       this.notifications = this.notifications.concat(data);
       this.amountOfNewNotifications = this.notifications.filter(n => !n.seen).length;
-    })
+    });
   }
 }

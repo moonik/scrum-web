@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.getAllProjects();
   }
-  
+
   getAllProjects() {
     this.homeService.getAllProjects()
       .subscribe(

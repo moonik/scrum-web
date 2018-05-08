@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/observable/throw';
 import {Observable} from 'rxjs/Observable';
-import {LoaderService} from "../loader/loader.service";
+import {LoaderService} from '../loader/loader.service';
 import * as constants from '../constants/application-constants';
 
 @Injectable()

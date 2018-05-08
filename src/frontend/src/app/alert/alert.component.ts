@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Alert, AlertType } from './alert';
 import { AlertService } from './alert.service';
@@ -50,7 +50,7 @@ export class AlertComponent {
         }
     }
 
-    delay(alert){
-        setTimeout(()=>{ this.removeAlert(alert) }, 10000)
+    delay(alert) {
+        setTimeout(() => { this.removeAlert(alert) }, 10000);
     }
 }

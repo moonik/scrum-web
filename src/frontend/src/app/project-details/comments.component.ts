@@ -70,7 +70,7 @@ export class CommentsComponent {
     }
 
     checkControl(name: string): boolean {
-        return this.commentForm.controls[name].invalid && 
+        return this.commentForm.controls[name].invalid &&
             (this.commentForm.controls[name].touched || this.commentForm.controls[name].dirty);
     }
 
@@ -98,11 +98,11 @@ export class CommentsComponent {
         if (this.checkReporter()) {
             users = users.concat(this.issue.reporter.username);
         }
-        users.forEach(i => this.notificationService.sendNotification(i.username, content))
+        users.forEach(i => this.notificationService.sendNotification(i.username, content));
     }
 
     private checkReporter() {
-        return !this.issue.assignees.includes(this.issue.reporter) && 
+        return !this.issue.assignees.includes(this.issue.reporter) &&
             this.issue.reporter !== localStorage.getItem('currentUser');
     }
 }
