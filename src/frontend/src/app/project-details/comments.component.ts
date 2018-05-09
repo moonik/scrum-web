@@ -96,7 +96,7 @@ export class CommentsComponent {
     private sendNotification(content: string) {
         let users = this.issue.assignees.filter(a => a.username !== localStorage.getItem('currentUser'));
         if (this.checkReporter()) {
-            users = users.concat(this.issue.reporter.username);
+            users = users.concat(this.issue.reporter);
         }
         users.forEach(i => this.notificationService.sendNotification(i.username, content));
     }
