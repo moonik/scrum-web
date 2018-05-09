@@ -56,7 +56,7 @@ export class NotificationService {
     }
 
     disconnect(): Promise<{}> {
-        this.status = 'closed';
+        this.status = null;
 		this.stompClient.disconnect(() => this.resolveDisConPromise());
 		return this.disconnectPromise;
 	}
