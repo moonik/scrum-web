@@ -25,10 +25,12 @@ export class NotificationService {
     }
 
     initWebSocketConnection() {
-        const ws = new SockJS(constants.default.API_URL);
-        const user = {'user' : localStorage.getItem('currentUser')};
-        this.stompClient = Stomp.over(ws);
-        this.stompClient.connect(user, this.onSuccess, this.onError);
+        if (this.status !== 'connected') {
+            const ws = new SockJS(constants.default.API_URL);
+            const user = {'user' : localStorage.getItem('currentUser')};
+            this.stompClient = Stomp.over(ws);
+            this.stompClient.connect(user, this.onSuccess, this.onError);
+        }
     }
 
     onSuccess = (frame: any) => {
@@ -54,7 +56,7 @@ export class NotificationService {
     }
 
     disconnect(): Promise<{}> {
-        this.status = null;
+        this.status = 'closed';
 		this.stompClient.disconnect(() => this.resolveDisConPromise());
 		return this.disconnectPromise;
 	}
