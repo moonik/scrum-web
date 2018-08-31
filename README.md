@@ -22,7 +22,7 @@ user name: scrmwb<br/>
 password: billteam
 <br/>
 
-**Running application**:<br/>
+**How to run the application**:<br/>
 To run this application go to the root folder open the command line and type here: **mvn spring-boot:run**. This will start the back end server. Now, go to the frontend folder in src package and again open the command line and type here: **npm start** - this command will start the front end server.
 <br/>
 <br/>
