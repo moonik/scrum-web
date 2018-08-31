@@ -1,7 +1,7 @@
 This application is an advanced task manager in which you can customize almost everything. You can manage your project, team in project and even tasks for each project. This application is fully customizable by user.
 
 **Main features:** <br/>
--customize your project (e.g. accept/decline access to project, create/edit project etc.)<br/>
+-customize your project (e.g. accept/decline request access to project, create/edit project etc.)<br/>
 -manage team in project (e.g. add/remove contributors, append to contributors their role in project etc.)<br/>
 -customize tasks in project (e.g. create your own fields for each task type, create your own task types etc.)<br/>
 
