@@ -22,9 +22,9 @@ user name: scrmwb<br/>
 password: billteam
 <br/>
 
-Before running the application do not forget to install all dependecies!<br/>
+**Before running the application do not forget to install all dependecies!<br/>**
 
-Back end:
+Back end:<br/>
 Go to the root folder, open the command line and type here: **mvn clean install** - this command will install all neccessary dependencies for back end side.
 
 <br/>
