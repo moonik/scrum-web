@@ -9,7 +9,7 @@ This application is an advanced task manager in which you can customize almost e
 Java 8, Maven, Spring Boot 1.5.9.RELEASE (will be migrated to version 2.0.4.RELEASE), Spring Security (authorization via JWT), Spring WebSockets, PostgreSQL, Spock Framework, Lombok, Angular 5, etc.
 
 **Getting started:**<br/>
-To get started with this application you should have installed on your computer such things as: JDK 8 or higher, Nodejs, PostgreSQL database, Maven.<br/>
+To get started with this application you should have installed on your computer such things as: JDK 8, Nodejs, PostgreSQL database, Maven.<br/>
 
 Database connection:<br/>
 name: scrumwb<br/>
