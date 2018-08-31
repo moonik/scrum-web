@@ -39,4 +39,4 @@ For each task (our tasks are here: trello.com/b/4PyesJ92/scrumweb) you should cr
 Branch name should be as a task title.<br/>
 Before merging you should create pull request.<br/>
 To close pull request minimum 2 reviewers should accept your pull request.<br/>
-Please, merge using -> git merge --squash "branch_name".<br/>
+Please, merge using this command **git merge --squash "branch_name"**.<br/>
