@@ -6,7 +6,7 @@ This application is an advanced task manager in which you can customize almost e
 -customize tasks in project (e.g. create your own fields for each task type, create your own task types etc.)<br/>
 
 **Technology stack:**<br/>
-Java 8, Maven, Spring Boot 1.5.9.RELEASE (will be migrated to version 2.0.4.RELEASE), Spring Security (authorization via JWT), Spring WebSockets, PostgreSQL, Spock Framework, Lombok, Angular 5, etc.
+Java 8, Maven, Spring Boot 1.5.9.RELEASE (will be migrated to version 2.0.4.RELEASE), JPA, Spring Security (authorization via JWT), Spring WebSockets, PostgreSQL, Spock Framework, Lombok, Angular 5, etc.
 
 **Getting started:**<br/>
 To get started with this application you should have installed on your computer such things as: JDK 8, Nodejs, PostgreSQL database, Maven.<br/>
