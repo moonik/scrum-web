@@ -11,36 +11,36 @@ Java 8, Maven, Spring Boot 1.5.9.RELEASE (will be migrated to version 2.0.4.RELE
 # **Getting started:**<br/>
 To get started with this application you should have installed on your computer such things as: JDK 8, Nodejs, PostgreSQL database, Maven.<br/>
 
-Database connection:<br/>
-name: scrumwb<br/>
-user name: scrmwb<br/>
-password: billteam<br/>
-<br/>
-Test database:<br/>
-name: scrumwb_test<br/>
-user name: scrmwb<br/>
-password: billteam
-<br/>
+  Database connection:<br/>
+  name: scrumwb<br/>
+  user name: scrmwb<br/>
+  password: billteam<br/>
+  <br/>
+  Test database:<br/>
+  name: scrumwb_test<br/>
+  user name: scrmwb<br/>
+  password: billteam
+  <br/>
 
 ### **Before running the application do not forget to install all dependecies!<br/>**
 
 Back end:<br/>
-Go to the root folder, open the command line and type here: **mvn clean install** - this command will install all neccessary dependencies for back end side.
+Go to the root folder, open the command line and type here: `mvn clean install` - this command will install all neccessary dependencies for back end side.
 
 Front end:<br/>
-Go to the frontend folder (src package), open the command line and type here: **npm install** - this command will install all neccessary dependencies for the front end. 
+Go to the frontend folder (`src package`), open the command line and type here: `npm install` - this command will install all neccessary dependencies for the front end. 
 <br/> Also next dependencies should be installed: <br/>
-npm install bootstrap@4.0.0<br/>
+`npm install bootstrap@4.0.0<br/>
 npm install jquery<br/>
-npm install popper.js angular-popper<br/>
+npm install popper.js angular-popper<br/>`
 
 # **How to run the application**:<br/>
-To run this application go to the root folder open the command line and type here: **mvn spring-boot:run**. This will start the back end server. Now, go to the frontend folder in src package and again open the command line and type here: **npm start** - this command will start the front end server.
+To run this application go to the root folder open the command line and type here: `mvn spring-boot:run`. This will start the back end server. Now, go to the frontend folder in `src package` and again open the command line and type here: `npm start` - this command will start the front end server.
 <br/>
 
 # **Contributing:**<br/>
-For each task (our tasks are here: trello.com/b/4PyesJ92/scrumweb) you should create a new brunch.<br/>
+For each task (our tasks are here: `trello.com/b/4PyesJ92/scrumweb`) you should create a new brunch.<br/>
 Branch name should be as a task title.<br/>
 Before merging you should create pull request.<br/>
 To close pull request minimum 2 reviewers should accept your pull request.<br/>
-Please, merge using this command **git merge --squash "branch_name"**.<br/>
+Please, merge using this command `git merge --squash "branch_name"`.<br/>
