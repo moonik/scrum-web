@@ -20,8 +20,7 @@ To get started with this application you should have installed on your computer 
     name: scrumwb_test
     user name: scrmwb
     password: billteam
-<br/>
-
+    
 ### **Before running the application do not forget to install all dependecies!<br/>**
 
 Back end:<br/>
