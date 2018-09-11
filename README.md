@@ -11,15 +11,16 @@ Java 8, Maven, Spring Boot 1.5.9.RELEASE (will be migrated to version 2.0.4.RELE
 # **Getting started:**<br/>
 To get started with this application you should have installed on your computer such things as: JDK 8, Nodejs, PostgreSQL database, Maven.<br/>
 
-  Database connection:<br/>
-  name: scrumwb<br/>
-  user name: scrmwb<br/>
-  password: billteam<br/>
-  <br/>
-  Test database:<br/>
-  name: scrumwb_test<br/>
-  user name: scrmwb<br/>
+  Database connection:
+  name: scrumwb
+  user name: scrmwb
   password: billteam
+  
+  Test database:
+  name: scrumwb_test
+  user name: scrmwb
+  password: billteam
+  
   <br/>
 
 ### **Before running the application do not forget to install all dependecies!<br/>**
