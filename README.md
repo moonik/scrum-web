@@ -30,9 +30,9 @@ Go to the root folder, open the command line and type here: `mvn clean install` 
 Front end:<br/>
 Go to the frontend folder (`src package`), open the command line and type here: `npm install` - this command will install all neccessary dependencies for the front end. 
 <br/> Also next dependencies should be installed: <br/>
-`npm install bootstrap@4.0.0<br/>
-npm install jquery<br/>
-npm install popper.js angular-popper<br/>`
+`npm install bootstrap@4.0.0`<br/>
+`npm install jquery`<br/>
+`npm install popper.js angular-popper`<br/>
 
 # **How to run the application**:<br/>
 To run this application go to the root folder open the command line and type here: `mvn spring-boot:run`. This will start the back end server. Now, go to the frontend folder in `src package` and again open the command line and type here: `npm start` - this command will start the front end server.
