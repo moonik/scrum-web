@@ -21,12 +21,12 @@ To get started with this application you should have installed on your computer 
     user name: scrmwb
     password: billteam
     
-### **Before running the application do not forget to install all dependecies!<br/>**
+## **Before running the application do not forget to install all dependecies!<br/>**
 
-Back end:<br/>
+### Back end:<br/>
 Go to the root folder, open the command line and type here: `mvn clean install` - this command will install all neccessary dependencies for back end side.
 
-Front end:<br/>
+### Front end:<br/>
 Go to the frontend folder (`src package`), open the command line and type here: `npm install` - this command will install all neccessary dependencies for the front end. 
 <br/> Also next dependencies should be installed: <br/>
 `npm install bootstrap@4.0.0`<br/>
