@@ -9,13 +9,12 @@ services:
       - scrmweb:/var/lib/postgresql/data
     ports:
       - '5432:5432'
-
   backend:
     build:
         dockerfile: Dockerfile-backend
     image: scrum-web-backend
-    # ports:
-    #   - '8080:8080'
+    ports:
+      - '8080:8080'
     environment:
       - DB_HOST=database
       - DB_PORT=5432
