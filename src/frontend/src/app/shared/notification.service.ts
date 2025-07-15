@@ -3,7 +3,6 @@ import {AlertService} from '../alert/alert.service';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 import { HttpClient } from './http.client.service';
-import { StompService } from 'ng2-stomp-service';
 
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';

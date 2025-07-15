@@ -1,0 +1,15 @@
+FROM node:8.17.0
+
+WORKDIR /app
+
+COPY /src/frontend/package.json package.json
+
+RUN npm install \
+    && npm install bootstrap@4.0.0 \
+    && npm install jquery \
+    && npm install popper.js angular-popper \
+    && npm cache clean --force
+
+COPY /src/frontend/ .
+
+CMD ["npm", "start"]
