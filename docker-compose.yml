@@ -9,6 +9,8 @@ services:
       - scrmweb:/var/lib/postgresql/data
     ports:
       - '5432:5432'
+    networks:
+      - backend
   backend:
     build:
         dockerfile: Dockerfile-backend
@@ -21,13 +23,21 @@ services:
       - DB_USER=scrmwb
       - DB_PASSWORD=billteam
       - DB_NAME=scrumwb
+    networks:
+      - frontend
+      - backend
   frontend:
     build:
         dockerfile: Dockerfile-frontend
     image: scrum-web-frontend
     ports:
       - '4200:4200'
+    networks:
+      - frontend
     
-
 volumes:
   scrmweb:
+
+networks:
+  backend:
+  frontend:
