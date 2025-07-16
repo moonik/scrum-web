@@ -1,11 +1,16 @@
-FROM openjdk:8-jdk-alpine
-
-RUN apk add --no-cache maven
+FROM maven:3.5.4-jdk-8 AS build
 
 WORKDIR /app
+COPY pom.xml .
+COPY src ./src
 
-COPY pom.xml pom.xml
+RUN mvn clean package -DskipTests
 
-COPY src/main /app/src/main/
+FROM openjdk:8-jdk
 
-CMD ["mvn", "spring-boot:run"]
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+
+ENV JAVA_OPTS="-Xmx512m"
+
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
