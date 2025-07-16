@@ -12,8 +12,6 @@ services:
     networks:
       - backend
   backend:
-    build:
-        dockerfile: Dockerfile-backend
     image: moonpq/study:scrum-web-backend
     ports:
       - '8080:8080'
@@ -27,14 +25,12 @@ services:
       - frontend
       - backend
   frontend:
-    build:
-        dockerfile: Dockerfile-frontend
     image: moonpq/study:scrum-web-frontend
     ports:
       - '4200:4200'
     networks:
       - frontend
-    
+
 volumes:
   scrmweb:
 
