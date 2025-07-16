@@ -1,0 +1,39 @@
+services:
+  database:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=scrmwb
+      - POSTGRES_PASSWORD=billteam
+      - POSTGRES_DB=scrumwb
+    volumes:
+      - scrmweb:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      - backend
+  backend:
+    image: moonpq/study:scrum-web-backend
+    ports:
+      - '8080:8080'
+    environment:
+      - DB_HOST=database
+      - DB_PORT=5432
+      - DB_USER=scrmwb
+      - DB_PASSWORD=billteam
+      - DB_NAME=scrumwb
+    networks:
+      - frontend
+      - backend
+  frontend:
+    image: moonpq/study:scrum-web-frontend
+    ports:
+      - '4200:4200'
+    networks:
+      - frontend
+
+volumes:
+  scrmweb:
+
+networks:
+  backend:
+  frontend:

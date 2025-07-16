@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# BEFORE DEPLOYING MAKE SURE ALL YOUR DOCKER SWARM NODES HAVE ACCESS TO DOCKER HUB PRIVATE REPOSITORY
+
 # Prompt for inputs
 read -p "Enter Docker Context name: " CONTEXT_NAME
 read -p "Enter SSH username: " SSH_USER
@@ -39,7 +41,23 @@ fi
 # Use the Docker Context
 docker context use $CONTEXT_NAME
 
+read -p "Docker Hub Username: " DOCKER_USER
+read -s -p "Docker Hub Password: " DOCKER_PASS
+echo ""
+
+echo "Logging into Docker Hub..."
+echo "$DOCKER_PASS" | docker --context $CONTEXT_NAME login --username "$DOCKER_USER" --password-stdin
+if [ $? -ne 0 ]; then
+    echo "Docker login failed. Exiting."
+    exit 1
+fi
+
 # Deploy the Docker Stack
-docker stack deploy -c $COMPOSE_FILE $STACK_NAME
+docker stack deploy --with-registry-auth -c $COMPOSE_FILE $STACK_NAME
+
+if [ $? -ne 0 ]; then
+    echo "Deploy failed. Exiting."
+    exit 1
+fi
 
 echo "✅ Stack '$STACK_NAME' deployed to remote context '$CONTEXT_NAME' at $REMOTE_HOST"
