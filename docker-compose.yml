@@ -29,7 +29,7 @@ services:
   frontend:
     build:
         dockerfile: Dockerfile-frontend
-    image: moonpq/study:scrum-web-backend
+    image: moonpq/study:scrum-web-frontend
     ports:
       - '4200:4200'
     networks:
