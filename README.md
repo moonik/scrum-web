@@ -1,9 +1,10 @@
 This application is an advanced task manager in which you can customize almost everything. You can manage your project, team in project and even tasks for each project. This application is fully customizable by user.
 
 # **How to run the application:** <br/>
-- you can use `docker compose up` to spin all the services and run the application locally. It will start database, UI and backend locally <br/>
+- the easiest way to run the application locally is to install Docker and then you can use `docker compose up` to start all services. It will start database, UI and backend locally <br/>
 - you can use `build-and-push-compose.sh` to build and push new versions of Docker images to the Docker Hub private repository (required if you want to deploy it to Docker Swarm cluster) <br/>
 - you can deploy application using `deploy.sh` script which will deploy the application to Docker Swarm cluster (make sure you have access to Docker Hub private repository) <br/>
+- database service is using Docker volume to persist data, however the auto-ddl in the application.properties will prevent this, you might want to change it after creating a schema (after first run) to `none` if you want to persist data in the applcation <br/>
 
 # **Main features:** <br/>
 -customize your project (e.g. accept/decline request access to project, create/edit project etc.)<br/>
