@@ -1,0 +1,15 @@
+services:
+  database:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=scrmwb
+      - POSTGRES_PASSWORD=billteam
+      - POSTGRES_DB=scrumwb
+    volumes:
+      - scrmweb:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      - backend
+  backend:
+    image: scrum-web-backend
